@@ -21,7 +21,7 @@
    - It never examines FDE practice (security reviews, systems-of-record integration, customer environments), which is where FDE time actually goes.
    - Its "85–90% coverage" figure has no stated method.
 4. **Fixes, in order of leverage:**
-   - Re-tier the priorities to a ~30-topic FDE core.
+   - Re-tier the priorities to a 46-topic FDE core, about 30% of the expanded syllabus instead of 51%.
    - Add the 16 real-world projects in [projects/](projects/README.md) as the assessment backbone.
    - Split dated facts into a versioned annex with owners and review dates.
    - Add the verified gap topics in [02-gap-register.md](02-gap-register.md).
@@ -49,7 +49,7 @@
 | Watch (Section M) | 18 | n/a |
 
 A learner with 10–12 weeks cannot cover 60 "most important" topics in depth. Adding the existing gap doc's eight P1 candidates would push P1 to about 68.
-**Recommendation:** define a **~30-topic FDE core** (P1), move the rest to P2/P3 electives, and justify each P1 by "an FDE meets this in most engagements, or it is legally required for common deployments". [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) proposes the re-tiering.
+**Recommendation:** define an explicit **FDE core** (P1), move the rest to P2/P3 electives, and justify each P1 by "an FDE meets this in most engagements, or it is legally required for common deployments". Applied honestly, that rule gives 46 core topics across Vol 2 and the gap register, about 30% of the expanded syllabus. [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) proposes the re-tiering.
 
 ### 2.2 Effort is inverted relative to the target role
 
