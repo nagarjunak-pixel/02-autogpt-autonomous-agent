@@ -46,10 +46,7 @@ The gateway holds every provider key and sees every prompt. It is the crown jewe
 
 ## 2. Constraints
 
-**Data.**
-- Prompts carry loyalty-programme PII (retail), KYC data (Aadhaar, PAN; NBFC), lab results (diagnostics) and formulations (FMCG, chemicals).
-- Some BUs must keep prompts in-country or on self-hosted models.
-- Sector rules, such as RBI requirements for the NBFC, may add outsourcing and localisation conditions. Get each BU's regulatory register; do not assume.
+**Data.** Prompts carry loyalty PII (retail), KYC data such as Aadhaar and PAN (NBFC), lab results (diagnostics) and formulations (FMCG, chemicals). Some BUs must keep prompts in-country or on self-hosted models. Sector rules, such as RBI requirements for the NBFC, may add conditions: get each BU's regulatory register rather than assuming.
 
 **Legal and regulatory (verified as of Sept 2026 unless marked):**
 
@@ -62,10 +59,7 @@ The gateway holds every provider key and sees every prompt. It is the crown jewe
 | **EU AI Act** as amended by the Digital Omnibus, Reg. (EU) 2026/1744 of 8 Jul 2026 ([EUR-Lex](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202601744)) | EU BU deployers | Art. 5 prohibitions apply (e.g. emotion recognition at work). Annex III high-risk duties move to **2 Dec 2027**. Art. 4 AI-literacy duty softened to "take measures to support". The inventory must flag Annex III candidates such as HR screening in the German BU |
 | UAE BU | — | Not researched here; local counsel to confirm |
 
-**Infrastructure.**
-- Azure is the group standard (Central India, plus UK South for UK and Germany); two BUs are on AWS.
-- On-prem GPU cluster running vLLM.
-- Provider A through Azure with provisioned throughput units (PTU), Provider B direct and via Bedrock, Provider C via Google Cloud.
+**Infrastructure.** Azure is the group standard; two BUs use AWS; an on-prem GPU cluster runs vLLM. Provider A is used through Azure with provisioned throughput units (PTU), Provider B directly and via Bedrock, Provider C via Google Cloud.
 
 **Security.** No provider master key may live outside the vault. The admin plane must never face the internet.
 
@@ -73,11 +67,7 @@ The gateway holds every provider key and sees every prompt. It is the crown jewe
 
 **Timeline.** The CFO needs showback by January 2027 for FY 2027-28 budgets (the Indian financial year starts 1 April).
 
-**Politics.**
-- The Consumer BU runs its own stack and refuses chargeback.
-- Developers fear latency.
-- Security wants full prompt logging; the works council and DPO do not.
-- Procurement has committed-spend minimums, so the "cheapest" route is not always the cheapest marginal route.
+**Politics.** The Consumer BU runs its own stack and refuses chargeback. Developers fear latency. Security wants full prompt logs; the works council and DPO do not. Committed-spend minimums mean the cheapest list price is not always the cheapest route.
 
 ## 3. What students are given (course build)
 
@@ -85,20 +75,11 @@ The gateway holds every provider key and sees every prompt. It is the crown jewe
 - **Use-case catalogue (YAML):** 12 BUs × 25 apps. Each app has a model, task type (classification, extraction, summarisation, chat, agentic), traffic profile (diurnal, month-end spikes), lognormal prompt and output lengths, data class, residency rule and a **success signal** (such as "extraction accepted without correction").
 - **Request log:** about 2M metadata records for 30 days, generated from the catalogue, plus 5,000 full prompts for routing and DLP evaluation.
 - **Billing exports:** three schemas (per-token, per-PTU-hour, per-request). Include credits, a mid-month price change, and INR, USD and EUR. Students normalise these into a FOCUS-shaped ledger; FOCUS 1.4 now covers AI, cloud and SaaS billing ([FinOps Foundation](https://www.finops.org/focus/)).
-- **Discovery logs (1M lines):** egress, DNS and proxy logs; SSO/OAuth grants; corporate-card lines. Seed 40 shadow-AI cases:
-  - direct SDK calls from BU cloud accounts that bypass the gateway;
-  - consumer chatbots in browsers;
-  - an internet-exposed n8n instance;
-  - an Ollama server on a developer workstation;
-  - AI features embedded in approved SaaS;
-  - card-paid AI subscriptions.
+- **Discovery logs (1M lines):** egress, DNS, proxy, SSO/OAuth grants and card lines, with 40 seeded shadow-AI cases: direct SDK calls that bypass the gateway, consumer chatbots, an exposed n8n instance, a workstation Ollama server, AI features inside approved SaaS, and card-paid subscriptions.
 - **DLP set:** 2,000 prompts in English, Hindi, Marathi and code-mixed text, with checksum-valid Aadhaar numbers (Verhoeff), PAN patterns, card numbers (Luhn), IBANs (mod-97), GSTINs, and patient names with lab values. Add **decoys**, such as 12-digit numbers that fail Verhoeff, plus spaced, Unicode-digit and base64 encodings.
 - **Adversarial inputs:** an MCP server whose tool description contains hidden instructions; an agent script that loops on a failing tool call with growing context; a tenant probe that tries to hit another BU's cache.
 
-**Mock systems:**
-- Three mock provider endpoints (FastAPI) with configurable latency, 429s and 5xx errors, a "region down" switch, token accounting, and a "retired model" switch that returns 404 or 410.
-- A mock MCP server set.
-- A local "self-hosted" tier on Ollama.
+**Mock systems.** Three mock providers (FastAPI) with configurable latency, 429/5xx errors, a "region down" switch, token accounting and a "retired model" switch (404/410); mock MCP servers; a local "self-hosted" tier on Ollama.
 
 **Budget, two paths:**
 - **API ≤ USD 50:** a small and a mid-tier model; use the strong tier only on eval samples.
@@ -110,33 +91,27 @@ The gateway holds every provider key and sees every prompt. It is the crown jewe
 
 ## 4. Discovery — what the FDE does in week 1
 
-**Processes to map:**
-- How a team gets model access today (ticket → procurement → a key pasted in chat).
-- How AI is paid for (enterprise agreement vs corporate card vs cloud marketplace).
-- How models are chosen and upgraded.
-- What happens in a provider outage.
-- How a new use case gets risk review, if it does.
+**Processes to map:** how teams get model access (ticket → procurement → a key pasted in chat); how AI is paid for (enterprise agreement, corporate card, cloud marketplace); how models are chosen and upgraded; what happens in an outage; how a new use case gets risk review, if it does.
 
 **Baselines and how to measure them:**
-- **Spend census:** invoices, card data and cloud billing for 6 months, normalised to one ledger.
-- **Key census:** secret scanning across repos and CI, plus the provider consoles; record key count, age and owner.
-- **Traffic share through any gateway:** egress logs matched to provider domains. The baseline is 0%.
-- **Cost per successful outcome for 3 anchor use cases:** FMCG invoice extraction, retail email triage, diagnostics report summarisation. Measure it from the success signal, not from token counts alone.
-- **Latency p50/p95 per anchor app,** and PTU utilisation per hour.
-- **Incident log** for the last 6 months: outages, retirements, leaks, runaway spend.
+- **Spend census:** 6 months of invoices, card data and cloud billing in one ledger.
+- **Key census:** secret scanning of repos and CI, plus provider consoles (count, age, owner).
+- **Gateway traffic share:** egress logs matched to provider domains (baseline 0%).
+- **Cost per successful outcome** for 3 anchors (FMCG invoice extraction, retail email triage, diagnostics summarisation), measured from the success signal, not token counts.
+- **Latency p50/p95** per anchor; hourly PTU utilisation; a 6-month incident log.
 
 **Sharpest discovery questions:**
 1. Which three AI use cases would the CFO defend in a budget cut, and what evidence shows they work?
-2. Where is each provider key stored, who has it, and when was it last rotated?
+2. Where is each provider key, who has it, and when was it last rotated?
 3. What committed-spend and PTU contracts exist, with what minimums and expiry dates?
-4. What counts as "success" for each anchor use case, and where is that signal recorded?
+4. What counts as "success" for each anchor, and where is that signal recorded?
 5. Which BUs and data classes must stay in India, in the EU, or on self-hosted models?
 6. What did the last model retirement break, and how long did the fix take?
-7. In the July loop incident, who noticed, after how long, and what stopped it?
-8. What logging granularity will the works council and DPO accept: metadata only, redacted, or full?
-9. How much extra latency can each app tolerate (voice vs chat vs batch)?
-10. Which MCP servers and tools do agents use today, and who approved them?
-11. How are shared services charged today, and which BU will fight chargeback?
+7. In the July loop incident, who noticed, and after how long?
+8. What logging will the works council and DPO accept: metadata, redacted, or full?
+9. How much extra latency can each app tolerate?
+10. Which MCP servers do agents use, and who approved them?
+11. Which BU will fight chargeback, and why?
 12. What would make a team bypass the gateway, and how do we make the paved road faster than the bypass?
 
 **Qualification: the lowest rung that works.** Almost all of this is **not AI**: configuration, policy-as-code, deterministic routing and accounting.
@@ -166,7 +141,7 @@ The gateway holds every provider key and sees every prompt. It is the crown jewe
 | Supply chain | Gateway artefacts | 100% deployed by digest from the internal registry; hash-pinned lockfiles; KEV-listed gateway CVEs patched ≤ 72 h | Deploy audit; drill |
 | Security | Tool governance | Only registry-approved MCP servers are reachable; the poisoned tool description is blocked or flagged | Adversarial suite |
 
-The quality margin exists because a cascade that saves 40% but quietly loses 5 points of accuracy is a cost transfer to the BU's reviewers, not a saving.
+A cascade that saves 40% but loses 5 points of accuracy moves the cost to the BU's reviewers; that is not a saving.
 
 ## 6. Reference architecture
 
@@ -229,7 +204,7 @@ flowchart LR
 
 | Component | Responsibility | Options (OSS/self-host · managed) | Owner |
 |---|---|---|---|
-| Gateway data plane | Auth, policy, routing, cache, MCP | **LiteLLM** proxy; **Agent Router** (formerly Envoy AI Gateway: 1.0 on 23 Jun 2026, renamed on joining the Agentic AI Foundation, announced 9 Sep 2026, [site](https://theagentrouter.ai/)); **agentgateway** (Linux Foundation, now in AAIF, [site](https://agentgateway.dev/)) · **Kong AI Gateway** (2.x managed via Konnect, self-hosted data planes); **Azure API Management AI gateway** (`llm-token-limit`, `llm-emit-token-metric`, semantic cache, backend circuit breaker, MCP/A2A, [docs](https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities)); **Prisma AIRS AI Gateway** (Portkey, acquired by Palo Alto Networks; GA announced 16 Jul 2026 — verify the open-source gateway's status); **Cloudflare AI Gateway** | Platform |
+| Gateway data plane | Auth, policy, routing, cache, MCP | **LiteLLM**; **Agent Router** (formerly Envoy AI Gateway; 1.0 on 23 Jun 2026; joined the Agentic AI Foundation under the new name, announced 9 Sep 2026, [site](https://theagentrouter.ai/)); **agentgateway** (Linux Foundation, in AAIF, [site](https://agentgateway.dev/)) · **Kong AI Gateway** (Konnect-managed, self-hosted data planes); **Azure APIM AI gateway** (`llm-token-limit`, `llm-emit-token-metric`, circuit breaker, MCP/A2A, [docs](https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities)); **Prisma AIRS AI Gateway** (Portkey after its acquisition by Palo Alto Networks; GA announced 16 Jul 2026; verify the OSS gateway's status); **Cloudflare AI Gateway** | Platform |
 | Vault | Provider keys; rotation | OpenBao / HashiCorp Vault · Azure Key Vault | Security |
 | DLP | Detect, redact, block | Presidio + checksum validators · Kong AI Sanitizer, Azure AI Content Safety | Security |
 | Cache | Exact/semantic cache, per tenant | Redis with tenant namespaces · APIM semantic cache | Platform |
@@ -328,20 +303,15 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
     raise RuntimeError(f"no acceptable answer: {trace}")
 ```
 
-**Production gaps to close:**
-- Distributed counters (atomic Redis/Lua) instead of in-process state, and single-probe half-open.
-- Token accounting for streamed responses; `max_tokens` set on every request so the reservation is a true upper bound.
-- Prices come from the registry, not code.
-- Residency rules filter the tiers **before** fallback, so an outage never silently moves Indian health data offshore.
-- Emit the trace as OTel span events.
+**Production gaps to close:** distributed counters (atomic Redis/Lua) and a single-probe half-open state; streamed-token accounting, with `max_tokens` on every request so the reservation is a true upper bound; prices from the registry; residency filters applied to tiers **before** fallback, so an outage never moves Indian health data offshore; the trace emitted as OTel span events.
 
 ## 8. Evaluation plan
 
 **Datasets:**
-- **Golden:** 1,000 items per anchor use case, labelled by BU experts and frozen.
-- **Adversarial:** the DLP evasion set, the poisoned MCP description, tenant cache probes, and the loop script.
+- **Golden:** 1,000 frozen items per anchor, labelled by BU experts.
+- **Adversarial:** DLP evasions, the poisoned MCP description, cache probes, the loop script.
 - **Regression:** every escaped PII case, bad cascade acceptance and failed drill.
-- **Held-out:** two weeks of live pilot traffic, sampled and labelled after the fact.
+- **Held-out:** two weeks of live pilot traffic, labelled afterwards.
 - **Seeded discovery:** the 40 shadow-AI cases.
 
 **Metrics by layer:**
@@ -364,28 +334,17 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 - Policy unit tests.
 - A route change is blocked if its golden-set quality falls outside the non-inferiority margin.
 
-**Online metrics:**
-- Cost per successful outcome per use case.
-- Escalation and fallback rates.
-- Cache hit rate per tenant.
-- DLP blocks.
-- Budget alerts.
-- Share of traffic through the gateway.
-- Gateway p95 overhead.
+**Online metrics:** cost per successful outcome per use case; escalation and fallback rates; cache hit rate per tenant; DLP blocks; budget alerts; share of traffic through the gateway; gateway p95 overhead.
 
 ## 9. Security, privacy and compliance
 
 **The gateway is the crown jewel.** It holds every provider key, sees every prompt, and can reach every tool.
 
 **Case study: LiteLLM on PyPI, 24 Mar 2026 (verified).**
-- Versions 1.82.7 and 1.82.8 were published with credential-harvesting malware, using a publishing token reportedly obtained through the earlier compromise of the Trivy scanner. Version 1.82.8 added a `litellm_init.pth` file that runs on any Python start.
-- LiteLLM said users of its official Docker image were not affected because that path "pins dependencies" ([LiteLLM](https://docs.litellm.ai/blog/security-update-march-2026); [GHSA-5mg7-485q-xm76](https://osv.dev/vulnerability/GHSA-5mg7-485q-xm76)). The versions are no longer on PyPI.
-- Separately, CISA's KEV catalogue added three LiteLLM CVEs in 2026:
-  - CVE-2026-42208, SQL injection in proxy API-key verification (added 8 May);
-  - CVE-2026-42271, command execution by **low-privilege internal-user keys** via MCP test endpoints (added 8 Jun);
-  - CVE-2026-59822, MCP authentication bypass (added 2 Sep).
-- **Lesson 1:** pin by hash and deploy by digest from a mirror with a cooldown.
-- **Lesson 2:** have a 72-hour path for KEV fixes, because your gateway **will** need emergency patches.
+- Versions 1.82.7 and 1.82.8 carried credential-harvesting malware, published with a token reportedly stolen in the earlier Trivy scanner compromise. Version 1.82.8's `litellm_init.pth` ran on any Python start.
+- Users of the official Docker image were unaffected because that path "pins dependencies" ([LiteLLM](https://docs.litellm.ai/blog/security-update-march-2026); [GHSA-5mg7-485q-xm76](https://osv.dev/vulnerability/GHSA-5mg7-485q-xm76)).
+- Separately, CISA's KEV added three LiteLLM CVEs in 2026: CVE-2026-42208 (SQL injection in key verification, 8 May), CVE-2026-42271 (command execution by **low-privilege internal-user keys** via MCP test endpoints, 8 Jun) and CVE-2026-59822 (MCP authentication bypass, 2 Sep).
+- **Lessons:** pin by hash and deploy by digest from a mirror with a cooldown, **and** keep a 72-hour path for KEV fixes, because the gateway will need emergency patches.
 
 **Lethal-trifecta check:**
 
@@ -397,15 +356,15 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 | Threat | Control |
 |---|---|
-| Upstream package compromise | Hash-pinned lockfiles, internal mirror, 3–7 day cooldown, SBOM per image, minimal environment secrets, egress allow-list |
+| Upstream package compromise | Hash-pinned lockfiles, mirror, 3–7 day cooldown, SBOM per image, few environment secrets, egress allow-list |
 | Exploited gateway CVE | KEV watch; 72 h patch path; no internet-facing admin UI; least-privilege internal keys |
-| Provider-key theft | Vault, short-lived fetch, per-provider rotation runbook; virtual keys only in apps |
-| Cross-tenant leakage via cache | Tenant-scoped cache keys; vLLM `cache_salt` per BU. Gu et al. detected global cache sharing across users in seven API providers ([arXiv 2502.07776](https://arxiv.org/abs/2502.07776)), so ask providers about isolation |
-| Denial of wallet / runaway loops | Hourly burn-rate caps, per-run step limits, repeated-call detection |
-| DLP evasion (encodings, code-mixed text) | Normalisation before detection; checksum validators; adversarial set in CI |
-| MCP tool poisoning / rug pull | Registry allow-list; pinned tool-description hashes; re-approval on change |
-| Log store as breach target | Metadata-only default; redaction; access logging; 180-day India retention, then deletion |
-| Bypass | Direct-provider egress blocked from corporate and cloud networks; exceptions logged |
+| Provider-key theft | Vault, short-lived fetch, rotation runbook; only virtual keys in apps |
+| Cross-tenant cache leakage | Tenant-scoped cache keys; vLLM `cache_salt` per BU. Gu et al. found cache sharing across users at seven API providers ([arXiv 2502.07776](https://arxiv.org/abs/2502.07776)), so ask providers about isolation |
+| Denial of wallet | Hourly caps, per-run step limits, repeated-call detection |
+| DLP evasion | Normalise before detection; checksums; adversarial set in CI |
+| MCP tool poisoning / rug pull | Allow-list; pinned tool-description hashes; re-approval on change |
+| Log store as breach target | Metadata-only default; redaction; 180-day India retention, then deletion |
+| Bypass | Direct-provider egress blocked; exceptions logged |
 
 **Obligations → controls** ([07](templates/07-compliance-obligations-to-controls.md)):
 
@@ -420,12 +379,7 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 ## 10. Operations and cost model
 
-**SLOs:**
-- Gateway availability 99.95% per month.
-- Gateway-attributable error rate ≤ 0.05%.
-- Overhead p95 ≤ 30 ms.
-- Spend data fresh within 5 minutes for burn-rate caps.
-- Monthly chargeback closed by working day 5.
+**SLOs:** availability 99.95% per month; gateway-attributable errors ≤ 0.05%; overhead p95 ≤ 30 ms; spend data fresh within 5 minutes; chargeback closed by working day 5.
 
 **Observability.** Emit OTel GenAI spans with `gen_ai.request.model`, `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens`, plus Orion attributes (`orion.bu`, `orion.use_case`, `orion.tier`, `orion.outcome`). The GenAI conventions now live in a separate repository and are still in **Development** status ([OTel](https://opentelemetry.io/docs/specs/semconv/gen-ai/)), so pin the version and expect renames.
 
@@ -450,34 +404,23 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 - Strong-only: USD 0.012 per invoice at 92% success = **USD 0.0130 per success**.
 - Cascade: cheap tier at USD 0.001, with the validator (schema + line totals reconcile) passing 80%, and 20% escalated. Cost is 0.001 + 0.2 × 0.012 = 0.0034 per invoice at 93% success = **USD 0.0037 per success**.
 
-**Runbooks:**
-- **RB-1** Provider or region outage.
-- **RB-2** Runaway spend.
-- **RB-3** Gateway package or CVE emergency.
-- **RB-4** Model retirement.
-- **RB-5** Key compromise.
-- **RB-6** DLP false-block storm: switch the affected route to monitor mode, with CISO approval.
+**Runbooks:** RB-1 provider or region outage; RB-2 runaway spend; RB-3 gateway package or CVE emergency; RB-4 model retirement; RB-5 key compromise; RB-6 DLP false-block storm (monitor mode, with CISO approval).
 
-**DR.**
-- Active-active gateways in two Azure regions, with on-prem as the third path for self-hosted routes.
-- Configuration lives in Git and is rebuilt from digests.
-- **Break-glass** direct-provider keys sit in the vault for Sev-1 only. They are time-boxed, dual-approved and audited.
-- Quarterly key-rotation drill.
+**DR.** Active-active gateways in two Azure regions, with on-prem as a third path for self-hosted routes; configuration rebuilt from Git and digests. **Break-glass** direct-provider keys stay in the vault for Sev-1 only: time-boxed, dual-approved, audited. Key rotation is drilled quarterly.
 
 ## 11. Curveballs (instructor-injected events)
 
 1. **A provider announces a model retirement with 60 days' notice.**
    - Both Anthropic and Azure Foundry commit to at least 60 days' notice for GA models ([Anthropic](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)). Azure retirement dates are not extendable, and provisioned deployments are **not** auto-upgraded.
-   - Query the registry: which aliases and use cases depend on the model (say 43)?
-   - Pick candidates, run a **shadow** evaluation that mirrors 5% of traffic, then canary at 5% → 25% → 100% with SLO-based rollback.
-   - Watch API-contract changes, not only quality. For example, newer Claude models reject non-default `temperature`/`top_p`/`top_k` with a 400 error.
-   - Re-check PTU capacity, and finish by day 40 to leave a buffer.
+   - Query the registry for dependent aliases and use cases (say 43).
+   - Run a **shadow** evaluation on 5% mirrored traffic, then canary at 5% → 25% → 100% with SLO-based rollback.
+   - Check API-contract changes as well as quality: newer Claude models return a 400 error for non-default `temperature`/`top_p`/`top_k`.
+   - Re-check PTU capacity, and finish by day 40.
 2. **An agent loop burns a month's budget overnight.**
-   - Revoke or throttle the key; confirm spend has flattened.
-   - Trace the cause, for example a failing tool call retried with growing context.
-   - Add the hourly cap, a per-run step limit and repeated-call detection.
-   - Alert on spend velocity against a 7-day baseline.
-   - Hold a blameless review with the BU. Ask the provider about credits (not guaranteed), and decide under ADR-5 who pays.
+   - Throttle or revoke the key and confirm spend has flattened.
+   - Trace the cause (e.g. a failing tool call retried with growing context).
+   - Add the hourly cap, per-run step limits, repeated-call detection and spend-velocity alerts against a 7-day baseline.
+   - Hold a blameless review. Credits from the provider are not guaranteed; ADR-5 decides who pays.
 3. **The gateway package is compromised upstream (a LiteLLM-style event).**
    - Compare deployed digests with the bad versions. Check whether the mirror ever served them; the cooldown should have blocked them.
    - Hunt for the `.pth` IoC in dev and CI.
@@ -512,11 +455,10 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 ## 13. Stretch goals
 
-- Train a learned router on logged outcomes and compare it with the rule cascade.
-- Build PTU vs pay-as-you-go break-even analysis from hourly utilisation.
-- Build an MCP sub-registry with signed tool manifests.
-- Run a prefix-cache timing side-channel experiment on vLLM with and without `cache_salt`.
-- Add carbon or energy per outcome as a dashboard dimension.
+- A learned router trained on logged outcomes, compared with the rule cascade.
+- PTU vs pay-as-you-go break-even analysis from hourly utilisation.
+- An MCP sub-registry with signed tool manifests.
+- A prefix-cache timing experiment on vLLM with and without `cache_salt`.
 
 ## 14. Curriculum map
 

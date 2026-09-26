@@ -74,7 +74,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 **Mock APIs** (FastAPI, with injected latency and faults): `/subscriber`, `/plans`, `/bills`, `/cases`, `/otp`, `/app-push`, `/payment-ivr` (token and status only), `/outage-status` and `/crm/handoff` (a Salesforce/ServiceNow-shaped case). There is also `/sim-swap`, which exists only so tests can prove the bot can never call it.
 
 **Budget paths.**
-- **(A) API, ≤ USD 50.** Streaming ASR/TTS with Hindi/Telugu support plus a small cached LLM. About 1,500 synthetic calls × 3 min fits if ASR+TTS cost under about $0.02/min.
+- **(A) API, ≤ USD 50.** Streaming ASR/TTS with Hindi/Telugu support plus a small cached LLM. At about $0.02–0.04 per call-minute all-in, $50 buys roughly 1,200–2,500 call-minutes: enough for development and a stratified pass^4 subset. Pre-render caller audio locally, and run the full suite on path B.
 - **(B) Local.** Use [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) (ASR), a 7–30B open-weight model on vLLM/Ollama, Indic Parler-TTS or [IndicF5](https://huggingface.co/ai4bharat/IndicF5) (TTS) and [Silero VAD](https://github.com/snakers4/silero-vad) (MIT, 8 kHz). Orchestrate with [Pipecat](https://github.com/pipecat-ai/pipecat) (BSD-2) or [LiveKit Agents](https://github.com/livekit/agents) (Apache-2.0). You need a GPU with ≥ 12 GB; CPU Telugu TTS will miss the budget, so record that finding.
 
 **Out of scope:** real PSTN/SIP, payments, voice biometrics, outbound calling and production CRM tenants.
@@ -421,7 +421,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 | 61 | Agent-Computer Interface (ACI) Design | Task-shaped tools per workflow state |
 | 71 | Agent Identity Platforms | Verified caller identity, step-up by auth level |
 | 72 | Hosted Agent Platforms | Agentforce/ServiceNow vs custom ADR |
-| 73, 74, 75 | OWASP Agentic Top 10; OWASP LLM Top 10; Jailbreaks and Red-Teaming Practice | Threat model, spoken injection, adversarial set |
+| 73, 74, 75 | OWASP Top 10 for Agentic Applications (2026); OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice | Threat model, spoken injection, adversarial set |
 | 78 | PII Detection and Data-Loss Prevention | PAN/Luhn redaction |
 | 81 | Privacy Law for AI: GDPR and India's DPDP | Notice, recordings, breach |
 | 84 | Content Provenance and Watermarking | Synthetic-voice disclosure |
@@ -429,7 +429,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 | 90, 94 | SLOs, Incident Response and On-Call for AI; Provider Failover and Disaster Recovery | IVR failover drills |
 | 91, 96, 97, 100 | LLM FinOps; Observability Tools; Evaluation Tools; AI Gateways | Cost per contained call, voice spans, CI gates |
 | 102 | Model Provider Landscape | Indic ASR/TTS/LLM choice |
-| 109–116 | Use-case discovery through SOWs | All FDE artifacts |
+| 109–116 | Use-Case Discovery and Qualification; Business Case and ROI; POC → Pilot → Production Playbook; Architecture Documents and ADRs; Stakeholder Communication and Demos; Change Management and Adoption; Data-Readiness Assessment; Scoping, Estimation and SOWs | All FDE artifacts; BPO contract change (114) |
 
 **New/gap topics exercised:**
 - India IT Rules SGI amendment (applicability analysis)

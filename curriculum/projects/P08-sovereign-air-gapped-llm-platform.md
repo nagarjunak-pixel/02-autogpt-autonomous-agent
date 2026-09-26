@@ -1,6 +1,6 @@
 # P08 · Sovereign, Air-Gapped LLM Platform for a Cooperative Bank
 
-> Build a no-egress LLM platform inside a bank's own data centre: pick open-weight models by evaluation, size GPUs with real KV-cache maths, and ship every model change through a signed, one-way, audit-ready pipeline.
+> A no-egress LLM platform in a bank's own data centre: open-weight models chosen by evaluation, GPUs sized with real KV-cache maths, and every model change shipped through a signed, one-way, auditable pipeline.
 
 > **Customer:** Godavari Cooperative Bank (fictional) · **Industry:** Banking (multi-state urban co-operative bank, RBI-regulated) · **Geography:** Andhra Pradesh and Telangana, India · **Real engagement:** 16 weeks; FDE lead, platform/SRE engineer, ML engineer, part-time security architect and a Telugu/Hindi language lead · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
@@ -17,7 +17,7 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
-| CGM (IT), sponsor | A win before RBI's inspection; no lock-in | Budget, scope |
+| CGM (IT), sponsor | A win before inspection; no lock-in | Budget, scope |
 | CISO | No egress, key custody, media rules, SOC | Security sign-off |
 | Chief Risk Officer | Board AI policy, AI inventory, FREE-AI alignment | The loan use case |
 | Head of Credit | Time saved without "AI deciding loans" | Officer adoption |
@@ -25,7 +25,7 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 | IS audit cell | Pre-deployment review, provenance, logs | Promotion to production |
 | DC/network team | Power, cooling, DR parity | Hardware install |
 | Legal | Model licences, vendor contracts | Any unclear-licence model |
-| HR / staff union | How query logs are used | Branch rollout |
+| HR / union | Use of query logs | Branch rollout |
 
 ## 2. Constraints
 
@@ -44,9 +44,9 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 | [CERT-In SBOM/…/AIBOM Guidelines v2.0](https://www.cert-in.org.in/PDF/TechnicalGuidelines-on-SBOM,QBOM&CBOM,AIBOM_and_HBOM_ver2.0.pdf), 9 Jul 2025 | Guidance. Its AIBOM minimum elements (version, developer, licence, dependencies, data sources, metrics, intended use, vulnerabilities) become the provenance format. |
 | Model licences (read on the repos, Sept 2026) | Apache-2.0: Gemma 4, Qwen3.8-27B, Sarvam-30B/105B, gpt-oss. Custom: Llama 4 Community Licence plus its AUP; Mistral Medium 3.5 "Modified MIT" (excludes companies above USD 20M monthly revenue); Qwen Community Licence 1.0. |
 
-**Infrastructure and security.** DCs are in Hyderabad (primary) and Vijayawada (DR), with about 12 kW per rack, VMware and no Kubernetes skills. Capex covers **one GPU server per site**: 4× L40S or 2× H100 NVL. The production enclave has no internet route, including NTP. Staging may reach the internet but never holds customer data. Keys are held in an HSM, promotion needs two people, and USB is blocked.
+**Infrastructure and security.** DCs are in Hyderabad (primary) and Vijayawada (DR), with about 12 kW per rack, VMware and no Kubernetes skills. Capex covers **one GPU server per site**: 4× L40S or 2× H100 NVL. The production enclave has no internet route (time from an internal NIC/NPL-traceable NTP source). Staging may reach the internet but never holds customer data. Keys sit in an HSM, promotion needs two people, USB is blocked.
 
-**Budget, timeline, politics.** Capex plus 2 FTE of opex; **no recurring API spend**. The pilot must be live by week 14, before RBI's inspection. The CBS vendor is pitching its own AI add-on. The union wants query logs kept out of appraisals. The Head of Credit has told the Board that "no machine will write sanction notes".
+**Budget, timeline, politics.** Capex plus 2 FTE; **no recurring API spend**. Pilot live by week 14 (RBI inspection). The CBS vendor is pitching its own AI add-on; the union wants logs kept out of appraisals; the Head of Credit told the Board "no machine will write sanction notes".
 
 ## 3. What students are given (course build)
 
@@ -60,7 +60,7 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 
 **Mock systems.** An LDAP stub with roles, a mock DMS API, and two Docker networks where `enclave` has no external route. A drop directory simulates the diode; a key in a separate container simulates the HSM.
 
-**Budget paths.** *Local (default):* vLLM or Ollama on the team's GPU with small candidates (Gemma 4 E4B/12B, Qwen3.5-9B, a Sarvam-30B GGUF if memory allows). Do the L40S/H100 maths on paper, then validate the method by predicting and measuring KV capacity on your own GPU. *API (≤ USD 50):* synthetic data and a judge baseline, in staging only. The enclave must pass a zero-egress test.
+**Budget paths.** *Local (default):* vLLM or Ollama with small candidates (Gemma 4 E4B/12B, Qwen3.5-9B, a Sarvam-30B GGUF if memory allows). Do the L40S/H100 maths on paper; validate the method by predicting, then measuring, KV capacity on your own GPU. *API (≤ USD 50):* synthetic data and a judge baseline, staging only. The enclave must pass a zero-egress test.
 
 **Out of scope:** real diode or HSM, CBS integration, multi-node Kubernetes, real regulator filings.
 
@@ -84,7 +84,7 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 11. Who runs the platform after handover? An AMC is IT outsourcing.
 12. What evidence will internal audit ask for?
 
-**Qualification: the lowest rung that works.** Search already answers "where is circular X?", so bilingual BM25 with supersession-aware ranking ships first as the fallback. Single-call RAG adds synthesis and Telugu answers. It is a fixed **workflow** (retrieve → rerank → answer → verify citations), not an agent, because there are no side-effecting tools. Loans are also a workflow (OCR → classify → extract → verify numbers → summarise), with **FOIR/DSCR computed in code**. No agent is justified, and both use cases qualify.
+**Qualification: the lowest rung that works.** Search answers "where is circular X?", so bilingual BM25 with supersession-aware ranking ships first, as the fallback. Single-call RAG adds synthesis and Telugu. It is a fixed **workflow** (retrieve → rerank → answer → verify citations) with no side-effecting tools, so no agent. Loans are a workflow too (OCR → classify → extract → verify numbers → summarise), with **FOIR/DSCR computed in code**. Both qualify.
 
 ## 5. Success criteria and acceptance tests
 
@@ -101,7 +101,7 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 | Availability and DR | Branch hours / DR restore | ≥ 99.5% / ≤ 4 h | Probes / drill |
 | Supply chain and cost | Promoted artefacts passing the verifier / cost per successful answer | 100% / reported monthly | Registry audit / §10 |
 
-The thresholds are set to beat the measured staff baseline. Telugu gets its own bar so it cannot be averaged away. Untraceable numbers must be zero because a single invented income figure ends trust.
+Thresholds beat the measured staff baseline; Telugu gets its own bar so it cannot be averaged away; one invented income figure ends trust, so untraceable numbers must be zero.
 
 ## 6. Reference architecture
 
@@ -134,21 +134,21 @@ flowchart LR
   RG -. replicate .-> DRV
 ```
 
-| Component | Open-source / self-hosted | Managed or commercial | Owner |
+| Component: responsibility | Open-source / self-hosted | Managed or commercial | Owner |
 |---|---|---|---|
-| Serving | vLLM, SGLang | NVIDIA NIM; vendor-supported vLLM | Platform |
-| Cluster and air-gap packaging | RKE2/k3s + Zarf (LF project); or VMs + Ansible | OpenShift, Rancher Prime | Platform |
-| Registry | Harbor (OCI) + MLflow metadata | JFrog Artifactory | Platform |
-| Signing | OpenSSF `model_signing` (key/PKI/PKCS#11 modes), cosign | Network HSM | Security |
-| Retrieval | OpenSearch or Qdrant; BGE-M3 / Qwen3-Embedding | Elastic on-prem | ML |
-| OCR | Tesseract (Telugu), docTR, a VLM (Gemma 4) | Commercial OCR SDK | ML |
-| Gateway | Envoy AI Gateway; LiteLLM pinned and hash-verified (1.82.7/1.82.8 were compromised on PyPI, Mar 2026) | Kong, F5 | Platform |
-| Observability | OTel Collector, Prometheus, DCGM, Grafana | Bank SIEM/APM | SRE |
-| Evaluation | Inspect, lm-evaluation-harness, DeepEval | Vendor platforms (Promptfoo is OpenAI-owned since Mar 2026) | ML |
-| IaC/GitOps | OpenTofu, Ansible, Argo CD + in-enclave Gitea | Terraform Enterprise | Platform |
+| Serving: batching, paged KV, FP8 | vLLM, SGLang | NVIDIA NIM; vendor-supported vLLM | Platform |
+| Cluster: air-gapped install and delivery | RKE2/k3s + Zarf (LF project); or VMs + Ansible | OpenShift, Rancher Prime | Platform |
+| Registry: digest-addressed artefacts | Harbor (OCI) + MLflow metadata | JFrog Artifactory | Platform |
+| Signing: sign outside, verify inside | OpenSSF `model_signing` (key/PKI/PKCS#11), cosign | Network HSM | Security |
+| Retrieval: hybrid search, ACL and supersession filters | OpenSearch or Qdrant; BGE-M3 / Qwen3-Embedding | Elastic on-prem | ML |
+| OCR: scans, Telugu script | Tesseract, docTR, a VLM (Gemma 4) | Commercial OCR SDK | ML |
+| Gateway: auth, quotas, masking, logs | Envoy AI Gateway; LiteLLM pinned (1.82.7/1.82.8 were compromised on PyPI, Mar 2026) | Kong, F5 | Platform |
+| Observability: traces, GPU/KV metrics | OTel Collector, Prometheus, DCGM, Grafana | Bank SIEM/APM | SRE |
+| Evaluation: bake-offs, gates, canaries | Inspect, lm-evaluation-harness, DeepEval | Vendor platforms (Promptfoo is OpenAI-owned since Mar 2026) | ML |
+| IaC/GitOps: rebuild either site | OpenTofu, Ansible, Argo CD + in-enclave Gitea | Terraform Enterprise | Platform |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
-1. *Model and licence policy.* Candidates: Sarvam-30B (MoE, 22 Indian languages, needs `trust_remote_code`), Qwen3.8-27B (hybrid attention), Gemma 4 31B/26B-A4B, gpt-oss-120b (English-centric), Mistral Small 4. Choose between Apache/MIT only and custom licences with legal sign-off.
+1. *Model and licence policy.* Candidates: Sarvam-30B (MoE, 22 Indian languages, needs `trust_remote_code`), Qwen3.8-27B (hybrid attention), Gemma 4 31B/26B-A4B, gpt-oss-120b (check Telugu closely), Mistral Small 4. Choose between Apache/MIT only and custom licences with legal sign-off.
 2. *GPUs.* 4× L40S or 2× H100 NVL; replicas or TP. **Run the bake-off before the purchase order.**
 3. *Quantisation.* BF16/FP8/4-bit weights and FP8 KV, decided by per-language deltas.
 4. *Trust anchor.* Diode or controlled media; HSM key or internal PKI. Sigstore keyless needs online Fulcio/Rekor.
@@ -159,7 +159,7 @@ flowchart LR
 
 *Load.* Design peak is 2 req/s (≈1.7× measured peak; confirm in discovery). Each request is 4,000 prompt tokens (about 1,000 of them a cached prefix) plus 400 output, so ≤ 4,500 tokens per sequence. Target ≥ 20 tokens/s per stream. By Little's law, 2 × ~20 s ≈ **40 concurrent sequences**. Summaries (~400 files a day × ~66k tokens) run at low priority.
 
-*Memory and speed.* Usable ≈ 90% of memory minus ~4 GB; check against the engine's startup report. Decode step ≈ (weight + KV bytes read) ÷ (bandwidth × 0.6). Datasheets: L40S 48 GB, 864 GB/s, PCIe Gen4, no NVLink; H100 NVL 94 GB, 3.9 TB/s, 600 GB/s NVLink bridge.
+*Memory and speed.* Usable ≈ 90% of memory minus ~4 GB (check the engine's startup report). Decode step ≈ (weight + KV bytes read) ÷ (bandwidth × 0.6). Datasheets: L40S 48 GB, 864 GB/s, PCIe Gen4, no NVLink; H100 NVL 94 GB, 3.9 TB/s, 600 GB/s NVLink bridge.
 
 *KV per token* = 2 × layers × KV heads × head_dim × bytes, from `config.json`:
 - dense 32B-class GQA (64 layers, 8 heads, 128): **256 KiB** BF16, 128 KiB FP8, so 0.59 GB per 4.5k sequence;
@@ -252,7 +252,7 @@ if __name__ == "__main__":
     sys.exit(1 if errs else 0)
 ```
 
-Passing this gate starts a **second** one: the in-enclave eval on the real golden set, which staging can never see. For a custom-code model, the reviewed `.py` files travel as listed bundle files and are never fetched from a hub.
+Passing it starts the **second** gate: the in-enclave eval on the real golden set, which staging never sees. A custom-code model's reviewed `.py` files travel as listed bundle files, never fetched from a hub.
 
 ## 8. Evaluation plan
 
@@ -273,22 +273,21 @@ Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (600 question
 | Staging enclave | None | Yes | Yes | Acceptable only while it never holds customer data |
 | Requested internet search | Yes | Yes | Would be added | Completes the trifecta (see curveballs) |
 
-**Threats and controls.** Malicious weights or loader code: safetensors only, reviewed and vendored `trust_remote_code`. Tampering or replay: signature, hashes, anti-rollback. Insider promotion: HSM, two-person rule, verifier-only admission. Document injection: spotlighting, no tools. ACL leakage: query-time group filter. PII in logs: gateway masking. Python supply chain: internal mirror with pinned hashes. Driver and engine CVEs: patched through the same signed pipeline.
+**Threats and controls.** Malicious weights or loader code: safetensors only, vendored and reviewed `trust_remote_code`. Tampering or replay: signature, hashes, anti-rollback. Insider promotion: HSM, two-person rule, verifier-only admission. Document injection: spotlighting, no tools. ACL leakage: query-time filter. PII in logs: gateway masking. Package supply chain: internal mirror, pinned hashes. Driver/engine CVEs: same signed pipeline.
 
 | Obligation | Control | Evidence |
 |---|---|---|
-| UCB Cyber Directions para 91 / 92 | IS-audit review per release class; synthetic data only in staging | Review minutes; data-flow diagram |
+| UCB Cyber Directions paras 91/92 | IS-audit review per release class; staging holds synthetic data only | Minutes; data-flow diagram |
 | Paras 56–57, 146 | Diode preferred; any media whitelisted, scanned, logged | Media register |
-| Para 88 + CERT-In 6 hours | AI incidents in the cyber runbook | Tabletop record |
-| Outsourcing Directions 2025 | AMC contract with audit, RBI-inspection, data-location and incident clauses | Contract, due-diligence file |
-| DPDP s.8(5), Rules 6–7 | Encryption, RBAC, 1-year access logs, 72-hour Board runbook | Configs, runbook |
-| CERT-In 2022 logs/NTP | In-DC log store; NIC-traceable time | Config export |
-| FREE-AI Recs 14, 16, 20, 21, 23, 24 | Policy annexe, drift canary, red team, fallback drill, inventory, audit pack | Inventory record, drill logs |
-| Licences | Import screen; `licence_approved_by` in manifest | AIBOM per bundle |
+| Para 88; CERT-In 6 hours, 180-day logs, NTP | AI incidents in the cyber runbook; in-DC logs; NIC time | Tabletop record; config |
+| Outsourcing Directions 2025 | AMC contract: audit, RBI inspection, data location, incidents | Contract, due diligence |
+| DPDP s.8(5), Rules 6–7 | Encryption, RBAC, 1-year logs, 72-hour runbook | Configs, runbook |
+| FREE-AI Recs 14, 16, 20, 21, 23, 24 | Policy annexe, canary, red team, fallback drill, inventory, audit pack | Inventory, drill logs |
+| Licences | Import screen; approver in manifest | AIBOM per bundle |
 
 ## 10. Operations and cost model
 
-**SLOs.** 99.5% in branch hours; p95 TTFT ≤ 3 s; summary p90 ≤ 30 min; canary within 2 points of the release baseline. **Observability:** OTel GenAI spans (the conventions are still at Development status, so pin the version), DCGM, KV utilisation, preemptions, queue depth, per-language abstention, and the model digest on every trace.
+**SLOs.** 99.5% in branch hours; p95 TTFT ≤ 3 s; summary p90 ≤ 30 min; canary within 2 points of release baseline. **Observability:** OTel GenAI spans (conventions still at Development status, so pin the version), DCGM, KV utilisation, preemptions, queue depth, per-language abstention, model digest on every trace.
 
 **Cost (illustrative bands; get OEM quotes).**
 
@@ -318,7 +317,7 @@ At about 4M answers a year that is **₹20–47 per answer**, against USD 0.0006
 
 ## 12. Deliverables and grading rubric
 
-**Checklist.** Discovery memo; SOW; data-readiness scorecard; 6 ADRs with capacity maths; frozen eval sets; threat model; obligations map; running enclave (verifier, registry, serving, RAG, loan workflow); signed-transfer demo; fallback drill log; runbook; AIBOM; weekly status reports; a demo that shows one failure.
+**Checklist.** Memo, SOW, scorecard, 6 ADRs with capacity maths, frozen eval sets, threat model, obligations map, running enclave, signed-transfer demo, fallback drill log, runbook, AIBOM, weekly status reports, a demo showing one failure.
 
 | Dimension | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -331,31 +330,27 @@ At about 4M answers a year that is **₹20–47 per answer**, against USD 0.0006
 
 ## 13. Stretch goals
 
-Speculative decoding at the design batch; multi-LoRA (credit and compliance adapters); CycloneDX AIBOM diffs between releases; TEE attestation for the GPU host (verify hardware support); a Telugu voice front end inside the enclave.
+Speculative decoding at the design batch; multi-LoRA adapters; CycloneDX AIBOM diffs; TEE attestation for the GPU host (verify hardware support); Telugu voice input in the enclave.
 
 ## 14. Curriculum map
 
-| Turns | How exercised |
+| Turns (from topics135) | How exercised |
 |---|---|
-| 1 Tokenization Algorithms; 41 Multilingual Prompting | Telugu fertility, Romanised queries |
-| 7 Mixture of Experts; 27 Pipeline and Expert Parallelism for Serving | Memory by total parameters; TP vs replicas |
-| 29 PagedAttention and Serving Engines; 30 Quantisation Formats in Depth; 31 Prefix Caching; 33 Accelerator Landscape and Capacity Planning | KV maths, FP8, L40S vs H100 NVL |
-| 42 Document Parsing; 48 Embedding-Model Selection; 49 RAG Evaluation Tooling; 50 Named Vector Databases; 52 Data Lineage and Deletion in RAG | Scans, multilingual retrieval, supersession |
-| 74 OWASP Top 10 for LLM Apps; 75 Jailbreaks and Red-Teaming; 77 Model Supply Chain; 78 PII Detection and DLP | Injection, signing, AIBOM, masking |
-| 81 Privacy Law (DPDP); 82 Sector Compliance | DPDP Rules, RBI directions, FREE-AI |
-| 87 Model Upgrades; 88 Canary Releases; 90 SLOs and Incident Response; 91 LLM FinOps | Telugu upgrade, 6-hour reporting, cost per answer |
-| 92 On-Prem, Air-Gapped and Sovereign Deployment; 93 IaC for AI Stacks; 94 Provider Failover and DR | The core of the project |
-| 96 Observability Tools; 97 Evaluation Tools; 102 Model Provider Landscape; 134 Sovereign AI and Open-Weight Ecosystems | OTel/DCGM, Inspect, licences, Sarvam |
-| 109–116 FDE practice | Discovery, ROI, POC→production, ADRs, demos, adoption, data readiness, SOW |
+| 1 Tokenization Algorithms · 41 Multilingual Prompting · 42 Document Parsing and Ingestion | Telugu fertility and Romanised queries; scans and legacy fonts |
+| 7 Mixture of Experts · 27 Pipeline and Expert Parallelism for Serving · 29 PagedAttention and Serving Engines · 30 Quantisation Formats in Depth · 31 Prefix Caching · 33 Accelerator Landscape and Capacity Planning | KV and throughput maths, FP8, TP vs replicas, L40S vs H100 NVL |
+| 48 Embedding-Model Selection · 49 RAG Evaluation Tooling · 50 Named Vector Databases · 52 Data Lineage and Deletion in RAG | Multilingual retrieval bake-off; supersession |
+| 74 OWASP Top 10 for LLM Apps · 75 Jailbreaks and Red-Teaming · 77 Model Supply Chain · 78 PII Detection and DLP · 81 Privacy Law (DPDP) · 82 Sector Compliance | Injection, signing, AIBOM, masking; DPDP, RBI, FREE-AI |
+| 87 Model Upgrades · 88 Canary Releases · 90 SLOs and Incident Response · 91 LLM FinOps · 92 On-Prem, Air-Gapped and Sovereign · 93 IaC for AI Stacks · 94 Failover and DR · 96 Observability Tools · 97 Evaluation Tools · 102 Model Provider Landscape · 134 Sovereign AI and Open-Weight Ecosystems | The platform core: pipeline, upgrades, DR, cost, licences |
+| 109–116 FDE practice (discovery, ROI, POC→production, ADRs, demos, adoption, data readiness, SOW) | Every phase artefact |
 
-**New/gap topics exercised:** prompt-injection-resistant architectures and the lethal-trifecta rule (gap #8); KV-cache capacity and tiering (#16); web-search APIs, examined and declined (#19); orchestration-layer supply-chain attacks (#1).
+**New/gap topics exercised:** prompt-injection-resistant architectures and the lethal trifecta (gap #8); KV-cache capacity (#16); web-search APIs, examined and declined (#19); orchestration-layer supply-chain attacks (#1).
 
 ## 15. What reviewers look for / common failure modes
 
-- **Hardware bought before the bake-off.** The model's KV footprint decides the GPU.
-- **Averages that hide Telugu.** Every quality and quantisation claim needs a language slice.
-- **A leaky air gap.** Examples: pip install at start-up, hub fetches for `trust_remote_code`, internet NTP, a UI loading remote images.
-- **Signatures without gates.** The eval report must be bound to the weight digest.
-- **Summaries that do arithmetic.** FOIR and DSCR belong in code.
-- **Law from memory.** FREE-AI is a report, DPDP's core rules start in 2027, and no-egress is Board policy. Say which is which.
-- **No fallback.** Without retrieval-only mode, a GPU fault becomes an outage.
+- **Hardware bought before the bake-off**: the model's KV footprint decides the GPU.
+- **Averages that hide Telugu**: every quality and quantisation claim needs a language slice.
+- **A leaky air gap**: pip installs at start-up, hub fetches for `trust_remote_code`, internet NTP, remote images in the UI.
+- **Signatures without gates**: bind the eval report to the weight digest.
+- **Summaries that do arithmetic**: FOIR/DSCR belong in code.
+- **Law from memory**: FREE-AI is a report, DPDP's core rules start in 2027, no-egress is Board policy.
+- **No fallback**: without retrieval-only mode, a GPU fault is an outage.
