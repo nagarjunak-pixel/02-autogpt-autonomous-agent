@@ -300,7 +300,7 @@ Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (600 question
 | People | 2–3 FTE | 40–90 lakh |
 | **Total** | | **≈ ₹0.8–1.9 crore** |
 
-About 4M answers a year works out to **₹20–45 per answer** if Q&A carries everything. A hosted API would cost USD 0.0006–0.02 per answer at 2026 price bands (prices change). Tell the Board plainly that sovereignty, not unit cost, justifies the platform. Unit cost falls only when more use cases share the GPUs, and productivity gains must be measured in the pilot.
+At about 4M answers a year that is **₹20–47 per answer**, against USD 0.0006–0.02 through a hosted API at 2026 price bands (prices change). Tell the Board that sovereignty, not unit cost, justifies the platform. Unit cost falls as more use cases share the GPUs, and productivity gains must be measured in the pilot.
 
 **Runbook.** GPU loss: surviving replica serves, and Q&A pre-empts summaries. KV saturation: cap context, pause summaries. Verifier rejection: a security incident until explained. Canary regression: roll back to the previous digest. HSM or diode down: freeze promotions. Key rotation: annual, with a dual-signed overlap bundle.
 
@@ -310,11 +310,11 @@ About 4M answers a year works out to **₹20–45 per answer** if Q&A carries ev
 
 | When | Event | Strong FDE response |
 |---|---|---|
-| Week 5 | **GPU budget halved** | Re-run the capacity table with the bake-off winner. Prefer a small-KV MoE and FP8 KV cache, cap context at 6k, move summaries to 18:00–08:00, and put DR on retrieval-only with CRO sign-off, all in an ADR. Keep the eval gate and verifier. Show the new latency numbers before agreeing. |
-| Week 7 | **Licence review flags acceptable-use terms.** The Llama 4 AUP bars "unauthorized or unlicensed practice of any profession including … financial"; Mistral Medium 3.5 excludes companies above USD 20M monthly revenue | Freeze the candidate in quarantine and get Legal's written reading; do not argue law as an engineer. Fall back to the next Apache-2.0 finalist. Add `licence_id`, licence hash and approver to the manifest, and automate the screen. |
-| Week 9 | **Branch asks for internet search** | Explain the trifecta and the Board's no-egress policy. Offer curated weekly ingestion of public RBI/NPCI updates through the diode, or a separate internet assistant with no internal data. The product decision belongs to the CGM. |
-| Week 10 | **Auditor asks for model provenance** for one loan summary | Walk the chain: trace ID → model digest → registry → signed manifest → AIBOM → staging and enclave eval reports → approvals → hub commit and download hash. Report any missing link and fix the pipeline. |
-| Week 12 | **New model is +8 points on Telugu** | Put it through the full pipeline: quarantine, licence, bake-off with EN/HI non-regression, new KV maths, signed bundle, diode, verifier, held-out eval, one-zone canary, then rollout with rollback ready. No USB shortcut. |
+| Week 5 | **GPU budget halved** | Re-run the capacity table. Prefer a small-KV MoE and FP8 KV, cap context at 6k, move summaries to 18:00–08:00, and put DR on retrieval-only with CRO sign-off, recorded in an ADR. Keep the gates, and show the new latency before agreeing. |
+| Week 7 | **Licence review flags acceptable-use terms.** The Llama 4 AUP bars "unauthorized or unlicensed practice of any profession including … financial"; Mistral Medium 3.5 excludes companies above USD 20M monthly revenue | Quarantine the candidate and get Legal's written reading; do not argue law as an engineer. Fall back to the next Apache-2.0 finalist. Add licence ID, hash and approver to the manifest and automate the screen. |
+| Week 9 | **Branch asks for internet search** | Explain the trifecta and the Board's no-egress policy. Offer curated RBI/NPCI updates through the diode, or a separate internet assistant with no internal data. The CGM owns the decision. |
+| Week 10 | **Auditor asks for model provenance** for one loan summary | Walk the chain: trace ID → model digest → registry → signed manifest → AIBOM → eval reports → approvals → hub commit and download hash. Report any gap and fix the pipeline. |
+| Week 12 | **New model +8 points on Telugu** | Run the full pipeline: quarantine, licence, bake-off with EN/HI non-regression, new KV maths, signed bundle, diode, verifier, held-out eval, one-zone canary, rollout with rollback ready. No USB shortcut. |
 
 ## 12. Deliverables and grading rubric
 
