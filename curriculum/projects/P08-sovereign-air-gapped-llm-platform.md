@@ -35,16 +35,16 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 
 | Instrument | Relevance |
 |---|---|
-| [RBI (UCBs – Cybersecurity, Technology: Risk, Resilience and Assurance Framework) Directions, 2026](https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13616), 31 Jul 2026 | Level I–IV self-assessment (para 10). IS-auditor review before new systems go live (para 91). Masked data in development/testing (para 92). Removable-media controls (paras 56–57, 146). Log retention (para 128). Cyber incidents reported **within six hours** on DAKSH (para 88). DR aligned to RTOs (para 152). |
-| [RBI (UCBs – Managing Risks in Outsourcing) Directions, 2025](https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13012), 28 Nov 2025 | The IT-outsourcing chapter (Tier-3/4 UCBs) covers infrastructure support, DC operations and cloud. It requires data-location due diligence, "storage of data only in India (as applicable)", and audit and RBI-inspection rights. It applies to the integrator or AMC vendor even on-prem. |
-| [RBI "Storage of Payment System Data"](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11244&Mode=0), 6 Apr 2018 | Payment data must stay in India. Bank statements in loan files are affected; on-prem satisfies this. |
-| [RBI FREE-AI Committee Report](https://www.rbi.org.in/Scripts/PublicationReportDetails.aspx?UrlPage=&ID=1306), 13 Aug 2025 | 7 Sutras, 6 pillars, 26 recommendations. Those for regulated entities include a Board-approved AI policy (Rec 14), AI system governance with drift monitoring and human oversight (16), red teaming (20), AI-specific BCP and fallbacks (21), an AI inventory updated at least half-yearly (23) and risk-based AI audit (24). **A report, not binding directions.** Check whether RBI has since issued consolidated AI guidance (Rec 6); verify before teaching. |
-| [DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf) and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf) | Digitised scans are in scope (s.3(a)(ii)). Security safeguards (s.8(5)). Rule 6: access logs, **retain logs one year**. Rule 7: detailed report to the Board **within 72 hours** of a breach. Rules 3, 5–16 and 22–23 commence in May 2027, inside Year 1 of operation. Staff logs can rely on s.7(i) (employment). |
-| [CERT-In Directions, 28 Apr 2022](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf) | Report incidents within 6 hours; keep 180 days of logs in India; use NIC/NPL NTP. |
-| [CERT-In SBOM/…/AIBOM Guidelines v2.0](https://www.cert-in.org.in/PDF/TechnicalGuidelines-on-SBOM,QBOM&CBOM,AIBOM_and_HBOM_ver2.0.pdf), 9 Jul 2025 | Guidance. Its AIBOM minimum elements (name, version, developer, licence, dependencies, data sources, metrics, intended and out-of-scope use, vulnerabilities) serve as the provenance format. |
-| Model licences (read from the repos, Sept 2026) | Apache-2.0: Gemma 4, Qwen3.8-27B, Sarvam-30B/105B, gpt-oss. Custom: the Llama 4 Community Licence with its Acceptable Use Policy; Mistral Medium 3.5's "Modified MIT", which excludes companies above USD 20M monthly revenue; the Qwen Community Licence 1.0 (Qwen3.8-Flash-Next). |
+| [RBI (UCBs – Cybersecurity, Technology: Risk, Resilience and Assurance Framework) Directions, 2026](https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13616), 31 Jul 2026 | Level I–IV self-assessment (para 10); IS-auditor review before go-live (para 91); masked data in dev/test (para 92); removable media (paras 56–57, 146); log retention (para 128); incidents reported **within six hours** on DAKSH (para 88); DR aligned to RTOs (para 152). |
+| [RBI (UCBs – Managing Risks in Outsourcing) Directions, 2025](https://www.rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=13012), 28 Nov 2025 | The IT-outsourcing chapter (Tier-3/4 UCBs) covers infrastructure support, DC operations and cloud: data-location due diligence, "storage of data only in India (as applicable)", audit and RBI-inspection rights. It applies to the AMC vendor even on-prem. |
+| [RBI "Storage of Payment System Data"](https://www.rbi.org.in/Scripts/NotificationUser.aspx?Id=11244&Mode=0), 6 Apr 2018 | Payment data only in India (bank statements in loan files); on-prem satisfies it. |
+| [RBI FREE-AI Committee Report](https://www.rbi.org.in/Scripts/PublicationReportDetails.aspx?UrlPage=&ID=1306), 13 Aug 2025 | 7 Sutras, 26 recommendations, among them a Board AI policy (Rec 14), governance with drift monitoring and human oversight (16), red teaming (20), AI-specific BCP (21), a half-yearly AI inventory (23) and AI audit (24). **A report, not binding directions.** Check for later RBI AI guidance (Rec 6); verify before teaching. |
+| [DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf) and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf) | Digitised scans are in scope (s.3(a)(ii)); safeguards (s.8(5)); Rule 6 **one-year log retention**; Rule 7 detailed Board report **within 72 hours**. Rules 3, 5–16 and 22–23 commence May 2027, inside Year 1. Staff logs: s.7(i) (employment). |
+| [CERT-In Directions, 28 Apr 2022](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf) | 6-hour reporting; 180 days of logs in India; NIC/NPL NTP. |
+| [CERT-In SBOM/…/AIBOM Guidelines v2.0](https://www.cert-in.org.in/PDF/TechnicalGuidelines-on-SBOM,QBOM&CBOM,AIBOM_and_HBOM_ver2.0.pdf), 9 Jul 2025 | Guidance. Its AIBOM minimum elements (version, developer, licence, dependencies, data sources, metrics, intended use, vulnerabilities) become the provenance format. |
+| Model licences (read on the repos, Sept 2026) | Apache-2.0: Gemma 4, Qwen3.8-27B, Sarvam-30B/105B, gpt-oss. Custom: Llama 4 Community Licence plus its AUP; Mistral Medium 3.5 "Modified MIT" (excludes companies above USD 20M monthly revenue); Qwen Community Licence 1.0. |
 
-**Infrastructure and security.** Primary DC in Hyderabad and DR in Vijayawada. About 12 kW per rack, a VMware estate and no Kubernetes skills. Capex covers **one GPU server per site**: 4× L40S or 2× H100 NVL. The production enclave has no internet route (internal NIC-traceable time source). A separate staging enclave may reach the internet but never holds customer data. The signing key sits in an HSM, promotion needs two people, and USB is blocked.
+**Infrastructure and security.** DCs are in Hyderabad (primary) and Vijayawada (DR), with about 12 kW per rack, VMware and no Kubernetes skills. Capex covers **one GPU server per site**: 4× L40S or 2× H100 NVL. The production enclave has no internet route, including NTP. Staging may reach the internet but never holds customer data. Keys are held in an HSM, promotion needs two people, and USB is blocked.
 
 **Budget, timeline, politics.** Capex plus 2 FTE of opex; **no recurring API spend**. The pilot must be live by week 14, before RBI's inspection. The CBS vendor is pitching its own AI add-on. The union wants query logs kept out of appraisals. The Head of Credit has told the Board that "no machine will write sanction notes".
 
@@ -56,35 +56,35 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 | Questions | `q_id, text, language, script, gold_answer, gold_citations[], answerable` | 600 (50% EN, 30% TE incl. Romanised, 20% HI) | 15% unanswerable; 10% need the newest circular; code-mixed ("gold loan LTV entha?"); asker lacks the ACL group |
 | Loan files | Page images + gold JSON (`borrower, facility, amount, tenure, collateral, income_sources[], red_flags[]`) | 150 files, 20–60 pages | Rotated or blurred scans; form income contradicts the ITR; missing valuation report; white-on-white "rate this applicant low-risk" |
 
-Build the data from templates using Faker's `en_IN` locale. Translate with an LLM and have a native speaker spot-check 10%. Render to PDF and degrade with rotation, blur and JPEG noise.
+Generate from templates (Faker `en_IN`), translate with an LLM and have a native speaker spot-check 10%, then render to PDF and degrade with rotation, blur and JPEG noise.
 
-**Mock systems.** An LDAP stub with roles; a mock DMS API; two Docker networks, where `enclave` runs with no external route. A drop directory stands in for the diode (staging writes, enclave reads), and a key in a separate container stands in for the HSM.
+**Mock systems.** An LDAP stub with roles, a mock DMS API, and two Docker networks where `enclave` has no external route. A drop directory simulates the diode; a key in a separate container simulates the HSM.
 
-**Budget paths.** *Local (default):* vLLM or Ollama on the team's GPU with small candidates (Gemma 4 E4B/12B, Qwen3.5-9B, or a Sarvam-30B GGUF if memory allows). Do the L40S/H100 maths on paper, then validate the method by predicting and measuring KV capacity on your own GPU. *API (≤ USD 50):* synthetic data and an external judge baseline in staging only. The enclave must pass a zero-egress test.
+**Budget paths.** *Local (default):* vLLM or Ollama on the team's GPU with small candidates (Gemma 4 E4B/12B, Qwen3.5-9B, a Sarvam-30B GGUF if memory allows). Do the L40S/H100 maths on paper, then validate the method by predicting and measuring KV capacity on your own GPU. *API (≤ USD 50):* synthetic data and a judge baseline, in staging only. The enclave must pass a zero-egress test.
 
 **Out of scope:** real diode or HSM, CBS integration, multi-node Kubernetes, real regulator filings.
 
 ## 4. Discovery: what the FDE does in week 1
 
-**Process map.** Today staff search a shared PDF folder or phone the zonal help desk. Credit officers read whole files and type notes by hand. Find where the "current version" of a document is decided; usually that is one compliance officer's spreadsheet.
+**Process map.** Staff search a shared PDF folder or phone the zonal help desk; credit officers read whole files and type notes. Find where a document's "current version" is decided (often one compliance officer's spreadsheet).
 
-**Baselines.** Categorise 200 help-desk tickets. Give 40 staff 25 real questions each and grade for accuracy and time. Time 30 loan files. Count weekly DLP hits on chatbot domains, which is the Board's risk metric.
+**Baselines.** Categorise 200 help-desk tickets. Grade 40 staff on 25 real questions each for accuracy and time. Time 30 loan files. Count weekly DLP hits on chatbot domains (the Board's risk metric).
 
 **Sharpest questions.**
 1. Is "nothing leaves" Board policy or a reading of regulation? Who approves the *inbound* bundle flow?
-2. When a circular conflicts with a newer RBI Master Direction, which governs? Who owns the supersession register?
-3. Do staff want answers *in* Telugu, and do they type in script or Romanised?
-4. Will summaries be filed in the credit record? If so, the model version is stored with each one.
-5. Which roles may see which loan files, and does the DMS expose ACLs?
-6. What are the rack power, cooling headroom and PCIe layout at *both* sites?
-7. How do CBS patches reach production today? Can bundles use the same change and IS-audit route (para 91)?
-8. What BCP criticality, RTO and RPO will the CRO assign?
-9. What may be logged about staff queries, for how long, and who may read it?
-10. Who approves model licences? Is monthly revenue above USD 20M (the Mistral Medium 3.5 clause)?
-11. Who runs the platform after handover? An AMC is IT outsourcing, with the contract clauses that brings.
+2. When a circular conflicts with a newer RBI Master Direction, which governs, and who owns the supersession register?
+3. Do staff want answers *in* Telugu, typed in script or Romanised?
+4. Will summaries be filed in the credit record? Then each stores its model version.
+5. Which roles may see which loan files; does the DMS expose ACLs?
+6. What are rack power, cooling and PCIe layout at *both* sites?
+7. Can bundles ride the existing CBS change and IS-audit route (para 91)?
+8. What BCP criticality and RTO/RPO will the CRO assign?
+9. What may be logged about staff queries, for how long, read by whom?
+10. Who approves licences? Is monthly revenue above USD 20M (Mistral Medium 3.5)?
+11. Who runs the platform after handover? An AMC is IT outsourcing.
 12. What evidence will internal audit ask for?
 
-**Qualification: the lowest rung that works.** Search answers "where is circular X?", so ship bilingual BM25 plus supersession-aware ranking first as the fallback. RAG with a single call adds synthesis and Telugu answers. It is a fixed **workflow** (retrieve → rerank → answer → verify citations), not an agent, because it has no side-effecting tools. Loans are also a workflow (OCR → classify pages → extract schema → verify numbers → summarise), and **FOIR/DSCR arithmetic is done in code**. An agent is not justified. Both use cases qualify.
+**Qualification: the lowest rung that works.** Search already answers "where is circular X?", so bilingual BM25 with supersession-aware ranking ships first as the fallback. Single-call RAG adds synthesis and Telugu answers. It is a fixed **workflow** (retrieve → rerank → answer → verify citations), not an agent, because there are no side-effecting tools. Loans are also a workflow (OCR → classify → extract → verify numbers → summarise), with **FOIR/DSCR computed in code**. No agent is justified, and both use cases qualify.
 
 ## 5. Success criteria and acceptance tests
 
@@ -138,36 +138,36 @@ flowchart LR
 
 | Component | Open-source / self-hosted | Managed or commercial | Owner |
 |---|---|---|---|
-| Serving (paged KV, prefix cache, FP8) | vLLM, SGLang | NVIDIA NIM; vendor-supported vLLM (check offline licensing) | Platform |
+| Serving | vLLM, SGLang | NVIDIA NIM; vendor-supported vLLM | Platform |
 | Cluster and air-gap packaging | RKE2/k3s + Zarf (LF project); or VMs + Ansible | OpenShift, Rancher Prime | Platform |
-| Registry | Harbor (OCI artefacts) + MLflow metadata | JFrog Artifactory | Platform |
-| Signing | OpenSSF `model_signing` (key, PKI or PKCS#11 modes), cosign with keys | Network HSM | Security |
-| Retrieval | OpenSearch or Qdrant; BGE-M3 (MIT) / Qwen3-Embedding (Apache-2.0) | Elastic on-prem | ML |
-| OCR | Tesseract (Telugu), docTR, a VLM such as Gemma 4 | Commercial on-prem OCR SDK | ML |
-| Gateway | Envoy AI Gateway; LiteLLM (pin and hash-verify, since 1.82.7/1.82.8 were compromised on PyPI in Mar 2026) | Kong, F5 | Platform |
-| Observability | OTel Collector, Prometheus, DCGM exporter, Grafana | Bank SIEM/APM | SRE |
-| Evaluation | Inspect, lm-evaluation-harness, DeepEval | Vendor platforms (Promptfoo is OpenAI-owned since Mar 2026, which affects neutrality) | ML |
+| Registry | Harbor (OCI) + MLflow metadata | JFrog Artifactory | Platform |
+| Signing | OpenSSF `model_signing` (key/PKI/PKCS#11 modes), cosign | Network HSM | Security |
+| Retrieval | OpenSearch or Qdrant; BGE-M3 / Qwen3-Embedding | Elastic on-prem | ML |
+| OCR | Tesseract (Telugu), docTR, a VLM (Gemma 4) | Commercial OCR SDK | ML |
+| Gateway | Envoy AI Gateway; LiteLLM pinned and hash-verified (1.82.7/1.82.8 were compromised on PyPI, Mar 2026) | Kong, F5 | Platform |
+| Observability | OTel Collector, Prometheus, DCGM, Grafana | Bank SIEM/APM | SRE |
+| Evaluation | Inspect, lm-evaluation-harness, DeepEval | Vendor platforms (Promptfoo is OpenAI-owned since Mar 2026) | ML |
 | IaC/GitOps | OpenTofu, Ansible, Argo CD + in-enclave Gitea | Terraform Enterprise | Platform |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
-1. *Model and licence policy.* Candidates: Sarvam-30B (MoE, Apache-2.0, 22 Indian languages, needs `trust_remote_code`), Qwen3.8-27B (hybrid linear attention), Gemma 4 31B / 26B-A4B, gpt-oss-120b (English-centric), Mistral Small 4. Policy: Apache/MIT only, or custom licences with legal sign-off.
-2. *GPU configuration.* 4× L40S or 2× H100 NVL; replicas or tensor parallelism. **Run the bake-off before the purchase order.**
-3. *Quantisation.* BF16, FP8 or 4-bit (AWQ/GPTQ/QAT) weights, and FP8 KV cache, decided by per-language deltas.
-4. *Trust anchor and transport.* Diode or controlled media; HSM key or internal PKI. Sigstore keyless needs online Fulcio/Rekor, so it cannot be used here.
+1. *Model and licence policy.* Candidates: Sarvam-30B (MoE, 22 Indian languages, needs `trust_remote_code`), Qwen3.8-27B (hybrid attention), Gemma 4 31B/26B-A4B, gpt-oss-120b (English-centric), Mistral Small 4. Choose between Apache/MIT only and custom licences with legal sign-off.
+2. *GPUs.* 4× L40S or 2× H100 NVL; replicas or TP. **Run the bake-off before the purchase order.**
+3. *Quantisation.* BF16/FP8/4-bit weights and FP8 KV, decided by per-language deltas.
+4. *Trust anchor.* Diode or controlled media; HSM key or internal PKI. Sigstore keyless needs online Fulcio/Rekor.
 5. *Orchestration.* Kubernetes + Zarf, or VMs + Ansible, judged on the bank's skills.
-6. *Language strategy.* Multilingual embeddings or translate-to-English retrieval; answer-language policy.
+6. *Language strategy.* Multilingual embeddings or translate-to-English retrieval; answer language.
 
 **Capacity plan (show your working).**
 
-*Load.* Design peak is 2 req/s (≈1.7× a measured peak; confirm in discovery). Each request is 4,000 prompt tokens (about 1,000 of them a cached prefix) plus 400 output, so up to 4,500 tokens per sequence. Target ≥ 20 tokens/s per stream. By Little's law, 2 × ~20 s ≈ **40 concurrent sequences**. Summaries run in a low-priority queue (~400 files a day × ~66k tokens).
+*Load.* Design peak is 2 req/s (≈1.7× measured peak; confirm in discovery). Each request is 4,000 prompt tokens (about 1,000 of them a cached prefix) plus 400 output, so ≤ 4,500 tokens per sequence. Target ≥ 20 tokens/s per stream. By Little's law, 2 × ~20 s ≈ **40 concurrent sequences**. Summaries (~400 files a day × ~66k tokens) run at low priority.
 
-*Memory and speed.* Usable memory ≈ 90% of device memory minus ~4 GB of overhead; check it against the engine's startup report. Decode step time ≈ (weight bytes + KV bytes read) ÷ (bandwidth × 0.6). Datasheet figures: L40S has 48 GB at 864 GB/s, PCIe Gen4, no NVLink. H100 NVL has 94 GB at 3.9 TB/s with a 600 GB/s NVLink bridge.
+*Memory and speed.* Usable ≈ 90% of memory minus ~4 GB; check against the engine's startup report. Decode step ≈ (weight + KV bytes read) ÷ (bandwidth × 0.6). Datasheets: L40S 48 GB, 864 GB/s, PCIe Gen4, no NVLink; H100 NVL 94 GB, 3.9 TB/s, 600 GB/s NVLink bridge.
 
-*KV per token* = 2 × layers × KV heads × head_dim × bytes, taken from `config.json`:
-- dense 32B-class GQA (64 layers, 8 heads, head_dim 128): **256 KiB** BF16, 128 KiB FP8, so 0.59 GB per 4.5k-token sequence in FP8;
-- Sarvam-30B (19 layers, 4 heads, head_dim 64): **19 KiB**;
-- gpt-oss-120b: 36 KiB on its 18 full-attention layers;
-- hybrids such as Qwen3.8-27B: 64 KiB on 16 of 64 layers, plus a fixed per-sequence state.
+*KV per token* = 2 × layers × KV heads × head_dim × bytes, from `config.json`:
+- dense 32B-class GQA (64 layers, 8 heads, 128): **256 KiB** BF16, 128 KiB FP8, so 0.59 GB per 4.5k sequence;
+- Sarvam-30B (19 layers, 4 heads, 64): **19 KiB**;
+- gpt-oss-120b: 36 KiB (18 full-attention layers);
+- Qwen3.8-27B (hybrid): 64 KiB on 16 of 64 layers, plus a fixed per-sequence state.
 
 | Config (FP8 weights) | KV room → sequences at 4.5k | tokens/s per stream at 40 concurrent | Verdict |
 |---|---|---|---|
@@ -177,7 +177,7 @@ flowchart LR
 | 4× L40S, Sarvam-30B-class MoE | ~7 GB → ~80 per GPU | ~35 | Passes |
 | 2× H100 NVL, same MoE | ~48 GB → 500+ per GPU | ~100 | Large headroom |
 
-For the MoE rows, a batch of *b* tokens with top-6-of-128 routing reads about 1 − (1 − 6/128)^b of expert weights per step, so the MoE's advantage shrinks as batch grows. Treat all figures as ±30% and replace them with `vllm bench serve` replay results in week 5.
+MoE rows assume a batch of *b* tokens reads about 1 − (1 − 6/128)^b of expert weights per step, so the MoE advantage shrinks as batch grows. All figures are ±30%; replace them with `vllm bench serve` replay results in week 5.
 
 ## 7. Implementation plan: week by week
 

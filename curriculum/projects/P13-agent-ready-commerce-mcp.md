@@ -131,7 +131,7 @@ Saree Sutra sells sarees, lehengas, blouses and kurtas. It has about ₹250 cror
 | Latency (server side) | p95 for `search_catalog` / `get_product` / `add_to_cart` | ≤ 400 / 200 / 300 ms | Load test |
 | Cost | All-in cost per 1,000 tool calls at pilot volume | ≤ USD 0.50 | Cost dashboard |
 
-**Why these thresholds.** Facts and mandates are 100% because they are deterministic code; any miss is a defect. pass^3 ≥ 0.85 accepts that part of the flow runs in *someone else's* assistant. Hinglish parity matters because diaspora shoppers search in transliteration.
+**Why these thresholds.** Facts and mandates are 100% because they are deterministic code. pass^3 ≥ 0.85 accepts that part of the flow runs in *someone else's* assistant. Hinglish parity matters because diaspora shoppers search in transliteration.
 
 ## 6. Reference architecture
 
@@ -200,7 +200,7 @@ flowchart LR
 | **Production (12–13)** | Delegated payment only where PSP and platform confirmed (US first); crawl-policy enforcement; penetration test; runbooks | Pen test has no criticals; drills pass | Security pack ([08](templates/08-security-review-pack.md)) |
 | **Handover (14)** | Customer team runs the swarm, poisoning and spec-change drills | Drills pass without the FDE | Runbook and SLOs ([09](templates/09-runbook-slos-and-handover.md)), demo |
 
-**Code sketch (TypeScript): the `add_to_cart` tool handler.** It is library-agnostic apart from Zod and `node:crypto`, and it returns an MCP `CallToolResult`-shaped object (`content`, `structuredContent`, `isError`). Register it with your SDK's tool-registration call. The price comes from the server catalogue, never from the agent.
+**Code sketch (TypeScript): the `add_to_cart` tool handler.** Library-agnostic apart from Zod and `node:crypto`; it returns an MCP `CallToolResult`-shaped object (`content`, `structuredContent`, `isError`) to register with your SDK. Price always comes from the server catalogue, never from the agent.
 
 ```ts
 import { z } from "zod";
@@ -262,7 +262,7 @@ export async function addToCart(raw: unknown, ctx: Ctx): Promise<ToolResult> {
 }
 ```
 
-Error codes are deliberately machine-readable. `MANDATE_LIMIT_EXCEEDED` tells the assistant to go back to the *human* rather than retry, and the step-up happens in the assistant's UI, never through a tool argument.
+Error codes are machine-readable: `MANDATE_LIMIT_EXCEEDED` tells the assistant to go back to the *human*, not retry; step-up happens in the assistant's UI, never through a tool argument.
 
 ## 8. Evaluation plan
 
@@ -356,7 +356,7 @@ That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management. 
    - *Removed in 2026-07-28:* sessions. Migrate to explicit `cartId` handles.
    - *Deprecated:* Sampling (call the model directly, or better, use deterministic size rules) and Dynamic Client Registration (Client ID Metadata Documents first, DCR as fallback).
    - *Planning:* use the deprecated-features registry and the 12-month window, and write an ADR update.
-5. **Week 10: an agent attempts a purchase above the mandate.** It splits one ₹42,000 lehenga order into two carts under a ₹25,000 limit. Per-user aggregate limits plus the checkout re-check catch it, and `MANDATE_LIMIT_EXCEEDED` sends the assistant back to the human. Review the logs to separate a confused agent from an attack, and decide whether limits should also cap velocity (orders per 24 hours).
+5. **Week 10: an agent attempts a purchase above the mandate.** It splits a ₹42,000 bridal set (lehenga, blouse, dupatta) into two carts, each under a ₹25,000 limit. The sketch's per-cart check passes both; a per-mandate aggregate across open carts and orders, re-checked at checkout, catches it, and `MANDATE_LIMIT_EXCEEDED` sends the assistant back to the human. Use the logs to tell a confused agent from an attack, and decide whether limits should also cap velocity (orders per 24 hours).
 
 ## 12. Deliverables and grading rubric
 

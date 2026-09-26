@@ -48,7 +48,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 - **Accessibility** duties under the RPwD Act 2016 and the government web/app guidelines (GIGW) apply; exact clauses, and whether they reach WhatsApp and IVR, are *verify*.
 - **Election Model Code of Conduct** restrictions on government publicity during polls: current ECI instructions, including any on AI-generated content, are *verify*.
 
-**Infrastructure.** Production must be hosted in the State Data Centre or a MeitY-empanelled cloud (confirm the current empanelment). GPU procurement through GeM takes 8–12 weeks, so the early phases use managed APIs on **PII-free paths only**. Many users are on 2G/3G or feature phones.
+**Infrastructure.** Production runs in the State Data Centre (SDC) or a MeitY-empanelled cloud (confirm empanelment). GPU procurement through GeM takes 8–12 weeks, so early phases use managed APIs on **PII-free paths only**.
 
 **Budget.** The opex target is ≤ ₹3 per resolved text query and ≤ ₹8 per resolved IVR call. A human-handled call costs about ₹25–40.
 
@@ -70,12 +70,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Budget paths.**
 - **(A) API, ≤ USD 50.** Small hosted LLM, embeddings and translation. About 3,600 eval queries × 5k tokens ≈ 18M tokens fits on small models.
-- **(B) Local.**
-  - Embeddings: [bge-m3](https://huggingface.co/BAAI/bge-m3) or [multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large), with [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3).
-  - Pivot translation: [IndicTrans2](https://huggingface.co/ai4bharat/indictrans2-en-indic-1B), which covers Urdu.
-  - LLM: open weights on Ollama/vLLM, e.g. [Sarvam-30B](https://huggingface.co/sarvamai/sarvam-30b) (GGUF exists), Qwen or Gemma; measure Telugu and Urdu quality yourself.
-  - OCR: Tesseract (`tel`, `urd`, `hin`) as the baseline.
-  - Speech: [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) for ASR; [Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts) for TTS, which lists Urdu. IndicF5 and Sarvam's Bulbul v3 do **not** list Urdu as of Sept 2026, while Sarvam's Saaras v3 ASR does ([docs](https://docs.sarvam.ai/)).
+- **(B) Local.** Embeddings [bge-m3](https://huggingface.co/BAAI/bge-m3) or [multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large) with [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3); pivot translation with [IndicTrans2](https://huggingface.co/ai4bharat/indictrans2-en-indic-1B) (covers Urdu); an open-weight LLM on Ollama/vLLM, e.g. [Sarvam-30B](https://huggingface.co/sarvamai/sarvam-30b) (GGUF exists), Qwen or Gemma; Tesseract (`tel`, `urd`, `hin`) as the OCR baseline; [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) for ASR and [Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts), which lists Urdu, for TTS. IndicF5 and Sarvam's Bulbul v3 do **not** list Urdu as of Sept 2026; Sarvam's Saaras v3 ASR does ([docs](https://docs.sarvam.ai/)).
 
 **Out of scope:** a real WhatsApp number or BSP onboarding, real department data, Aadhaar/e-KYC, payments and consent-manager integration.
 
@@ -107,8 +102,8 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 | Dimension | Criterion | Threshold | Test set | Justification |
 |---|---|---|---|---|
-| Business | Scheme-info and status contacts resolved without a human (pilot districts) | ≥ 40% by pilot week 8; helpline abandonment ≤ 20% (from 38%) | Pilot in 3 districts vs 3 control districts | Status and FAQ-type questions dominate |
-| Retrieval | hit@5 per language slice | 95% CI lower bound ≥ 0.85 | ≥ 150 answerable golden queries per slice | The answer cannot be right if the GO is not retrieved |
+| Business | Scheme-info and status contacts resolved without a human | ≥ 40% by pilot week 8; abandonment ≤ 20% (from 38%) | 3 pilot vs 3 control districts | Status and FAQ questions dominate |
+| Retrieval | hit@5 per language slice | 95% CI lower bound ≥ 0.85 | ≥ 150 answerable golden queries per slice | No right answer without the right GO |
 | Faithfulness | Every claim supported by the cited GO | CI lower bound ≥ 0.93 | Same set; judge calibrated to native raters | Unsupported claims about benefits cause real harm |
 | Eligibility | Agreement with the rules engine and an officer panel | ≥ 97%; 0 determinative "you are eligible" statements | 400 synthetic applicant profiles | The officer decides; the bot only indicates |
 | Parity | hit@5 and faithfulness gap vs Telugu | Not credibly > 0.07 (bootstrap) | Golden set | Equal service across languages is the point |
@@ -168,24 +163,24 @@ flowchart LR
 | Component | Responsibility | Self-hostable | Managed | Owner |
 |---|---|---|---|---|
 | Channel gateway | WhatsApp webhooks, IVR, SMS fallback, rate limits | FastAPI + FreeSWITCH/Asterisk | WhatsApp Cloud API via BSP; CPaaS IVR/SMS | FDE → state IT |
-| Normalisation and language ID | Unicode NFC, Urdu code-point unification, Roman-script transliteration | [IndicXlit](https://huggingface.co/ai4bharat/IndicXlit), rules | BHASHINI (MeitY) transliteration/translation APIs (*verify* coverage and terms) | Applied scientist |
+| Normalisation, language ID | NFC, Urdu code-point unification, transliteration | [IndicXlit](https://huggingface.co/ai4bharat/IndicXlit), rules | BHASHINI (MeitY) APIs (*verify* coverage, terms) | Applied scientist |
 | Ingestion and OCR | Text, tables, legacy-font detection | Tesseract, VLM-based OCR | Cloud document AI (check te/ur support) | FDE |
 | Provenance gate | Signature and registry check, approvals | In-house | — | Directorate content ops |
 | Retrieval | Hybrid BM25 + dense, per-language evaluation | bge-m3/e5 + OpenSearch, Qdrant or pgvector | Hosted vector DB and embeddings | Applied scientist |
 | Translation pivot | Urdu/Hindi ↔ Telugu/English | IndicTrans2 | Sarvam translate, BHASHINI | Applied scientist |
-| LLM | Understanding, grounded simple-language answers | Open weights (Sarvam-30B, BharatGen Param-1 (*verify*), Qwen/Gemma) on vLLM | Managed APIs for PII-free paths | FDE |
+| LLM | Grounded simple-language answers | Open weights (Sarvam-30B, Qwen, Gemma) on vLLM | Managed APIs, PII-free paths only | FDE |
 | Rules engine | Indicative eligibility | Python/JSON-logic | — | Scheme officers own the rules |
-| Speech | ASR/TTS in 4 languages | IndicConformer, Indic Parler-TTS | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
+| Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam ASR / Sooktam TTS](https://huggingface.co/bharatgenai) (Hindi only; government-funded, *verify* funder) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
 | Escalation | Ticket plus context packet to humans | — | Helpline CRM | Helpline vendor |
 | Observability | OTel traces, per-language dashboards | Langfuse/Phoenix + OTel collector | APM vendors | State IT |
 
 **ADRs** ([Template 04](templates/04-solution-design-and-adr.md)):
-1. **Retrieval per language.** Options: native multilingual embeddings, pivot translation of the query to Telugu/English, or hybrid BM25 + dense with a reranker. Decide per language from the harness numbers.
-2. **Model hosting.** Managed APIs, self-hosted open weights in the SDC, or phased (managed for PII-free paths, then SDC). The criteria are sovereignty, GPU lead time and Urdu quality.
-3. **Eligibility.** A rules engine, LLM reasoning, or a hybrid where the LLM collects facts and explains while the engine decides the indicative outcome.
-4. **Corpus trust.** Open upload by district staff vs signed-registry-only ingestion with two-person approval and effective dating.
-5. **Speech stack and voice persona.** BHASHINI vs Sarvam vs self-hosted AI4Bharat vs hyperscalers. This ADR also covers synthetic-voice disclosure and the rule that no voice is cloned.
-6. **Channel strategy.** WhatsApp-first, IVR-first, or both with SMS fallback. It must weigh WhatsApp platform risk: the AI-provider clause and template approvals.
+1. **Retrieval per language:** native multilingual embeddings vs pivot translation to Telugu/English vs hybrid BM25 + dense with a reranker, decided per language from the harness.
+2. **Model hosting:** managed APIs vs open weights in the SDC vs phased, judged on sovereignty, GPU lead time and Urdu quality.
+3. **Eligibility:** rules engine vs LLM reasoning vs hybrid (the LLM collects facts and explains; the engine decides the indicative outcome).
+4. **Corpus trust:** open upload by district staff vs signed-registry-only ingestion with two-person approval and effective dating.
+5. **Speech stack and voice persona:** BHASHINI vs Sarvam vs self-hosted AI4Bharat vs hyperscalers, plus synthetic-voice disclosure and no cloning.
+6. **Channel strategy:** WhatsApp-first vs IVR-first vs both with SMS fallback, weighing the AI-provider clause and template approvals.
 
 ## 7. Implementation plan — week by week
 
@@ -253,7 +248,7 @@ def evaluate(records, k=5, floors=None, ref_lang="te", max_gap=0.07, min_n=100):
     return report, failures
 ```
 
-On a synthetic run with Urdu hit@5 at about 0.64, the harness reports a gap of about 0.28 [0.21, 0.36] against Telugu and fails the Urdu floor and parity gates. That is exactly curveball 3. Code-mixed slices with n < 100 are reported as `insufficient_n` and never passed quietly.
+On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.36] against Telugu and fails Urdu on floor and parity (curveball 3). Slices with n < 100 are reported as `insufficient_n`, never passed quietly.
 
 ## 8. Evaluation plan
 
@@ -279,8 +274,8 @@ On a synthetic run with Urdu hit@5 at about 0.64, the harness reports a gap of a
 
 | Context | Private data | Untrusted content | External channel | Design response |
 |---|---|---|---|---|
-| Grounded Q&A | **No**: no PII in context | Citizen message + corpus (possibly poisoned) | Reply to citizen | Provenance gate; links only to allow-listed government domains |
-| Status lookup | Yes (one application) | Citizen message | Reply to citizen | Deterministic tool with mobile match; **no corpus text in this context**, so a poisoned GO cannot instruct it; LLM only phrases the returned fields |
+| Grounded Q&A | **No** PII in context | Citizen message + corpus (maybe poisoned) | Reply | Provenance gate; only allow-listed government links |
+| Status lookup | Yes (one application) | Citizen message | Reply | Deterministic mobile-matched tool; **no corpus text in this context**, so a poisoned GO cannot steer it; the LLM only phrases returned fields |
 | Ingestion / OCR / VLM | No | Uploaded documents | Index (after approval) | Quarantined reader extracts typed fields; hidden text stripped; two-person approval |
 | Escalation packager | Yes | Conversation | Internal ticket | Identity and status fields come from systems, not the summary |
 
@@ -344,12 +339,9 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
    - Report within the CERT-In window if it qualifies, fix the root cause (registry-only ingestion), and run a post-mortem that does not blame the clerk.
 2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect.
    - Effective-dated rules and index entries (valid_from) let the officer approve the change once. Clear answer caches, re-run that scheme's golden set, brief agents, and publish the freshness SLO result.
-3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning:
-   - **Code points:** Arabic vs Urdu forms of *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC).
-   - **Coverage:** Roman-Urdu queries, and few Urdu source documents, so retrieval is really cross-lingual.
-   - **OCR:** poor recognition of Nastaliq script.
-
-   The fixes are normalisation, a pivot translation for retrieval with the answer returned in Urdu, BM25 hybrid search, and a curated Urdu FAQ. If needed, fine-tune the embeddings on native Urdu pairs. Report with CIs, and keep Urdu routed to Urdu-speaking agents until the gate passes.
+3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning: Arabic vs Urdu code points for *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC); Roman-Urdu queries; few Urdu source documents, so retrieval is really cross-lingual; and poor Nastaliq OCR.
+   - Fix with normalisation, pivot translation for retrieval (answering in Urdu), BM25 hybrid and a curated Urdu FAQ, then embedding fine-tuning on native pairs if needed.
+   - Report with CIs, and route Urdu to Urdu-speaking agents until the gate passes.
 4. **Week 5: a politically sensitive question during the election period.** *"Which party started this scheme; will it stop if X wins?"*
    - Give a neutral answer with only the GO facts and date: no commentary, and no promotion of new schemes under the MCC. Log it, using wording agreed with I&PR in advance.
 5. **Week 5: WhatsApp template or policy restrictions block a flow.** The "application approved" utility template is recategorised as marketing and paused, or the BSP flags the account under the AI-provider clause.
@@ -374,7 +366,6 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
 - Fine-tune the embeddings for Urdu and Tenglish (Turn 24) and show the before/after CIs.
 - Test speech-to-speech for the IVR against the cascade.
 - Build a content-ops UI where officers diff GO clauses and approve rule changes.
-- Measure multimodal RAG over income-slab tables in scanned GOs.
 
 ## 14. Curriculum map
 

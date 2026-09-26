@@ -37,14 +37,14 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 **Legal and regulatory** (as of Sept 2026). This brief assumes, as fictional facts, that Northstar is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
 - **UK MAR.** Inside information may be disclosed only "in the normal exercise of an employment, a profession or duties" ([Art. 10](https://www.legislation.gov.uk/eur/2014/596/article/10)). This matters when a target or its debt is listed.
-- **FCA SYSC 10.2 (Chinese walls).** Rule 10.2.2R permits arrangements under which information held in one part of the business is withheld from another. Rule 10.2.4R means that a firm does not "act with knowledge" when a wall keeps that knowledge out ([FCA Handbook](https://www.handbook.fca.org.uk/handbook/SYSC/10/2.html)). An agent that pools memory across deals breaks this wall.
+- **FCA SYSC 10.2 (Chinese walls).** 10.2.2R permits withholding information held in one part of the business from another; under 10.2.4R a firm does not "act with knowledge" that a wall keeps out ([FCA Handbook](https://www.handbook.fca.org.uk/handbook/SYSC/10/2.html)). An agent that pools memory across deals breaks the wall.
 - **SEBI (Prohibition of Insider Trading) Regulations, 2015** (last amended 12 Mar 2025, per [SEBI](https://www.sebi.gov.in/legal/regulations/mar-2025/securities-and-exchange-board-of-india-prohibition-of-insider-trading-regulations-2015-last-amended-on-march-12-2025-_92672.html)). These cover unpublished price-sensitive information (UPSI) for listed Indian companies. UPSI may be shared for due diligence only under conditions, and a structured digital database of recipients is required. *Verify clause numbers.*
 - **UK GDPR and DPA 2018,** as amended by the [Data (Use and Access) Act 2025](https://www.legislation.gov.uk/ukpga/2025/18/contents). Researching management teams is processing personal data, so run a legitimate-interests assessment ([ICO guidance](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/legitimate-interests/), updated 23 Mar 2026). Keep criminal and sanctions checks with vetted providers, not the agent.
 - **India DPDP Act 2023.** Section 3(c)(ii) excludes personal data made public by the data principal, or by someone legally obliged to publish it ([Act](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf)). Employee data in a VDR is in scope. Most obligations apply from 13 May 2027 under the phased Rules.
 - **Copyright.** The UK text-and-data-analysis exception covers only non-commercial research ([CDPA s.29A](https://www.legislation.gov.uk/ukpga/1988/48/section/29A)), so Northstar cannot rely on it. Quotation needs fair dealing, an extent "no more than is required", and acknowledgement ([s.30(1ZA)](https://www.legislation.gov.uk/ukpga/1988/48/section/30)). DSIT's report on copyright and AI (19 Mar 2026, [gov.uk](https://www.gov.uk/government/consultations/copyright-and-artificial-intelligence)) has not changed s.29A. In India, the July 2026 *ANI v. OpenAI* interim order is narrow; do not rely on it.
 - **Computer Misuse Act 1990, s.1.** Unauthorised access is an offence, with up to two years' imprisonment on indictment ([s.1](https://www.legislation.gov.uk/ukpga/1990/18/section/1)).
 - **Crawl and licence signals** (not statutes, but binding through contracts and reputation; treat as hard policy): robots.txt; Cloudflare [Content Signals](https://blog.cloudflare.com/content-signals-policy/) (24 Sep 2025: `search`, `ai-input`, `ai-train`); Cloudflare [pay-per-crawl](https://blog.cloudflare.com/introducing-pay-per-crawl/) (1 Jul 2025, private beta; HTTP 402 with `crawler-price`, Web Bot Auth signatures); [RSL 1.0](https://rslstandard.org/press/rsl-1-specification-2025) (10 Dec 2025); and IETF [aipref](https://datatracker.ietf.org/wg/aipref/about/), still a draft ([vocab-08](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/), 14 Sep 2026; not an RFC; the 31 Aug 2026 IESG milestone has passed).
-- **Search-API terms.** Bing Search APIs were [retired on 11 Aug 2025](https://learn.microsoft.com/en-us/lifecycle/announcements/bing-search-api-retirement). Google's Custom Search JSON API is [closed to new customers](https://developers.google.com/custom-search/v1/overview), and existing customers have until 1 Jan 2027. Brave requires a plan with explicit storage rights before you may store results ([Brave](https://brave.com/search/api/)).
+- **Search-API terms.** Bing Search APIs were [retired on 11 Aug 2025](https://learn.microsoft.com/en-us/lifecycle/announcements/bing-search-api-retirement); Google's Custom Search JSON API is [closed to new customers](https://developers.google.com/custom-search/v1/overview) (existing customers until 1 Jan 2027); Brave requires a plan with explicit storage rights to store results ([Brave](https://brave.com/search/api/)).
 
 **Data:** VDR content is under NDAs that differ on sub-processors and "return or destroy". Documents include scans, Excel models and Hindi or Marathi files, with conflicting versions. Licensed market data and expert-call transcripts often restrict AI processing, storage or quotation.
 
@@ -101,10 +101,9 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 - **Registry lookups** (Companies House, Indian MCA filings) are plain API calls.
 - **VDR financial tables** need parsing plus single-call schema extraction with reconciliation rules.
 - **Section prose** is written by single-call generation over a verified fact table.
-- **Market and competitor research** is open-ended and spans many sources, so a *bounded* agentic search loop is justified. It runs inside a fixed workflow with budgets and stopping rules.
-- **No agent logs in, sends email or acts outside the workflow.**
+- **Market and competitor research** is open-ended, so a *bounded* agentic search loop is justified, inside a fixed workflow with budgets and stopping rules. No agent logs in, sends email or acts outside the workflow.
 
-The decision is to proceed with a workflow containing a bounded research loop, with human sign-off, piloted first on closed deals. Record this in the SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), using [template 01](templates/01-discovery-questionnaire.md) and the [data-readiness scorecard](templates/02-data-readiness-scorecard.md).
+**Decision:** go with a workflow plus bounded research loop and human sign-off, piloted first on closed deals. Record this in the SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), using [template 01](templates/01-discovery-questionnaire.md) and the [data-readiness scorecard](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
@@ -186,7 +185,7 @@ flowchart LR
 | Verifier | Entailment + exact-quote + number checks | NLI or [MiniCheck](https://arxiv.org/abs/2404.10774)-class checker (reports GPT-4-level accuracy at ~400× lower cost) · pinned LLM judge; provider citation features (e.g. [Claude web fetch citations](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool)) | FDE |
 | Compliance PDP | Allow or deny a deal scope per user and run | OPA with the wall register as data · the existing compliance system's API | CCO |
 | Model gateway | Model allow-list, per-run and per-deal budgets, zero-retention routing | LiteLLM (pin versions), agentgateway · cloud AI gateways | IT |
-| Observability / eval | Traces, costs, eval runs | OTel + Langfuse, Inspect, DeepEval · commercial observability (note: Promptfoo is OpenAI-owned since Mar 2026) | FDE |
+| Observability / eval | Traces, costs, eval runs | OTel + Langfuse, Inspect, DeepEval · commercial observability (OpenAI announced it was acquiring Promptfoo in Mar 2026: weigh vendor neutrality) | FDE |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 1. **Orchestration:** fixed workflow with a bounded research loop vs supervisor + sub-researchers vs a vendor deep-research API (public questions only, never VDR content).
@@ -316,8 +315,8 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 
 | Threat | Control |
 |---|---|
-| Indirect injection in the VDR or on the web | Quarantined readers with typed output; the planner never sees raw text; an injection classifier as telemetry, not as the defence; the verifier as backstop |
-| Cross-deal MNPI leakage | Per-deal indexes, keys and memory; no cross-deal semantic cache; prompt caches keyed by deal; policy decision point on every run; leakage probes in CI |
+| Indirect injection (VDR, web) | Quarantined readers with typed output; planner never sees raw text; classifier as telemetry only; verifier as backstop |
+| Cross-deal MNPI leakage | Per-deal indexes, keys and memory; no cross-deal semantic cache; prompt caches keyed by deal; PDP check per run; leakage probes in CI |
 | Deal intent leaked via search queries | Query filter; zero-retention search providers; code names; for restricted targets, no web research without CCO approval |
 | Fabricated or never-accessed citations | Citations only from the retrieval log; the verifier strips the rest |
 | Poisoned or low-quality sources | Source tiering (regulator/filings > audited > press > blogs); counter-search; conflicts shown, not averaged |
@@ -400,10 +399,9 @@ At 25–40 runs a month that is about USD 25–600 of model and search spend. Li
 
 ## 13. Stretch goals
 - A Web Bot Auth–signed fetcher tested against a mock HTTP 402 pay-per-crawl server.
-- Verification for Hindi and Marathi claims, with per-language precision reported.
-- An analyst accept/reject flywheel that tunes source tiering.
-- Sentence-level provenance export for the IC pack.
-- A cascade verifier (local NLI first, LLM judge on uncertain cases) with a cost/recall curve.
+- Hindi and Marathi claim verification with per-language precision.
+- An accept/reject flywheel that tunes source tiering.
+- A cascade verifier (local NLI, then LLM judge) with a cost/recall curve.
 
 ## 14. Curriculum map
 
@@ -426,22 +424,16 @@ At 25–40 runs a month that is about USD 25–600 of model and search spend. Li
 | 109–113 | FDE professional skills | Qualification, ROI, POC → pilot, ADRs, demos |
 | 122 | The Agentic Web | Web Bot Auth, pay-per-crawl, AI preferences |
 
-**New/gap topics exercised:**
-- AI crawler control and content licensing (Content Signals, pay-per-crawl, RSL, IETF aipref).
-- Web search and web-data APIs for agents.
-- Prompt-injection-resistant architectures (quarantined readers, lethal trifecta).
-- Agent memory architectures (scoped and deletable).
-- Context engineering for long runs.
-- Non-EU regulation (UK MAR, FCA SYSC, SEBI PIT).
+**New/gap topics exercised:** AI crawler control and content licensing (Content Signals, pay-per-crawl, RSL, IETF aipref); web search and web-data APIs for agents; prompt-injection-resistant architectures (quarantined readers, lethal trifecta); agent memory architectures (scoped, deletable); context engineering for long runs; non-EU regulation (UK MAR, FCA SYSC, SEBI PIT).
 
 ## 15. What reviewers look for / common failure modes
 
-- **Citations checked only for format.** A URL that looks right is not evidence. Check the retrieval log and the entailment of the passage.
-- **Stripping without telling.** The analyst must see what was removed and why, because contradictions are often the most valuable finding.
-- **"Walls" built as a metadata filter on a shared index, with a shared cache.** Reviewers will probe it.
-- **Trusting the injection classifier.** Architecture is the defence; classifiers are telemetry.
-- **Leaking deal intent through search queries** to third-party APIs.
-- **Treating robots.txt, AI preferences and licence terms as optional,** or storing search results when the plan forbids it.
-- **Long verbatim quotes** from paywalled or licensed sources in memos that go to LPs.
-- **No cost ceiling,** or a ceiling enforced only by after-the-fact monitoring.
-- **Agreeing to the portal scrape.** A strong FDE says no clearly, fast, in writing, and with alternatives.
+- **Citations checked only for format.** A plausible URL is not evidence; check the retrieval log and entailment.
+- **Stripping silently.** Analysts must see what was removed and why; contradictions are often the best finding.
+- **"Walls" built as a metadata filter on a shared index and cache.**
+- **Trusting the injection classifier** instead of the architecture.
+- **Leaking deal intent through search queries.**
+- **Treating robots, AI preferences and licence terms as optional,** or storing results the plan forbids.
+- **Long verbatim quotes** from licensed sources in memos that go to LPs.
+- **No hard cost ceiling.**
+- **Agreeing to the portal scrape.** Say no clearly, in writing, with alternatives.

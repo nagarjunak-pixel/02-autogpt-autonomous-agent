@@ -175,7 +175,7 @@ flowchart LR
   WF --> CUA
   EXEC -->|proposed action| GATE
   CUA -->|proposed action| GATE
-  GATE -->|irreversible: needs approval| APPR
+  GATE -->|irreversible action needs approval| APPR
   GATE --> IDEM
   GATE -->|allowed action| BR
   GATE -->|allowed action| WIN
@@ -315,7 +315,7 @@ class ActionGate:
 | Approval UI | Yes | Yes (remarks shown) | No | Render remarks as inert text; highlight any instruction-like phrasing |
 
 **Agentic-browser security.**
-- Use a fresh profile per run: no personal browsing, no password-manager extension, and cookies for the broker only.
+- A browser agent inherits every logged-in session in its profile, so use a fresh profile per run: no personal browsing, no password-manager extension, and cookies for the broker only.
 - Enforce the allow-list at the network proxy, not only in code.
 - Mask secrets in screenshots before the model or the evidence store sees them.
 - Model-level defences help but do not suffice. Anthropic reported prompt-injection success falling from **23.6% to 11.2%** with browser mitigations ([Claude for Chrome, 25 Aug 2025](https://claude.com/blog/claude-for-chrome)). That is still far too high for customs filings, so the architecture must hold even when the model is fooled.
