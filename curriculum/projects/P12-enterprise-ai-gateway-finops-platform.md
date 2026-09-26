@@ -99,20 +99,20 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 - **Latency p50/p95** per anchor; hourly PTU utilisation; a 6-month incident log.
 
 **Sharpest discovery questions:**
-1. Which three AI use cases would the CFO defend in a budget cut, and what evidence shows they work?
+1. Which three use cases would the CFO defend in a budget cut, and what shows they work?
 2. Where is each provider key, who has it, and when was it last rotated?
-3. What committed-spend and PTU contracts exist, with what minimums and expiry dates?
+3. Which committed-spend and PTU contracts exist, with what minimums and expiry dates?
 4. What counts as "success" for each anchor, and where is that signal recorded?
 5. Which BUs and data classes must stay in India, in the EU, or on self-hosted models?
 6. What did the last model retirement break, and how long did the fix take?
 7. In the July loop incident, who noticed, and after how long?
 8. What logging will the works council and DPO accept: metadata, redacted, or full?
 9. Which MCP servers do agents use, and who approved them?
-10. What would make a team bypass the gateway (latency, chargeback, friction), and how do we make the paved road faster than the bypass?
+10. What would make a team bypass the gateway, and how do we make the paved road faster?
 
 **Qualification: the lowest rung that works.** Almost all of this is **not AI**: configuration, policy-as-code, deterministic routing and accounting.
-- **Rules:** static route tables, budgets, allow-lists and regex-plus-checksum DLP.
-- **ML:** a small learned router trained on logged outcomes, only after 8–12 weeks of data exist.
+- **Rules:** route tables, budgets, allow-lists, regex-plus-checksum DLP.
+- **ML:** a learned router, only after 8–12 weeks of logged outcomes.
 - **Single LLM call:** an LLM validator for cascade acceptance, only where no deterministic check (schema, totals, citation) exists.
 - **Workflow:** the model-migration pipeline.
 - **Agents:** none in the request path.
@@ -128,14 +128,14 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 | Business | Chargeback accuracy | Allocated vs invoiced within ±2%; unallocated ≤ 3% | Monthly close |
 | Inventory | Shadow-AI discovery | Seeded recall ≥ 90%; every discovered use case has owner, data class and risk tier | 40 seeded cases; inventory audit |
 | Reliability | Gateway availability | 99.95% monthly (21.6 min error budget) | Synthetic probes, both regions |
-| Reliability | Failover drill: primary provider region down | ≥ 99% requests succeed; p95 ≤ 2× baseline; **pass^3** over 3 drills | Game days |
+| Reliability | Failover drill: primary region down | ≥ 99% succeed; p95 ≤ 2× baseline; **pass^3** over 3 drills | Game days |
 | Latency | Gateway overhead p95 | ≤ 30 ms (rules DLP); ≤ 120 ms on routes with ML DLP | Load test at 3× peak |
-| Cost control | Runaway-loop containment | Key throttled ≤ 60 s after crossing the hourly cap; overspend ≤ one request's cost | Loop simulator |
-| Safety/DLP | PII detection | Recall ≥ 97% on checksum-valid IDs, ≥ 90% on names + health; precision ≥ 90%; false blocks ≤ 0.5% of clean traffic | DLP set (per language) |
+| Cost control | Runaway-loop containment | Throttled ≤ 60 s after the hourly cap; overspend ≤ one request | Loop simulator |
+| Safety/DLP | PII detection | Recall ≥ 97% on checksum-valid IDs, ≥ 90% on names + health; precision ≥ 90%; false blocks ≤ 0.5% | DLP set (per language) |
 | Isolation | Cross-tenant leakage | 0 cross-BU cache hits in 10,000 probe pairs; 0 cross-BU key use | Isolation suite |
-| Lifecycle | Model references | 100% of routes use registry aliases; every model has a retirement date on the calendar | Config lint in CI |
-| Supply chain | Gateway artefacts | 100% deployed by digest from the internal registry; hash-pinned lockfiles; KEV-listed gateway CVEs patched ≤ 72 h | Deploy audit; drill |
-| Security | Tool governance | Only registry-approved MCP servers are reachable; the poisoned tool description is blocked or flagged | Adversarial suite |
+| Lifecycle | Model references | All routes use registry aliases; every model has a retirement date | Config lint in CI |
+| Supply chain | Gateway artefacts | All deployed by digest from the internal registry; hash-pinned lockfiles; KEV-listed CVEs patched ≤ 72 h | Deploy audit; drill |
+| Security | Tool governance | Only approved MCP servers reachable; poisoned description blocked or flagged | Adversarial suite |
 
 A cascade that saves 40% but loses 5 accuracy points moves the cost to the BU's reviewers.
 
@@ -296,9 +296,9 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
     raise RuntimeError(f"no acceptable answer: {trace}")
 ```
 
-**429s.** Honour `Retry-After` first: the sketch parks that deployment for the stated time and moves down the chain. Some 429s are not retryable: Anthropic's tier spend-cap 429 has no `retry-after` and carries `enforced_spend_limit_reached` ([docs](https://platform.claude.com/docs/en/api/rate-limits#reaching-your-spend-cap)), so park it until a human acts and page FinOps. When every deployment is parked, return a 429 with the earliest `Retry-After`.
+**429s.** Honour `Retry-After` first: the sketch parks the deployment for that long and moves down the chain. Some 429s are not retryable: Anthropic's spend-cap 429 has no `retry-after` and carries `enforced_spend_limit_reached` ([docs](https://platform.claude.com/docs/en/api/rate-limits#reaching-your-spend-cap)); park it until a human acts and page FinOps. If every deployment is parked, return 429 with the earliest `Retry-After`.
 
-**Production gaps to close:** distributed counters (atomic Redis/Lua) and a single-probe half-open state; streamed-token accounting, with `max_tokens` on every request so the reservation is a true upper bound; prices from the registry; residency filters applied to tiers **before** fallback, so an outage never moves Indian health data offshore; the trace emitted as OTel span events.
+**Production gaps:** distributed counters (atomic Redis/Lua) and a single-probe half-open state; streamed-token accounting with `max_tokens` on every request, so the reservation is an upper bound; prices from the registry; residency filters applied **before** fallback, so an outage never moves Indian health data offshore; the trace as OTel span events.
 
 ## 8. Evaluation plan
 
@@ -313,21 +313,20 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 | Layer | Metrics |
 |---|---|
-| Cascade | **Validator false-accept rate** (cheap answer accepted but wrong), escalation rate, quality vs strong-only baseline with CIs, cost per success |
-| Router/resilience | Fallback success, breaker open time, p95 under chaos (429/5xx/latency/region down), pass^3 across drills |
-| Budget | Time-to-throttle, overspend beyond cap, false throttles on legitimate spikes (month-end) |
+| Cascade | **Validator false-accept rate** (wrong cheap answer accepted), escalation rate, quality vs strong-only with CIs, cost per success |
+| Router/resilience | Fallback success, breaker open time, p95 under chaos (429/5xx/latency/region down), pass^3 |
+| Budget | Time-to-throttle, overspend, false throttles on month-end spikes |
 | DLP | Precision/recall per entity × language; encoded-evasion recall; added latency |
 | Isolation | Cross-tenant hit count; prefix-cache timing test with and without `cache_salt` |
 | Lifecycle | Shadow-eval deltas per use case; canary SLO breaches; rollback time |
 | FinOps | Reconciliation error; unallocated share; cost-per-outcome trend |
 | Discovery | Seeded-case recall; flagged-domain precision; detection-to-inventory time |
 
-**Judge calibration.** Use an LLM validator only where no deterministic check exists. Calibrate it on 300 human labels per use case (κ ≥ 0.7), re-check monthly, and treat judge drift after a model upgrade as a canary failure.
+**Judge calibration.** Where an LLM validator is unavoidable, calibrate it on 300 human labels per use case (κ ≥ 0.7), re-check monthly, and treat judge drift after a model upgrade as a canary failure.
 
 **CI gates on the policy repo:**
-- Config lint: no raw model IDs, every key has a budget, residency tags present.
-- Policy unit tests.
-- A route change is blocked if its golden-set quality falls outside the non-inferiority margin.
+- Config lint (no raw model IDs, every key has a budget, residency tags present) and policy unit tests.
+- A route change is blocked if golden-set quality falls outside the non-inferiority margin.
 
 **Online metrics:** cost per successful outcome; escalation and fallback rates; per-tenant cache hit rate; DLP blocks; budget alerts; gateway traffic share and p95 overhead.
 
@@ -345,11 +344,10 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 |---|---|---|---|---|
 | BU agent with RAG + web tool + email tool (via gateway) | Yes | Yes | Yes | **Break a leg:** per-agent tool policy denies "untrusted-read + external-send" without human confirmation |
 | Gateway itself (non-LLM) | All prompts, keys | All prompts | Egress to providers | Egress allow-list; no general internet; admin plane on a separate network |
-| Optional FinOps assistant | Spend data | Low | None | Read-only; no budget writes |
 
 | Threat | Control |
 |---|---|
-| Upstream package compromise | Hash-pinned lockfiles, mirror, 3–7 day cooldown, SBOM per image, few environment secrets, egress allow-list |
+| Upstream package compromise | Hash-pinned lockfiles, mirror, 3–7 day cooldown, SBOM per image, egress allow-list |
 | Exploited gateway CVE | KEV watch; 72 h patch path; no internet-facing admin UI; least-privilege internal keys |
 | Provider-key theft | Vault, short-lived fetch, rotation runbook; only virtual keys in apps |
 | Cross-tenant cache leakage | Tenant-scoped cache keys; vLLM `cache_salt` per BU. Gu et al. found cross-user cache sharing at seven API providers ([arXiv 2502.07776](https://arxiv.org/abs/2502.07776)). Provider scope varies: Anthropic isolates caches per workspace on its API but only per organisation on Bedrock and Google Cloud ([docs](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)), so map BUs to workspaces or accounts |
@@ -384,12 +382,12 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 | Lever | Assumption | Saving (USD/month) |
 |---|---|---|
-| Cascade on eligible work (~40% of PAYG, now on the strong tier) | Cheap tier accepts 60–80%; cheap cost 10–25% of strong; new cost = 80k × (cheap share + escalation share) | 28–56k |
+| Cascade on eligible work (~40% of PAYG, now strong tier) | Cheap tier accepts 60–80% at 10–25% of strong cost; new cost = 80k × (cheap cost share + escalation share) | 28–56k |
 | Caching (per tenant) + provider prompt caching | 3–10% of PAYG | 6–20k |
 | Batch for offline jobs | 15–25% of PAYG at ~50% discount | 15–25k |
 | PTU right-sizing | Utilisation 55% → 75–80%; spillover to PAYG | 20–35k |
 | SaaS seat consolidation | 20–40% of USD 40k | 8–16k |
-| **Gross saving** (levers overlap: compute them in sequence, not as a sum, in the real model) | | **≈ 77–152k (18–36%)** |
+| **Gross saving** (levers overlap: compute in sequence in the real model) | | **≈ 77–152k (18–36%)** |
 | Platform run cost | Infra 6–15k + 5 FTE (platform team of 4 + FinOps analyst) 20–35k | −26–50k |
 | **Net** | | **≈ +27k to +126k** |
 
@@ -475,11 +473,10 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 ## 15. What reviewers look for / common failure modes
 
 - **Savings without quality.** A cascade reported without non-inferiority tests or a validator false-accept rate.
-- **Pinning without patching.** A cooldown with no KEV fast path; the gateway runs a vulnerable version for months.
+- **Pinning without patching.** A cooldown with no KEV fast path.
 - **Fallback that ignores residency.** An outage moves health or KYC prompts offshore.
 - **Shared caches across BUs.** Semantic or prefix caches keyed only on prompt text.
 - **Full prompt logging by default,** or logs outside India when CERT-In applies.
 - **Budgets as monthly alerts only.** No hourly burn-rate cap, so the July incident repeats.
 - **Raw model IDs in app code.** Every retirement becomes a 12-team fire drill.
-- **Treating chargeback as a technical problem.** It is a negotiation; bring the BU's own numbers.
-- **Chargeback that charges BUs for unused PTU.** This creates perverse incentives to bypass.
+- **Chargeback as a technical problem.** It is a negotiation; bring the BU's own numbers. Charging BUs for unused PTU invites bypass.

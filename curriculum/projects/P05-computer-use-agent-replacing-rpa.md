@@ -13,12 +13,7 @@ Fourteen RPA bots key this with selectors and screen coordinates. Tickets show *
 
 **The ask (COO):** "Make the bots stop breaking."
 
-**The real need:** a resilient automation layer that:
-- climbs the **decision ladder** first: official API/EDI > MCP server > WebMCP/structured page tools > computer use;
-- drives the portal and TMS only inside an **isolated VM or browser profile**;
-- runs as a **durable workflow** with **per-step screenshots** as the audit trail;
-- is **idempotent** (never files twice) and gets **human confirmation before every submission**;
-- includes a plan to push the vendor for an API.
+**The real need:** climb the **decision ladder** first (official API/EDI > MCP server > WebMCP > computer use), then run what remains as an **isolated**, **durable**, **idempotent** workflow with **per-step screenshots** as the audit trail and **human confirmation before every submission**, plus a plan to push the vendor for an API.
 
 The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating into a declaration", because Northwind carries the liability.
 
@@ -420,9 +415,7 @@ Timings are real-engagement weeks. In the course build, inject them in weeks 3â€
 
 - **Skipping the ladder:** choosing computer use before asking about EDI, TMS import or a vendor API.
 - **Trusting leaderboards:** quoting a self-reported 85% OSWorld score (Sept 2026) as a reliability promise, when OSWorld 2.0's best was about 21% at publication (June 2026).
-- **Fragile idempotency:** kept in memory, written after the click, or retried on submit.
-- **Decorative approval:** 3-second approvals with no seeded-error checks.
+- **Fragile idempotency** (in memory, written after the click, retried on submit) and **decorative approval** (3-second approvals, no seeded-error checks).
 - **Bad MFA:** seeds in environment variables, or a person's phone as the bot's MFA.
 - **Prompt-only defences:** instructions instead of plan-bound values and egress control.
-- **Incomplete cost model:** no approver labour, no VM cost, no peak latency.
-- **Evidence retention:** none at all, or kept forever and full of personal data.
+- **Incomplete cost model** (no approver labour, VM cost or peak latency) and **bad evidence retention** (none, or kept forever and full of personal data).

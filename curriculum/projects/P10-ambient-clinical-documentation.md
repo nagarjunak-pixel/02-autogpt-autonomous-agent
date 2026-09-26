@@ -6,7 +6,7 @@
 
 ## 1. Scenario: the customer and the ask
 
-**The customer.** Lakeshore runs 14 clinics: 9 in California's Central Valley and 5 in South Texas. About 110 prescribing clinicians (physicians, NPs, PAs) see roughly 2,000 visits a day. Just over half of patients prefer Spanish, many conversations code-switch mid-sentence, and some visits use in-person, phone or video interpreters.
+**The customer.** Lakeshore runs 14 clinics: 9 in California's Central Valley, 5 in South Texas. About 110 prescribing clinicians (physicians, NPs, PAs) see roughly 2,000 visits a day. Just over half of patients prefer Spanish, many conversations code-switch, and some visits use in-person, phone or video interpreters.
 
 **Two EHRs.** After a 2024 merger, the California clinics run an Epic-style hosted EHR and the Texas clinics an athena-style cloud EHR.
 
@@ -19,7 +19,7 @@
 - a review step that makes clinicians check what matters rather than rubber-stamp;
 - write-back to both EHRs via FHIR (the course build uses a HAPI FHIR server).
 
-It also needs an honest build-vs-buy decision, clinician-rated evaluation, and trust calibration: the signed note is the legal medical record.
+It also needs an honest build-vs-buy decision, clinician-rated evaluation and trust calibration: the signed note is the legal medical record.
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
@@ -61,7 +61,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
   - Sec. 183.002: EHRs must be "physically maintained in the United States" from 1 Jan 2026.
   - Whether a scribe that suggests diagnoses is "diagnostic" is **uncertain; verify with counsel**. Disclose and review regardless.
 - **Texas HB 149 (TRAIGA)**, effective 1 Jan 2026 ([text](https://capitol.texas.gov/tlodocs/89R/billtext/html/HB00149F.htm)). Sec. 552.051(f) requires providers to disclose AI used "in relation to health care service or treatment". Because it cross-references a governmental-agency duty, its reach to private providers is **debated; verify**.
-- **Texas biometric law** ([Bus. & Com. Code 503.001](https://texas.public.law/statutes/tex._bus._and_com._code_section_503.001)): voiceprints need notice and consent if enrolled for diarisation (whether non-profit clinical use is a "commercial purpose": verify).
+- **Texas biometric law** ([Bus. & Com. Code 503.001](https://texas.public.law/statutes/tex._bus._and_com._code_section_503.001)): voiceprints enrolled for diarisation need notice and consent (whether non-profit clinical use is a "commercial purpose": verify).
 - **42 CFR Part 2** (amended Feb 2024; [LII](https://www.law.cornell.edu/cfr/text/42/part-2)) covers SUD programme records, which are excluded.
 - **Offshore access:** no PHI access from India by default; storage stays in the US (SB 1188).
 - **Not applicable:** EU AI Act, DPDP.
@@ -72,7 +72,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
 
 **Budget and timeline.** The year-one all-in ceiling is about USD 250k, since FQHC margins are thin. The 20-clinician pilot must launch before the July onboarding cycle, and the board approves the consent language.
 
-**Organisation and politics.** Clinicians fear audio will be used for performance review (policy: never). Interpreters want a say. The patient board warns some patients fear recordings for immigration reasons, so declining must be easy and penalty-free. Coders fear "AI upcoding" audits.
+**Organisation and politics.** Clinicians fear audio will be used for performance review (policy: never). Interpreters want a say. Some patients fear recordings for immigration reasons, so declining must be easy and penalty-free. Coders fear "AI upcoding" audits.
 
 ## 3. What students are given (course build)
 
@@ -354,7 +354,7 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 **Cost** (assumptions stated; prices change, so re-quote):
 - Volume: about 44,000 visits/month × about 18 minutes of audio ≈ 790,000 audio minutes.
 - *Managed ASR* at roughly USD 0.005-0.03/min: about USD 4k-24k/month.
-- *Self-hosted ASR:* batch transcription runs many times faster than real time on one modern GPU, so a few hundred GPU-hours a month (benchmark in week 4).
+- *Self-hosted ASR:* batch ASR plus diarisation runs many times faster than real time, so a few hundred GPU-hours a month (benchmark in week 4).
 - *LLM:* about 11k input and 1k output tokens per visit (draft + verification). At USD 0.5-5 per M input and USD 2-25 per M output, that is USD 0.01-0.08 per visit, or USD 0.3k-3.5k/month.
 - *AI compute per visit:* about USD 0.02-0.65, depending on the ASR route.
 - *People and budget:* at the low ASR band, engineering support (about 1.5 FTE) dominates total cost of ownership. At the high band, managed ASR alone (about USD 290k/yr at full volume) breaks the USD 250k ceiling and the USD 0.50 per-note target, which is why the ASR ADR matters.
@@ -404,11 +404,11 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 | 14 | Hallucination in Depth | Critical-error taxonomy; omissions vs fabrications |
 | 23 | Distillation and Synthetic Data | Visit cards → dialogues → TTS audio |
 | 36 | Constrained Decoding Engines | SOAP JSON with statement IDs |
-| 38 | Reflection and Evaluator-Optimizer Loops | Program-first evaluator after drafting; flags go to the clinician, not a revise loop |
+| 38 | Reflection and Evaluator-Optimizer Loops | Program-first evaluator; flags go to the clinician, not a revise loop |
 | 41 | Multilingual Prompting | Code-switched transcripts |
 | 48 | Embedding-Model Selection | ICD-10-CM retrieval |
 | 63, 64 | Simulation and Synthetic Users for Testing; Trust Calibration and Automation Bias | Role-played and TTS encounters; time-to-sign, flag acknowledgement, drills |
-| 71 | Agent Identity Platforms | Short-lived, clinician-scoped delegated tokens for write-back; no shared service account |
+| 71 | Agent Identity Platforms | Short-lived delegated clinician tokens for write-back |
 | 74, 75 | OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice | Spoken prompt injection in the adversarial audio set |
 | 78 | PII Detection and Data-Loss Prevention | PHI kept out of telemetry |
 | 82, 83 | Sector Compliance; Responsible AI Practice: Fairness, Explainability and Oversight | HIPAA, BAAs, Part 2; language and interpreter fairness slices |
@@ -418,7 +418,7 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 | 96, 97, 99 | Observability Tools; Evaluation Tools; Durable Workflow Platforms | OTel GenAI; CI gates; async pipeline with idempotent write-back |
 | 102 | Model Provider Landscape | BAA availability shapes the choice |
 | 106 | Speech AI | WER, DER, entity accuracy; self-hosted ASR option |
-| 109–116 | FDE practice block (Use-Case Discovery and Qualification … Scoping, Estimation and SOWs) | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
+| 109–116 | Use-Case Discovery and Qualification … Scoping, Estimation and SOWs | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
 
 **New/gap topics exercised:** #4 regulation as obligations→controls (CA AB 3030, AB 489, Penal Code 632; TX SB 1188, TRAIGA); #8 prompt-injection-resistant architecture (tool-less drafter); RAG-9 citation and attribution engineering (statement-to-transcript evidence spans); FDE-1 security review and AI data-handling terms (BAA register); FDE-2 integrating with the system of record (FHIR write-back to two EHRs); FDE-5 measuring impact honestly (EHR audit logs, not self-report); FDE-11 records retention (audio TTL; the signed note is the legal record).
 
