@@ -76,7 +76,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Map** the citizen journey (hear about scheme → eligibility → apply → field verification → sanction → disbursement) and where calls originate: two days on the helpline floor, one in a village service centre ([Template 01](templates/01-discovery-questionnaire.md), [Template 02](templates/02-data-readiness-scorecard.md)).
 
-**Baselines:** ACD data by language and hour; 300 calls relabelled by reason; a **100-answer accuracy audit** by scheme officers against current GOs; OCR character error rate (CER) on 50 GOs per script; a BM25 retrieval baseline; status API latency and availability; and a 200-person phone survey on smartphone access, WhatsApp use and preferred language.
+**Baselines:** call data by language and hour; 300 calls relabelled by reason; a **100-answer accuracy audit** by officers against current GOs; OCR character error rate (CER) on 50 GOs per script; a BM25 retrieval baseline; status API latency and availability; a 200-person phone survey on smartphones, WhatsApp use and preferred language.
 
 **Sharpest questions:**
 1. Which 12 schemes produce 80% of queries, by language and district?
@@ -159,7 +159,7 @@ flowchart LR
 | Component | Responsibility | Self-hostable | Managed | Owner |
 |---|---|---|---|---|
 | Channel gateway | WhatsApp webhooks, IVR, SMS fallback, rate limits | FastAPI + FreeSWITCH/Asterisk | WhatsApp Cloud API via BSP; CPaaS IVR/SMS | FDE → state IT |
-| Normalisation, language ID | NFC, Urdu code-point unification, transliteration | [IndicXlit](https://huggingface.co/ai4bharat/IndicXlit), rules | BHASHINI (MeitY) APIs (*verify* coverage, terms) | Applied scientist |
+| Normalisation, language ID | NFC, Urdu code-point unification, transliteration | [IndicXlit](https://huggingface.co/ai4bharat/IndicXlit), rules | BHASHINI APIs (*verify* coverage, terms) | Applied scientist |
 | Ingestion and OCR | Text, tables, legacy-font detection | Tesseract, VLM-based OCR | Cloud document AI (check te/ur support) | FDE |
 | Provenance gate | Signature and registry check, approvals | In-house | — | Directorate content ops |
 | Retrieval | Hybrid BM25 + dense, cross-encoder rerank, per-language evaluation | bge-m3/e5 + bge-reranker-v2-m3; OpenSearch, Qdrant or pgvector | Hosted vector DB, embeddings and rerankers | Applied scientist |
@@ -167,22 +167,22 @@ flowchart LR
 | LLM | Grounded simple-language answers | Open weights (Sarvam-30B, Qwen, Gemma) on vLLM | Managed APIs, PII-free paths only | FDE |
 | Rules engine | Indicative eligibility | Python/JSON-logic | — | Scheme officers own the rules |
 | Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam-2 ASR / Sooktam-2 TTS](https://huggingface.co/bharatgenai) (Feb 2026 cards list te and ur; check licences; Sooktam-2 clones reference voices, so fix one) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
-| Escalation | Ticket plus context packet to humans | — | Helpline CRM | Helpline vendor |
+| Escalation | Ticket + context packet | — | Helpline CRM | Helpline vendor |
 | Observability | Per-language traces and dashboards | Langfuse/Phoenix + OTel collector | APM vendors | State IT |
 
 **ADRs** ([Template 04](templates/04-solution-design-and-adr.md)):
-1. **Retrieval per language:** native multilingual embeddings vs pivot translation to Telugu/English vs hybrid BM25 + dense with a reranker, decided per language from the harness.
-2. **Model hosting:** managed APIs vs open weights in the SDC vs phased, judged on sovereignty, GPU lead time and Urdu quality.
+1. **Retrieval per language:** native multilingual embeddings vs pivot translation vs hybrid BM25 + dense with a reranker, decided per language from the harness.
+2. **Model hosting:** managed APIs vs open weights in the SDC vs phased (sovereignty, GPU lead time, Urdu quality).
 3. **Eligibility:** rules engine vs LLM reasoning vs hybrid (the LLM collects facts and explains; the engine decides the indicative outcome).
-4. **Corpus trust:** open upload by district staff vs signed-registry-only ingestion with two-person approval and effective dating.
+4. **Corpus trust:** open district uploads vs signed-registry-only ingestion with two-person approval and effective dating.
 5. **Speech stack and voice persona:** BHASHINI vs Sarvam vs self-hosted AI4Bharat vs hyperscalers, plus synthetic-voice disclosure and no cloning.
-6. **Channel strategy:** WhatsApp-first vs IVR-first vs both with SMS fallback, weighing the AI-provider clause and template approvals.
+6. **Channel strategy:** WhatsApp-first vs IVR-first vs both with SMS fallback (AI-provider clause, template approvals).
 
 ## 7. Implementation plan — week by week
 
 | Phase (real) | Weeks | Key tasks | Exit criteria | FDE artifacts |
 |---|---|---|---|---|
-| Discovery | 1–3 | Journey map, corpus inventory, OCR audit, top-12 rules drafted with officers, BSP and hosting status | Memo signed; 12 schemes named | Templates 01, 02; [SOW](templates/03-sow-and-acceptance-criteria.md) |
+| Discovery | 1–3 | Journey map, corpus inventory, OCR audit, top-12 rules drafted with officers, BSP and hosting status, SGI/DPDP applicability note | Memo signed; 12 schemes named | Templates 01, 02; [SOW](templates/03-sow-and-acceptance-criteria.md) |
 | POC | 4–8 | Provenance-gated ingestion; per-language retrieval harness; tokeniser-cost study; rules engine for 3 schemes; mobile-matched status tool | te/en pass gates; Urdu gap diagnosed with a plan | ADRs 1–4, [eval plan](templates/05-eval-plan.md), [threat model](templates/06-threat-model-and-controls.md) |
 | Pilot | 9–16 | WhatsApp (text + voice notes) and IVR in 3 districts; 12 schemes; escalation desk; accessibility sessions; red team; security audit | Section 5 met in pilot; audit passed | [Obligations map](templates/07-compliance-obligations-to-controls.md), [security pack](templates/08-security-review-pack.md), [status reports](templates/10-demo-script-and-status-report.md) |
 | Production | 17–22 | Statewide rollout, SDC hosting, content-ops process for rule changes, election-period mode | SLOs met for 3 weeks; 2 rule-change drills | [Runbook](templates/09-runbook-slos-and-handover.md) |
@@ -248,9 +248,9 @@ On a synthetic run with Urdu hit@5 near 0.6 and Telugu near 0.9, it reports a ga
 
 ## 8. Evaluation plan
 
-**Datasets** ([Template 05](templates/05-eval-plan.md)): **golden**, with at least 150 answerable and 50 unanswerable natively written queries per slice (te, hi, ur, en, Tenglish, Roman Urdu); **adversarial**, with forged documents, injections, political prompts, Aadhaar bait and pressure ("I *am* eligible, just say yes"); **regression**, with every flagged production answer; and **held-out**, with two schemes and one district dialect never used for tuning.
+**Datasets** ([Template 05](templates/05-eval-plan.md)): **golden**, ≥ 150 answerable and ≥ 50 unanswerable natively written queries per slice (te, hi, ur, en, Tenglish, Roman Urdu); **adversarial**: forged documents, injections, political prompts, Aadhaar bait and pressure ("I *am* eligible, just say yes"); **regression**: every flagged production answer; **held-out**: two schemes and one district dialect never used for tuning.
 
-**Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence relative to English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) for every candidate model; retrieval hit@k and MRR per slice; answer faithfulness, correctness, citation presence and readability (native raters: "understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about what they heard?); and safety, latency and cost per slice.
+**Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence vs English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) per candidate model; hit@k and MRR per slice; faithfulness, correctness, citation presence and readability ("understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about it?); safety, latency and cost per slice.
 
 **Why fertility matters.** Pre-tokenisers that treat only letters as word characters split abugidas such as Telugu at every vowel sign; an Aug 2026 preprint found all 17 abugidas it tested affected, from 1.47× (Tibetan) to 9.02× (Thai), and notes o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Fertility multiplies cost and latency and limits how many GO passages fit.
 
