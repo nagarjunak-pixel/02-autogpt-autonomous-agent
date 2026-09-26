@@ -6,11 +6,11 @@ We ran two independent checks, each against dated sources, primary sources where
 
 | Document | Claims checked | Correct | Needs nuance | Outdated | Wrong | Unverifiable |
 |---|---|---|---|---|---|---|
-| Vol 2 study guide | 50 | **41** | 8 | 1 | 0 | 0 |
+| Vol 2 study guide | 50 + 5 follow-ups | **41** | 11 | 3 | 0 | 0 |
 | Gap doc | 60 | **30** | 17 | 2 | 5 | 3 |
 
 **What this says:**
-- Vol 2 is accurate for a fast-moving field. Its one outdated claim is serious, though: US bank model-risk guidance changed in April 2026.
+- Vol 2 is accurate for a fast-moving field. Its outdated claims are few but serious: US bank model-risk guidance changed in April 2026 (A1), AP2's mandate model changed in v0.2 (A10), and OpenAI is closing its fine-tuning platform (A13). A1–A9 come from the main check. A10–A14 are follow-ups that later research agents found and verifiers confirmed.
 - The gap doc's facts are mostly right, but its *citations* are weaker than its conclusions. Two arXiv IDs point to unrelated papers, one statistic is misattributed, and several legal claims rest on blogs where statutes or regulator pages exist.
 - We spot-checked the two most consequential findings ourselves against primary sources: the SR 11-7 replacement (Federal Reserve SR 26-2; OCC Bulletin 2026-13) and the arXiv 2606.29175 mis-citation. Both held.
 
@@ -67,6 +67,51 @@ We ran two independent checks, each against dated sources, primary sources where
 - Dynamic Resource Allocation went GA in Kubernetes **v1.34** (Sept 2025). Workloads request devices by attributes through ResourceClaims, which also enables better sharing and MIG partitioning.
 - Device plugins still work, but a 2026 answer should name DRA.
 - Source: [kubernetes.io](https://kubernetes.io/blog/2025/09/01/kubernetes-v1-34-dra-updates/)
+
+### A10. Turn 70, Q344: AP2 mandate types changed in v0.2 (OUTDATED)
+- **Vol 2 says:** an AP2 mandate records "intent, the exact cart, and the payment".
+- **Correct as of Sept 2026:** those were the **v0.1** (Sept 2025) names. **AP2 v0.2, released 28 Apr 2026**, defines two SD-JWT mandate types:
+  - a **Checkout Mandate**, which covers what is bought and is shared with the merchant;
+  - a **Payment Mandate**, which covers the payment and is shared with the credential provider, network and processor.
+
+  Each mandate is either **open** (the user's constraints, for human-not-present purchases) or **closed** (bound to one final checkout and amount). Google contributed AP2 to the **FIDO Alliance** on the same day.
+- Sources: [AP2 specification](https://github.com/google-agentic-commerce/AP2/blob/main/docs/ap2/specification.md) · [AP2 changelog](https://github.com/google-agentic-commerce/AP2/blob/main/CHANGELOG.md) · [Google blog](https://blog.google/products-and-platforms/platforms/google-pay/agent-payments-protocol-fido-alliance/)
+- Checked in the same pass, **no correction needed:**
+  - Vol 2's WebMCP text names no entry point. The spec moved to `document.modelContext` on 27 May 2026, so any code sample in the full book that uses `navigator.modelContext` needs updating.
+  - Vol 2 says nothing specific about ChatGPT apps or checkout. For the record: OpenAI's Apps SDK docs now redirect to **"Plugins"**, and third-party plugins must use external checkout except in beta programmes.
+
+### A11. Turns 87, 93 and 97 (Q429, Q461, Q480): "low temperature and pinning make outputs reproducible" (NEEDS NUANCE)
+- **Problem 1: temperature is not always available.** Some current reasoning models reject a non-default `temperature` with an HTTP 400. Examples: Claude Opus 4.7 and later, and the GPT-5.x and o-series models on Azure. Other current models (the GPT-6 family, Gemini 3) accept it. So Q480's first remedy, "low temperature", can simply fail.
+- **Problem 2: temperature 0 is not deterministic.** Thinking Machines (10 Sep 2025) sampled one prompt 1,000 times at temperature 0 on a standard serving stack and got **80 unique completions**. The cause is batch-dependent numerics. Batch-invariant kernels made all 1,000 identical, at roughly 1.6–2× the cost. Hosted-API users cannot switch this on.
+- **Teach instead:**
+  - Pinning makes behaviour *stable and deliberate*, not *bitwise reproducible*.
+  - In CI, rely on repeated runs, tolerance bands, confidence intervals and pinned judges.
+  - Store outputs so failures can be replayed.
+- Sources: [Thinking Machines](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/) · provider model docs (check the current model's parameter support before teaching).
+
+### A12. Turn 23, Q110: distillation "works even when only a text API is available" (NEEDS NUANCE)
+- It is technically true, but it leaves out the **provider's terms**. Many commercial terms restrict using outputs to train competing models, and providers monitor for distillation.
+- **Teach:**
+  - Check the teacher's output-use terms before distilling or generating synthetic training data.
+  - Prefer an open-weight teacher whose licence allows it.
+  - Record which licence terms flow down to the student model.
+- See gap register entry MOD-13.
+
+### A13. Turn 135: managed reinforcement fine-tuning is consolidating, and OpenAI's platform is closing (OUTDATED framing)
+- OpenAI is **winding down its self-serve fine-tuning platform, including RFT**:
+  - **7 May 2026:** announced; new users are already blocked.
+  - **6 Jan 2027:** no customer can create new fine-tuning jobs.
+  - **23 Oct 2026:** o4-mini, OpenAI's only RFT model, shuts down.
+  - Inference on already fine-tuned models continues until their base model is deprecated.
+- Managed RFT continues elsewhere, for example Amazon Bedrock (from 3 Dec 2025), Microsoft Foundry and Tinker (GA 12 Dec 2025).
+- **Teach:** "post-training as a service" is real but provider-dependent. Keep training data and graders portable.
+- Sources: [OpenAI deprecations](https://developers.openai.com/api/docs/deprecations) · [OpenAI RFT guide](https://developers.openai.com/api/docs/guides/reinforcement-fine-tuning)
+
+### A14. Turns 94 and 103 (Q464, Q510): retry guidance for HTTP 429 is incomplete (NEEDS NUANCE)
+- "Retry rate limits with exponential backoff and jitter" is right *after* two more rules:
+  1. **Honour `Retry-After` first.** Anthropic's normal 429s send it; Microsoft Graph recommends backoff only when it is absent.
+  2. **Classify 429s: some are not retryable.** For example, Anthropic's spend-cap 429 (`enforced_spend_limit_reached`) carries no `Retry-After` and keeps failing until access is restored. Aggressive retries against SharePoint/Graph count against the quota and prolong throttling.
+- **Teach:** honour `Retry-After` → classify → back off with jitter within a retry budget → stop and alert on quota or spend-cap errors.
 
 ### Also update: Turn 134, Q668 (open-weight lag)
 - Epoch AI's 29 May 2026 data insight reports that open models lag the closed frontier by **~4 months (8 ECI points)** since Jan 2026. The ~3 months in Vol 2 covered Jan 2023–Oct 2025.
