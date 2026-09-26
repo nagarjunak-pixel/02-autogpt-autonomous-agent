@@ -2,17 +2,17 @@
 
 > Consented exam-room audio in; a clinician-verified SOAP note in the EHR within minutes, with every medication and dose traceable to what was actually said.
 >
-> **Customer:** Lakeshore Community Health (fictional) · **Industry:** Healthcare: US federally qualified health centre (FQHC) network · **Geography:** California and Texas, USA; English/Spanish · **Real engagement:** 24 weeks, FDE lead + speech/ML FDE + EHR integration engineer, with a customer clinical informaticist and a security engineer part-time · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
+> **Customer:** Almarosa Community Health (fictional) · **Industry:** Healthcare: US federally qualified health centre (FQHC) network · **Geography:** California and Texas, USA; English/Spanish · **Real engagement:** 24 weeks, FDE lead + speech/ML FDE + EHR integration engineer, with a customer clinical informaticist and a security engineer part-time · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 ## 1. Scenario: the customer and the ask
 
-**The customer.** Lakeshore runs 14 clinics: 9 in California's Central Valley, 5 in South Texas. About 110 prescribing clinicians (physicians, NPs, PAs) see roughly 2,000 visits a day. Just over half of patients prefer Spanish, many conversations code-switch, and some visits use in-person, phone or video interpreters.
+**The customer.** Almarosa runs 14 clinics: 9 in California's Central Valley, 5 in South Texas. About 110 prescribing clinicians (physicians, NPs, PAs) see roughly 2,000 visits a day. Just over half of patients prefer Spanish, many conversations code-switch, and some visits use in-person, phone or video interpreters.
 
 **Two EHRs.** After a 2024 merger, the California clinics run an Epic-style hosted EHR and the Texas clinics an athena-style cloud EHR.
 
 **The pain.** The CMO's staff survey says clinicians spend 60-120 minutes a night finishing notes. Two physicians resigned last year, citing burnout.
 
-**The ask vs the need.** The CMO asked for **"An AI scribe so doctors stop charting at night."** What Lakeshore actually needs is an ambient documentation *system*:
+**The ask vs the need.** The CMO asked for **"An AI scribe so doctors stop charting at night."** What Almarosa actually needs is an ambient documentation *system*:
 - consent that works in two languages and two states;
 - speech recognition and speaker diarisation that survive code-switching and interpreters;
 - a draft SOAP note plus *suggested* ICD-10-CM codes;
@@ -55,7 +55,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
   - A clinician-signed SOAP note is documentation, not a patient communication, and even when released to the portal it has been reviewed by the signing clinician.
   - The law *does* bite if AI-drafted after-visit summaries, Spanish instructions or portal replies go out without that licensed review.
 - **California AB 489** (Ch. 615, 2025; [bill](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB489)): AI must not imply a licensed human is providing the care or advice.
-- **Texas [Penal Code 16.02(c)(4)](https://texas.public.law/statutes/tex._penal_code_section_16.02)** allows one-party consent. Lakeshore uses all-party consent in both states anyway: one workflow, cross-state telehealth, trust.
+- **Texas [Penal Code 16.02(c)(4)](https://texas.public.law/statutes/tex._penal_code_section_16.02)** allows one-party consent. Almarosa uses all-party consent in both states anyway: one workflow, cross-state telehealth, trust.
 - **Texas SB 1188** (effective 1 Sept 2025; [text](https://capitol.texas.gov/tlodocs/89R/billtext/html/SB01188F.htm)).
   - Sec. 183.005: AI used "for diagnostic purposes" requires the practitioner to review all AI-created records and disclose the use to patients.
   - Sec. 183.002: EHRs must be "physically maintained in the United States" from 1 Jan 2026.
@@ -68,7 +68,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 
 **Infrastructure.** Clinic phones and tablets run under MDM, and exam-room Wi-Fi has dead zones, so capture needs an encrypted local buffer. Both EHRs expose FHIR R4, but *writing* notes typically needs vendor app registration, with lead times of weeks to months (verify).
 
-**Security.** SSO through Lakeshore's identity provider. Write-back runs under the signing clinician's identity (SMART-style on-behalf-of), never a shared service account.
+**Security.** SSO through Almarosa's identity provider. Write-back runs under the signing clinician's identity (SMART-style on-behalf-of), never a shared service account.
 
 **Budget and timeline.** The year-one all-in ceiling is about USD 250k, since FQHC margins are thin. The 20-clinician pilot must launch before the July onboarding cycle, and the board approves the consent language.
 
@@ -161,7 +161,7 @@ flowchart LR
   subgraph ROOM["EXAM ROOM: MDM device"]
     CAP["Capture app<br/>consent-gated, encrypted local buffer"]
   end
-  subgraph LCH["TRUST BOUNDARY: Lakeshore HIPAA environment, US region, BAA cloud"]
+  subgraph ACH["TRUST BOUNDARY: Almarosa HIPAA environment, US region, BAA cloud"]
     CON["Consent service<br/>FHIR Consent"]
     ING["Ingest API"]
     WF["Durable workflow"]
@@ -195,16 +195,16 @@ flowchart LR
 | Component | Responsibility | Options (OSS/self-host · managed) | Owner |
 |---|---|---|---|
 | Capture app | Consent gate, recording, encrypted buffer, stop button | PWA or native app · vendor SDK | FDE |
-| Consent service | Per-participant consent and withdrawal, FHIR `Consent` | FastAPI + HAPI FHIR · EHR consent module | FDE → Lakeshore |
+| Consent service | Per-participant consent and withdrawal, FHIR `Consent` | FastAPI + HAPI FHIR · EHR consent module | FDE → Almarosa |
 | ASR + diarisation | Speaker-labelled, timestamped transcript | faster-whisper/WhisperX + pyannote.audio · AWS HealthScribe/Transcribe (on AWS's HIPAA-eligible list, Sept 2026), Azure AI Speech, Google Speech-to-Text (check BAA scope, Spanish vocabulary) | FDE |
 | Note drafter | SOAP JSON with statement IDs | Llama/Qwen-class via vLLM · Azure OpenAI, Bedrock or Vertex AI under the cloud BAA (confirm the exact service, model and region are in scope) | FDE |
 | Verifier | Align statements to transcript spans; flag meds and doses | Code sketch below + NLI model · LLM judge (second pass) | FDE |
 | Code suggester | Ranked ICD-10-CM candidates with evidence | Embedding retrieval over the public code set · vendor CAC tools | FDE + coding lead |
-| Workflow | Retries, timers, idempotent write-back | Temporal, Restate · Step Functions, Azure Durable Functions | FDE → Lakeshore IT |
-| Observability | Traces, latency, cost, quality | OTel GenAI + Langfuse/Phoenix self-hosted · a vendor under BAA | Lakeshore IT |
+| Workflow | Retries, timers, idempotent write-back | Temporal, Restate · Step Functions, Azure Durable Functions | FDE → Almarosa IT |
+| Observability | Traces, latency, cost, quality | OTel GenAI + Langfuse/Phoenix self-hosted · a vendor under BAA | Almarosa IT |
 
 **ADRs** ([template 04](templates/04-solution-design-and-adr.md)):
-1. **Build vs buy.** Commercial ambient scribes (for example Microsoft Dragon Copilot, [announced 3 Mar 2025](https://news.microsoft.com/2025/03/03/microsoft-dragon-copilot-provides-the-healthcare-industrys-first-unified-voice-ai-assistant-that-enables-clinicians-to-streamline-clinical-documentation-surface-information-and-automate-task/), Abridge, Suki, Nabla, Ambience) vs EHR-native offerings (verify roadmaps) vs custom. Decide by a bake-off on Lakeshore's golden set: Spanish and interpreter slices, both EHRs, BAA and data-use terms, exit terms, cost per visit.
+1. **Build vs buy.** Commercial ambient scribes (for example Microsoft Dragon Copilot, [announced 3 Mar 2025](https://news.microsoft.com/2025/03/03/microsoft-dragon-copilot-provides-the-healthcare-industrys-first-unified-voice-ai-assistant-that-enables-clinicians-to-streamline-clinical-documentation-surface-information-and-automate-task/), Abridge, Suki, Nabla, Ambience) vs EHR-native offerings (verify roadmaps) vs custom. Decide by a bake-off on Almarosa's golden set: Spanish and interpreter slices, both EHRs, BAA and data-use terms, exit terms, cost per visit.
 2. **ASR and diarisation.** Managed vs self-hosted; a separate audio channel for video interpreters; voiceprint enrolment or not.
 3. **LLM route.** A BAA-covered API vs self-hosted open weights; the pinning and deprecation policy.
 4. **Audio retention.** Delete at signature vs a 30-day QA window vs consented QI samples only.
@@ -219,7 +219,7 @@ flowchart LR
 | POC (4-8) | Pipeline on golden plus 50 consented recordings; clinician rating rubric; vendor bake-off | Offline targets met or buy decision taken | Eval plan ([05](templates/05-eval-plan.md)), ADRs 1-3, demo ([10](templates/10-demo-script-and-status-report.md)) |
 | Pilot (9-16) | 20 clinicians, 4 clinics (2 per state), 1 week shadow, then assisted; write-back to one EHR | Acceptance table met; no critical error in signed-note audit | Threat model ([06](templates/06-threat-model-and-controls.md)), compliance map ([07](templates/07-compliance-obligations-to-controls.md)), weekly status |
 | Production (17-22) | Second EHR, all clinics in waves, canary for model changes, DR drill | Security review; CMIO and compliance sign-off | Security pack ([08](templates/08-security-review-pack.md)), SLOs, runbooks |
-| Handover (23-24) | Train Lakeshore IT and clinical informatics; hand over the rater programme | Customer runs a model-upgrade canary unaided | Handover ([09](templates/09-runbook-slos-and-handover.md)) |
+| Handover (23-24) | Train Almarosa IT and clinical informatics; hand over the rater programme | Customer runs a model-upgrade canary unaided | Handover ([09](templates/09-runbook-slos-and-handover.md)) |
 
 **Code sketch: note verification.** It aligns medication statements to transcript spans and flags unsupported medications, unsupported doses and negation conflicts. The review UI highlights the evidence spans, and `UNSUPPORTED_MEDICATION` blocks signing until acknowledged.
 

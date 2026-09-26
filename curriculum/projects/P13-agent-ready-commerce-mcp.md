@@ -2,13 +2,13 @@
 
 > Make a D2C ethnic-wear brand discoverable and safely buyable inside AI assistants and in-browser agents, using a standards-based remote MCP server, honest structured data and checkout bound to the shopper's mandate. Do it without letting agents, scrapers, poisoned seller text or the brand's own marketing team game the system.
 >
-> **Customer:** Saree Sutra (fictional) · **Industry:** D2C fashion / ethnic wear with an artisan-seller marketplace · **Geography:** India (HQ), US, UK · **Real engagement:** 14 weeks; FDE lead, two TypeScript engineers, part-time security engineer · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆ · **Stack:** TypeScript-first
+> **Customer:** Neyyarasi (fictional) · **Industry:** D2C fashion / ethnic wear with an artisan-seller marketplace · **Geography:** India (HQ), US, UK · **Real engagement:** 14 weeks; FDE lead, two TypeScript engineers, part-time security engineer · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆ · **Stack:** TypeScript-first
 
 ---
 
 ## 1. Scenario — the customer and the ask
 
-Saree Sutra sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annual GMV, 35% from diaspora shoppers in the US and UK. Of its 18,000 SKUs, 40% come from about 300 artisan sellers and weaving cooperatives, who write their own descriptions in a seller portal. The engagement began when the CEO asked a chat assistant for "a Kanjivaram saree for my sister's wedding, delivered to New Jersey" and it recommended a competitor.
+Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annual GMV, 35% from diaspora shoppers in the US and UK. Of its 18,000 SKUs, 40% come from about 300 artisan sellers and weaving cooperatives, who write their own descriptions in a seller portal. The engagement began when the CEO asked a chat assistant for "a Kanjivaram saree for my sister's wedding, delivered to New Jersey" and it recommended a competitor.
 
 **The ask:** "Be discoverable and buyable inside AI assistants."
 
@@ -102,7 +102,7 @@ Saree Sutra sells sarees, lehengas, blouses and kurtas: about ₹250 crore of an
 - *Rules and code:* auth, mandates, idempotency and rate limits.
 - *Classic retrieval:* BM25 plus embeddings and a cross-encoder reranker; no generation in the request path.
 - *One offline, schema-constrained LLM call:* normalises seller descriptions into attributes.
-- *No agent to build:* the assistants are the agents; Saree Sutra builds tools, data and guardrails.
+- *No agent to build:* the assistants are the agents; Neyyarasi builds tools, data and guardrails.
 
 **Decision: Go, with conditions:** catalogue completeness starts in week 1; checkout phase 1 is a hand-off to the brand's checkout; delegated payment only with written PSP confirmation.
 
@@ -137,7 +137,7 @@ flowchart LR
   subgraph EDGE["Edge"]
     WAF["CDN / WAF: bot scoring, Web Bot Auth check,<br/>rate limits, robots and content signals"]
   end
-  subgraph CORE["Saree Sutra trust zone"]
+  subgraph CORE["Neyyarasi trust zone"]
     MCP["Remote MCP server (TypeScript, stateless)<br/>search, product, size, cart, order status"]
     AZ["Authorization server<br/>OAuth 2.1, PKCE, audience-bound tokens"]
     MAN["Mandate and limits service"]

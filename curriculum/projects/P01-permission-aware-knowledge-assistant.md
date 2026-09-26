@@ -1,11 +1,11 @@
 # P01 · Permission-Aware Knowledge Assistant for a Law Firm
 
 > A research assistant over the firm's matter files. It answers with paragraph-level citations and never shows anyone a document they could not open themselves, including documents behind an ethical wall.
-> **Customer:** Meridian & Rao LLP (fictional) · **Industry:** Legal services (disputes, M&A, regulatory) · **Geography:** London, Mumbai, Bengaluru; clients in the UK, EU and India · **Real engagement:** 16 weeks; 2 FDEs and a security engineer at 50%, plus the firm's KM lead, a DMS administrator and 2 lawyer SMEs (4 h/week each) · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
+> **Customer:** Carrowby & Varadan LLP (fictional) · **Industry:** Legal services (disputes, M&A, regulatory) · **Geography:** London, Mumbai, Bengaluru; clients in the UK, EU and India · **Real engagement:** 16 weeks; 2 FDEs and a security engineer at 50%, plus the firm's KM lead, a DMS administrator and 2 lawyer SMEs (4 h/week each) · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 ## 1. Scenario — the customer and the ask
 
-Meridian & Rao has about 1,200 staff, around 550 of them fee earners. Its iManage/NetDocuments-style DMS holds about 9 million documents and emails across about 60,000 matters, and newer work lives in SharePoint and Teams. The Managing Partner asked for **"ChatGPT for our documents"**. Associates are already pasting clauses into consumer chatbots, which the CISO keeps blocking.
+Carrowby & Varadan has about 1,200 staff, around 550 of them fee earners. Its iManage/NetDocuments-style DMS holds about 9 million documents and emails across about 60,000 matters, and newer work lives in SharePoint and Teams. The Managing Partner asked for **"ChatGPT for our documents"**. Associates are already pasting clauses into consumer chatbots, which the CISO keeps blocking.
 
 **What they actually need** is a research assistant that:
 

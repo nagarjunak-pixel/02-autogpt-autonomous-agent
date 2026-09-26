@@ -143,7 +143,7 @@ flowchart LR
 | Signing: sign outside, verify inside | OpenSSF `model_signing` (key/PKI/PKCS#11), cosign | Network HSM | Security |
 | Retrieval: hybrid search, ACL and supersession filters | OpenSearch or Qdrant; BGE-M3 / Qwen3-Embedding | Elastic on-prem | ML |
 | OCR: scans, Telugu script | Tesseract, docTR, a VLM (Gemma 4) | Commercial OCR SDK | ML |
-| Gateway: auth, quotas, masking, logs | Envoy AI Gateway; LiteLLM pinned (1.82.7/1.82.8 were compromised on PyPI, Mar 2026) | Kong, F5 | Platform |
+| Gateway: auth, quotas, masking, logs | Agent Router (formerly Envoy AI Gateway, renamed 9 Sep 2026); LiteLLM pinned (1.82.7/1.82.8 were compromised on PyPI, Mar 2026) | Kong, F5 | Platform |
 | Observability: traces, GPU/KV metrics | OTel Collector, Prometheus, DCGM, Grafana | Bank SIEM/APM | SRE |
 | Evaluation: bake-offs, gates, canaries | Inspect, lm-evaluation-harness, DeepEval, Promptfoo (OpenAI announced its acquisition 9 Mar 2026; still open source) | Vendor eval platforms | ML |
 | IaC/GitOps: rebuild either site | OpenTofu, Ansible, Argo CD + in-enclave Gitea | Terraform Enterprise | Platform |

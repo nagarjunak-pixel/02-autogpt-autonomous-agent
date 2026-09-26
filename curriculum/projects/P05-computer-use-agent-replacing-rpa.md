@@ -1,13 +1,13 @@
 # P05 · Computer-Use Agent Replacing Brittle RPA for Customs Filing
 
 > Replace weekly-breaking RPA bots with a gated, durable, auditable computer-use layer that bridges to a real API.
-> **Customer:** Northwind Freight Forwarders (fictional) · **Industry:** Freight forwarding and customs brokerage · **Geography:** Rotterdam (NL/EU) and Chennai (IN) · **Real engagement:** 14 weeks; 1 FDE lead, 2 FDEs, a part-time security engineer, plus the customer's RPA CoE engineer and a customs SME · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
+> **Customer:** Duinhaven Freight Forwarders (fictional) · **Industry:** Freight forwarding and customs brokerage · **Geography:** Rotterdam (NL/EU) and Chennai (IN) · **Real engagement:** 14 weeks; 1 FDE lead, 2 FDEs, a part-time security engineer, plus the customer's RPA CoE engineer and a customs SME · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 ## 1. Scenario — the customer and the ask
 
-Northwind (about 1,100 staff) runs two operations hubs:
-- **Rotterdam** keys import and export declarations into a customs broker's web portal ("BrokerLink", fictional, no API); the broker lodges them with customs.
-- **Chennai** keys shipment and goods-line data into "CargoDesk 7", a 2011-vintage Windows desktop TMS, and into BrokerLink for EU-bound consignments.
+Duinhaven (about 1,100 staff) runs two operations hubs:
+- **Rotterdam** keys import and export declarations into a customs broker's web portal ("Tollvane", fictional, no API); the broker lodges them with customs.
+- **Chennai** keys shipment and goods-line data into "Manifestra 7", a 2011-vintage Windows desktop TMS, and into Tollvane for EU-bound consignments.
 
 Fourteen RPA bots key this with selectors and screen coordinates. Tickets show **31 bot breakages in 26 weeks**, with a mean outage of 9 hours. Two filings missed vessel cut-offs last quarter.
 
@@ -15,7 +15,7 @@ Fourteen RPA bots key this with selectors and screen coordinates. Tickets show *
 
 **The real need:** climb the **decision ladder** first (official API/EDI > MCP server > WebMCP > computer use), then run what remains as an **isolated**, **durable**, **idempotent** workflow with **per-step screenshots** as the audit trail and **human confirmation before every submission**, plus a plan to push the vendor for an API.
 
-The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating into a declaration", because Northwind carries the liability.
+The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating into a declaration", because Duinhaven carries the liability.
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
@@ -26,7 +26,7 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 | CISO | Credentials, MFA, isolation, egress | Security sign-off |
 | Group DPO (NL) | Personal data in screenshots, EU–India transfers | Evidence retention design |
 | IT Infrastructure | Windows VMs, VDI capacity | Environment provisioning |
-| BrokerLink vendor (external) | Terms of service, portal load | Automated access, API roadmap |
+| Tollvane vendor (external) | Terms of service, portal load | Automated access, API roadmap |
 | Works council (NL) | Monitoring of reviewers | Reviewer-vigilance metrics |
 
 ## 2. Constraints
@@ -40,11 +40,11 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 - **India DPDP Act 2023 and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), notified 13 Nov 2025): the consent-manager rule applies 12 months and most duties 18 months from notification (May 2027). Design for them now.
 - **EU AI Act:** this use is not Annex III high-risk. The Art. 4 AI-literacy duty has applied since 2 Feb 2025; the Digital Omnibus (Reg. (EU) 2026/1744) softened it to "take measures to support" AI literacy ([text](https://artificialintelligenceact.eu/article/4/)). Train approvers either way.
 - **Dutch WOR Art. 27(1)(l):** the works council has a consent right over facilities "suitable for" observing staff behaviour or performance, which covers the reviewer-vigilance metrics ([wetten.overheid.nl](https://wetten.overheid.nl/BWBR0002747/)).
-- **BrokerLink terms of service:** automated access has never been confirmed in writing; get it confirmed.
+- **Tollvane terms of service:** automated access has never been confirmed in writing; get it confirmed.
 
-**Infrastructure.** BrokerLink is a single-page app with 15-minute sessions and per-user TOTP MFA. CargoDesk runs on Windows Server VDI with a partial UI Automation (UIA) tree. Chennai–Rotterdam round-trip time is about 150 ms.
+**Infrastructure.** Tollvane is a single-page app with 15-minute sessions and per-user TOTP MFA. Manifestra runs on Windows Server VDI with a partial UI Automation (UIA) tree. Chennai–Rotterdam round-trip time is about 150 ms.
 
-**Security.** All 14 bots share one operator's credentials and MFA seed, stored in a config file. As an ISO 27001-certified Authorised Economic Operator (UCC Art. 38), Northwind can have its IT controls audited by customs.
+**Security.** All 14 bots share one operator's credentials and MFA seed, stored in a config file. As an ISO 27001-certified Authorised Economic Operator (UCC Art. 38), Duinhaven can have its IT controls audited by customs.
 
 **Budget and politics.**
 - Budget: EUR 180k. Run cost must beat the RPA TCO of about EUR 240k/yr (licences, 1.5 FTE maintenance, overtime; validate in week 1).
@@ -60,8 +60,8 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 - **Ground truth:** the expected value of every portal field per record.
 
 **Mock systems.**
-1. **BrokerLink mock** (FastAPI + HTML/JS): TOTP login (`pyotp`), 15-minute sessions, search by customer reference; UI variants v1 baseline, v2 redesign (renamed labels, tabs, cookie banner), v3 (confirmation modal, lazy dropdowns, goods lines in an iframe), v4 (random A/B); 5% HTTP 502s and 3% 20-second stalls; a fake movement reference on submit.
-2. **CargoDesk mock:** a Qt desktop app in a Linux container, viewed over noVNC. Qt exposes AT-SPI on Linux and UIA on Windows. A Windows VM track is optional.
+1. **Tollvane mock** (FastAPI + HTML/JS): TOTP login (`pyotp`), 15-minute sessions, search by customer reference; UI variants v1 baseline, v2 redesign (renamed labels, tabs, cookie banner), v3 (confirmation modal, lazy dropdowns, goods lines in an iframe), v4 (random A/B); 5% HTTP 502s and 3% 20-second stalls; a fake movement reference on submit.
+2. **Manifestra mock:** a Qt desktop app in a Linux container, viewed over noVNC. Qt exposes AT-SPI on Linux and UIA on Windows. A Windows VM track is optional.
 3. **Vendor API stub:** an OpenAPI spec released in course week 4, for curveball 4.
 
 **Budget.**
@@ -83,8 +83,8 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 
 **Discovery questions:**
 1. Does the broker offer EDI (UN/EDIFACT CUSDEC/CUSRES), SFTP batch upload or a partner API, even on a premium tier?
-2. Could Northwind lodge through certified declaration software instead?
-3. Does CargoDesk have an import folder, a reporting DB or a COM/.NET automation interface?
+2. Could Duinhaven lodge through certified declaration software instead?
+3. Does Manifestra have an import folder, a reporting DB or a COM/.NET automation interface?
 4. What exactly changed in each of the last ten breakages?
 5. Which screens are irreversible? Is there a saved-draft state? What does invalidation cost?
 6. Whose identity and MFA do the bots use? Will the vendor issue service accounts and allow automated access?
@@ -98,17 +98,17 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 - The top rows on [Steel.dev's leaderboard](https://leaderboard.steel.dev/leaderboards/osworld/) (4 Sep 2026) show 83–86%, but **all are self-reported**, with differing step limits and harnesses.
 - **OSWorld 2.0** ([arXiv 2606.29537](https://arxiv.org/abs/2606.29537), v1 28 Jun 2026) has 108 workflows at a median of about 1.6 human-hours each. At publication (June 2026) the best agent scored **20.6% binary / 54.8% partial** with a 500-step budget, and agents "lose track of constraints … and skip verification".
 - An audit of 150 failure-scored trajectories from five benchmarks found **15.3% of FAIL verdicts were wrong** ([arXiv 2607.28367](https://arxiv.org/abs/2607.28367), 30 Jul 2026).
-- **Conclusion:** measure pass^k on Northwind's own screens.
+- **Conclusion:** measure pass^k on Duinhaven's own screens.
 
 **Qualification: the lowest rung that works**
 
-| Rung | Northwind status | Decision |
+| Rung | Duinhaven status | Decision |
 |---|---|---|
 | 1. Official API / EDI | None today; vendor says "on roadmap" | Push commercially (contract renewal is in 5 months); design for it |
-| 2. MCP server | Possible over CargoDesk's import folder and reporting DB (about 60% of TMS fields) | Build a thin internal MCP server; it later wraps the vendor API |
+| 2. MCP server | Possible over Manifestra's import folder and reporting DB (about 60% of TMS fields) | Build a thin internal MCP server; it later wraps the vendor API |
 | 3. WebMCP / structured page tools | Only the site owner can add WebMCP tools (`document.modelContext`; Chrome origin trial 149–156; W3C community-group draft; see Turn 69) | Ask the vendor; not in our control |
 | 4a. DOM / accessibility-tree automation | Works: Playwright role locators and UIA via pywinauto | **Default executor.** Deterministic, cheap, testable |
-| 4b. Pixel-level computer use | Needed when UI drift defeats 4a, and for CargoDesk screens with a poor accessibility tree | **Gated fallback only** |
+| 4b. Pixel-level computer use | Needed when UI drift defeats 4a, and for Manifestra screens with a poor accessibility tree | **Gated fallback only** |
 
 Below the ladder: rules validate the data (net ≤ gross mass), and a single vision-language model (VLM) call proposes locator repairs. Pure computer use everywhere is rejected on cost, latency and injection surface (§10).
 
@@ -134,7 +134,7 @@ Critical fields are held at 100% because UCC Art. 15 and s.114AA leave no statis
 
 ```mermaid
 flowchart LR
-  subgraph TB1["Trust boundary 1: Northwind control plane (trusted)"]
+  subgraph TB1["Trust boundary 1: Duinhaven control plane (trusted)"]
     SRC[("TMS import folder + reporting DB")]
     MCP["Internal MCP server: typed shipment tools"]
     WF["Durable workflow: one per filing"]
@@ -149,10 +149,10 @@ flowchart LR
     EXEC["Scripted executor: Playwright roles / UIA"]
     CUA["Computer-use fallback agent"]
     BR["Per-run browser profile"]
-    WIN["Windows VM with CargoDesk client"]
+    WIN["Windows VM with Manifestra client"]
   end
   subgraph TB3["Trust boundary 3: untrusted content"]
-    PORTAL["BrokerLink portal pages"]
+    PORTAL["Tollvane portal pages"]
     REM["Shipment remarks and customer free text"]
   end
   LLM["Model endpoint: managed API or self-hosted VLM"]
@@ -174,7 +174,7 @@ flowchart LR
 
 | Component | Responsibility | Self-hostable option | Managed option | Owner |
 |---|---|---|---|---|
-| Durable workflow | Per-filing state, timers, non-retryable submit | Temporal, DBOS, Restate | Temporal Cloud, AWS Step Functions, Azure Durable Functions | Northwind platform team |
+| Durable workflow | Per-filing state, timers, non-retryable submit | Temporal, DBOS, Restate | Temporal Cloud, AWS Step Functions, Azure Durable Functions | Duinhaven platform team |
 | Scripted executor | Fast path via role/UIA locators | Playwright, pywinauto | Existing RPA robots (keeps the CoE involved) | RPA CoE |
 | Computer-use model | Grounding and actions when locators fail | UI-TARS-1.5, Qwen-VL family on vLLM | Computer-use tools from Anthropic, OpenAI or Google. OpenAI retired only the `computer-use-preview` model (23 Jul 2026); its computer tool continues on GPT-5.6 models | AI platform |
 | Sandbox | Ephemeral browser/VM per run | Docker plus noVNC, Firecracker microVMs, Hyper-V VMs | Browserbase or Steel (browsers); Azure Virtual Desktop / Windows 365 (TMS) | IT infrastructure |
@@ -273,7 +273,7 @@ class ActionGate:
 ## 8. Evaluation plan
 
 **Datasets:**
-- **Golden:** 300 verified filings. **UI variants:** portal v1–v4 × 2 CargoDesk layouts.
+- **Golden:** 300 verified filings. **UI variants:** portal v1–v4 × 2 Manifestra layouts.
 - **Adversarial:** 300+ cases: remarks injections, lookalike-domain redirects, fake "session expired" login pages, pop-ups, instructions hidden in goods descriptions.
 - **Chaos:** a crash at every step, 502s, timeouts, MFA mid-run. **Regression:** one case per incident.
 - **Held-out:** portal **v5**, unseen until final grading, simulating a real redesign.

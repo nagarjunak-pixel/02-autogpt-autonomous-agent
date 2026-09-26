@@ -2,13 +2,13 @@
 
 > Turn "modernise in half the time" into a measured coding-agent programme: one COBOL premium module migrated by sandboxed agents against a legacy oracle, with productivity figures you can defend to a board.
 
-> **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
+> **Customer:** Bhuvika Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 ---
 
 ## 1. Scenario — the customer and the ask
 
-Bharat Mutual Life (BML) has about 4.2 million in-force policies. Premiums come from `PRMCALC`, a z/OS COBOL suite of 14 programs, 22 copybooks and about 38k lines, inside roughly 1.8M lines of COBOL/JCL. `PRMCALC` prices about 350k renewal notices a month in batch and serves quotes via CICS to a Java 8 servicing monolith (about 600k lines).
+Bhuvika Mutual Life (BML) has about 4.2 million in-force policies. Premiums come from `PRMCALC`, a z/OS COBOL suite of 14 programs, 22 copybooks and about 38k lines, inside roughly 1.8M lines of COBOL/JCL. `PRMCALC` prices about 350k renewal notices a month in batch and serves quotes via CICS to a Java 8 servicing monolith (about 600k lines).
 
 **The ask (CTO):** "Use AI coding agents to modernise in half the time." A systems integrator (SI) has pitched "automatic COBOL-to-Java for the whole estate in six months", and the board wants a mainframe-exit story.
 

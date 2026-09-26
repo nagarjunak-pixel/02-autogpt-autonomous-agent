@@ -2,15 +2,15 @@
 
 > A 1–8B model on rugged laptops in substations with no signal. It is fine-tuned and distilled for manual Q&A and fault diagnosis, grounded in on-device manuals, and for any lockout/tagout or high-voltage step it quotes the exact manual step or refuses and escalates.
 
-> **Customer:** VoltGrid Energy Services (fictional) · **Industry:** Utility maintenance contracting (substations, switchgear, distribution) · **Geography:** US Gulf Coast field operations (Texas, Louisiana); engineering centre in Hyderabad · **Real engagement:** 18 weeks; FDE lead, ML engineer (SFT, distillation, evals), edge engineer (runtimes, packaging), part-time HSE safety SME and security engineer · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
+> **Customer:** Kilnridge Energy Services (fictional) · **Industry:** Utility maintenance contracting (substations, switchgear, distribution) · **Geography:** US Gulf Coast field operations (Texas, Louisiana); engineering centre in Hyderabad · **Real engagement:** 18 weeks; FDE lead, ML engineer (SFT, distillation, evals), edge engineer (runtimes, packaging), part-time HSE safety SME and security engineer · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
 ## 1. Scenario — the customer and the ask
 
-VoltGrid's 1,100 technicians maintain breakers, transformers, relays and switchgear for utilities and electric co-ops. Substations often have no signal, some clients forbid network connections, and after hurricanes crews can be offline for weeks. Today technicians scroll PDFs or queue for the desk-engineer hotline. The VP of Field Operations asks for **"an offline assistant for our technicians."**
+Kilnridge's 1,100 technicians maintain breakers, transformers, relays and switchgear for utilities and electric co-ops. Substations often have no signal, some clients forbid network connections, and after hurricanes crews can be offline for weeks. Today technicians scroll PDFs or queue for the desk-engineer hotline. The VP of Field Operations asks for **"an offline assistant for our technicians."**
 
 The real need:
 1. **Manual Q&A** grounded in on-device manuals, citing document, revision, section and step.
-2. **Fault-diagnosis dialogue** that follows VoltGrid's troubleshooting trees (symptom → next check → likely cause → escalate).
+2. **Fault-diagnosis dialogue** that follows Kilnridge's troubleshooting trees (symptom → next check → likely cause → escalate).
 3. **Safety-critical behaviour.** For lockout/tagout (LOTO), switching, grounding and high-voltage steps, the assistant **renders the exact manual text or refuses and escalates**. It never paraphrases.
 4. **Sync when connected.** Models, adapters and manual packs update at depots, with recall of bad versions.
 5. **Proof that fine-tuning is worth it.** A small model with RAG and a good prompt may be enough, and the FDE must find out honestly.
@@ -30,7 +30,7 @@ The key insight is to **fine-tune for behaviour, not knowledge.** Citation forma
 
 ## 2. Constraints
 
-**Data.** About 3,800 documents (2,600 OEM manuals, 900 VoltGrid procedures, 300 bulletins), about 180k pages. A quarter are scanned, and torque and clearance tables are often images. Several revisions of each manual are in circulation, and 10% of crew guides are in Spanish. Three years of hotline notes (about 40k calls) contain names, so minimise them.
+**Data.** About 3,800 documents (2,600 OEM manuals, 900 Kilnridge procedures, 300 bulletins), about 180k pages. A quarter are scanned, and torque and clearance tables are often images. Several revisions of each manual are in circulation, and 10% of crew guides are in Spanish. Three years of hotline notes (about 40k calls) contain names, so minimise them.
 
 **Legal and regulatory (US; as of Sept 2026, verify before teaching).**
 
@@ -71,7 +71,7 @@ The key insight is to **fine-tune for behaviour, not knowledge.** Citation forma
 **Baselines.** Label 500 hotline calls by intent, handle time and "was the answer in a manual?". Time 10 shadowed lookups. Count repeat visits and near-misses tied to procedure lookup. **Export device inventory (CPU, RAM, NPU, OS build) from MDM telemetry, not from the purchase order.**
 
 **Sharpest questions.**
-1. For each LOTO or switching step, which document is authoritative (OEM manual, VoltGrid procedure, the utility's switching order), and which wins in a conflict?
+1. For each LOTO or switching step, which document is authoritative (OEM manual, Kilnridge procedure, the utility's switching order), and which wins in a conflict?
 2. How do you know which revision a crew holds today?
 3. Do laptops ever connect to a utility's BES Cyber Systems, and whose TCA plan governs software changes?
 4. Which hotline questions have no answer in any manual?
@@ -116,7 +116,7 @@ flowchart LR
     OEM["OEM manuals and bulletins"]
     TCH["Teacher: open-weight, self-hosted<br/>(API only where terms allow)"]
   end
-  subgraph HQ["TB1 · VoltGrid training enclave"]
+  subgraph HQ["TB1 · Kilnridge training enclave"]
     ING["Parse + OCR + tables<br/>→ revision-stamped packs"] --> SYN["Synthetic generation"]
     SYN --> FIL["Filter · decontaminate · verify"] --> SFT["LoRA/QLoRA SFT + embedding FT"]
     SFT --> QNT["Quantise per device class"] --> EVG["Gates: safety re-test,<br/>on-device bench"] --> PKG["Package + sign"]
@@ -175,7 +175,7 @@ The **safety router** is deterministic (rules plus a small classifier tuned for 
 | POC (3–7) | Packs, router, renderer, lookup; B0; synthetic pipeline + filter; embedding FT; B1; quantised builds; device bench | B0-vs-B1 decision with CIs; safety suite 100% on the chosen build | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
 | Pilot (8–13) | 6 crews vs 6 control crews; signed sync; recall drill; B2; red team | Hotline delta measured; no safety incident; recall within one sync | [08](templates/08-security-review-pack.md), weekly [10](templates/10-demo-script-and-status-report.md) |
 | Production (14–17) | Rollout by device class; client CIP evidence packs; fleet dashboard | ≥ 95% on approved version; HSE sign-off | [09](templates/09-runbook-slos-and-handover.md) |
-| Handover (18) | VoltGrid ships a manual release and a model release alone | Both pass gates | Checklist, AI-BOM |
+| Handover (18) | Kilnridge ships a manual release and a model release alone | Both pass gates | Checklist, AI-BOM |
 
 **Synthetic data and distillation.**
 - **Generation.** The teacher writes Q&A and dialogues **only from training-split passages**, varying phrasing with slang, Spanish and typos. Include unanswerable examples ("not in the manual — escalate") and HSE-reviewed refusals.

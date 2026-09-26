@@ -1,11 +1,11 @@
 # P06 · Injection-Resistant Executive Inbox and Calendar Agent
 
 > Build an AI chief-of-staff for 40 executives in which no single model context ever holds private data, untrusted content and an exfiltration channel at once, and where "draft only" survives a long session.
-> **Customer:** Helix Therapeutics (fictional) · **Industry:** Biotech (commercial-stage, Nasdaq-listed, fictional) · **Geography:** Cambridge, MA and South San Francisco, CA (US) · **Real engagement:** 12 weeks; 1 FDE lead, 1 FDE, a part-time security engineer, plus Helix's M365/Entra admin and the Chief of Staff as product owner · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
+> **Customer:** Kerrowan Therapeutics (fictional) · **Industry:** Biotech (commercial-stage, Nasdaq-listed, fictional) · **Geography:** Cambridge, MA and South San Francisco, CA (US) · **Real engagement:** 12 weeks; 1 FDE lead, 1 FDE, a part-time security engineer, plus Kerrowan's M365/Entra admin and the Chief of Staff as product owner · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 ## 1. Scenario — the customer and the ask
 
-Helix (about 900 staff) has one approved product and a Phase 3 pipeline. Its 40 executives work in Microsoft 365 with 12 executive assistants (EAs). Each executive receives about 120 emails a day and has about 30 meetings a week. EAs estimate 40% of their time goes on scheduling (validate this in discovery).
+Kerrowan (about 900 staff) has one approved product and a Phase 3 pipeline. Its 40 executives work in Microsoft 365 with 12 executive assistants (EAs). Each executive receives about 120 emails a day and has about 30 meetings a week. EAs estimate 40% of their time goes on scheduling (validate this in discovery).
 
 **The ask (CEO):** "An AI chief-of-staff that handles our email and calendar."
 
@@ -16,7 +16,7 @@ Helix (about 900 staff) has one approved product and a Phase 3 pipeline. Its 40 
 
 This is not theoretical: **EchoLeak** (CVE-2025-32711) achieved "remote, unauthenticated data exfiltration via a single crafted email" against Microsoft 365 Copilot ([arXiv 2509.10540](https://arxiv.org/abs/2509.10540), Sept 2025).
 
-The FDE's first honest move is to put **buying** on the table (ADR-1): extend Helix's M365 Copilot licences with Copilot Studio agents. Build only if Helix needs what a packaged assistant does not give it: data-flow policies it controls, guaranteed adverse-event routing, and a send policy it enforces itself.
+The FDE's first honest move is to put **buying** on the table (ADR-1): extend Kerrowan's M365 Copilot licences with Copilot Studio agents. Build only if Kerrowan needs what a packaged assistant does not give it: data-flow policies it controls, guaranteed adverse-event routing, and a send policy it enforces itself.
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
@@ -41,9 +41,9 @@ The FDE's first honest move is to put **buying** on the table (ADR-1): extend He
   - unexpected fatal or life-threatening reactions are due within **7 calendar days of the sponsor's initial receipt**.
 
   An AE report sitting in an executive's inbox is a running regulatory clock, so routing needs near-perfect recall. For the approved product, post-marketing 15-day alert reports also apply ([21 CFR 314.80](https://www.law.cornell.edu/cfr/text/21/314.80) for drugs, [600.80](https://www.law.cornell.edu/cfr/text/21/600.80) for biologics).
-- **HIPAA:** Helix is probably not a [covered entity](https://www.hhs.gov/hipaa/for-professionals/covered-entities/index.html) (confirm), but patient-level data is still handled as the most restricted class.
+- **HIPAA:** Kerrowan is probably not a [covered entity](https://www.hhs.gov/hipaa/for-professionals/covered-entities/index.html) (confirm), but patient-level data is still handled as the most restricted class.
 - **Massachusetts 201 CMR 17.00:** a written information security programme covering MA residents' personal information, which brings the agent and its vendors into scope ([mass.gov](https://www.mass.gov/regulations/201-CMR-1700-standards-for-the-protection-of-personal-information-of-residents-of-the-commonwealth); verify).
-- **[CCPA/CPRA](https://oag.ca.gov/privacy/ccpa):** employee personal information is covered if Helix meets the thresholds (verify).
+- **[CCPA/CPRA](https://oag.ca.gov/privacy/ccpa):** employee personal information is covered if Kerrowan meets the thresholds (verify).
 - **Litigation holds, [FRCP 37(e)](https://www.law.cornell.edu/rules/frcp/rule_37):** drafts, summaries and memory are electronically stored information. The agent must never delete mail.
 
 **Infrastructure and security.** M365 E5 (Entra ID, Exchange Online, Purview, Defender) on Azure, with models in US regions under zero-data-retention terms. The CISO requires no tenant-wide app-only `Mail.*` permissions, per-executive delegated consent, a kill switch under 5 minutes, and a red-team pass before the pilot.
@@ -134,7 +134,7 @@ flowchart TB
   subgraph T0["Trusted user: executive or EA"]
     UI["Outlook add-in or web panel"]
   end
-  subgraph T1["Boundary A: privileged control plane (Helix Azure)"]
+  subgraph T1["Boundary A: privileged control plane (Kerrowan Azure)"]
     PL["P-LLM planner: request + variable names/types only"]
     INT["Interpreter + policy engine: provenance, capabilities"]
     PIN[("Pinned constraints: mode, allow-list, off-limits")]
@@ -146,7 +146,7 @@ flowchart TB
     Q["Q-LLM reader: schema-validated values"]
   end
   subgraph T3["Boundary C: tool server"]
-    MCP["Helix mail/calendar MCP server (OAuth resource server)"]
+    MCP["Kerrowan mail/calendar MCP server (OAuth resource server)"]
   end
   subgraph T4["Microsoft 365 tenant"]
     ENTRA["Entra ID: OBO, Conditional Access"]
@@ -173,12 +173,12 @@ flowchart TB
 
 | Component | Responsibility | Self-hostable option | Managed option | Owner |
 |---|---|---|---|---|
-| Planner and Q-LLM | Plans; typed extraction | Llama/Qwen-class on vLLM | Azure AI Foundry; vendor APIs with zero data retention | FDE, then Helix AI team |
-| Interpreter and policy engine | Provenance, capabilities, pinned constraints | Custom Python, Open Policy Agent; CaMeL research code | None mature; own it | Helix security |
-| MCP server | Task-shaped tools; OAuth resource server; OBO | MCP Python/TS SDK on Azure Container Apps | Microsoft-provided M365 MCP servers, if scopes are granular enough (verify) | Helix platform |
+| Planner and Q-LLM | Plans; typed extraction | Llama/Qwen-class on vLLM | Azure AI Foundry; vendor APIs with zero data retention | FDE, then Kerrowan AI team |
+| Interpreter and policy engine | Provenance, capabilities, pinned constraints | Custom Python, Open Policy Agent; CaMeL research code | None mature; own it | Kerrowan security |
+| MCP server | Task-shaped tools; OAuth resource server; OBO | MCP Python/TS SDK on Azure Container Apps | Microsoft-provided M365 MCP servers, if scopes are granular enough (verify) | Kerrowan platform |
 | Identity | Delegated tokens; agent registration | Keycloak (course) | Entra ID with MSAL OBO; Entra Agent ID (check feature GA status) | M365/Entra admin |
 | Detectors (defence in depth only) | Flag injection-like text | LLM Guard, Llama Prompt Guard, NeMo Guardrails | Azure AI Content Safety Prompt Shields | Security |
-| Memory store | Preferences with provenance and TTL | Postgres | Azure Cosmos DB | Helix platform |
+| Memory store | Preferences with provenance and TTL | Postgres | Azure Cosmos DB | Kerrowan platform |
 | Observability and evals | Traces, red-team suite | OTel GenAI + Langfuse/Phoenix; Inspect AI, promptfoo, AgentDojo | Azure Monitor, Datadog; LangSmith, Braintrust | SRE / security |
 
 **Least-privilege Graph scopes** (delegated; checked on Microsoft Learn, Sept 2026):
@@ -195,7 +195,7 @@ flowchart TB
 
 No `Files.*`, `Sites.*` or `Chat.*` scopes are granted, so SharePoint board packs are unreachable by construction.
 
-**Token flow.** The UI obtains a token whose audience is the Helix MCP server: under the MCP spec (2026-07-28), clients send an RFC 8707 `resource` parameter, and servers validate the audience and "MUST NOT accept or transit any other tokens" ([spec](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)). The MCP server then performs Entra **OBO** (`grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer`, `requested_token_use=on_behalf_of`) with only the scopes that tool needs ([Microsoft Learn](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow)). Conditional Access `interaction_required` errors go back to the executive and are never worked around.
+**Token flow.** The UI obtains a token whose audience is the Kerrowan MCP server: under the MCP spec (2026-07-28), clients send an RFC 8707 `resource` parameter, and servers validate the audience and "MUST NOT accept or transit any other tokens" ([spec](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization)). The MCP server then performs Entra **OBO** (`grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer`, `requested_token_use=on_behalf_of`) with only the scopes that tool needs ([Microsoft Learn](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow)). Conditional Access `interaction_required` errors go back to the executive and are never worked around.
 
 **Context engineering: constraints that survive compaction.** A day's session accumulates hundreds of tool results; in this design, compaction triggers at about 70% of the window. The cautionary case is **reported**, not verified. On 23 Feb 2026, TechCrunch reported that a Meta AI researcher's OpenClaw agent mass-deleted her inbox despite being told not to act until instructed. She attributed it to compaction, and TechCrunch "could not independently verify" what happened ([TechCrunch](https://techcrunch.com/2026/02/23/a-meta-ai-security-researcher-said-an-openclaw-agent-ran-amok-on-her-inbox/); secondary post-mortem in [vectara/awesome-agent-failures](https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/openclaw-email-deletion.md)).
 
@@ -220,8 +220,8 @@ The lesson: **a constraint that lives only in conversation history is a suggesti
 | Discovery (1–2) | EA shadowing; baselines; IT scope negotiation; trifecta analysis; buy-vs-build memo | Signed SOW; scopes approved or escalated | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md) |
 | POC (3–5) | Q-LLM, planner, interpreter, policies; read-only triage and summaries; AE router; red-team v1; compaction tests | 0 high-severity successes; AE recall ≥ 0.99 | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
 | Pilot (6–10) | 6 executives including the CEO, draft-only; weekly red-team drops; trust metrics; read-only board week | §5 thresholds met for 3 weeks | [07](templates/07-compliance-obligations-to-controls.md), [08](templates/08-security-review-pack.md), [10](templates/10-demo-script-and-status-report.md) |
-| Production (11–12) | Waves to all 40 executives; kill-switch drill by Helix IT; auto-send decision package (ADR-6) | CISO and GC sign-off | [09](templates/09-runbook-slos-and-handover.md) |
-| Handover (12) | Security team owns the red-team suite; runbooks | Helix runs a drill unaided | Handover pack |
+| Production (11–12) | Waves to all 40 executives; kill-switch drill by Kerrowan IT; auto-send decision package (ADR-6) | CISO and GC sign-off | [09](templates/09-runbook-slos-and-handover.md) |
+| Handover (12) | Security team owns the red-team suite; runbooks | Kerrowan runs a drill unaided | Handover pack |
 
 **Code sketch: a minimal quarantined reader with a data-flow policy.** The planner sees only the request and variable names such as `$req: meeting_request`. Every value carries provenance. `send_email` blocks draft-only mode, external recipients, and recipients derived from untrusted data.
 
@@ -292,7 +292,7 @@ def run_plan(plan: list, env: dict, tools: dict, mode: str) -> dict:
 
 **Datasets:**
 - **Golden:** 600 labelled emails, 100 threads, 50 scheduling scenarios and a 300-item AE recall set.
-- **Adversarial:** 400 cases, adapted from AgentDojo (97 tasks and 629 security cases; [arXiv 2406.13352](https://arxiv.org/abs/2406.13352)) plus Helix-specific attacks.
+- **Adversarial:** 400 cases, adapted from AgentDojo (97 tasks and 629 security cases; [arXiv 2406.13352](https://arxiv.org/abs/2406.13352)) plus Kerrowan-specific attacks.
 - **Long-session:** 200 sessions, each with at least 3 compactions.
 - **Regression:** every incident and every new attack.
 - **Held-out:** 100 attacks written in week 10 by a separate team, never seen by the builders.
