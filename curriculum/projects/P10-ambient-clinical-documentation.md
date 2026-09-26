@@ -45,14 +45,15 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
 
 **Legal and regulatory** (as of Sept 2026; verify before teaching; counsel decides):
 
-- **HIPAA.** A BAA is needed with every vendor touching PHI, including observability and error-tracking tools.
+- **HIPAA.** A BAA ([45 CFR 164.504(e)](https://www.law.cornell.edu/cfr/text/45/164.504)) is needed with every vendor that creates, receives, stores or transmits PHI, including observability and error-tracking tools. A cloud BAA covers only the provider's listed in-scope services.
   - *Minimum necessary* ([45 CFR 164.502(b)](https://www.law.cornell.edu/cfr/text/45/164.502)): treatment disclosures are exempt, but pipeline and vendor uses are not. Send encounter audio, never the chart.
   - *Audit controls:* [45 CFR 164.312(b)](https://www.law.cornell.edu/cfr/text/45/164.312).
-  - Check whether the Security Rule update proposed in Jan 2025 has been finalised.
-- **California [Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632).** Recording a confidential communication requires "the consent of all parties": patient, guardian, interpreter and student. The CMIA also applies (verify specific duties).
-- **California AB 3030** ([HSC 1339.75](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75), effective 1 Jan 2025). Generative-AI *patient communications pertaining to clinical information* need an AI disclaimer and instructions for reaching a human, **unless "read and reviewed by a human licensed or certified health care provider"**.
-  - A clinician-signed SOAP note is documentation, not a patient communication, and is reviewed anyway.
-  - The law *does* bite if AI-drafted after-visit summaries, Spanish instructions or portal replies go out unreviewed.
+  - The Security Rule update proposed on 6 Jan 2025 is still not final; HHS now lists July 2027 for final action ([Clark Hill, 13 Jul 2026](https://www.clarkhill.com/news-events/news/hipaa-security-rule-update-delayed-until-2027/)). Design to it anyway.
+- **California [Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) (CIPA).** Recording a confidential communication without "the consent of all parties" is a crime: patient, guardian, interpreter and student, as well as the clinician and MA (via employment policy). [Penal Code 637.2](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=637.2) adds a civil claim of USD 5,000 per violation. A proposed class action filed on 26 Nov 2025 alleges a California health system recorded visits with an ambient scribe without all-party consent, and that charts falsely said patients had consented (CIPA and CMIA; allegations only; [Fisher Phillips](https://www.fisherphillips.com/en/insights/insights/new-class-action-targets-healthcare-ai-recordings)). The CMIA ([Civ. Code 56.10](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=56.10)) also governs disclosure of medical information (verify its duties for vendors).
+- **California AB 3030** ([HSC 1339.75](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75), effective 1 Jan 2025). A clinic using generative AI for written or verbal *patient communications pertaining to patient clinical information* must include an AI disclaimer (placement depends on the medium) and instructions for reaching a human. Scheduling and billing messages are outside it.
+  - **Exemption (subd. (b)):** the duties do not apply if the communication is "read and reviewed by a human licensed or certified health care provider", meaning a person licensed or certified under Division 2 of the Business and Professions Code. Review by an interpreter or scribe does not count; whether an MA's review counts: verify with counsel.
+  - A clinician-signed SOAP note is documentation, not a patient communication. Even when released to the patient portal, it has been read and reviewed by the signing clinician.
+  - The law *does* bite if AI-drafted after-visit summaries, Spanish instructions or portal replies go out without that licensed review.
 - **California AB 489** (Ch. 615, 2025; [bill](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB489)): AI must not imply a licensed human is providing the care or advice.
 - **Texas [Penal Code 16.02(c)(4)](https://texas.public.law/statutes/tex._penal_code_section_16.02)** allows one-party consent. Lakeshore uses all-party consent in both states anyway: one workflow, cross-state telehealth, trust.
 - **Texas SB 1188** (effective 1 Sept 2025; [text](https://capitol.texas.gov/tlodocs/89R/billtext/html/SB01188F.htm)).
@@ -88,7 +89,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
 **Mock systems.** A HAPI FHIR R4 server (Docker) seeded with Synthea patients; an auth stub issuing clinician-scoped tokens; a consent service writing FHIR `Consent`; a browser capture app (MediaRecorder, chunked encrypted upload); a review UI. Write-back is a `DocumentReference` (LOINC 11506-3 Progress note; `docStatus` preliminary → final) plus a `Provenance` recording AI assistance.
 
 **Budget paths.**
-- *API path (≤ USD 50):* hosted Whisper-class ASR plus a mid-tier LLM, for about 150 encounters × 5 eval runs. Synthetic data needs no BAA, but students list which vendors *would*.
+- *API path (≤ USD 50):* hosted Whisper-class ASR plus a mid-tier LLM, for about 150 encounters × 5 eval runs. Transcribe each audio file once and cache the transcripts. Synthetic data needs no BAA, but students list which vendors *would*.
 - *Local path:* faster-whisper/WhisperX + pyannote.audio, an 8-14B instruct model via Ollama or vLLM, and a small NLI model, on one 16-24 GB GPU (CPU works, slowly).
 
 **Out of scope:** real PHI, vendor app certification, claims submission, CPT codes (AMA-licensed content), orders or e-prescribing from the note, and behavioural-health notes.
@@ -145,7 +146,7 @@ Output: SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) and dat
 | Reliability | pass^3 schema-valid SOAP JSON | 100% | Regression set |
 | Safety | Capture without an active consent record | 0 (blocked in code) | E2E tests |
 | Safety | Stop after consent withdrawal | Capture stops ≤ 2 s; partial audio purged ≤ 5 min | E2E tests |
-| Safety | Spoken injection changes meds or plan | 0/15 | Adversarial set |
+| Safety | Spoken injection changes meds or plan | 0 cases | Injection items in the adversarial set |
 | Latency | Note ready after visit end (visits ≤ 30 min) | p50 ≤ 2 min, p95 ≤ 5 min | Load test at 400 visits/hour |
 | Trust | Flagged statements acknowledged before signing | 100% | UI telemetry |
 | Cost | AI compute per signed note | ≤ USD 0.50 | FinOps dashboard |
@@ -197,8 +198,8 @@ flowchart LR
 |---|---|---|---|
 | Capture app | Consent gate, recording, encrypted buffer, stop button | PWA or native app · vendor SDK | FDE |
 | Consent service | Per-participant consent and withdrawal, FHIR `Consent` | FastAPI + HAPI FHIR · EHR consent module | FDE → Lakeshore |
-| ASR + diarisation | Speaker-labelled, timestamped transcript | faster-whisper/WhisperX + pyannote.audio · AWS HealthScribe/Transcribe, Azure AI Speech, Google Speech-to-Text (check BAA eligibility, Spanish vocabulary) | FDE |
-| Note drafter | SOAP JSON with statement IDs | Llama/Qwen-class via vLLM · BAA-covered Azure OpenAI, Bedrock, Vertex | FDE |
+| ASR + diarisation | Speaker-labelled, timestamped transcript | faster-whisper/WhisperX + pyannote.audio · AWS HealthScribe/Transcribe (on AWS's HIPAA-eligible list, Sept 2026), Azure AI Speech, Google Speech-to-Text (check BAA scope, Spanish vocabulary) | FDE |
+| Note drafter | SOAP JSON with statement IDs | Llama/Qwen-class via vLLM · Azure OpenAI, Bedrock or Vertex AI under the cloud BAA (confirm the exact service, model and region are in scope) | FDE |
 | Verifier | Align statements to transcript spans; flag meds and doses | Code sketch below + NLI model · LLM judge (second pass) | FDE |
 | Code suggester | Ranked ICD-10-CM candidates with evidence | Embedding retrieval over the public code set · vendor CAC tools | FDE + coding lead |
 | Workflow | Retries, timers, idempotent write-back | Temporal, Restate · Step Functions, Azure Durable Functions | FDE → Lakeshore IT |
@@ -239,8 +240,11 @@ DOSE = re.compile(r"(\d+(?:[.,]\d+)?)\s*(mg|mcg|g|ml|units?|unidades|miligramos)
 NEG = re.compile(r"\b(no|not|stop|stopped|discontinue[ds]?|denies|sin|ya no|dej[óo]|suspend\w*)\b", re.I)
 UNIT = {"miligramos": "mg", "unidades": "units", "unit": "units"}
 
+def num(v: str) -> float:   # "1,000" is a thousands separator; "0,5" / "2,5" is a decimal comma
+    return float(re.sub(r"^([1-9]\d{0,2}),(\d{3})$", r"\1\2", v).replace(",", "."))
+
 def doses(text: str) -> set:
-    return {(float(v.replace(",", ".")), UNIT.get(u.lower(), u.lower())) for v, u in DOSE.findall(text)}
+    return {(num(v), UNIT.get(u.lower(), u.lower())) for v, u in DOSE.findall(text)}
 
 def mentions(form: str, text: str, min_ratio: float = 0.85) -> bool:
     """Fuzzy token match tolerates ASR spelling noise ('metformine' ~ 'metformin')."""
@@ -355,7 +359,7 @@ This is deliberately lexical, cheap and high-recall. In production, add RxNorm n
 - *Self-hosted ASR:* batch transcription runs many times faster than real time on one modern GPU, so a few hundred GPU-hours a month (benchmark in week 4).
 - *LLM:* about 11k input and 1k output tokens per visit (draft + verification). At USD 0.5-5 per M input and USD 2-25 per M output, that is USD 0.01-0.08 per visit, or USD 0.3k-3.5k/month.
 - *AI compute per visit:* about USD 0.02-0.65, depending on the ASR route.
-- *People:* engineering support (about 1.5 FTE) dominates total cost of ownership.
+- *People and budget:* at the low ASR band, engineering support (about 1.5 FTE) dominates total cost of ownership. At the high band, managed ASR alone (about USD 290k/yr at full volume) breaks the USD 250k ceiling and the USD 0.50 per-note target, which is why the ASR ADR matters.
 - *Comparison:* vendor subscriptions reportedly vary widely, roughly USD 100-600 per clinician-month (**verify with quotes**). Decide the ADR on quality, Spanish, integration and data rights more than on compute price.
 
 **Runbook.**
@@ -406,31 +410,27 @@ This is deliberately lexical, cheap and high-recall. In production, add RxNorm n
 
 | Turn | Title | How exercised |
 |---|---|---|
+| 6 | Encoder, Decoder and Encoder-Decoder Models | Bi-encoder retrieval of ICD-10-CM candidates; NLI cross-encoder in the verifier |
 | 14 | Hallucination in Depth | Critical-error taxonomy; omissions vs fabrications |
 | 23 | Distillation and Synthetic Data | Visit cards → dialogues → TTS audio |
 | 36 | Constrained Decoding Engines | SOAP JSON with statement IDs |
-| 38 | Reflection and Evaluator-Optimizer Loops | Verification pass after drafting |
+| 38 | Reflection and Evaluator-Optimizer Loops | Program-first evaluator after drafting; flags go to the clinician, not a revise loop |
 | 41 | Multilingual Prompting | Code-switched transcripts |
 | 48 | Embedding-Model Selection | ICD-10-CM retrieval |
-| 63 | Simulation and Synthetic Users | Role-played and TTS encounters |
-| 64 | Trust Calibration and Automation Bias | Time-to-sign, flag acknowledgement, drills |
-| 71 | Agent Identity Platforms | On-behalf-of write-back under clinician identity |
-| 78 | PII Detection and DLP | PHI out of telemetry |
-| 82 | Sector Compliance | HIPAA, BAAs, Part 2 |
-| 83 | Responsible AI Practice | Language and interpreter fairness slices |
-| 87, 88 | Model Upgrades; Canary | Style-change curveball |
-| 89 | Data Flywheel | Clinician edits → regression set |
-| 90, 94 | SLOs; Failover and DR | Latency SLO, ASR failover |
-| 91 | LLM FinOps | Cost per signed note vs vendor licence |
-| 96, 97 | Observability; Evaluation Tools | OTel GenAI; CI gates |
-| 99 | Durable Workflow Platforms | Async pipeline, idempotent write-back |
+| 63, 64 | Simulation and Synthetic Users for Testing; Trust Calibration and Automation Bias | Role-played and TTS encounters; time-to-sign, flag acknowledgement, drills |
+| 71 | Agent Identity Platforms | Short-lived, clinician-scoped delegated tokens for write-back; no shared service account |
+| 74, 75 | OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice | Spoken prompt injection in the adversarial audio set |
+| 78 | PII Detection and Data-Loss Prevention | PHI kept out of telemetry |
+| 82, 83 | Sector Compliance; Responsible AI Practice: Fairness, Explainability and Oversight | HIPAA, BAAs, Part 2; language and interpreter fairness slices |
+| 87, 88 | Model Upgrades and Deprecation Management; Online A/B Testing and Canary Releases | Style-change curveball; 10% canary |
+| 89 | Feedback Loops and the Data Flywheel | Clinician edits → regression set |
+| 90, 91, 94 | SLOs, Incident Response and On-Call for AI; LLM FinOps; Provider Failover and Disaster Recovery | Latency SLO; cost per signed note vs vendor licence; ASR failover |
+| 96, 97, 99 | Observability Tools; Evaluation Tools; Durable Workflow Platforms | OTel GenAI; CI gates; async pipeline with idempotent write-back |
 | 102 | Model Provider Landscape | BAA availability shapes the choice |
 | 106 | Speech AI | WER, DER, entity accuracy; self-hosted ASR option |
-| 109-116 | FDE practice turns | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
+| 109–116 | FDE practice block (Use-Case Discovery and Qualification … Scoping, Estimation and SOWs) | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
 
-**New/gap topics exercised:**
-- Global AI regulation map (gap #4): US state law in California (AB 3030, AB 489, Penal Code 632) and Texas (SB 1188, TRAIGA).
-- Prompt-injection-resistant architectures (gap #8): spoken injection into a tool-less drafter.
+**New/gap topics exercised:** #4 regulation as obligations→controls (CA AB 3030, AB 489, Penal Code 632; TX SB 1188, TRAIGA); #8 prompt-injection-resistant architecture (tool-less drafter); RAG-9 citation and attribution engineering (statement-to-transcript evidence spans); FDE-1 security review and AI data-handling terms (BAA register); FDE-2 integrating with the system of record (FHIR write-back to two EHRs); FDE-5 measuring impact honestly (EHR audit logs, not self-report); FDE-11 records retention (audio TTL; the signed note is the legal record).
 
 ## 15. What reviewers look for / common failure modes
 

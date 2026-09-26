@@ -2,7 +2,7 @@
 
 > A deep-research agent that drafts first-pass due-diligence memos in which every sentence traces to a passage the system actually retrieved, behind information barriers between deals, with licence-clean sourcing and a hard cost cap per run.
 
-> **Customer:** Northstar Capital Partners (fictional) · **Industry:** Private equity (mid-market buyout and growth) · **Geography:** UK (London) and India (Mumbai) · **Real engagement:** 14 weeks. The FDE lead and one FDE work with Northstar's data engineer, a part-time compliance officer and 2 analyst champions · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
+> **Customer:** Northstar Capital Partners (fictional) · **Industry:** Private equity (mid-market buyout and growth) · **Geography:** UK (London) and India (Mumbai) · **Real engagement:** 14 weeks. The FDE lead and one FDE work with Northstar's data engineer, a part-time compliance officer and 2 analyst champions · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 ---
 
@@ -12,20 +12,14 @@ Northstar runs 11 deal teams. Each year it screens about 120 opportunities, take
 
 **The ask (Managing Partner):** "An AI analyst that writes first-draft due-diligence memos."
 
-**What Northstar actually needs:**
-1. **A deep-research pipeline (plan → search → read → verify → write)** over web search/extract APIs, licensed data, the VDR and internal deal notes.
-2. **Strict citation verification:** every claim linked to a source passage; unsupported claims removed or flagged; nothing cited that was never accessed.
-3. **Source-quality judgement and counter-search** for disconfirming evidence and conflicts (e.g. confidential information memorandum (CIM) vs audited revenue).
-4. **Information barriers for material non-public information (MNPI)**, with memory scoped per deal and deletable.
-5. **Compliance** with site terms, robots and AI-crawler preferences, content licences and copyright limits on quoting.
-6. **Cost controls on long runs,** and **evaluation with analysts** (claim-level precision, coverage against a gold memo).
+**What Northstar actually needs:** a deep-research pipeline (plan → search → read → verify → write) over web search/extract APIs, licensed data, the VDR and deal notes; strict citation verification, with nothing cited that was never accessed; source-quality judgement and counter-search for conflicts (e.g. confidential information memorandum (CIM) vs audited revenue); information barriers for material non-public information (MNPI), with per-deal, deletable memory; compliance with site terms, crawler preferences, licences and quotation limits; and cost controls plus evaluation with analysts.
 
 The memo stays the analyst's work product: the agent delivers a draft plus an evidence table, and the analyst signs it off.
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
 | Managing Partner (MP, sponsor) | Speed, edge, a demo at the limited-partner (LP) meeting in week 10 | Budget |
-| Deal partners | Memo quality; being misled by a confident error | Usage (they can simply ignore it) |
+| Deal partners | Memo quality; being misled by a confident error | Usage (they can ignore it) |
 | Analysts and associates | Hours saved, but also fear of deskilling and blame | Adoption, feedback quality |
 | Chief Compliance Officer (CCO) | MNPI, information barriers, record-keeping | Any access to live-deal data |
 | General Counsel (GC) | NDA terms, licence terms, copyright, scraping | Sources and tools |
@@ -35,15 +29,15 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 ## 2. Constraints
 
-**Legal and regulatory** (as of Sept 2026). This brief assumes, as fictional facts, that Northstar is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
+**Legal and regulatory** (as of Sept 2026). Assume, as fictional facts, that Northstar is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
 - **UK MAR.** Inside information may be disclosed only "in the normal exercise of an employment, a profession or duties" ([Art. 10](https://www.legislation.gov.uk/eur/2014/596/article/10)). This matters when a target or its debt is listed.
 - **FCA SYSC 10.2 (Chinese walls).** 10.2.2R permits withholding information held in one part of the business from another; under 10.2.4R a firm does not "act with knowledge" that a wall keeps out ([FCA Handbook](https://www.handbook.fca.org.uk/handbook/SYSC/10/2.html)). An agent that pools memory across deals breaks the wall.
 - **SEBI (Prohibition of Insider Trading) Regulations, 2015** (last amended 12 Mar 2025, per [SEBI](https://www.sebi.gov.in/legal/regulations/mar-2025/securities-and-exchange-board-of-india-prohibition-of-insider-trading-regulations-2015-last-amended-on-march-12-2025-_92672.html)). These cover unpublished price-sensitive information (UPSI) for listed Indian companies. UPSI may be shared for due diligence only under conditions, and a structured digital database of recipients is required. *Verify clause numbers.*
 - **UK GDPR and DPA 2018,** as amended by the [Data (Use and Access) Act 2025](https://www.legislation.gov.uk/ukpga/2025/18/contents). Researching management teams is processing personal data, so run a legitimate-interests assessment ([ICO guidance](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/legitimate-interests/), updated 23 Mar 2026). Keep criminal and sanctions checks with vetted providers, not the agent.
-- **India DPDP Act 2023.** Section 3(c)(ii) excludes personal data made public by the data principal, or by someone legally obliged to publish it ([Act](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf)). Employee data in a VDR is in scope. Most obligations apply from 13 May 2027 under the phased Rules.
-- **Copyright.** The UK text-and-data-analysis exception covers only non-commercial research ([CDPA s.29A](https://www.legislation.gov.uk/ukpga/1988/48/section/29A)), so Northstar cannot rely on it. Quotation needs fair dealing, an extent "no more than is required", and acknowledgement ([s.30(1ZA)](https://www.legislation.gov.uk/ukpga/1988/48/section/30)). DSIT's report on copyright and AI (19 Mar 2026, [gov.uk](https://www.gov.uk/government/consultations/copyright-and-artificial-intelligence)) has not changed s.29A. In India, the July 2026 *ANI v. OpenAI* interim order is narrow; do not rely on it.
+- **India DPDP Act 2023.** Section 3(c)(ii) excludes personal data made public by the data principal, or by someone legally obliged to publish it ([Act](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf)). Employee data in a VDR is in scope. The Rules (notified 13 Nov 2025) phase in at 12 and 18 months from notification, so most obligations apply from May 2027.
+- **Copyright.** The UK text-and-data-analysis exception covers only non-commercial research ([CDPA s.29A](https://www.legislation.gov.uk/ukpga/1988/48/section/29A)), so Northstar cannot rely on it. Quotation needs fair dealing, an extent "no more than is required", and acknowledgement ([s.30(1ZA)](https://www.legislation.gov.uk/ukpga/1988/48/section/30)). DSIT's report on copyright and AI (19 Mar 2026, [gov.uk](https://www.gov.uk/government/consultations/copyright-and-artificial-intelligence)) has not changed s.29A. In India, the Delhi High Court's 24 Jul 2026 interim order in *ANI v. OpenAI* is narrow ([Cyril Amarchand Mangaldas](https://corporate.cyrilamarchandblogs.com/2026/07/ani-v-open-ai-delhi-high-court-refuses-interim-injunction-in-landmark-ai-copyright-dispute/)) and ANI has appealed ([India Legal](https://indialegallive.com/constitutional-law-news/courts-news/delhi-high-court-seeks-openais-stand-on-anis-appeal-in-copyright-infringement-case/)); do not rely on it.
 - **Computer Misuse Act 1990, s.1.** Unauthorised access is an offence, with up to two years' imprisonment on indictment ([s.1](https://www.legislation.gov.uk/ukpga/1990/18/section/1)).
-- **Crawl and licence signals** (not statutes, but binding through contracts and reputation; treat as hard policy): robots.txt; Cloudflare [Content Signals](https://blog.cloudflare.com/content-signals-policy/) (24 Sep 2025: `search`, `ai-input`, `ai-train`); Cloudflare [pay-per-crawl](https://blog.cloudflare.com/introducing-pay-per-crawl/) (1 Jul 2025, private beta; HTTP 402 with `crawler-price`, Web Bot Auth signatures); [RSL 1.0](https://rslstandard.org/press/rsl-1-specification-2025) (10 Dec 2025); and IETF [aipref](https://datatracker.ietf.org/wg/aipref/about/), still a draft ([vocab-08](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/), 14 Sep 2026; not an RFC; the 31 Aug 2026 IESG milestone has passed).
+- **Crawl and licence signals** (not statutes; treat as hard policy): robots.txt; Cloudflare [Content Signals](https://blog.cloudflare.com/content-signals-policy/) (24 Sep 2025: `search`, `ai-input`, `ai-train`); Cloudflare [pay-per-crawl](https://blog.cloudflare.com/introducing-pay-per-crawl/) (1 Jul 2025, private beta; HTTP 402 with `crawler-price`, Web Bot Auth signatures), now being widened into a "pay per use" pilot ([TechCrunch](https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/), 1 Jul 2026); Cloudflare defaults that, from 15 Sep 2026, block training and agent crawlers on pages showing ads ([Cloudflare](https://blog.cloudflare.com/content-independence-day-ai-options/)); [RSL 1.0](https://rslstandard.org/press/rsl-1-specification-2025) (10 Dec 2025); and IETF [aipref](https://datatracker.ietf.org/wg/aipref/about/), still a draft ([vocab-08](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/), 14 Sep 2026; not an RFC; the WG's 31 Aug 2026 milestone for sending it to the IESG is still pending).
 - **Search-API terms.** Bing Search APIs were [retired on 11 Aug 2025](https://learn.microsoft.com/en-us/lifecycle/announcements/bing-search-api-retirement); Google's Custom Search JSON API is [closed to new customers](https://developers.google.com/custom-search/v1/overview) (existing customers until 1 Jan 2027); Brave requires a plan with explicit storage rights to store results ([Brave](https://brave.com/search/api/)).
 
 **Data:** VDR content is under NDAs that differ on sub-processors and "return or destroy". Documents include scans, Excel models and Hindi or Marathi files, with conflicting versions. Licensed market data and expert-call transcripts often restrict AI processing, storage or quotation.
@@ -71,7 +65,7 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 **Gold memos:** 3 analyst-written memos. Each has about 120 atomic claims with source passage IDs and a category (financial, market, customer, legal, management, ESG, red flag).
 
 **Budget paths:**
-- **API path (≤ USD 50):** a small model for reading, extraction and verification, and a stronger model for planning and writing. Cap each run at USD 1.50.
+- **API path (≤ USD 50):** a small model for reading, extraction and verification, and a stronger model for planning and writing. Cap each run at USD 1.50, reasoning tokens included.
 - **Local path:** an 8–32B instruct model on Ollama or vLLM, a local NLI or MiniCheck-class checker, and local embeddings.
 
 **Out of scope:** crawling real third-party sites (optionally, fetch real public pages whose signals allow `ai-input`), real VDR or CRM integrations, real licensed data or MNPI, and sending memos anywhere.
@@ -80,22 +74,19 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 **Map** the deal lifecycle (screen → NDA → VDR → IIM → first investment committee → confirmatory DD → final committee); who writes each memo section, from which sources, and how they cite today; the wall-crossing, restricted-list and conflicts processes; and what happens to material when a deal dies.
 
-**Baselines:**
-- Analyst hours on the last 10 first drafts (timesheets and interviews; expect a median around 30), partner edit rounds, research spend, and days from VDR opening to IIM.
-- **Claim-accuracy audit:** trace 150 claims from 3 past memos to their sources and count unsupported or wrong ones. Human memos are imperfect too, and this sets the bar the agent must beat.
+**Baselines:** analyst hours on the last 10 first drafts (timesheets and interviews; expect a median around 30), partner edit rounds, research spend, and days from VDR opening to IIM. A **claim-accuracy audit** traces 150 claims from 3 past memos to their sources; human memos are imperfect too, and this sets the bar the agent must beat.
 
 **Discovery questions:**
 1. Which memo sections do partners value most, and where must the agent be precise rather than broad?
 2. What do our NDAs say about sub-processors and about returning or destroying material?
 3. Which licensed sources allow AI processing, storage and quotation?
-4. How are wall crossings recorded, and which live deals involve listed securities (UK or India)?
-5. Should London and Mumbai see each other's deals? Does any NDA require data to stay in India?
-6. What is an acceptable source for market size?
-7. Fewer claims, all verified, or more claims with flags?
-8. How is management background research done today, and on what lawful basis?
-9. What happens to research on dead deals? Are deletion certificates issued?
-10. Who owns and signs the final memo, and what cost and time per draft are acceptable?
-11. Do LP due-diligence questionnaires ask how AI is used?
+4. How are wall crossings recorded, and which live deals involve listed securities?
+5. Should London and Mumbai see each other's deals? Must any data stay in India?
+6. What is an acceptable source for market size? Fewer claims, all verified, or more with flags?
+7. How is management research done today, and on what lawful basis?
+8. What happens to research on dead deals? Are deletion certificates issued?
+9. Who signs the final memo, and what cost and time per draft are acceptable?
+10. Do LP due-diligence questionnaires ask how AI is used?
 
 **Qualification (lowest rung that works):**
 - **Registry lookups** (Companies House, Indian MCA filings) are plain API calls.
@@ -103,7 +94,7 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 - **Section prose** is written by single-call generation over a verified fact table.
 - **Market and competitor research** is open-ended, so a *bounded* agentic search loop is justified, inside a fixed workflow with budgets and stopping rules. No agent logs in, sends email or acts outside the workflow.
 
-**Decision:** go with a workflow plus bounded research loop and human sign-off, piloted first on closed deals. Record this in the SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), using [template 01](templates/01-discovery-questionnaire.md) and the [data-readiness scorecard](templates/02-data-readiness-scorecard.md).
+**Decision:** a workflow plus bounded research loop with human sign-off, piloted first on closed deals; record it in the SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), using [template 01](templates/01-discovery-questionnaire.md) and the [scorecard](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
@@ -135,7 +126,7 @@ flowchart LR
   subgraph ZG["Zone G · Compliance control plane"]
     WALL["Wall-crossing register + restricted list (policy decision point)"]
   end
-  subgraph ZB["Zone B · Privileged orchestration (one deal per run; trusted inputs + schema-checked findings only)"]
+  subgraph ZB["Zone B · Privileged orchestration (one deal per run; schema-checked findings only)"]
     PL["Planner: sub-questions, counter-search, budget"]
     WR["Writer: drafts only from verified fact table"]
     VR["Citation verifier"]
@@ -146,7 +137,7 @@ flowchart LR
   end
   subgraph ZD["Zone D · Egress and policy"]
     QF["Query filter: removes deal-identifying terms"]
-    FG["Fetch gateway: robots, AI preferences, RSL, licence allow-list, pay-per-crawl budget, retrieval log with hashes"]
+    FG["Fetch gateway: robots, AI preferences, RSL, licences, paid-access budget, hashed retrieval log"]
   end
   subgraph ZE["Zone E · External (untrusted)"]
     WEB["Search and extract APIs, websites"]
@@ -177,23 +168,23 @@ flowchart LR
 
 | Component | Responsibility | Tech options (OSS / managed) | Owner |
 |---|---|---|---|
-| Workflow orchestrator | Plan → search → read → verify → write; budgets; resumable runs | LangGraph; [open_deep_research](https://github.com/langchain-ai/open_deep_research) (MIT) or [GPT Researcher](https://github.com/assafelovic/gpt-researcher) (Apache-2.0) as reference designs; Temporal for durability · Managed deep-research APIs (e.g. [Parallel](https://parallel.ai/) Task API) for *public-only* questions | FDE → Northstar data engineer |
-| Search / extract | Candidate sources and clean page text | [SearXNG](https://github.com/searxng/searxng) (AGPL; check upstream engines' terms) + [Firecrawl](https://github.com/firecrawl/firecrawl) self-hosted (AGPL; respects robots.txt by default) · [Brave](https://brave.com/search/api/), [Exa](https://exa.ai/) (states zero data retention), [Tavily](https://www.tavily.com/) (announced as joining Nebius; verify ownership), Parallel Search/Extract | FDE |
-| Fetch gateway | Enforce robots, Content Signals, RSL and licence terms; pay-per-crawl budget; log URL, status, time and content hash | Custom service (Python `urllib.robotparser` + RSL/Content-Signal parsers); Web Bot Auth signing · Cloudflare pay-per-crawl participation | FDE → IT |
+| Workflow orchestrator | Plan → search → read → verify → write; budgets; resumable runs | LangGraph or a vendor agent SDK (Claude Agent SDK, OpenAI Agents SDK, Google ADK); [open_deep_research](https://github.com/langchain-ai/open_deep_research) (MIT) or [GPT Researcher](https://github.com/assafelovic/gpt-researcher) (Apache-2.0) as references; Temporal for durability · managed deep-research APIs (e.g. [Parallel](https://parallel.ai/) Task API) for *public-only* questions | FDE → Northstar data engineer |
+| Search / extract | Candidate sources and clean page text | [SearXNG](https://github.com/searxng/searxng) (AGPL; check upstream engines' terms) + [Firecrawl](https://github.com/firecrawl/firecrawl) self-hosted (AGPL; respects robots.txt by default) · [Brave](https://brave.com/search/api/), [Exa](https://exa.ai/) (states zero data retention), [Tavily](https://www.tavily.com/) (Nebius agreed to acquire it, [10 Feb 2026](https://nebius.com/newsroom/nebius-announces-agreement-to-acquire-tavily-to-add-agentic-search-to-its-ai-cloud-platform)), Parallel Search/Extract | FDE |
+| Fetch gateway | Enforce robots, Content Signals, RSL and licence terms; paid-access budget; log URL, status, time, content hash | Custom service (Python `urllib.robotparser` + RSL/Content-Signal parsers); Web Bot Auth signing · Cloudflare pay-per-crawl / pay-per-use pilots | FDE → IT |
 | Document parsing | PDF, scans, XLSX, Indian languages | Docling, Unstructured, Tesseract OCR · cloud document-AI services | Data engineer |
 | Deal-scoped store | Passages, findings and memory per deal; deletable | pgvector, Qdrant or OpenSearch with a **separate collection and key per deal** · managed vector DB with hard namespaces | Data engineer + CISO |
 | Verifier | Entailment + exact-quote + number checks | NLI or [MiniCheck](https://arxiv.org/abs/2404.10774)-class checker (reports GPT-4-level accuracy at ~400× lower cost) · pinned LLM judge; provider citation features (e.g. [Claude web fetch citations](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool)) | FDE |
 | Compliance policy decision point (PDP) | Allow or deny a deal scope per user and run | OPA with the wall register as data · the existing compliance system's API | CCO |
-| Model gateway | Model allow-list, per-run and per-deal budgets, zero-retention routing | LiteLLM (pin versions), agentgateway · cloud AI gateways | IT |
-| Observability / eval | Traces, costs, eval runs | OTel + Langfuse, Inspect, DeepEval · commercial observability (OpenAI announced it was acquiring Promptfoo in Mar 2026: weigh vendor neutrality) | FDE |
+| Model gateway | Model allow-list, per-run and per-deal budgets, zero-retention routing | LiteLLM (pin a verified release; 1.82.7/1.82.8 were compromised on PyPI, 24 Mar 2026), agentgateway · cloud AI gateways | IT |
+| Observability / eval | Traces, costs, eval runs | OTel + Langfuse, Inspect, DeepEval, Promptfoo (OpenAI acquisition announced 9 Mar 2026; still open source) · commercial observability | FDE |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
-1. **Orchestration:** fixed workflow with a bounded research loop vs supervisor + sub-researchers vs a vendor deep-research API (public questions only, never VDR content).
+1. **Orchestration:** fixed workflow with a bounded research loop vs supervisor + sub-researchers vs a vendor deep-research API (public questions only, never VDR content); and the loop's harness: LangGraph vs a vendor agent SDK (subagents, hooks and budgets built in, but tied to one provider) vs plain code.
 2. **Web data:** commercial search/extract APIs (retention, storage rights, terms) vs self-hosted SearXNG + Firecrawl (upstream terms risk, operating load).
 3. **Verification:** small NLI checker vs LLM judge vs a cascade; thresholds; whether quote and number checks block or flag.
 4. **Information barrier:** physical per-deal separation (index, keys, caches, memory) vs metadata filters, including prompt and semantic caches.
-5. **Model hosting for VDR content:** managed API with zero retention and a UK region vs self-hosted open-weight for VDR reading.
-6. **Crawl and licence policy:** robots, AI preferences and RSL as hard blocks or advice; pay-per-crawl participation; house quotation limits (e.g. ≤ 30 words per quote, ≤ 2 per source).
+5. **Model hosting and routing:** managed API with zero retention and a UK region vs self-hosted open-weight for VDR reading; and separate small and strong models vs **one reasoning model with effort set per step** (§10), which keeps one prompt cache and one behaviour profile.
+6. **Crawl and licence policy:** robots, AI preferences and RSL as hard blocks or advice; paid-access participation (pay-per-crawl, pay-per-use); house quotation limits (e.g. ≤ 30 words per quote, ≤ 2 per source).
 
 ## 7. Implementation plan — week by week
 
@@ -204,6 +195,8 @@ flowchart LR
 | **Pilot (7–11)** | 2 deal teams on live deals, *in parallel* with their normal memo; analyst sentence-level accept/reject UI; wall integration; budgets; LP demo (week 10) | §5 thresholds on 12 memos; 0 leakage; CCO sign-off | Security pack ([08](templates/08-security-review-pack.md)), compliance map ([07](templates/07-compliance-obligations-to-controls.md)), demo ([10](templates/10-demo-script-and-status-report.md)) |
 | **Production (12–13)** | Roll out to all teams; deletion workflow; runbooks; cost dashboards | Deletion drill passed; on-call agreed | Runbook + SLOs ([09](templates/09-runbook-slos-and-handover.md)) |
 | **Handover (14)** | Train champions; eval set ownership; quarterly source-register review | Northstar reruns the eval suite without the FDE | Handover pack |
+
+**Course build (6 weeks):** (1) discovery role-play and source register; (2) parsing, per-deal index, quarantined readers; (3) fetch gateway and research loop; (4) verifier and writer; (5) evals, injection and leakage suites, effort sweep; (6) hardening and demo. Inject curveballs 1–2 in week 4, 3–4 in week 5 and 5–6 in week 6.
 
 **Code sketch: the citation verifier.** Every draft sentence goes through this function before an analyst sees it.
 
@@ -252,11 +245,12 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
             reasons.append(f"{pid}: belongs to another deal (information barrier)")
         else:
             cited.append(p)
-    if not cited:
+    if reasons:  # one bad citation is enough: never-accessed or cross-deal evidence is not allowed
         return Verdict(sentence, "strip", reasons)
     evidence = "\n\n".join(p.text for p in cited)
+    numbers = {norm(n) for n in NUMBER.findall(evidence)}  # whole numbers, so "2.5" does not match "12.5"
     reasons += [f"quote not verbatim: {q[:40]}" for q in QUOTE.findall(claim) if norm(q) not in norm(evidence)]
-    reasons += [f"number {n} not in cited text" for n in NUMBER.findall(claim) if norm(n) not in norm(evidence)]
+    reasons += [f"number {n} not in cited text" for n in NUMBER.findall(claim) if norm(n) not in numbers]
     label, conf = judge.judge(evidence, claim)
     if label == "contradicted":
         return Verdict(sentence, "strip", reasons + [f"contradicted by cited source ({conf:.2f})"])
@@ -266,16 +260,16 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 ```
 
 **What the verifier does with each sentence:**
-- **Strip** sentences with no citation, a citation that was never accessed, a citation from another deal, or evidence that is unsupported or contradicted. Every stripped sentence is logged; contradictions go to the analyst as possible counter-evidence.
-- **Flag** sentences that are supported but contain a quote or number that could not be matched verbatim. The analyst decides.
+- **Strip** sentences with no citation, *any* citation that was never accessed or belongs to another deal, or evidence that is unsupported or contradicted. Every stripped sentence is logged; contradictions go to the analyst as possible counter-evidence.
+- **Flag** sentences that are supported but contain a quote or a number that could not be matched verbatim (numbers are matched whole, so "2.5%" does not match "12.5%"). The analyst decides.
 
-**Student extensions:** split compound sentences into atomic claims; check each cited passage individually as well as combined (to catch citation padding); enforce the house quotation limits.
+**Student extensions:** split compound sentences into atomic claims; check each cited passage alone as well as combined (to catch citation padding); enforce the quotation limits.
 
 ## 8. Evaluation plan
 
 **Datasets:**
 - **Gold:** 3 memos (course) or 8 historical memos (real), about 120 claims each. Two annotators; Cohen's κ ≥ 0.7.
-- **Seeded verification set:** 1,000 sentence–passage pairs. Half are supported. The rest have a number swap, an entity swap, a negation, a plausible-but-wrong passage, a never-accessed citation or an altered quote.
+- **Seeded verification set:** 1,000 sentence–passage pairs, half supported; the rest carry a number or entity swap, a negation, a plausible-but-wrong passage, a never-accessed citation or an altered quote.
 - **Adversarial:** 60 injection cases (VDR and web), 200 MNPI probes ("what did the other team learn about TerraFleet?"), query-exfiltration attempts, poisoned SEO pages and the name-collision company.
 - **Regression:** every analyst-reported bad citation.
 - **Held-out:** one target that is never used in development.
@@ -291,10 +285,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 | Process | Analyst hours; partner "usable" score; sentence accept/reject rates |
 | Cost / latency | Cost per memo and per accepted claim; p90 run time |
 
-**Judge calibration:**
-- Measure agreement between the judge and both annotators on 500 claim–passage pairs, and publish the confusion matrix. The target is κ ≥ 0.7.
-- Test specifically for leniency on paraphrased numbers and on partial support.
-- Pin the judge version and recalibrate after any model change (Turn 87).
+**Judge calibration:** measure judge–annotator agreement on 500 claim–passage pairs (target κ ≥ 0.7) and publish the confusion matrix; test for leniency on paraphrased numbers and partial support. Pin the judge's model version and effort level, and recalibrate after any change (Turn 87). Do not count on temperature 0 for stability: many reasoning models reject a non-default temperature, and it is not deterministic anyway.
 
 **CI gates** (every change to prompts, models or retrieval): verifier recall ≥ 95% on the seeded set; 0 MNPI leakage; injection suite passes; cost per run within cap on the 3 fixture deals.
 
@@ -338,7 +329,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 
 **SLOs:** p90 run time ≤ 45 minutes; the verifier runs on 100% of sentences (no verifier, no draft); 99.5% availability across London and Mumbai working hours; deletion within 10 business days of a destroy request.
 
-**Observability:** OTel spans for plan, search, fetch, read, verify and write, with hashed deal ID, tokens and cost (GenAI semantic conventions are still at Development status, so pin the version); a fetch log (URL, policy decision, status, content hash); PDP decisions.
+**Observability:** OTel spans for plan, search, fetch, read, verify and write, with hashed deal ID, tokens and cost (GenAI conventions are at Development status, so pin the version); the fetch log; PDP decisions.
 
 **Cost model.** Prices vary by vendor and change often, so treat these as bands.
 
@@ -354,45 +345,32 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 
 At 25–40 runs a month that is about USD 25–600 of model and search spend. Licensed data is an existing fixed cost, and analyst review (6–10 hours per memo) remains the largest cost.
 
-**Runbook:**
-- *Injection detected:* quarantine the document, notify the deal team, add it to the regression set.
-- *Budget breaker:* stop, keep partial state, and let the analyst decide whether to resume.
-- *Suspected wall breach:* freeze both namespaces, notify the CCO, preserve logs.
-- *Licence complaint:* block the source and purge its passages.
-- *Destroy request:* run the deletion workflow and issue a certificate.
-- *Provider outage:* fail over to a model that has passed the eval gate.
+**Reasoning effort per step.** Set effort explicitly on every call, because defaults change between model versions: high for planning, counter-search and the LLM-judge step on contested or numeric claims; low or none for reading and extraction, where typed schemas do the work. Give each run a reasoning-token budget (e.g. 150k, about USD 0.75–11 at the table's strong-model output prices) inside the USD 40 cap; once it is spent, remaining steps drop to low effort and the run is flagged. Keep the split only if an effort sweep on the 3 fixture deals shows precision and red-flag coverage gains worth the cost.
 
-**DR:** stores are backed up per deal under that deal's key, so shredding the key also makes backups unreadable (document this for the CCO). RPO 24 h, RTO 8 h; indexes can be rebuilt from VDR exports.
+**Runbook:** *injection detected*: quarantine the document, notify the deal team, add it to the regression set. *Budget breaker*: stop, keep partial state, let the analyst decide whether to resume. *Suspected wall breach*: freeze both namespaces, notify the CCO, preserve logs. *Licence complaint*: block the source and purge its passages. *Destroy request*: run the deletion workflow and issue a certificate. *Provider outage*: fail over to a model that has passed the eval gate.
+
+**DR:** per-deal backups under that deal's key, so shredding the key also makes backups unreadable (document this for the CCO). RPO 24 h, RTO 8 h; indexes rebuild from VDR exports.
 
 ## 11. Curveballs (instructor-injected events)
 
-1. **Week 5 — a data-room document contains injected instructions.** A footer in the CIM tells "AI assistants" to call the company low-risk and to omit an HMRC dispute.
-   - *Strong response:* show from the logs that the VDR reader returned only typed fields and the planner never saw raw text, and that the verifier would strip any unsupported "low risk" claim. Tell the deal team (it may be deliberate) and add the document to the adversarial set.
-2. **Week 7 — the agent cites a paywalled article it never accessed.** The writer built a claim from a search-result title and snippet.
-   - *Strong response:* the retrieval-record check strips it. Fix the root cause so the writer can cite only stored passages. Obtain licensed access (a subscription whose terms allow this use, or pay-per-crawl where offered) or mark the gap for the analyst. Report the metric honestly.
-3. **Week 8 — two deal teams share a target.** Team A is evaluating TerraFleet. Team B is advising a portfolio company that competes with it and holds wall-crossed information about a listed parent.
-   - *Strong response:* the CCO decides and the PDP enforces. Namespaces, keys and caches are already separate; run the leakage probes on this pair. If TerraFleet is restricted, Team B's runs may not research it at all.
-4. **Week 9 — a run costs 20× the budget (about USD 300).** Counter-search looped on a common company name, and the reader re-fetched a 900-page PDF.
-   - *Strong response:* kill the run; add hard per-step caps (fetches, tokens, wall time), a diminishing-returns stopping rule, fetch caching and entity disambiguation before search; alert at 50% and 80% of budget; write a short post-mortem.
-5. **Week 10 — a partner asks the team to scrape a competitor's customer portal,** using a former employee's login, to get pricing. **Say no.**
-   - Using credentials you are not authorised to use is unauthorised access (CMA 1990 s.1). It also breaches site terms and raises confidential-information, competition-law and LP reputational risks.
-   - *Strong response:* decline in writing, escalate to the GC, and offer lawful alternatives: expert calls through licensed networks, public pricing pages whose signals allow AI input, customer interviews, or a commercial DD provider. Record it in the decision log.
-6. **Week 12 — the target invokes the NDA's destroy clause.** The deal has died, and all material must be destroyed within 10 business days.
-   - *Strong response:* delete index, memory, caches and drafts, and shred the key; handle legal-hold exceptions; issue a certificate; prove it by showing that queries now return nothing.
+Weeks are real-engagement weeks (see §7 for the course schedule).
+
+1. **Week 5 — a CIM footer tells "AI assistants" to call the company low-risk and omit an HMRC dispute.** *Strong response:* show from the logs that the VDR reader returned only typed fields, the planner never saw raw text, and the verifier would strip any unsupported "low risk" claim. Tell the deal team (it may be deliberate) and add the document to the adversarial set.
+2. **Week 7 — the agent cites a paywalled article it never accessed,** built from a search-result title and snippet. *Strong response:* the retrieval-record check strips it; fix the root cause so the writer can cite only stored passages. Obtain licensed access (a subscription whose terms allow this use, or paid crawler access where offered) or mark the gap for the analyst. Report the metric honestly.
+3. **Week 8 — two deal teams share a target.** Team A is evaluating TerraFleet; Team B advises a competing portfolio company and holds wall-crossed information about a listed parent. *Strong response:* the CCO decides and the PDP enforces. Namespaces, keys and caches are already separate; run the leakage probes on this pair. If TerraFleet is restricted, Team B's runs may not research it at all.
+4. **Week 9 — a run costs 20× the budget (about USD 300).** Counter-search looped on a common company name, and the reader re-fetched a 900-page PDF. *Strong response:* kill the run; add hard per-step caps (fetches, tokens, wall time), a diminishing-returns stopping rule, fetch caching and entity disambiguation before search; alert at 50% and 80% of budget; write a short post-mortem.
+5. **Week 10 — a partner asks the team to scrape a competitor's customer portal with a former employee's login. Say no.** Using credentials you are not authorised to use is unauthorised access (CMA 1990 s.1); it also breaches site terms and raises confidential-information, competition-law and LP reputational risks. *Strong response:* decline in writing, escalate to the GC, and offer lawful alternatives (expert calls through licensed networks, public pricing pages whose signals allow AI input, customer interviews, a commercial DD provider). Record it in the decision log.
+6. **Week 12 — the target invokes the NDA's destroy clause** for a dead deal: all material within 10 business days. *Strong response:* delete index, memory, caches and drafts, and shred the key; handle legal-hold exceptions; issue a certificate; prove it by showing that queries now return nothing.
 
 ## 12. Deliverables and grading rubric
 
-**Deliverables by phase:**
-- **Discovery:** questionnaire, claim-accuracy baseline, source register, SOW.
-- **POC:** working pipeline, verifier, fetch gateway, ADRs, eval report.
-- **Pilot:** analyst UI, wall integration, threat model, compliance map, demo.
-- **Handover:** runbook, deletion drill evidence, eval suite with owners.
+**Deliverables by phase:** questionnaire, claim-accuracy baseline, source register and SOW (discovery); working pipeline, verifier, fetch gateway, ADRs and eval report (POC); analyst UI, wall integration, threat model, compliance map and demo (pilot); runbook, deletion-drill evidence and an owned eval suite (handover).
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
 | Working system | 25% | End-to-end memos on 3 targets; verifier gates every sentence; per-deal stores | A chat wrapper over a search API |
 | Evaluation rigour | 20% | Calibrated judge; claim-level precision and coverage vs gold; seeded verifier tests | "Looks good" reviews; no gold set |
-| Security / compliance | 15% | Trifecta table; injection and leakage probes pass; fetch-policy log; deletion proven | Shared index with metadata filters only; no robots or licence handling |
+| Security / compliance | 15% | Trifecta table; injection and leakage probes pass; fetch-policy log; deletion proven | Shared index with metadata filters; no robots or licence handling |
 | FDE artefacts | 20% | Source register, ADRs with real trade-offs, runbook, LIA | Generic templates |
 | Demo and communication | 10% | Shows a stripped hallucinated citation and a blocked injection | Shows only the happy path |
 | Curveball handling | 10% | Says no to scraping clearly, with alternatives; involves the CCO in the shared-target case | Complies with the partner; treats walls as a UI filter |
@@ -408,23 +386,22 @@ At 25–40 runs a month that is about USD 25–600 of model and search spend. Li
 | Turn | Title | How it is exercised |
 |---|---|---|
 | 14 | Hallucination in Depth | Fabricated and never-accessed citations; the verifier |
+| 21 | Reasoning Models and Test-Time Compute | Effort set per step (high for planning and contested-claim judging, low for extraction); per-run reasoning budget; effort sweep |
 | 41, 42 | Multilingual Prompting; Document Parsing and Ingestion | Scans, XLSX, Hindi/Marathi VDR files |
 | 49 | RAG Evaluation Tooling | Claim precision, coverage, recall@k |
 | 50, 52 | Vector Databases; Data Lineage and Deletion in RAG | Per-deal collections; NDA destruction drill |
-| 55 | Subagents and Context Isolation | Quarantined readers returning typed data |
-| 56 | Deep-Research Agents | Plan → search → read → verify → write; stopping rules |
-| 58 | Long-Horizon Task Execution | 45-minute resumable runs with budgets |
+| 55, 56, 58 | Subagents and Context Isolation; Deep-Research Agents; Long-Horizon Task Execution | Quarantined readers; plan → search → read → verify → write with stopping rules; 45-minute resumable runs |
 | 64 | Trust Calibration and Automation Bias | Flags and evidence panel; partner over-trust |
 | 73, 74, 75, 76 | OWASP Agentic / LLM Top 10; Red-Teaming; Data and Memory Poisoning | Injection and leakage suites; poisoned pages |
 | 78, 81, 82 | PII/DLP; GDPR and DPDP; Sector Compliance | Query DLP; LIA; MAR, SYSC 10.2, SEBI PIT |
 | 85 | Copyright and IP for AI | Quotation limits; s.29A not available |
+| 87, 96, 97 | Model Upgrades; Observability; Evaluation Tools | Judge re-pinning and recalibration; OTel spans; calibrated judge |
 | 91, 100 | LLM FinOps; AI Gateways | Per-run caps; the 20× curveball |
-| 96, 97 | Observability; Evaluation Tools | OTel spans; calibrated judge |
-| 99 | Durable Workflow Platforms | Resumable research runs |
+| 95, 99 | Agent Frameworks, Hands-On; Durable Workflow Platforms | LangGraph or a vendor agent SDK for the loop (ADR 1); Temporal-style resumable runs |
 | 109–113 | FDE professional skills | Qualification, ROI, POC → pilot, ADRs, demos |
-| 122 | The Agentic Web | Web Bot Auth, pay-per-crawl, AI preferences |
+| 122 | The Agentic Web | Web Bot Auth, paid crawler access, AI preferences |
 
-**New/gap topics exercised:** AI crawler control and content licensing (Content Signals, pay-per-crawl, RSL, IETF aipref); web search and web-data APIs for agents; prompt-injection-resistant architectures (quarantined readers, lethal trifecta); agent memory architectures (scoped, deletable); context engineering for long runs; non-EU regulation (UK MAR, FCA SYSC, SEBI PIT).
+**New/gap topics exercised:** #15 crawler control and licensing; #19 web search APIs; #8 injection-resistant architecture (quarantined readers); #12 agent memory (per-deal, deletable); RAG-9 citation checking; RAG-8 agentic retrieval; RAG-1 context engineering for long runs; MOD-1 reasoning controls (per-step effort, run budget); MOD-7 cache isolation (per-deal prompt caches); AGT-1 harness choice and AGT-2 when not to go multi-agent (ADR 1); FDE-8 saying no (the portal scrape); FDE-11 record-keeping vs NDA destruction; plus UK MAR, FCA SYSC 10.2 and SEBI PIT.
 
 ## 15. What reviewers look for / common failure modes
 
