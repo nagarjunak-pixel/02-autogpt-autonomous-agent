@@ -18,7 +18,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 | Scheme programme officers (×12) | Correct rules, no false promises | Per-scheme content sign-off (a hard gate) |
 | State IT / State Data Centre | Hosting, security audit | Hosting approval, audit certificate |
 | Application-system team | API load, PII exposure | API access, rate limits |
-| Helpline vendor and agents | Jobs, workload, blame | Adoption of the escalation desk |
+| Helpline vendor and agents | Jobs, workload, blame | Escalation-desk adoption |
 | Legal / DPDP nodal officer | Notice, consent, children's data | Go-live |
 | Official-language cell | Correct Telugu/Urdu terminology | Glossary approval |
 | Information and Public Relations (I&PR) | Messaging, election-period risk | Public launch, WhatsApp templates |
@@ -90,8 +90,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 8. What do agents do today when they do not know an answer, and what will their job become?
 9. Which accessibility groups will test with us?
 10. When does the next Model Code of Conduct period start, and what will I&PR require during it?
-11. Does the Directorate already have a verified WhatsApp account, a BSP contract and approved templates?
-12. Which security audit and hosting approvals gate go-live?
+11. Is there already a verified WhatsApp account, a BSP contract and approved templates? Which audit gates go-live?
 
 **Qualification: the lowest rung that works.** *Status* is already a DTMF lookup by application number; keep it as the fallback and add voice and WhatsApp on top. *Eligibility* belongs in a **deterministic rules engine** authored from the GOs and signed off by officers; an LLM reasoning freely over GOs is rejected for decisions. *Questions* need a single grounded LLM call over retrieved GO passages, with citations and simplified language. A *workflow* ties these together (language ID → intent → status tool | rules questionnaire | grounded Q&A | escalate). No autonomous agent is needed.
 
@@ -197,7 +196,7 @@ flowchart LR
 
 **Offline and low-bandwidth fallback.** WhatsApp replies are text-first and under 500 characters, with no images or PDFs unless asked for, and voice only for users who send voice. The IVR keeps a no-data DTMF status path and pre-recorded audio for the top 50 FAQs. SMS status works by keyword (register templates under TRAI's DLT rules; *verify*), a missed call triggers a callback, and pre-approved cached answers cover the top 100 questions if the LLM is down.
 
-**Code sketch: per-language evaluation harness** (library-agnostic). It computes hit@k and faithfulness per language slice with bootstrap confidence intervals, gates on the *lower* bound, and flags parity gaps against Telugu that are credibly larger than allowed.
+**Code sketch: per-language evaluation harness** (library-agnostic): hit@k and faithfulness per slice with bootstrap CIs, gating on the *lower* bound and on credible parity gaps against Telugu.
 
 ```python
 import random
@@ -255,7 +254,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence relative to English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) for every candidate model; retrieval hit@k and MRR per slice; answer faithfulness, correctness, citation presence and readability (native raters: "understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about what they heard?); and safety, latency and cost per slice.
 
-**Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; a 2026 study put the fertility floor as high as 9× on some abugidas and noted that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Urdu's Perso-Arabic script behaves differently again. Fertility multiplies cost, latency and how many GO passages fit in context, so measure it.
+**Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; a 2026 study put the fertility floor as high as 9× on some abugidas and noted that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Urdu's Perso-Arabic script behaves differently again. Fertility multiplies cost and latency and limits how many GO passages fit, so measure it.
 
 **Native-speaker raters and judge calibration.** Two raters per language label 200 answers (report their agreement). The LLM judge is used for a language only when Cohen's κ ≥ 0.7 against them; otherwise humans rate that slice.
 
@@ -279,7 +278,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 - **Children's data.** A minor's status goes only to the guardian's registered mobile, with no profiling.
 - **Political jailbreaks.** A fixed neutrality policy, an election-period mode and a red-team set.
 - **Synthetic voice mistaken for an official.** Prefixed disclosure, a neutral voice persona and no cloning.
-- **Cost or DoS abuse.** Rate limits and quality-rating monitoring.
+- **Cost/DoS abuse.** Per-number rate limits.
 
 **Obligations → controls** ([Template 07](templates/07-compliance-obligations-to-controls.md)):
 
@@ -347,9 +346,9 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
-| Working system | 25% | Grounded, cited answers in four languages; mobile-matched status; honest escalation; DTMF fallback | English-first bot with translated output |
-| Evaluation rigour | 20% | Per-language CIs, native raters, calibrated judge, fertility measured | One pooled accuracy number from translated queries |
-| Security and compliance | 15% | Provenance gate, split contexts, verified obligations with *verify* flags | "We filter bad documents with the LLM" |
+| Working system | 25% | Cited answers in four languages; mobile-matched status; honest escalation; DTMF fallback | English-first bot, translated output |
+| Evaluation rigour | 20% | Per-language CIs, native raters, calibrated judge, fertility measured | One pooled number from translated queries |
+| Security and compliance | 15% | Provenance gate, split contexts, obligations with *verify* flags | "The LLM filters bad documents" |
 | FDE artifacts | 20% | ADRs backed by numbers; a real change-management plan | Templates copied unfilled |
 | Demo and communication | 10% | Shows the Urdu gap honestly, with the plan | Hides weak languages |
 | Curveball handling | 10% | Containment, citizen correction, root cause | Hot-fixes the prompt |
@@ -374,7 +373,7 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
 | 64, 83 | Trust Calibration and Automation Bias; Responsible AI Practice | Indicative eligibility, language parity |
 | 76, 74, 75 | Data and Memory Poisoning; OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice | Forged circulars, injections, political prompts |
 | 78, 81, 84 | PII Detection and DLP; Privacy Law (DPDP); Content Provenance and Watermarking | Status privacy, children, signed registry, audio disclosure |
-| 89, 91, 92 | Feedback Loops and the Data Flywheel; LLM FinOps; On-Prem, Air-Gapped and Sovereign Deployment | Platform-data limits, fertility-driven cost, SDC hosting |
+| 89, 91, 92 | Feedback Loops and the Data Flywheel; LLM FinOps; On-Prem, Air-Gapped and Sovereign Deployment | Platform-data limits, fertility cost, SDC hosting |
 | 90, 96, 97 | SLOs, Incident Response and On-Call for AI; Observability Tools; Evaluation Tools | Freshness SLO, per-language dashboards |
 | 102, 134 | Model Provider Landscape; Sovereign AI and Open-Weight Ecosystems | Indic model choices |
 | 109–116 | Discovery through SOWs, incl. 114 Change Management and Adoption | The FDE artifacts, the escalation desk |

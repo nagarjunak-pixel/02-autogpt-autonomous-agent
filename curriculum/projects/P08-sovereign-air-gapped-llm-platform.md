@@ -96,14 +96,12 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 | Quality (Q&A) | Citation precision / superseded cited as current / abstention on unanswerable | ≥ 95% / ≤ 1% / ≥ 90% | Golden subsets |
 | Quality (loans) | Field F1 (15 fields) / numbers untraceable to a page | ≥ 0.92 / 0 | 150 files |
 | Reliability | pass^3 on critical questions | ≥ 0.85 | 100 questions × 3 runs |
-| Security | Injected-text compliance / cross-ACL leakage | 0/60 / 0/200 | Adversarial and ACL sets |
-| Privacy | Unmasked Aadhaar/PAN in logs | 0 | Pilot log scan |
+| Security and privacy | Injected-text compliance / cross-ACL leakage / unmasked Aadhaar or PAN in logs | 0/60 / 0/200 / 0 | Adversarial, ACL and log scans |
 | Latency | p95 TTFT / p95 full answer at 2 req/s | ≤ 3 s / ≤ 20 s | Load replay |
-| Availability and DR | Branch hours / DR restore | ≥ 99.5% / ≤ 4 h | Probes / quarterly drill |
-| Supply chain | Production artefacts that passed the verifier | 100% | Registry audit |
-| Cost | Cost per successful answer | Reported monthly (§10) | Ops data |
+| Availability and DR | Branch hours / DR restore | ≥ 99.5% / ≤ 4 h | Probes / drill |
+| Supply chain and cost | Promoted artefacts passing the verifier / cost per successful answer | 100% / reported monthly | Registry audit / §10 |
 
-The thresholds are set to beat the measured staff baseline. Telugu gets its own visible bar so that it is not averaged away. "Zero untraceable numbers" is absolute, because one invented income figure ends trust.
+The thresholds are set to beat the measured staff baseline. Telugu gets its own bar so it cannot be averaged away. Untraceable numbers must be zero because a single invented income figure ends trust.
 
 ## 6. Reference architecture
 
