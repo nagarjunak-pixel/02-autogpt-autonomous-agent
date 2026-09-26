@@ -115,7 +115,52 @@ The sections run A→M, bottom-up from tokenizers to future topics. An FDE learn
 
 ## 3. Stress-test of the existing gap analysis
 
-<!-- GAPDOC-CRITIQUE -->
+The gap doc is a useful peer review, and most of its conclusions survive. This section starts with the problems, because those are what a reader needs to act on. Full fact-check details are in [03-errata-and-fact-check.md](03-errata-and-fact-check.md), Part B, and its 23 candidates are re-ranked in [02-gap-register.md](02-gap-register.md).
+
+### Where it is wrong or weak
+
+1. **The headline number has no method.** "Coverage is roughly 85–90%" comes with no taxonomy, denominator or scoring rule. It also ignores the one quantitative signal it had, Vol 2's own status tags (61 turns MISSING and 42 THIN relative to Vol 1). Treat the number as an impression.
+2. **Its citations are weaker than its conclusions.**
+   - Two load-bearing arXiv IDs point to unrelated papers. The "85% on OSWorld-Verified" source is a desktop-transition benchmark, and the OpenClaw source is an international-humanitarian-law paper; we checked the second one ourselves.
+   - The "647,017 exposed n8n instances" figure is the attacker's own reconnaissance result, which Unit 42 quoted.
+   - A Microsoft Copilot DLP bug is cited as evidence for agentic-browser risk, but it was a permissions failure.
+   - Tennessee SB 1580 is listed as a companion-chatbot law, but it is an "AI therapist" law.
+   - Many legal claims rest on blogs even though statutes and regulator pages exist.
+3. **It contradicts itself.** It says "four need fixing" but lists nine. Its P1 list has seven items while its table has eight. It cites a "verified" item (i) that is never shown. It is dated 27 September 2026, after the actual check date.
+4. **It adds without cutting.** It proposes eight new P1 topics on top of a syllabus where 51% of topics are already P1, and names nothing to merge or drop.
+5. **It is driven by news.** Many candidates are dated events (a specific model, bill or benchmark score) that belong in a dated annex. The durable skill underneath is often missing. For example, what an engineer needs is "turn obligations into controls and evidence", not a tour of statutes.
+6. **Its priorities are inconsistent.**
+   - It calls text-to-SQL "the most common enterprise FDE request" (without evidence) but ranks it P2.
+   - It ranks frontier safety frameworks and CoT monitorability at P2, although deployers only read those frameworks (P3 fits).
+   - It labels live products (ads in ChatGPT) and mature models (TabPFN) as "Watch".
+7. **It misses the FDE practice layer entirely.** All 23 candidates are frontier-technical or regulatory. None covers delivery mechanics, which is where FDE time actually goes:
+   - security review and procurement;
+   - systems-of-record integration;
+   - deploying inside customer networks with customer-managed keys;
+   - provider capacity;
+   - honest impact measurement;
+   - the field-to-product loop.
+
+   Vol 2's own Q539 already says projects fail because of the wrong problem, no data access, no measurable success or no adoption, and "rarely because the model was too weak". The MIT NANDA report (Aug 2025, based on interviews and surveys) calls the cause of stalled pilots a "learning gap", meaning tools that do not fit the workflow. Press coverage paraphrased that as "flawed enterprise integration". Either way, the gap is in delivery, not in models. See [section E of the register](gap-register/E-fde-practice-and-operations.md).
+8. **It misses regulation and product changes that were already in effect:**
+   - US bank model-risk guidance was replaced on 17 Apr 2026 (SR 26-2), and the new guidance puts generative AI out of scope.
+   - EU Cyber Resilience Act reporting duties began on 11 Sep 2026.
+   - The UK's automated-decision reform took effect on 5 Feb 2026.
+   - Legal incident-reporting clocks (GDPR 72 h, CRA 24/72 h, CERT-In 6 h) are missing.
+   - AP2's mandate model changed in v0.2.
+   - OpenAI's fine-tuning platform is closing.
+9. **It overstates one gap.** "Regulation stops at the EU and India" is not true: Vol 2 already covers NIST AI RMF, ISO/IEC 42001, HIPAA and (the now-superseded) SR 11-7.
+
+### Where it is right (and we agree after testing it)
+
+- **Its MISSING/THIN labels mostly survive a grep of Vol 2.** There are two exceptions: Vol 2 does mention compaction (Turn 58), and it does cover some non-EU regulation.
+- **Most of its dated facts hold.** 30 of 60 checks verified outright, and 17 more were right but needed context.
+- **Its four strongest additions are the right ones**, and we keep all of them at P1:
+  - prompt-injection-resistant architectures (CaMeL, the lethal trifecta);
+  - context engineering;
+  - text-to-SQL, which we raise to P1;
+  - AI-era security of the orchestration layer.
+- **Its core diagnosis is correct.** Security is framed as "attacks on LLM apps" rather than "LLMs as attackers and defenders", and safety covers training but not user-harm failure modes such as sycophancy and minors.
 
 ---
 
