@@ -1,6 +1,6 @@
 # P16 · Due-Diligence Deep-Research Agent
 
-> A deep-research agent that drafts first-pass due-diligence memos. Every sentence traces to a passage the system actually retrieved. Deals are separated by information barriers, sources are licence-clean, and every run has a hard cost cap.
+> A deep-research agent that drafts first-pass due-diligence memos in which every sentence traces to a passage the system actually retrieved, behind information barriers between deals, with licence-clean sourcing and a hard cost cap per run.
 
 > **Customer:** Northstar Capital Partners (fictional) · **Industry:** Private equity (mid-market buyout and growth) · **Geography:** UK (London) and India (Mumbai) · **Real engagement:** 14 weeks. The FDE lead and one FDE work with Northstar's data engineer, a part-time compliance officer and 2 analyst champions · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
 

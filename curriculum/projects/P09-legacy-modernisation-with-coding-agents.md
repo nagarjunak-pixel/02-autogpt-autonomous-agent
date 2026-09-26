@@ -1,6 +1,6 @@
 # P09 · Legacy Modernisation with Coding Agents
 
-> Turn "modernise in half the time" into a measured coding-agent programme. It has an agent-ready repo, recovered specs, characterisation oracles, sandboxed agents and a strangler-fig migration of one premium-calculation module out of COBOL, and it produces productivity figures you can defend to a board.
+> Turn "modernise in half the time" into a measured coding-agent programme (agent-ready repo, recovered specs, characterisation oracles, sandboxed agents, a strangler-fig migration of one COBOL premium module) with productivity figures you can defend to a board.
 
 > **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
 
