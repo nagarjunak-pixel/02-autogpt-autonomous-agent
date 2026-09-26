@@ -13,14 +13,14 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
-| COO (sponsor) | Store-manager adoption; uses "revenue" to mean gross sales | Funding |
-| CFO | One version of the truth; "revenue" = net of returns and discounts, excluding GST | Finance metrics, go-live |
+| COO (sponsor) | Adoption; "revenue" means gross sales | Funding |
+| CFO | One version of the truth; "revenue" is net of returns and discounts, excluding GST | Finance metrics, go-live |
 | Head of Data Platform | Warehouse stability, schema ownership, the semantic layer | Production access |
 | CISO | Row-level security (RLS), data egress, provider approval | Security sign-off |
 | FinOps lead | The warehouse bill (a previous BI tool ran away with it) | Budget caps |
 | Regional managers (8) | Cross-region benchmarks, speed | Pilot participation |
 | Store managers (~900) | Hindi-first, mobile, low patience | Adoption |
-| HQ analysts (12) | Fear of being replaced; want to become metric curators | Metric definitions, golden set |
+| HQ analysts (12) | Fear replacement; could become metric curators | Metric definitions, golden set |
 | Grievance Officer / DPO | Loyalty and staff data under DPDP | DPIA |
 
 ## 2. Constraints
@@ -30,8 +30,7 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 - **Platform.** The data team is moving to a cloud warehouse this year; Snowflake, BigQuery or Databricks is still open (ADR-002 informs it), so the assistant must stay portable.
 - **Legal and regulatory** (as of Sept 2026):
   - **India's DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The Rules phase in at 12 and 18 months from notification: consent managers from Nov 2026, most obligations from **May 2027**. Until then, IT Act s.43A and the SPDI Rules apply ([DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)).
-  - **In scope for DPDP:** loyalty-member identifiers and cashier IDs are personal data, and so are the question logs of named managers.
-  - **Cross-border transfers** are allowed unless the Government restricts a destination by notification under s.16 ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)). Check the list before go-live.
+  - Loyalty-member identifiers, cashier IDs and named managers' question logs are personal data. **Cross-border transfers** are allowed unless the Government restricts a destination by notification under s.16 ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)); check before go-live.
   - **CERT-In Directions (28 Apr 2022):** report incidents within 6 hours; keep ICT logs for 180 days within India ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
   - **No AI-specific statute** applies to this internal analytics use (*verify before teaching*).
 - **Security.** A read-only warehouse role with RLS by region and store; no personal-data columns in the semantic layer; a model provider offering zero data retention (ZDR). The model sees schema, definitions and aggregated results only, never raw rows.
@@ -150,10 +149,10 @@ flowchart LR
 
 | Component | Responsibility | Open-source / self-hosted | Managed | Owner |
 |---|---|---|---|---|
-| Chat PWA | Chart, definition, scope, freshness; "show SQL" on tap | Next.js or Streamlit with Vega-Lite | Embedded in the existing store-ops app | Customer app team |
+| Chat PWA | Chart, definition, scope, freshness; "show SQL" on tap | Next.js or Streamlit with Vega-Lite | Existing store-ops app | Customer app team |
 | Normaliser | Detect script; transliterate; resolve "kal", lakh/crore and fiscal periods | Rules plus a small LLM | Provider API | FDE |
 | Planner | Question → `MetricQuery` JSON, validated with Pydantic against the catalogue | vLLM guided decoding, Outlines | Provider structured outputs | FDE |
-| Semantic layer | Metrics, joins, default filters (e.g. exclude test stores), pre-aggregations | dbt Core + MetricFlow (Apache 2.0 from v0.209.0, [GitHub](https://github.com/dbt-labs/metricflow)); Cube Core | dbt Semantic Layer, Cube Cloud, LookML, Snowflake semantic views, Databricks metric views | Analytics engineering |
+| Semantic layer | Metrics, joins, default filters (e.g. exclude test stores), pre-aggregations | dbt Core + MetricFlow (Apache 2.0 from v0.209.0, [GitHub](https://github.com/dbt-labs/metricflow)); Cube Core | dbt Semantic Layer, Cube Cloud, LookML, warehouse semantic or metric views | Analytics engineering |
 | SQL guard | Enforce statement and table allow-lists, RLS injection, LIMIT, cost gate | `sqlglot` ([docs](https://sqlglot.com/sqlglot.html)) | — | FDE → platform team |
 | Warehouse | Executes under a read-only role with native RLS and timeouts | Postgres 16 RLS ([docs](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)); DuckDB for the course | Snowflake, BigQuery, Databricks SQL | Data platform |
 | Verifier | Row counts; totals reconcile with certified daily aggregates within ±0.5%; nulls; freshness | Python | — | FDE |
@@ -161,7 +160,7 @@ flowchart LR
 
 **ADRs to write** (use [template 04](templates/04-solution-design-and-adr.md)):
 
-- **ADR-001 · Semantic layer.** MetricFlow (simple, ratio, derived, cumulative and conversion metrics; [dbt docs](https://docs.getdbt.com/docs/build/about-metricflow)); Cube, with access policies, a Postgres-compatible SQL API and an MCP server ([Cube docs](https://docs.cube.dev/docs/introduction)); LookML; warehouse-native semantic or metric views; or no layer, just documentation plus verified queries. The Open Semantic Interchange, now **Apache Ossie (incubating)**, aims to make semantic models portable ([GitHub](https://github.com/open-semantic-interchange/OSI); *verify maturity*).
+- **ADR-001 · Semantic layer.** MetricFlow (simple, ratio, derived, cumulative and conversion metrics; [dbt docs](https://docs.getdbt.com/docs/build/about-metricflow)); Cube, with access policies, a Postgres-compatible SQL API and an MCP server ([Cube docs](https://docs.cube.dev/docs/introduction)); LookML; warehouse-native semantic or metric views; or no layer, just documentation plus verified queries. The Open Semantic Interchange, now **Apache Ossie (incubating)**, aims at portable semantic models ([GitHub](https://github.com/open-semantic-interchange/OSI); *verify maturity*).
 - **ADR-002 · Warehouse platform.** Compare cost models: Snowflake per-second credits with a 60-second minimum on every resume ([Snowflake](https://docs.snowflake.com/en/user-guide/cost-understanding-compute)); BigQuery per TiB scanned on demand, or slots ([BigQuery](https://docs.cloud.google.com/bigquery/docs/best-practices-costs)); Databricks DBUs. Also compare India-region availability (*verify*), native RLS and team skills.
 - **ADR-003 · Build vs. platform-native.** A custom assistant; Snowflake Cortex Analyst, which uses semantic views, generates SQL that "adhere[s] to all established access controls" and is billed per message plus warehouse time ([Snowflake](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst)); Databricks Genie, now Genie One, Genie Agents and Genie Code ([Databricks](https://docs.databricks.com/aws/en/genie/)), where Genie Agents can query metric views ([docs](https://docs.databricks.com/aws/en/metric-views/)); or BigQuery conversational analytics and data agents (check release stage; [BigQuery](https://docs.cloud.google.com/bigquery/docs/generative-ai-overview)). For in-platform translation, weigh **native AI SQL functions** (Snowflake `AI_TRANSLATE`, [docs](https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql); Databricks `ai_translate`, [docs](https://docs.databricks.com/aws/en/large-language-models/ai-functions); BigQuery `AI.GENERATE`).
 - **ADR-004 · Where RLS lives.** Warehouse row access policies (primary), plus guard injection and semantic-layer policies (defence in depth). Per-user on-behalf-of identity vs. per-region service roles.
@@ -176,7 +175,7 @@ flowchart LR
 | POC | 3–5 | Semantic layer for 20 metrics; planner; guard; golden set v0 (n = 150) | AC-1 ≥ 0.85 and AC-5 met on the POC set | Eval plan ([05](templates/05-eval-plan.md)), ADR-001, ADR-004, ADR-006 |
 | Pilot | 6–9 | 4 regions, ~150 managers; clarifier; verifier; Hindi and Hinglish tuning; cost dashboards; red team | AC-1 to AC-11 met on frozen v1 (n = 300) | SOW acceptance ([03](templates/03-sow-and-acceptance-criteria.md)), threat model ([06](templates/06-threat-model-and-controls.md)), weekly status ([10](templates/10-demo-script-and-status-report.md)) |
 | Production | 10–11 | All regions; pre-aggregations; resource monitors; schema-change CI; DPIA ([07](templates/07-compliance-obligations-to-controls.md)) | SLOs met for 2 weeks; cost within cap | Runbooks ([09](templates/09-runbook-slos-and-handover.md)) |
-| Handover | 12 | Analysts become metric curators; drills for cost kill, schema change and RLS audit | Customer team passes the drills unaided | Handover checklist, field-to-product notes |
+| Handover | 12 | Analysts become metric curators; drills (cost kill, schema change, RLS audit) | Customer team passes the drills unaided | Handover checklist, field-to-product notes |
 
 **Course build (5 weeks):** week 1, discovery role-play, the generator and the semantic layer; week 2, the planner and the guard; week 3, clarification, the fallback path, evals and the effort sweep; week 4, Hindi/Hinglish, cost and curveballs; week 5, hardening and the demo.
 
@@ -270,7 +269,7 @@ The guard rejects `DELETE`, `SELECT … INTO`, a `DELETE` hidden in a CTE, `read
 
 An LLM judge is used only for Hindi fluency and clarity. It is calibrated against 2 native speakers on 100 items (κ ≥ 0.7) and pinned.
 
-**Benchmark context** (not used for acceptance): BIRD has 12,751 question–SQL pairs, human execution accuracy of 92.96% and a leaderboard top of 82.39% (22 Aug 2026, [BIRD](https://bird-bench.github.io/)); Spider 2.0 has 632 enterprise workflow tasks (ICLR 2025). They explain *why* the design puts a semantic layer first.
+**Benchmark context** (not for acceptance): the BIRD leaderboard top was 82.39% against 92.96% for humans (22 Aug 2026, [BIRD](https://bird-bench.github.io/)), which, with Spider 2.0, is *why* the design puts a semantic layer first.
 
 **CI gates.** A release is blocked on an execution-accuracy drop of more than 2 points (bootstrap 95% CI), any RLS or DML violation, or cost per question up more than 20%. A schema diff triggers a full golden-set run.
 
@@ -288,10 +287,10 @@ An LLM judge is used only for Hindi fluency and clarity. It is calibrated agains
 
 **Top threats and controls** (OWASP [LLM Top 10 2025](https://genai.owasp.org/llm-top-10/)):
 
-- **Excessive agency (LLM06).** A read-only role; the guard; no DDL/DML path exists at all.
-- **Sensitive information disclosure (LLM02).** Native RLS plus guard injection; the planner checks that the requested scope is within the user's entitlement.
+- **Excessive agency (LLM06).** A read-only role and the guard; no DDL/DML path exists.
+- **Sensitive information disclosure (LLM02).** Native RLS plus guard injection; the planner checks requested scope against the user's entitlement.
 - **Unbounded consumption (LLM10).** Per-question token and credit budgets, a retry cap and a circuit breaker.
-- **Misinformation (LLM09).** Governed metrics, clarification, the verifier, and a scope and freshness footer.
+- **Misinformation (LLM09).** Governed metrics, clarification, the verifier and the footer.
 - **Prompt injection via data (LLM01).** The planner never sees rows; the narrative is checked number by number.
 
 **Obligations → controls:**
@@ -317,8 +316,8 @@ An LLM judge is used only for Hindi fluency and clarity. It is calibrated agains
 |---|---|---|
 | LLM, small model | 90k questions (3k/day); ~8.7k input and ~0.8k output tokens per question (measure per language: Devanagari often needs more tokens per word), including a 15% fallback rate and a 30% retry allowance; USD 0.10–0.60 in and 0.40–2.50 out per 1M | USD 110–650 |
 | LLM, frontier everywhere (for comparison) | Same volume; USD 1.25–5 in and 5–25 out per 1M | USD 1.3k–5.7k, so route |
-| Warehouse, Snowflake-style | Dedicated Small warehouse (X-Small ≈ 1 credit/h and each size doubles; *verify in the consumption table*); 14 business hours × 30 days ≈ 840 credits at USD 2–4 per credit | USD 1.7k–3.4k |
-| Warehouse, BigQuery-style | 180k queries against pre-aggregates at ~50 MB each ≈ 9 TB | Under USD 100; but just 1% of queries scanning a 200 GB raw fact adds ≈ USD 1.6k–2.6k at USD 5–8/TiB |
+| Warehouse, Snowflake-style | Dedicated Small warehouse (2 credits/h; *verify in the consumption table*) × 14 business hours × 30 days ≈ 840 credits at USD 2–4 each | USD 1.7k–3.4k |
+| Warehouse, BigQuery-style | 180k queries against pre-aggregates at ~50 MB each ≈ 9 TB | Under USD 100, but 1% of queries scanning a 200 GB raw fact adds ≈ USD 1.6k–2.6k at USD 5–8/TiB |
 | Hosting and observability | Small containers | USD 200–400 |
 
 That gives **≈ USD 0.025–0.055 per successful answer** (at 90% success). The warehouse dominates, and the upper end breaks AC-9. The cost levers, in order: pre-aggregations; deterministic SQL text, so result caches hit (Snowflake reuses persisted results, kept 24 hours and renewed on reuse, only for identical query text; [docs](https://docs.snowflake.com/en/user-guide/querying-persisted-results)); auto-suspend; and retry caps. The ADR-006 reasoning option is not free: 13.5k fallback questions a month × 2–6k reasoning and output tokens at USD 5–25 per 1M adds USD 135–2,000, up to about USD 0.025 per successful answer, so it must earn its place on the golden set.
@@ -390,10 +389,9 @@ Timings are course weeks, with the real-engagement week in brackets.
 - **Raw text-to-SQL over all 2,400 columns,** justified by benchmark scores.
 - **The guard as the only control,** with no native RLS, timeouts or cost caps.
 - **Silent RLS trimming,** so a "national" total is really one region.
-- **The LLM doing the arithmetic in the narrative.**
+- **The LLM doing the narrative's arithmetic.**
 - **Scoring by SQL string match,** or counting empty results as correct.
-- **An English-only golden set** for a Hindi-first user base.
-- **Unbounded repair loops,** and cost per question that leaves out the warehouse.
+- **An English-only golden set** for Hindi-first users.
+- **Unbounded repair loops, or a reasoning model on every question,** and cost per question without the warehouse.
 - **The team choosing the definition of "revenue"** instead of the metric owners.
-- **Personal-data columns** exposed through the semantic layer.
-- **No freshness disclosure** on partially loaded days.
+- **Personal-data columns** in the semantic layer, or **no freshness disclosure** on partial days.

@@ -1,6 +1,6 @@
 # P09 · Legacy Modernisation with Coding Agents
 
-> Turn "modernise in half the time" into a measured coding-agent programme (agent-ready repo, recovered specs, characterisation oracles, sandboxed agents, a strangler-fig migration of one COBOL premium module) with productivity figures you can defend to a board.
+> Turn "modernise in half the time" into a measured coding-agent programme: one COBOL premium module migrated by sandboxed agents against a legacy oracle, with productivity figures you can defend to a board.
 
 > **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
@@ -13,7 +13,7 @@ Bharat Mutual Life (BML) has about 4.2 million in-force policies. Premiums come 
 **The ask (CTO):** "Use AI coding agents to modernise in half the time." A systems integrator (SI) has pitched "automatic COBOL-to-Java for the whole estate in six months", and the board wants a mainframe-exit story.
 
 **What BML actually needs:**
-1. **An agent-ready engineering system.** This means repository instruction files (AGENTS.md), reviewed agent skills (SKILL.md), subagents for exploration, sandboxes with least privilege, hooks, CI gates and provenance for AI-written code.
+1. **An agent-ready engineering system:** AGENTS.md instruction files, reviewed skills (SKILL.md), exploration subagents, least-privilege sandboxes, hooks, CI gates and provenance for AI-written code.
 2. **Spec-driven development** (spec → plan → tasks → implementation). The spec is *recovered* from the legacy code and confirmed by the actuary.
 3. **Characterisation tests as the oracle.** They are in place before any change: the legacy binary defines "correct".
 4. **A strangler-fig migration of one module** (premium calculation) behind a facade, run first in shadow and then as a canary.
@@ -187,7 +187,7 @@ flowchart LR
 | Repo instructions | Commands, conventions, never-edit paths; nested per area | [AGENTS.md](https://agents.md/) (stewarded by the Agentic AI Foundation, Linux Foundation); tool-specific files generated from it | FDE → platform team |
 | Skills | `cobol-explain`, `copybook-expand`, `characterise-paragraph`, `rule-provenance` | [Agent Skills](https://agentskills.io/) folders, reviewed and pinned like code | Platform team |
 | Agent runtime | Implement inside the sandbox; subagents | OSS: OpenHands, goose, OpenCode, Aider · Managed: Claude Code, OpenAI Codex, GitHub Copilot agent, Kiro | Platform team |
-| Spec workflow | Constitution → spec → plan → tasks → implement | [GitHub Spec Kit](https://github.com/github/spec-kit) (MIT; current README uses `/speckit-*` skills plus a "converge" step; names changed between releases, so pin one) · [Kiro specs](https://kiro.dev/docs/specs/) (requirements.md, design.md, tasks.md) · plain templates | FDE |
+| Spec workflow | Constitution → spec → plan → tasks → implement | [GitHub Spec Kit](https://github.com/github/spec-kit) (MIT; `/speckit-*` skills plus a "converge" step; names change between releases, so pin one) · [Kiro specs](https://kiro.dev/docs/specs/) · plain templates | FDE |
 | Sandbox | Isolation, no secrets, egress allow-list | gVisor, Firecracker/Kata, devcontainers, [Claude Code sandboxing](https://code.claude.com/docs/en/sandboxing) (Seatbelt / bubblewrap) · vendor cloud sandboxes | CISO + platform |
 | Hooks / policy | Deny protected-path writes and destructive commands | [Claude Code hooks](https://code.claude.com/docs/en/hooks) (`PreToolUse` deny), [Kiro hooks](https://kiro.dev/docs/hooks/), OPA/Conftest, GitLab push rules | Platform |
 | LLM gateway | Model allow-list, budgets, logs, DLP | LiteLLM proxy (pin hashes: 1.82.7/1.82.8 were compromised on PyPI in March 2026), agentgateway · cloud API gateways | Platform + CISO |
@@ -203,13 +203,7 @@ flowchart LR
 3. **Target stack:** Java 21 vs 25 LTS (Oracle premier support to Sep 2028 vs Sep 2030, [endoflife.date](https://endoflife.date/oracle-jdk)), Spring Boot 4.0 vs 4.1 (OSS support to 31 Jul 2027), or Python.
 4. **Oracle and tolerance policy:** exact for billed and statutory fields; who approves deviations.
 5. **Facade and rollout:** quote API first (shadow → 5% → 25% → 100%), batch last after a parallel cycle.
-6. **Review tiers and provenance:**
-   - T0 (docs, added tests): one reviewer.
-   - T1 (refactors behind green oracle): one reviewer, who reads test diffs first.
-   - T2 (premium rules, tolerances, fixtures, CI, AGENTS.md, skills): two reviewers, including CODEOWNERS.
-   - T3 (routing, production config): change board.
-
-   Also decide commit trailers plus attestations vs PR labels.
+6. **Review tiers and provenance:** T0 (docs, added tests) one reviewer; T1 (refactors behind a green oracle) one reviewer, who reads test diffs first; T2 (premium rules, tolerances, fixtures, CI, AGENTS.md, skills) two reviewers including CODEOWNERS; T3 (routing, production config) the change board. Also decide commit trailers plus attestations vs PR labels.
 
 ## 7. Implementation plan — week by week
 
@@ -288,21 +282,11 @@ if __name__ == "__main__":  # diff_harness.py N SEED EXPECTED_SHA256 -- legacy c
     sys.exit(1 if diffs else 0)
 ```
 
-Students extend it in three ways:
-- per-stratum mismatch counts;
-- a deviation register, in which an approved rule ID marks a known diff "explained";
-- Hypothesis property tests, for example that the premium never falls as sum assured rises within a band.
+Students extend it with per-stratum mismatch counts, a deviation register (an approved rule ID marks a known diff "explained") and Hypothesis property tests, e.g. the premium never falls as sum assured rises within a band.
 
 ## 8. Evaluation plan
 
-**Datasets:**
-- **Golden:** 200 actuary-verified policies, frozen.
-- **Differential:** 1M fixtures × 3 seeds.
-- **Masked production-derived:** 200k records, on-prem only.
-- **Mutation:** 50 seeded bugs.
-- **Adversarial:** 20 tasks that tempt the agent to edit tests, delete files, obey injected comments, add unvetted dependencies or paste external code.
-- **Held-out:** 40 tasks with hidden tests, never used to tune AGENTS.md or skills.
-- **Regression:** every shadow mismatch.
+**Datasets:** golden (200 actuary-verified policies, frozen); differential (1M fixtures × 3 seeds); masked production-derived (200k records, on-prem only); mutation (50 seeded bugs); adversarial (20 tasks that tempt the agent to edit tests, delete files, obey injected comments, add unvetted dependencies or paste external code); held-out (40 hidden-test tasks, never used to tune AGENTS.md or skills); regression (every shadow mismatch).
 
 **Metrics by layer:** equivalence (mismatches by field and stratum); oracle (mutation kill rate, legacy paragraph coverage); agent (pass@1, pass^3, tampering blocked, hook denials, cost per task); human review (seeded-defect catch rate on 10% of review assignments, per Turn 64; review minutes; rework); delivery (the five DORA metrics).
 
@@ -355,15 +339,13 @@ BML's design:
 | IRDAI Cyber Guidelines 2026 (verify Annex B) | Vendor assessment; sandbox + gateway; SDLC gates | Security pack, CI logs |
 | CERT-In: 6-hour reporting; 180-day logs in India | Gateway and agent logs in an India region ≥ 180 days; incident clock in the runbook | Retention config, drill |
 | IRDAI product and actuarial regulations | Oracle equivalence; deviation register signed by the Appointed Actuary | Harness reports, sign-off |
-| DPDP Act and Rules | No personal data in prompts; masking on-prem | Masking tests, data-flow note |
+| DPDP Act and Rules (SPDI Rules until May 2027) | No personal data in prompts; masking on-prem | Masking tests, data-flow note |
 | Licences and copyright | Scanning; provenance ledger (model, session, prompt hash, approver) as trailers + attestation | Ledger, scan reports |
 | Segregation of duties | Agents cannot approve or merge | GitLab approval rules |
 
 ## 10. Operations and cost model
 
-**SLOs:**
-- **Premium service:** quote API 99.9% (99.95% in business hours), p95 ≤ 150 ms, renewal batch within its 3-hour window, shadow lag ≤ 5 minutes.
-- **Agent platform:** sandbox start ≤ 60 s. It is off the production path.
+**SLOs:** quote API 99.9% (99.95% in business hours), p95 ≤ 150 ms, renewal batch within its 3-hour window, shadow lag ≤ 5 minutes; agent platform (off the production path) sandbox start ≤ 60 s.
 
 **Observability:** OTel traces per agent session (model, tokens, tool calls, hook denials, cost), facade routing counters, and the provenance ledger joined to merge requests. The GenAI semantic conventions are still at *Development* status and have moved repositories, so **pin the version**.
 
@@ -372,12 +354,7 @@ BML's design:
 - **Seat plans** instead run roughly USD 20–200 per developer per month.
 - **Review time is the real cost.** At 25 minutes × 300 agent PRs/month, that is 125 senior hours. So report **cost per successful task** = attempt cost ÷ pass rate + review cost.
 
-**Runbook:**
-- *Shadow mismatch spike:* the facade routes that product/mode back to legacy, and the diff is triaged against the register.
-- *Hook bypass:* revoke the session and quarantine the branch.
-- *Licence match:* quarantine and escalate to Legal.
-- *Model deprecation notice:* rerun the task suite before switching (Turn 87).
-- *Budget breach:* throttle per user.
+**Runbook:** *shadow mismatch spike*, the facade routes that product/mode back to legacy and the diff is triaged against the register; *hook bypass*, revoke the session and quarantine the branch; *licence match*, quarantine and escalate to Legal; *model deprecation notice*, rerun the task suite before switching (Turn 87); *budget breach*, throttle per user.
 
 **DR:** the legacy CICS path stays warm for two renewal cycles after 100% cutover, and the kill switch is drilled monthly. The new service runs active-active across two Indian availability zones.
 
