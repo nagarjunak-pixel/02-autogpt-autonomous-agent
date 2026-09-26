@@ -49,10 +49,10 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
   - *Minimum necessary* ([45 CFR 164.502(b)](https://www.law.cornell.edu/cfr/text/45/164.502)): treatment disclosures are exempt, but pipeline and vendor uses are not. Send encounter audio, never the chart.
   - *Audit controls:* [45 CFR 164.312(b)](https://www.law.cornell.edu/cfr/text/45/164.312).
   - The Security Rule update proposed on 6 Jan 2025 is still not final; HHS now lists July 2027 for final action ([Clark Hill, 13 Jul 2026](https://www.clarkhill.com/news-events/news/hipaa-security-rule-update-delayed-until-2027/)). Design to it anyway.
-- **California [Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) (CIPA).** Recording a confidential communication without "the consent of all parties" is a crime: patient, guardian, interpreter and student, as well as the clinician and MA (via employment policy). [Penal Code 637.2](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=637.2) adds a civil claim of USD 5,000 per violation. A proposed class action filed on 26 Nov 2025 alleges a California health system recorded visits with an ambient scribe without all-party consent, and that charts falsely said patients had consented (CIPA and CMIA; allegations only; [Fisher Phillips](https://www.fisherphillips.com/en/insights/insights/new-class-action-targets-healthcare-ai-recordings)). The CMIA ([Civ. Code 56.10](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=56.10)) also governs disclosure of medical information (verify its duties for vendors).
-- **California AB 3030** ([HSC 1339.75](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75), effective 1 Jan 2025). A clinic using generative AI for written or verbal *patient communications pertaining to patient clinical information* must include an AI disclaimer (placement depends on the medium) and instructions for reaching a human. Scheduling and billing messages are outside it.
-  - **Exemption (subd. (b)):** the duties do not apply if the communication is "read and reviewed by a human licensed or certified health care provider", meaning a person licensed or certified under Division 2 of the Business and Professions Code. Review by an interpreter or scribe does not count; whether an MA's review counts: verify with counsel.
-  - A clinician-signed SOAP note is documentation, not a patient communication. Even when released to the patient portal, it has been read and reviewed by the signing clinician.
+- **California [Penal Code 632](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) (CIPA).** Recording a confidential communication without "the consent of all parties" is a crime: patient, guardian, interpreter, student, and the clinician and MA (via employment policy). [Penal Code 637.2](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=637.2) adds civil claims of USD 5,000 per violation. A proposed class action (filed 26 Nov 2025) alleges a California health system's ambient scribe recorded visits without all-party consent while charts said patients had consented (allegations only; [Fisher Phillips](https://www.fisherphillips.com/en/insights/insights/new-class-action-targets-healthcare-ai-recordings)). The CMIA ([Civ. Code 56.10](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=56.10)) also governs disclosure of medical information (verify its duties for vendors).
+- **California AB 3030** ([HSC 1339.75](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1339.75), effective 1 Jan 2025). A clinic using generative AI for written or verbal *patient communications pertaining to patient clinical information* must include an AI disclaimer (placement varies by medium) and instructions for reaching a human. Scheduling and billing are outside it.
+  - **Exemption (subd. (b)):** the duties do not apply if the communication is "read and reviewed by a human licensed or certified health care provider" (licensed or certified under Division 2 of the Business and Professions Code). An interpreter's or scribe's review does not count; for an MA's, verify with counsel.
+  - A clinician-signed SOAP note is documentation, not a patient communication, and even when released to the portal it has been reviewed by the signing clinician.
   - The law *does* bite if AI-drafted after-visit summaries, Spanish instructions or portal replies go out without that licensed review.
 - **California AB 489** (Ch. 615, 2025; [bill](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB489)): AI must not imply a licensed human is providing the care or advice.
 - **Texas [Penal Code 16.02(c)(4)](https://texas.public.law/statutes/tex._penal_code_section_16.02)** allows one-party consent. Lakeshore uses all-party consent in both states anyway: one workflow, cross-state telehealth, trust.
@@ -121,11 +121,9 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
 10. What does the patient board need to see before endorsing recording?
 
 **Qualification: the lowest rung that works.**
-- *Rules* enforce consent gating and schema checks.
-- *ML* (ASR + diarisation) is unavoidable.
-- *One structured LLM call* drafts the note, then a deterministic verification pass checks it.
-- *A durable workflow* runs the async pipeline.
-- *No agent.* No auto-ordering, no auto-messaging patients, no auto-signing.
+- *Rules* enforce consent gating and schema checks; *ML* (ASR + diarisation) is unavoidable.
+- *One structured LLM call* drafts the note; a deterministic verification pass checks it; *a durable workflow* runs the async pipeline.
+- *No agent:* no auto-ordering, auto-messaging of patients or auto-signing.
 - *"Buy" is a rung too.* If a vendor meets the Spanish, interpreter and two-EHR bar at an acceptable cost, the FDE's job becomes evaluation, integration and governance.
 
 Output: SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) and data-readiness scorecard ([template 02](templates/02-data-readiness-scorecard.md)).
@@ -152,9 +150,9 @@ Output: SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) and dat
 | Cost | AI compute per signed note | ≤ USD 0.50 | FinOps dashboard |
 
 **Why these numbers.**
-- *Latency:* notes arriving more than about 10 minutes after the visit get batched to evening, which defeats the purpose.
-- *ASR:* WER gates are set relative to the week-1 baseline; tighten them if the baseline is better.
-- *Critical errors:* drafts may contain some, signed notes may not. That is why verification and review design matter more than raw model quality.
+- *Latency:* notes arriving more than about 10 minutes after the visit get batched to evening, defeating the purpose.
+- *ASR:* WER gates are relative to the week-1 baseline; tighten them if the baseline is better.
+- *Critical errors:* drafts may contain some, signed notes may not, so verification and review design matter more than raw model quality.
 
 ## 6. Reference architecture
 
@@ -287,7 +285,7 @@ if __name__ == "__main__":
 
 Running it flags p1 (dose not in transcript), p2 (dose, plus a negation conflict: the patient stopped it) and p3 (unsupported medication).
 
-This is deliberately lexical, cheap and high-recall. In production, add RxNorm normalisation, spoken-number handling, multi-word drug names, and an NLI or LLM-judge pass for laterality and attribution. False positives are acceptable: a flag costs a glance, while a miss can cost a patient.
+It is deliberately lexical, cheap and high-recall. In production, add RxNorm normalisation, spoken-number handling, multi-word drug names, and an NLI or LLM-judge pass for laterality and attribution. A false positive costs a glance; a miss can cost a patient.
 
 ## 8. Evaluation plan
 
@@ -308,7 +306,7 @@ This is deliberately lexical, cheap and high-recall. In production, add RxNorm n
 | Codes | Top-3 recall against coder-assigned ICD-10-CM codes; no code without an evidence span |
 | Human | Time-to-sign vs length, edit distance, flag acknowledgement, amendments, trust vs measured accuracy |
 
-**Clinician raters.** Three raters (one Spanish-fluent) with 20% double-rated. Scores count only once inter-rater κ ≥ 0.6 on critical-error presence; disagreements are adjudicated. An LLM judge for unsupported statements, calibrated to κ ≥ 0.7 against raters, is used for regression triage only, never acceptance.
+**Clinician raters.** Three raters (one Spanish-fluent), 20% double-rated; scores count only once inter-rater κ ≥ 0.6 on critical-error presence, with disagreements adjudicated. An LLM judge for unsupported statements, calibrated to κ ≥ 0.7 against raters, is for regression triage only, never acceptance.
 
 **CI gates.** Block a prompt, model or ASR change if critical errors rise, verifier recall falls below 95%, Spanish or code-switched WER worsens by more than 1 pp, or p95 latency exceeds 5 minutes.
 
@@ -340,8 +338,8 @@ This is deliberately lexical, cheap and high-recall. In production, add RxNorm n
 | Obligation | Control | Evidence |
 |---|---|---|
 | HIPAA BAAs; minimum necessary; audit controls | Vendor register with BAA status; encounter-scoped data only; immutable access log | BAA files; log samples |
-| CA Penal Code 632 all-party consent | Per-participant consent (patient, guardian, interpreter, student); capture gate | Consent records; E2E tests |
-| CA AB 3030 | No unreviewed AI patient communications; disclaimer template if ever enabled | Config test; UI screenshots |
+| CA Penal Code 632 all-party consent | Per-participant consent (patient, guardian, interpreter, student; staff via policy); capture gate; consent recorded only when actually given | Consent records; E2E tests |
+| CA AB 3030 | Licensed-clinician review before any AI patient communication; disclaimer and human-contact template if one is ever sent unreviewed | Config test; UI screenshots |
 | CA AB 489 | Patient-facing copy reviewed so it never implies a licensed human authored AI output | Copy review sign-off |
 | TX SB 1188 review, disclosure and US storage | Signing = full review attestation; disclosure in consent script; US-region storage only | Region config; script |
 | TX TRAIGA 552.051(f) (uncertain reach) | Disclosure at or before first service | Consent records |
@@ -360,12 +358,9 @@ This is deliberately lexical, cheap and high-recall. In production, add RxNorm n
 - *LLM:* about 11k input and 1k output tokens per visit (draft + verification). At USD 0.5-5 per M input and USD 2-25 per M output, that is USD 0.01-0.08 per visit, or USD 0.3k-3.5k/month.
 - *AI compute per visit:* about USD 0.02-0.65, depending on the ASR route.
 - *People and budget:* at the low ASR band, engineering support (about 1.5 FTE) dominates total cost of ownership. At the high band, managed ASR alone (about USD 290k/yr at full volume) breaks the USD 250k ceiling and the USD 0.50 per-note target, which is why the ASR ADR matters.
-- *Comparison:* vendor subscriptions reportedly vary widely, roughly USD 100-600 per clinician-month (**verify with quotes**). Decide the ADR on quality, Spanish, integration and data rights more than on compute price.
+- *Comparison:* vendor subscriptions reportedly run roughly USD 100-600 per clinician-month (**verify with quotes**). Decide the ADR on quality, Spanish, integration and data rights more than compute price.
 
-**Runbook.**
-- ASR endpoint down: queue audio (encrypted), notify clinicians of the delay, and fail over to the secondary ASR.
-- A clinician's time-to-sign drops below 10 s on long notes: CMIO conversation (see curveball 5).
-- Purge job failed: Sev-2, with a privacy officer notice.
+**Runbook.** ASR endpoint down: queue audio (encrypted), notify clinicians, fail over to the secondary ASR. Time-to-sign below 10 s on long notes: CMIO conversation (curveball 5). Purge job failed: Sev-2 with a privacy-officer notice.
 
 **DR.** If the pipeline is down, clinicians document as before. The device buffer holds audio up to 8 hours, then deletes it. Signed notes live in the EHR, so their RPO is 0.
 
@@ -373,20 +368,15 @@ This is deliberately lexical, cheap and high-recall. In production, add RxNorm n
 
 | When | Event | Strong FDE response |
 |---|---|---|
-| Pilot wk 3 | **A signed note contains a medication never discussed**; a pharmacist catches it at refill. | File a patient-safety report; amend the note (`docStatus` amended + Provenance). Find the root cause: ASR, drafter or a verifier miss on a brand name. Add it to regression, make new-medication flags blocking, and tell pilot clinicians what changed. |
-| Pilot wk 4 | **A patient withdraws consent mid-visit.** | Stop capture and purge the partial audio and transcript. Set `Consent` inactive with a timestamp, and keep only metadata in the audit log. Prove no copy survives in buffers or at vendors. In California, continuing to record would be unlawful. |
-| Pilot wk 6 | **A forced model upgrade changes note style; clinicians revolt.** | Roll back to the pinned version while it exists. Add a style-regression eval (section order, length, phrasing) and per-clinician templates. Canary with 10 champions and publish before/after metrics. Track deprecation dates proactively. |
-| Prod wk 2 | **Diarisation fails with an interpreter present**: first-person renditions are attributed as the interpreter's own history. | Add an "interpreter mode" toggle at rooming (3 speakers), put video interpreters on a separate channel, and attribute renditions to the patient. Gate on an interpreter slice, with the interpreter services lead involved. |
-| Prod wk 4 | **A clinician signs notes in 4 seconds on average.** | Present data, not blame, with the CMIO. Require per-flag acknowledgement, highlight uncertain statements, and add peer audit sampling. Run vigilance drills on *synthetic* notes only; seeding errors into real medical records is off the table (unlike P03). Revisit the attestation wording. |
+| Pilot wk 3 | **A signed note contains a medication never discussed**; a pharmacist catches it at refill. | File a patient-safety report; amend the note (`docStatus` amended + Provenance). Root-cause it (ASR, drafter, or a verifier miss on a brand name); add it to regression, make new-medication flags blocking, tell pilot clinicians what changed. |
+| Pilot wk 4 | **A patient withdraws consent mid-visit.** | Stop capture; purge partial audio and transcript; set `Consent` inactive with a timestamp, keeping only metadata in the audit log. Prove no copy survives in buffers or at vendors. In California, recording on would be unlawful. |
+| Pilot wk 6 | **A forced model upgrade changes note style; clinicians revolt.** | Roll back to the pinned version while it exists. Add a style-regression eval (section order, length, phrasing) and per-clinician templates; canary with 10 champions and publish before/after metrics. Track deprecation dates. |
+| Prod wk 2 | **Diarisation fails with an interpreter present**: first-person renditions are attributed as the interpreter's own history. | Add an "interpreter mode" toggle at rooming (3 speakers), put video interpreters on a separate channel, attribute renditions to the patient, and gate on an interpreter slice with the interpreter services lead. |
+| Prod wk 4 | **A clinician signs notes in 4 seconds on average.** | Present data, not blame, with the CMIO. Require per-flag acknowledgement, highlight uncertain statements, add peer audit sampling. Run vigilance drills on *synthetic* notes only; seeding errors into real medical records is off the table (unlike P03). Revisit the attestation wording. |
 
 ## 12. Deliverables and grading rubric
 
-**Checklist.**
-- *Discovery:* process map, baselines, consent scripts in English and Spanish, SOW.
-- *POC:* pipeline, verifier, golden set, rater rubric, bake-off report, ADRs.
-- *Pilot:* review UI, FHIR write-back to HAPI, threat model, compliance map, fairness report, demo.
-- *Production (simulated):* SLO dashboard, runbook, DR note.
-- *Handover:* handover pack.
+**Checklist.** *Discovery:* process map, baselines, English and Spanish consent scripts, SOW. *POC:* pipeline, verifier, golden set, rater rubric, bake-off report, ADRs. *Pilot:* review UI, FHIR write-back to HAPI, threat model, compliance map, fairness report, demo. *Production (simulated):* SLO dashboard, runbook, DR note. *Handover:* handover pack.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

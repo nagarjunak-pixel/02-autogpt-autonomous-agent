@@ -20,7 +20,7 @@ Applying that rule to Vol 2's 135 turns plus the verified gap topics gives a **c
 | **Engage** (11) | FDE operating model and field-to-product loop (NEW, FDE-7) · 109 Discovery (+ acceptable use and saying no, FDE-8) · 110 Business case and ROI (+ honest impact measurement, FDE-5) · 111 POC → pilot → production · 115 Data readiness (+ permission hygiene, FDE-9) · 116 Scoping and SOWs (+ pricing models, FDE-6) · 112 Architecture docs and ADRs · 113 Stakeholder communication and demos · Security review, vendor due diligence and data-handling terms (NEW, FDE-1) · Regulation as obligations → controls (NEW, gap #4 + section D; 79 EU AI Act becomes its worked example) · 81 Privacy law (GDPR, DPDP) |
 | **Build** (14) | 42 Parsing and ingestion (+ IDP at scale, RAG-7) · Permission-aware retrieval (NEW, RAG-3; absorbs 50 vector-store choice and RAG-11 managed RAG) · 52 Lineage and deletion (+ index freshness, RAG-4) · Context engineering (NEW, RAG-1 / gap #7) · Text-to-SQL and semantic layers (NEW, RAG-5 / gap #14) · 61 Tool/ACI design (promoted from P2; + the API → MCP → GUI decision ladder and tool-scale patterns, AGT-3/4) · 65 MCP specification · 66 MCP authorisation · 71 Agent identity (absorbs 124; + control planes, AGT-7) · 95 Agent harness engineering (rewritten around harness SDKs, AGT-1) · Systems-of-record integration (NEW, FDE-2; + SoR agent platforms, AGT-6) · 21 Reasoning models and reasoning controls (+ MOD-1) · 105 Vision-language models · 101 Coding agents as daily tools (+ team-scale governance, AGT-8) |
 | **Evaluate** (3) | Evaluation strategy (NEW spine turn; absorbs the core of 13, 49, 97, 104 and 132) · 14 Hallucination (+ citations RAG-9, abstention MOD-3) · 63 Simulation, synthetic users and pass^k (promoted from P2) |
-| **Harden** (6) | Prompt-injection-resistant architectures (NEW, gap #8) · OWASP LLM + Agentic Top 10 (73 + 74 merged) · 75 Red-teaming · 78 PII and DLP · AI-era security of the orchestration layer (NEW, gap #1; + 77 supply chain) · <!-- SEC-CORE --> |
+| **Harden** (6) | Prompt-injection-resistant architectures (NEW, gap #8) · OWASP LLM + Agentic Top 10 (73 + 74 merged) · 75 Red-teaming · 78 PII and DLP · AI-era security of the orchestration layer (NEW, gap #1; + 77 supply chain; + agent containment and credential misuse, HOR-1/HOR-11) · 76 Data and memory poisoning (nearly every engagement has a RAG corpus or memory that can be poisoned) |
 | **Operate** (8) | 87 Model upgrades and deprecation · 88 A/B tests and canaries · 89 Feedback loops and flywheel · 91 FinOps (+ provider capacity engineering, FDE-4) · 96 Observability · 100 AI gateways · 90 SLOs and incident response (promoted; + legal incident-reporting clocks) · 92 Deploying inside the customer's environment: on-prem, sovereign, private networking and customer-managed keys (absorbs 134; + FDE-3) |
 | **Model literacy for deployers** (4) | 1 Tokenisation and cost · 29 + 30 Serving engines and quantisation (merged, deployer depth) · 34 Local and on-device inference · 102 Provider landscape (+ 22 "when to fine-tune" decision, with teacher-terms caveat MOD-13) |
 
@@ -82,7 +82,12 @@ Priorities and full entries are in the [gap register](02-gap-register.md). "New 
 | 72a | Systems-of-record agent platforms: integrate, extend or compete | AGT-6 | P2 | Build elective / W6 |
 | 99a | Low-code and visual agent builders: governance and graduation to code | AGT-9 (gap #18) | P2 | Harden elective / W8 |
 | 101a | Distribution inside AI assistants and enterprise tenants | AGT-5 (gap #13) | P2 | Frontier practice / W14 |
-<!-- SEC-NEWTURNS -->
+| 78a | Deepfake and voice-clone fraud against identity checks | SEC-7 | P2 | Harden elective / W8 (and voice track) |
+| 80a | Shadow-AI discovery and the enterprise AI inventory | SEC-10 | P2 | Operate elective / W9 |
+| 81a | India's sectoral AI governance (RBI, SEBI, MeitY, CERT-In) | SEC-11 | P2 (India BFSI track: core) | Engage elective / W15 |
+| 82a | EU Cyber Resilience Act and revised Product Liability Directive | SEC-1 (= HOR-9) | P2 | Horizon and responsibility / W15 |
+| 83a | Automated-decision and AI-in-hiring rules beyond GDPR Art. 22 | SEC-5 (+ HOR-6 workforce evidence) | P2 | Horizon and responsibility / W15 |
+| 83b | Companion AI, minors and age assurance | SEC-6 (gap #5) | P2 (P1 for consumer products) | Horizon and responsibility / W15 (core for the consumer/edtech track) |
 
 ### Extensions of existing turns
 
@@ -111,7 +116,15 @@ Priorities and full entries are in the [gap register](02-gap-register.md). "New 
 | 101 | Hooks, managed settings and the plugin supply chain | AGT-8 |
 | 103 | Python **and TypeScript** patterns side by side | gap #17 |
 | 109 / 110 / 115 / 116 | Saying no; honest measurement; permission hygiene; pricing models | FDE-8, FDE-5, FDE-9, FDE-6 |
-<!-- SEC-EXTENSIONS -->
+| 60 | Outbound AI voice agents under US telemarketing law (TCPA) | SEC-14 |
+| 73 / 86 | Agent containment (egress paths, live monitoring, a tested automatic stop) and 2026 credential-misuse incidents | HOR-1, HOR-11 |
+| 74 | Multi-tenant isolation and LLM side channels; protecting your model APIs from extraction | SEC-8, SEC-9 |
+| 79 | GPAI obligations when you fine-tune or modify a model; the GPAI Code of Practice | SEC-4 |
+| 83 | Accessibility law for AI interfaces (EU EAA, US ADA Title II, India) | SEC-13 |
+| 90 | Regulatory incident clocks (GDPR 72 h, CRA 24/72 h, CERT-In 6 h, DORA) and mandatory AI records | SEC-3 (**P1**) |
+| 98 | Automated-reasoning guardrails and LLM-assisted formal verification | HOR-2 |
+| 101 | Provenance, attribution and licensing of agent-written code | HOR-8 |
+| 102 | Model-origin and compute governance rows in the model scorecard | HOR-5 |
 
 ---
 
@@ -141,15 +154,15 @@ Each week has roughly 10–12 hours of study plus project work. Projects run in 
 | 4 | Evaluate | 12a evaluation strategy · 14 · 63 · (49, 97 annexes) | **Frozen golden and adversarial sets; eval plan** (Template 05) |
 | 5 | Build II: data and tools | 51a text-to-SQL · 61 ACI + decision ladder · 36 · 65 · 66 MCP auth | POC build |
 | 6 | Build III: agents | 95 harness engineering · 55 orchestration · 71 identity · 100a systems of record · 21a reasoning controls | **POC demo** (Template 10), design doc + ADRs (Template 04) |
-| 7 | Harden I | 73a injection-resistant architecture · 73/74 OWASP · 75 red-teaming · 76 poisoning | Threat model (Template 06); red-team run |
+| 7 | Harden I | 73a injection-resistant architecture · 73/74 OWASP · 75 red-teaming · 76 poisoning · 74 multi-tenant side channels (SEC-8) | Threat model (Template 06); red-team run |
 | 8 | Harden II | 78 DLP · 86 sandboxes · 77a orchestration-layer security + 77 supply chain · 99a low-code builders | **Project 1 final + curveballs**; compliance map (Template 07) |
 | 9 | Operate I | 100 gateways · 96 observability · 91 FinOps + capacity · 101 coding agents | Project 2 kickoff (★★★) |
-| 10 | Operate II | 87 upgrades · 88 canaries · 89 flywheel · 90 SLOs + incident clocks | Eval CI gates; SLOs and runbook (Template 09) |
+| 10 | Operate II | 87 upgrades · 88 canaries · 89 flywheel · 90 SLOs + legal incident clocks (SEC-3) · 80a shadow-AI inventory | Eval CI gates; SLOs and runbook (Template 09) |
 | 11 | Deploy | 92 customer environments + sovereignty · 29/30 serving + quantisation · 29a serving fidelity · 33 capacity · 93 IaC | **Project 2 pilot** |
 | 12 | Multimodal | 105 VLMs · 43 multimodal RAG · (elective: 60/106 voice track) | **Project 2 final + curveballs + handover drill** |
 | 13 | Customisation | 22 fine-tuning decisions · 23 distillation + teacher terms · 24 · 34 on-device | Capstone kickoff; discovery memo |
 | 14 | Frontier practice | 61a computer use · 101a distribution in assistants · 69 WebMCP · 70 commerce protocols · 127 | Capstone POC |
-| 15 | Horizon and responsibility | [04](04-future-topics-2026-2028.md) horizon review · 83 responsible AI · 82 sector compliance · 114 change management | Capstone pilot |
+| 15 | Horizon and responsibility | [04](04-future-topics-2026-2028.md) horizon review · 83 responsible AI · 82 sector compliance · 82a CRA/PLD · 83a ADM and hiring laws · 83b companion AI and minors · 81a India sector rules · 114 change management | Capstone pilot |
 | 16 | Capstone | — | **Demo, design defence (Turn 117), handover drill** |
 
 ### Which projects fit which wave

@@ -454,28 +454,23 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 | Turn | Title | How it is exercised |
 |---|---|---|
-| 100 | AI Gateways | The core build |
-| 91 | LLM FinOps | Ledger, chargeback, cost per outcome |
-| 87, 88 | Model Upgrades and Deprecation; A/B and Canary | Registry, calendar, shadow → canary |
-| 94, 90 | Provider Failover and DR; SLOs and Incidents | Breakers, drills, error budgets |
-| 96, 97 | Observability; Evaluation Tools | OTel GenAI spans; golden-set harness |
+| 100, 91 | AI Gateways; LLM FinOps | The core build; ledger, chargeback, cost per outcome |
+| 87, 88 | Model Upgrades and Deprecation; A/B Testing and Canary | Registry, calendar, shadow → canary |
+| 90, 94 | SLOs and Incident Response; Provider Failover and DR | Breakers, `Retry-After` handling, drills, error budgets |
+| 96, 97, 98 | Observability; Evaluation; Guardrail Tools | OTel GenAI spans; golden-set harness; DLP tooling |
 | 78 | PII Detection and DLP | Checksum validators; multilingual evaluation |
-| 65, 66, 71 | MCP Spec; MCP Authorization; Agent Identity | Tool governance; per-agent policies |
+| 65, 66, 71 | MCP Specification; MCP Authorization; Agent Identity | Pinned tool descriptions; MCP auth at the gateway; per-agent virtual keys, not shared keys |
 | 68 | The Agentic AI Foundation | agentgateway and Agent Router governance |
-| 73, 74, 77 | OWASP Agentic/LLM; Model Supply Chain | Denial of wallet, tool poisoning, pinning |
-| 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
-| 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon | Cascade validators; loop containment |
-| 79, 80, 81 | EU AI Act; NIST/ISO 42001; GDPR/DPDP | Inventory screening; logging scope |
-| 92, 93, 134 | On-Prem/Sovereign; IaC; Open-Weight Ecosystems | Residency tiers; GitOps policy |
+| 73, 74, 77 | OWASP Agentic and LLM Top 10s; Model Supply Chain | Denial of wallet, tool poisoning, pinning plus KEV patching |
+| 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity Planning; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
+| 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon Execution | Cascade validators; spend caps; stuck-loop detection |
+| 79, 80, 81 | EU AI Act; NIST AI RMF and ISO/IEC 42001; GDPR and DPDP | Inventory screening and risk tiers; logging scope |
+| 92, 93 | On-Prem and Sovereign Deployment; IaC | Residency tiers; GitOps policy |
 | 102 | Model Provider Landscape | Multi-provider fallback pairs |
 | 109–116 | FDE practice turns | Census, ROI, ADRs, change management, SOW |
 | 128 | Governance-as-Code | Policy repo with tests |
 
-**New/gap topics exercised:**
-- AI-enabled cyber offence and defence: the orchestration layer as a target (LiteLLM supply chain and KEV entries).
-- Low-code/visual builder security: exposed n8n in shadow-AI discovery.
-- Distribution inside AI assistants: MCP Registry and sub-registries.
-- Prompt-injection-resistant architecture: trifecta-breaking tool policies at the gateway.
+**New/gap topics exercised:** #1 AI-era security of the orchestration layer (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture (trifecta-breaking tool policy); MOD-7 cache isolation (per-tenant keys, `cache_salt`, provider cache scope); FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; FDE-3 deploying inside the customer's network; AGT-7 agent sprawl and the AI inventory; AGT-9 low-code builders (exposed n8n); #4 obligations → controls; SEC (shadow-AI inventory); SEC (multi-tenant side channels); SEC (incident clocks and record retention).
 
 ## 15. What reviewers look for / common failure modes
 

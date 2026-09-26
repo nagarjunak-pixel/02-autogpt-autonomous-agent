@@ -286,7 +286,7 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 
 **SLOs:** crisis pipeline availability 99.95%; detection-to-card p95 ≤ 2 s; imminent-risk human acknowledgement p95 ≤ 5 min; tutor availability 99.5%.
 
-**Observability:** OpenTelemetry GenAI spans (conventions at Development status, so pin the version); pseudonymous safety-event logs; crisis content kept out of general traces.
+**Observability:** OpenTelemetry GenAI spans into Langfuse or Phoenix, or a managed APM (conventions at Development status, so pin the version); pseudonymous safety-event logs; crisis content kept out of general traces.
 
 **Back-of-envelope monthly cost** (prices change; use bands and recheck them).
 
