@@ -15,7 +15,7 @@ Northstar runs 11 deal teams. Each year it screens about 120 opportunities, take
 **What Northstar actually needs:**
 1. **A deep-research pipeline (plan → search → read → verify → write)** over web search/extract APIs, licensed data, the VDR and internal deal notes.
 2. **Strict citation verification:** every claim linked to a source passage; unsupported claims removed or flagged; nothing cited that was never accessed.
-3. **Source-quality judgement and counter-search** for disconfirming evidence and conflicts (CIM vs audited revenue).
+3. **Source-quality judgement and counter-search** for disconfirming evidence and conflicts (e.g. confidential information memorandum (CIM) vs audited revenue).
 4. **Information barriers for material non-public information (MNPI)**, with memory scoped per deal and deletable.
 5. **Compliance** with site terms, robots and AI-crawler preferences, content licences and copyright limits on quoting.
 6. **Cost controls on long runs,** and **evaluation with analysts** (claim-level precision, coverage against a gold memo).
@@ -24,11 +24,11 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
-| Managing Partner (sponsor) | Speed, edge, a demo at the LP meeting in week 10 | Budget |
+| Managing Partner (MP, sponsor) | Speed, edge, a demo at the limited-partner (LP) meeting in week 10 | Budget |
 | Deal partners | Memo quality; being misled by a confident error | Usage (they can simply ignore it) |
 | Analysts and associates | Hours saved, but also fear of deskilling and blame | Adoption, feedback quality |
-| Chief Compliance Officer | MNPI, information barriers, record-keeping | Any access to live-deal data |
-| General Counsel | NDA terms, licence terms, copyright, scraping | Sources and tools |
+| Chief Compliance Officer (CCO) | MNPI, information barriers, record-keeping | Any access to live-deal data |
+| General Counsel (GC) | NDA terms, licence terms, copyright, scraping | Sources and tools |
 | DPO | Background research on individuals (UK GDPR, DPDP) | Management-research features |
 | CISO / IT | Vendor security, data residency, retention | Vendor onboarding |
 | Mumbai office head | Indian-language documents, India targets | Mumbai rollout |
@@ -78,7 +78,7 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 ## 4. Discovery — what the FDE does in week 1
 
-**Map** the deal lifecycle (screen → NDA → VDR → IIM → IC1 → confirmatory DD → IC2); who writes each memo section, from which sources, and how they cite today; the wall-crossing, restricted-list and conflicts processes; and what happens to material when a deal dies.
+**Map** the deal lifecycle (screen → NDA → VDR → IIM → first investment committee → confirmatory DD → final committee); who writes each memo section, from which sources, and how they cite today; the wall-crossing, restricted-list and conflicts processes; and what happens to material when a deal dies.
 
 **Baselines:**
 - Analyst hours on the last 10 first drafts (timesheets and interviews; expect a median around 30), partner edit rounds, research spend, and days from VDR opening to IIM.
@@ -118,7 +118,7 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 | Verifier | Recall on unsupported sentences / false-strip rate | ≥ 95% / ≤ 10% | 1,000-pair seeded set |
 | Reliability | pass^3: all 3 runs of a task meet precision ≥ 95% and coverage ≥ 60% | ≥ 80% of 20 tasks | Research task suite |
 | Security | Cross-deal leakage | 0 of 200 probes | MNPI probe set |
-| Security | Injection-induced goal hijack / exfiltration | ≤ 1% / 0% | 60 injection cases |
+| Security | Injection that changes a kept sentence / causes exfiltration | 0 / 0 | 60 injection cases |
 | Compliance | Fetches with a logged policy decision; fetches to disallowed sources | 100%; 0 | Fetch-gateway log |
 | Latency | Full run wall-clock; interactive follow-up | ≤ 45 min p90; ≤ 20 s p95 | Pilot runs |
 | Cost | Cost per memo | Median ≤ USD 15; hard cap USD 40 | Gateway spend |
@@ -183,7 +183,7 @@ flowchart LR
 | Document parsing | PDF, scans, XLSX, Indian languages | Docling, Unstructured, Tesseract OCR · cloud document-AI services | Data engineer |
 | Deal-scoped store | Passages, findings and memory per deal; deletable | pgvector, Qdrant or OpenSearch with a **separate collection and key per deal** · managed vector DB with hard namespaces | Data engineer + CISO |
 | Verifier | Entailment + exact-quote + number checks | NLI or [MiniCheck](https://arxiv.org/abs/2404.10774)-class checker (reports GPT-4-level accuracy at ~400× lower cost) · pinned LLM judge; provider citation features (e.g. [Claude web fetch citations](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool)) | FDE |
-| Compliance PDP | Allow or deny a deal scope per user and run | OPA with the wall register as data · the existing compliance system's API | CCO |
+| Compliance policy decision point (PDP) | Allow or deny a deal scope per user and run | OPA with the wall register as data · the existing compliance system's API | CCO |
 | Model gateway | Model allow-list, per-run and per-deal budgets, zero-retention routing | LiteLLM (pin versions), agentgateway · cloud AI gateways | IT |
 | Observability / eval | Traces, costs, eval runs | OTel + Langfuse, Inspect, DeepEval · commercial observability (OpenAI announced it was acquiring Promptfoo in Mar 2026: weigh vendor neutrality) | FDE |
 

@@ -2,7 +2,7 @@
 
 > Turn "modernise in half the time" into a measured coding-agent programme. It has an agent-ready repo, recovered specs, characterisation oracles, sandboxed agents and a strangler-fig migration of one premium-calculation module out of COBOL, and it produces productivity figures you can defend to a board.
 
-> **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL SMEs, 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
+> **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
 
 ---
 
@@ -23,7 +23,7 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
-| CTO (sponsor) | Board narrative, MIPS cost, dates | Funding, scope |
+| CTO (sponsor) | Board narrative, mainframe MIPS (compute) cost, dates | Funding, scope |
 | Appointed Actuary | Premiums identical to the filed basis | Go-live of any premium path |
 | CISO | Source code leaving the network, agent permissions, IRDAI cyber rules | Tool procurement, egress |
 | Head of Policy Ops | Batch window 02:00–05:00, notice accuracy, Jan–Mar peak | Cutover dates |
@@ -42,7 +42,7 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 - **DPDP Act 2023 and Rules 2025.** Commencement is phased: 13 Nov 2025, then 13 Nov 2026 for consent managers, then 13 May 2027 for most obligations ([Act](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf); dates per [secondary summary](https://en.wikipedia.org/wiki/Digital_Personal_Data_Protection_Act,_2023), to be verified against the gazette). Policy data includes health disclosures.
 - **Copyright and licences (Turn 85).** Who owns AI-assisted code is unclear, copyleft snippets may be copied in, and vendor IP indemnities carry conditions (filters on, covered products, caps).
 
-**Infrastructure:** the mainframe has no internet access. Development runs on a segmented network with on-prem GitLab. Test-LPAR MIPS are charged back, and there are no GPUs today.
+**Infrastructure:** the mainframe has no internet access. Development runs on a segmented network with on-prem GitLab. MIPS used on the test LPAR (a mainframe partition) are charged back, and there are no GPUs today.
 
 **Security:** agents never hold production credentials, and egress is deny-by-default. Source code may reach an external model only under enterprise terms (no training, zero or short retention) and with CISO approval. Otherwise it goes to an on-prem open-weight model.
 
@@ -88,7 +88,7 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 
 **Map:**
 - The four premium paths: new-business quote, renewal batch, alterations and revival.
-- How premium-logic changes are approved: CAB, actuarial sign-off, spreadsheet UAT.
+- How premium-logic changes are approved: change advisory board (CAB), actuarial sign-off, spreadsheet UAT.
 - How premium defects are found today: complaints and reconciliation.
 
 **Baselines:**
@@ -107,7 +107,7 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 8. What evidence would make Internal Audit accept an AI-written change?
 9. Where are the old IRDA circulars, filing notes and actuarial memos that might explain the rounding?
 10. What does "half the time" mean to the CTO: calendar time, engineering hours or MIPS cost? What number goes to the board, and when?
-11. Which licences does policy forbid in shipped code? Does an SCA tool already exist?
+11. Which licences does policy forbid in shipped code? Does a software composition analysis (SCA) tool already exist?
 12. What did the last premium defect that reached customers cost?
 
 **Qualification (lowest rung that works):**

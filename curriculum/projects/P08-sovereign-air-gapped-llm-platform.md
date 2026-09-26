@@ -183,13 +183,13 @@ MoE rows assume a batch of *b* tokens reads about 1 − (1 − 6/128)^b of exper
 
 | Phase (weeks) | Key tasks | Exit criteria | Artefacts |
 |---|---|---|---|
-| Discovery (1–2) | Interviews, baselines, supersession audit, DC survey, licence screen | Discovery memo; SOW with §5 criteria; hardware deferred until the bake-off | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md), [07](templates/07-compliance-obligations-to-controls.md) |
-| POC (3–6) | Staging enclave; bake-off (5 candidates × 2 quantisations × languages); load replay; verifier; first diode transfer | Model and GPU ADRs signed; verified bundle in the enclave; Q&A ≥ 80% | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
-| Pilot (7–11) | 3 branches + 20 officers; retrieval-only fallback; SOC logging; red team; IS-audit review | §5 thresholds met; no High findings | [08](templates/08-security-review-pack.md); weekly [10](templates/10-demo-script-and-status-report.md) |
-| Production (12–15) | Zonal rollout; DR built from the same IaC; drill; AI-inventory entry | DR ≤ 4 h; CISO and CRO sign-off | [09](templates/09-runbook-slos-and-handover.md) |
-| Handover (16) | Bank team performs an upgrade and a DR failover alone | Both drills pass without the FDE | Handover checklist, AIBOM |
+| Discovery (1–2) | Interviews, baselines, supersession audit, DC survey, licence screen | Memo; SOW; hardware deferred to the bake-off | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md), [07](templates/07-compliance-obligations-to-controls.md) |
+| POC (3–6) | Staging; bake-off (5 candidates × 2 quantisations × languages); load replay; verifier; first diode transfer | Model and GPU ADRs; verified bundle inside; Q&A ≥ 80% | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
+| Pilot (7–11) | 3 branches, 20 officers; retrieval-only fallback; SOC logging; red team; IS audit | §5 thresholds; no High findings | [08](templates/08-security-review-pack.md), weekly [10](templates/10-demo-script-and-status-report.md) |
+| Production (12–15) | Zonal rollout; DR from the same IaC; drill; AI-inventory entry | DR ≤ 4 h; CISO and CRO sign-off | [09](templates/09-runbook-slos-and-handover.md) |
+| Handover (16) | Bank team performs an upgrade and a failover alone | Both drills pass | Checklist, AIBOM |
 
-**Code sketch: the offline bundle verifier.** It runs in import quarantine, and nothing reaches the registry unless it exits 0.
+**Code sketch: the offline bundle verifier.** It runs in import quarantine, and nothing is promoted unless it exits 0.
 
 ```python
 """Offline model-bundle verifier. Runs inside the air-gapped enclave, before promotion to the registry."""
@@ -280,15 +280,7 @@ Use [template 05](templates/05-eval-plan.md).
 | Staging enclave | None | Yes | Yes | Acceptable only while it never holds customer data |
 | Requested internet search | Yes | Yes | Would be added | Completes the trifecta (see curveballs) |
 
-**Threats and controls.**
-- *Malicious weights or loader code:* safetensors only, and reviewed, vendored `trust_remote_code`.
-- *Tampering or replay:* signature, hashes and anti-rollback.
-- *Insider promotion:* HSM, two-person rule, registry admission only via the verifier.
-- *Injection via documents:* spotlighting and no tools.
-- *ACL leakage:* query-time group filter.
-- *PII in logs:* gateway masking.
-- *Python supply chain:* internal mirror with pinned hashes.
-- *Driver and engine CVEs:* patched through the same signed pipeline.
+**Threats and controls.** Malicious weights or loader code: safetensors only, reviewed and vendored `trust_remote_code`. Tampering or replay: signature, hashes, anti-rollback. Insider promotion: HSM, two-person rule, verifier-only admission. Document injection: spotlighting, no tools. ACL leakage: query-time group filter. PII in logs: gateway masking. Python supply chain: internal mirror with pinned hashes. Driver and engine CVEs: patched through the same signed pipeline.
 
 | Obligation | Control | Evidence |
 |---|---|---|
@@ -317,13 +309,7 @@ Use [template 05](templates/05-eval-plan.md).
 
 About 4M answers a year works out to **₹20–45 per answer** if Q&A carries everything. A hosted API would cost USD 0.0006–0.02 per answer at 2026 price bands (prices change). Tell the Board plainly that sovereignty, not unit cost, justifies the platform. Unit cost falls only when more use cases share the GPUs, and productivity gains must be measured in the pilot.
 
-**Runbook.**
-- *GPU loss:* serve from the surviving replica, and Q&A pre-empts summaries.
-- *KV saturation:* cap context and pause summaries.
-- *Verifier rejection:* treat as a security incident until explained.
-- *Canary regression:* roll back to the previous digest.
-- *HSM or diode down:* freeze promotions; production is unaffected.
-- *Key rotation:* annual, with a dual-signed overlap bundle.
+**Runbook.** GPU loss: surviving replica serves, and Q&A pre-empts summaries. KV saturation: cap context, pause summaries. Verifier rejection: a security incident until explained. Canary regression: roll back to the previous digest. HSM or diode down: freeze promotions. Key rotation: annual, with a dual-signed overlap bundle.
 
 **DR.** Active–passive. The DR site imports and verifies the same bundles independently. Index and logs replicate with RPO ≤ 15 min; RTO ≤ 4 h. The fallback is **retrieval-only mode** (cited passages, no generation), drilled quarterly under FREE-AI Rec 21.
 
@@ -358,15 +344,15 @@ Speculative decoding at the design batch; multi-LoRA (credit and compliance adap
 
 | Turns | How exercised |
 |---|---|
-| 1 Tokenization Algorithms; 41 Multilingual Prompting | Telugu fertility, Romanised queries, answer-language policy |
-| 7 Mixture of Experts; 27 Pipeline and Expert Parallelism for Serving | Memory by total parameters; TP over PCIe vs replicas |
-| 29 PagedAttention and Serving Engines; 30 Quantisation Formats; 31 Prefix Caching; 33 Accelerator Landscape and Capacity Planning | Engine choice, FP8/KV maths, L40S vs H100 NVL |
-| 42 Document Parsing; 48 Embedding-Model Selection; 49 RAG Evaluation Tooling; 50 Named Vector Databases; 52 Data Lineage and Deletion | Scans, multilingual retrieval, supersession |
+| 1 Tokenization Algorithms; 41 Multilingual Prompting | Telugu fertility, Romanised queries |
+| 7 Mixture of Experts; 27 Pipeline and Expert Parallelism for Serving | Memory by total parameters; TP vs replicas |
+| 29 PagedAttention and Serving Engines; 30 Quantisation Formats in Depth; 31 Prefix Caching; 33 Accelerator Landscape and Capacity Planning | KV maths, FP8, L40S vs H100 NVL |
+| 42 Document Parsing; 48 Embedding-Model Selection; 49 RAG Evaluation Tooling; 50 Named Vector Databases; 52 Data Lineage and Deletion in RAG | Scans, multilingual retrieval, supersession |
 | 74 OWASP Top 10 for LLM Apps; 75 Jailbreaks and Red-Teaming; 77 Model Supply Chain; 78 PII Detection and DLP | Injection, signing, AIBOM, masking |
 | 81 Privacy Law (DPDP); 82 Sector Compliance | DPDP Rules, RBI directions, FREE-AI |
 | 87 Model Upgrades; 88 Canary Releases; 90 SLOs and Incident Response; 91 LLM FinOps | Telugu upgrade, 6-hour reporting, cost per answer |
-| 92 On-Prem/Air-Gapped; 93 Infrastructure as Code; 94 Failover and DR | Core of the project |
-| 96 Observability Tools; 97 Evaluation Tools; 102 Model Provider Landscape; 134 Sovereign AI and Open-Weight Ecosystems | OTel/DCGM, Inspect, open-weight licences, Sarvam |
+| 92 On-Prem, Air-Gapped and Sovereign Deployment; 93 IaC for AI Stacks; 94 Provider Failover and DR | The core of the project |
+| 96 Observability Tools; 97 Evaluation Tools; 102 Model Provider Landscape; 134 Sovereign AI and Open-Weight Ecosystems | OTel/DCGM, Inspect, licences, Sarvam |
 | 109–116 FDE practice | Discovery, ROI, POC→production, ADRs, demos, adoption, data readiness, SOW |
 
 **New/gap topics exercised:** prompt-injection-resistant architectures and the lethal-trifecta rule (gap #8); KV-cache capacity and tiering (#16); web-search APIs, examined and declined (#19); orchestration-layer supply-chain attacks (#1).

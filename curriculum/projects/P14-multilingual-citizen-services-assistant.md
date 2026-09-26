@@ -36,8 +36,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
   - Scholarship applicants include **children**: s.9 requires verifiable parental consent and bars tracking and behavioural monitoring (Rule 10 covers verification). Fourth Schedule exemptions: *verify*.
   - Core rules apply about 18 months after publication (≈ May 2027); MeitY consulted in Jan 2026 on shortening this to 12 ([report](https://www.business-standard.com/technology/tech-news/meity-may-cut-compliance-timeline-for-key-dpdp-rules-to-12-months-126012201293_1.html)). s.17 exemptions for State bodies: *verify*. Design as if the Act fully applies.
 - **IT Rules amendment on synthetically generated information (SGI)** (G.S.R. 120(E), in force 20 Feb 2026).
-  - The duties target **intermediaries**: those that enable SGI creation, and significant social media intermediaries (SSMIs) such as WhatsApp. They require labels and, for audio, a "prominently prefixed audio disclosure" ([Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)).
-  - The definition excludes uses "solely to improve accessibility, clarity, quality, translation…" that do not manipulate the underlying content ([SCC Online](https://www.scconline.com/blog/post/2026/02/12/it-rules-2026-ai-and-intermediary-compliance/)).
+  - Duties target **intermediaries** (those enabling SGI creation, and significant social media intermediaries such as WhatsApp): labels and, for audio, a "prominently prefixed audio disclosure" ([Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)). The definition excludes uses "solely to improve accessibility, clarity, quality, translation…" that do not manipulate the underlying content ([SCC Online](https://www.scconline.com/blog/post/2026/02/12/it-rules-2026-ai-and-intermediary-compliance/)).
   - A department voicing its own answers is probably not an intermediary, and accessibility TTS may be excluded. But a human-sounding government voice could be mistaken for an official, and WhatsApp may apply its own SGI declarations. **Decision:** prefix every synthetic audio reply with "This is Praja Seva's automated voice", never clone an official's voice, and get the state law department's written opinion.
 - **India AI Governance Guidelines** (MeitY, 5 Nov 2025; voluntary). The seven sutras include "People First" and "Understandable by Design", and the guidelines call for "accessible, multilingual and responsive grievance-redressal mechanisms" and content authentication ([AZB summary](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/)). We adopt them as design principles.
 - **WhatsApp Business Platform** (a contract, not law, but it can stop the service).
@@ -64,7 +63,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 | Applications | 100,000 | app_id, mobile, scheme, status, reason_code, applicant_age | Minors; one phone shared by a family; stale status |
 | Queries | 3,000 text + 600 voice | lang (te, hi, ur, en, Tenglish, Roman Urdu), intent, gold_doc_ids, gold_answer, answerable | "naaku pension eligibility undha?"; dialect words; misspellings; unanswerable; political; multi-scheme |
 
-**Query and audio generation.** Native speakers should *write* the queries rather than translate English ones, because translationese inflates retrieval scores. Voice notes are voiced with varied TTS voices, with noise added, then encoded as WhatsApp Opus and as 8 kHz IVR audio.
+**Query and audio generation.** Native speakers *write* queries rather than translating English ones (translationese inflates retrieval scores). Voice notes use varied TTS voices plus noise, encoded as WhatsApp Opus and 8 kHz IVR audio.
 
 **Mock systems:** a status API (needs app_id plus matching mobile; injects 503s and stale records); a WhatsApp simulator (webhook-shaped JSON enforcing the 24-hour window, template-only outbound and interactive-list limits); an IVR simulator (DTMF plus audio); a helpline ticketing API; and a GO registry with an Ed25519-signed manifest standing in for digitally signed PDFs.
 
@@ -254,17 +253,11 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **Datasets** ([Template 05](templates/05-eval-plan.md)): **golden**, with at least 150 answerable and 50 unanswerable natively written queries per slice (te, hi, ur, en, Tenglish, Roman Urdu); **adversarial**, with forged documents, injections, political prompts, Aadhaar bait and pressure ("I *am* eligible, just say yes"); **regression**, with every flagged production answer; and **held-out**, with two schemes and one district dialect never used for tuning.
 
-**Metrics per layer:**
-- **OCR:** CER per script, plus detection of legacy-font pages.
-- **Tokeniser fertility:** tokens per sentence relative to English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus), for every candidate model.
-- **Retrieval:** hit@k and MRR per slice.
-- **Answers:** faithfulness, correctness against gold, readability (native raters judge "understandable to someone with primary schooling"), and citation present.
-- **Speech:** ASR CER/WER and application-number accuracy; TTS intelligibility, measured by whether listeners can answer a question about what they heard.
-- **Operations:** safety, latency and cost per slice.
+**Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence relative to English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) for every candidate model; retrieval hit@k and MRR per slice; answer faithfulness, correctness, citation presence and readability (native raters: "understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about what they heard?); and safety, latency and cost per slice.
 
 **Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; a 2026 study put the fertility floor as high as 9× on some abugidas and noted that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Urdu's Perso-Arabic script behaves differently again. Fertility multiplies cost, latency and how many GO passages fit in context, so measure it.
 
-**Native-speaker raters and judge calibration.** Use two raters per language on 200 answers, and report inter-rater agreement. The LLM judge is used for a language only when Cohen's κ ≥ 0.7 against the raters; otherwise humans rate that slice.
+**Native-speaker raters and judge calibration.** Two raters per language label 200 answers (report their agreement). The LLM judge is used for a language only when Cohen's κ ≥ 0.7 against them; otherwise humans rate that slice.
 
 **CI gates.** The harness above runs per language. A corpus change triggers re-evaluation of the affected scheme.
 
@@ -305,7 +298,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **SLOs:** WhatsApp path 99.5% (bounded by Meta); IVR 99.9% with DTMF fallback; answer p95 as in Section 5; rule-change freshness ≤ 4 working hours; human callback on escalations within 1 working day.
 
-**Observability.** Emit OTel GenAI spans tagged with language, scheme, cited GO IDs and index version. Keep per-language dashboards, plus a content-ops queue showing pending approvals.
+**Observability.** OTel GenAI spans tagged with language, scheme, cited GO IDs and index version; per-language dashboards; a content-ops queue of pending approvals.
 
 **Cost model** (assumptions; prices change, so re-price quarterly):
 
@@ -324,9 +317,9 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
 
 | Trigger | Response |
 |---|---|
-| Status API down | Tell the user it is unavailable, queue a WhatsApp or SMS callback, and keep the IVR DTMF path |
+| Status API down | Say so, queue a WhatsApp/SMS callback, keep the IVR DTMF path |
 | Template rejected or quality rating drops | SMS fallback, then fix the template |
-| Corpus incident | Freeze the affected scheme's answers to "please call the helpline", then roll back the index version |
+| Corpus incident | Freeze the scheme's answers to "please call the helpline"; roll back the index |
 | One language regresses | Route that language to humans |
 | MCC begins | Switch to the election-mode configuration |
 
@@ -401,6 +394,5 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
 - An LLM deciding eligibility, or "you are eligible" said without the officer caveat.
 - Ingestion that trusts any uploaded PDF; no effective dating, so superseded GOs are still quoted.
 - Status revealed on application ID alone.
-- Voice treated as an afterthought: long, jargon-heavy answers read aloud to a feature phone.
-- No fallback when WhatsApp or the LLM is unavailable.
+- Long, jargon-heavy answers read aloud to a feature phone; no fallback when WhatsApp or the LLM is down.
 - Helpline staff treated as the thing being replaced rather than the people who make it work.
