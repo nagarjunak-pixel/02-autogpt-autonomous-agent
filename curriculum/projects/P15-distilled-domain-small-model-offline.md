@@ -4,7 +4,7 @@
 
 > **Customer:** VoltGrid Energy Services (fictional) · **Industry:** Utility maintenance contracting (substations, switchgear, distribution) · **Geography:** US Gulf Coast field operations (Texas, Louisiana); engineering centre in Hyderabad · **Real engagement:** 18 weeks; FDE lead, ML engineer (SFT, distillation, evals), edge engineer (runtimes, packaging), part-time HSE safety SME and security engineer · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
-## 1. Scenario: the customer and the ask
+## 1. Scenario — the customer and the ask
 
 VoltGrid's 1,100 technicians maintain breakers, transformers, relays and switchgear for utilities and electric co-ops. Substations often have no signal, some clients forbid network connections, and after hurricanes crews can be offline for weeks. Today technicians scroll PDFs or queue for the desk-engineer hotline. The VP of Field Operations asks for **"an offline assistant for our technicians."**
 
@@ -64,7 +64,7 @@ The key insight is to **fine-tune for behaviour, not knowledge.** Citation forma
 
 **Out of scope:** vendor-SDK NPU tuning, speech, nameplate images, real MDM and CIP audits.
 
-## 4. Discovery: what the FDE does in week 1
+## 4. Discovery — what the FDE does in week 1
 
 **Process map.** Ride along on two jobs: identify the equipment, find the manual and revision, follow the procedure, call the hotline, and note where the utility's switching order overrides the manual.
 
@@ -167,7 +167,7 @@ The **safety router** is deterministic (rules plus a small classifier tuned for 
 - Then measure **latency** as well as accuracy. CPU-class laptops may process prompts at only tens to a couple of hundred tokens/s, so a 1,500-token few-shot prompt costs seconds before the first token. A B1 that needs a 300-token instruction can win on TTFT even at equal accuracy.
 - In both cases, reuse the static prefix's KV cache and measure with `llama-bench` on real devices.
 
-## 7. Implementation plan: week by week
+## 7. Implementation plan — week by week
 
 | Phase (weeks) | Key tasks | Exit criteria | Artefacts |
 |---|---|---|---|
@@ -316,7 +316,7 @@ The marginal cost per answer is about zero. People and HSE review dominate, so t
 | Week 3 | **Teacher terms prohibit training a competing model** (the team began with an API teacher) | Stop and quarantine the generated data. Get Legal's written view on "competing" rather than guessing. Switch to an Apache/MIT open-weight teacher, regenerate, update the terms register and AI-BOM, and report the slip. |
 | Week 6 | **Synthetic data leaked test questions.** An audit finds 7% of test questions with near-duplicates in the SFT data | Invalidate the gains, re-split by held-out sections, regenerate, and retrain **and re-run B0**. Tell the sponsor "+11 points" became "+4", and add the audit to CI. |
 | Week 8 | **The 4-bit model fails numeric torque tables** | Numbers come from lookup, never generation, so fix the router. Compare QAT q4_0, Q5_K_M and higher-precision sensitive tensors, and add a numeric slice to the quantisation gate. Weight-only 4-bit also runs on hardware without native 4-bit support, so treat this as an accuracy problem, not a format problem. |
-| Week 9 | **30% of the fleet has no NPU** | Build per-class packages: llama.cpp CPU builds, a smaller student (E2B or 2B) or shorter prompts, benchmarked on the actual old units. Set class-specific SLOs and price a refresh. The router and renderer are identical across classes. |
+| Week 9 | **30% of the fleet has no NPU** (telemetry contradicts IT's refresh claim) | Build per-class packages: llama.cpp CPU builds, a smaller student (E2B or 2B) or shorter prompts, benchmarked on the actual old units. Set class-specific SLOs and price a refresh. The router and renderer are identical across classes. |
 | Week 12 | **A technician asks it to skip a safety step "just this once"** | Decline briefly, show the step verbatim and offer escalation. It must not flip under "my supervisor said it's fine" (a sycophancy test). Log a safety event (no discipline use), have HSE review it, and add it to the pressure suite. |
 | Week 14 | **Storm surge.** Crews are offline 3 weeks while an OEM revises a torque spec | Sync packs before models on reconnect; desk engineers broadcast the bulletin; stale banners show; review which answers used the old revision. |
 

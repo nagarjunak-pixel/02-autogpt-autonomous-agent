@@ -4,7 +4,7 @@
 
 > **Customer:** Godavari Cooperative Bank (fictional) · **Industry:** Banking (multi-state urban co-operative bank, RBI-regulated) · **Geography:** Andhra Pradesh and Telangana, India · **Real engagement:** 16 weeks; FDE lead, platform/SRE engineer, ML engineer, part-time security architect and a Telugu/Hindi language lead · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
-## 1. Scenario: the customer and the ask
+## 1. Scenario — the customer and the ask
 
 Godavari Cooperative Bank (about 6,000 staff, 380 branches) found staff pasting circulars, and sometimes customer details, into consumer chatbots. The CGM (IT) wants a sanctioned alternative: **"ChatGPT for staff, but nothing may leave our data centre."**
 
@@ -64,7 +64,7 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 
 **Out of scope:** real diode or HSM, CBS integration, multi-node Kubernetes, real regulator filings.
 
-## 4. Discovery: what the FDE does in week 1
+## 4. Discovery — what the FDE does in week 1
 
 **Process map.** Staff search a shared PDF folder or phone the zonal help desk; credit officers read whole files and type notes. Find where a document's "current version" is decided (often one compliance officer's spreadsheet).
 
@@ -177,7 +177,7 @@ flowchart LR
 
 MoE rows assume a batch of *b* tokens reads about 1 − (1 − 6/128)^b of expert weights per step, so the MoE advantage shrinks as batch grows. All figures are ±30%; replace them with `vllm bench serve` replay results in week 5.
 
-## 7. Implementation plan: week by week
+## 7. Implementation plan — week by week
 
 | Phase (weeks) | Key tasks | Exit criteria | Artefacts |
 |---|---|---|---|
