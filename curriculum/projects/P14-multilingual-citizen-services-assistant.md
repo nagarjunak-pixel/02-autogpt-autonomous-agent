@@ -8,9 +8,9 @@
 
 ## 1. Scenario — the customer and the ask
 
-The Directorate runs about 40 welfare schemes (pensions, scholarships, housing, farmer support). Its helpline takes about **9,000 calls a day** on 140 contract seats; in fictional discovery numbers, peak waits reach 11 minutes and abandonment 38%. About 70% of calls ask either *"Am I eligible, and which documents do I need?"* or *"What is my application status?"* The rules live in roughly 1,100 Government Orders (GOs) and circulars, mostly Telugu PDFs, 35% scanned, many amending earlier GOs clause by clause. The Director asks for **"an AI helpline for all schemes."**
+The Directorate runs about 40 welfare schemes (pensions, scholarships, housing, farmer support). Its helpline takes about **9,000 calls a day** on 140 contract seats, with peak waits of 11 minutes and 38% abandonment. About 70% of calls ask *"Am I eligible, and which documents do I need?"* or *"What is my application status?"* The rules live in about 1,100 Government Orders (GOs) and circulars, mostly Telugu PDFs, many amending earlier GOs clause by clause. The Director asks for **"an AI helpline for all schemes."**
 
-What citizens need is narrower: grounded eligibility answers for the **12 schemes behind about 80% of queries**, each citing its GO; status lookup through the department API; voice in and out (WhatsApp voice notes and a toll-free IVR); simple, accessible language; and **honest escalation** to a human centre. Users include pensioners on shared feature phones, farmers on patchy 2G/3G and Urdu-speaking families who today get Telugu-only answers. The assistant never *decides* eligibility ("you appear to meet the conditions in GO X; the verifying officer decides"), never collects Aadhaar numbers in chat, and says nothing political.
+What citizens need is narrower: grounded eligibility answers for the **12 schemes behind about 80% of queries**, each citing its GO; status lookup through the department API; voice in and out (WhatsApp voice notes and a toll-free IVR); simple, accessible language; and **honest escalation** to a human centre. Users include pensioners on shared feature phones, farmers on patchy 2G/3G and Urdu-speaking families who now get Telugu-only answers. The assistant never *decides* eligibility ("you appear to meet the conditions in GO X; the verifying officer decides"), never collects Aadhaar numbers, and says nothing political.
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
@@ -90,7 +90,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 9. When does the next Model Code of Conduct period start, and what will I&PR require?
 10. Is there a verified WhatsApp account, a BSP contract and approved templates? Which audit gates go-live?
 
-**Qualification: the lowest rung that works.** *Status* is already a DTMF lookup by application number; keep it as the fallback and add voice and WhatsApp on top. *Eligibility* belongs in a **deterministic rules engine** authored from the GOs and signed off by officers; an LLM reasoning freely over GOs is rejected for decisions. *Questions* need a single grounded LLM call over retrieved GO passages, with citations and simplified language. A *workflow* ties these together (language ID → intent → status tool | rules questionnaire | grounded Q&A | escalate). No autonomous agent is needed.
+**Qualification: the lowest rung that works.** *Status* is already a DTMF lookup by application number; keep it as the fallback and add voice and WhatsApp on top. *Eligibility* belongs in a **deterministic rules engine** authored from the GOs and signed off by officers, not an LLM reasoning over GOs. *Questions* need a single grounded LLM call over retrieved GO passages, with citations and simple language. A *workflow* ties these together (language ID → intent → status tool | rules questionnaire | grounded Q&A | escalate). No autonomous agent is needed.
 
 **Decision: Go with conditions.** Start with 12 schemes. **Launch each language separately** once it passes its gate, so Urdu may lag. The provenance gate goes live before any public traffic. No Aadhaar in chat.
 
@@ -168,7 +168,7 @@ flowchart LR
 | Rules engine | Indicative eligibility | Python/JSON-logic | — | Scheme officers own the rules |
 | Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam-2 ASR / Sooktam-2 TTS](https://huggingface.co/bharatgenai) (Feb 2026 cards list te and ur; check licences; Sooktam-2 clones reference voices, so fix one) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
 | Escalation | Ticket plus context packet to humans | — | Helpline CRM | Helpline vendor |
-| Observability | OTel traces, per-language dashboards | Langfuse/Phoenix + OTel collector | APM vendors | State IT |
+| Observability | Per-language traces and dashboards | Langfuse/Phoenix + OTel collector | APM vendors | State IT |
 
 **ADRs** ([Template 04](templates/04-solution-design-and-adr.md)):
 1. **Retrieval per language:** native multilingual embeddings vs pivot translation to Telugu/English vs hybrid BM25 + dense with a reranker, decided per language from the harness.
@@ -244,7 +244,7 @@ def evaluate(records, k=5, floors=None, ref_lang="te", max_gap=0.07, min_n=100):
     return report, failures
 ```
 
-On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.36] against Telugu and fails Urdu on floor and parity (curveball 3). Slices with n < 100 are reported as `insufficient_n`, never passed quietly.
+On a synthetic run with Urdu hit@5 near 0.6 and Telugu near 0.9, it reports a gap of about 0.3 [0.2, 0.39] and fails Urdu on floor and parity (curveball 3); slices with n < 100 fail as `insufficient_n`.
 
 ## 8. Evaluation plan
 
@@ -252,7 +252,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence relative to English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) for every candidate model; retrieval hit@k and MRR per slice; answer faithfulness, correctness, citation presence and readability (native raters: "understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about what they heard?); and safety, latency and cost per slice.
 
-**Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; an Aug 2026 preprint found all 17 abugidas it tested affected, from 1.47× (Tibetan) to 9.02× (Thai), and notes that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Fertility multiplies cost and latency and limits how many GO passages fit, so measure it.
+**Why fertility matters.** Pre-tokenisers that treat only letters as word characters split abugidas such as Telugu at every vowel sign; an Aug 2026 preprint found all 17 abugidas it tested affected, from 1.47× (Tibetan) to 9.02× (Thai), and notes o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Fertility multiplies cost and latency and limits how many GO passages fit.
 
 **Native-speaker raters and judge calibration.** Two raters per language label 200 answers (report agreement); the LLM judge rates a language only if Cohen's κ ≥ 0.7 against them, otherwise humans do.
 
@@ -332,9 +332,9 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
-| Working system | 25% | Cited answers in four languages; mobile-matched status; honest escalation; DTMF fallback | English-first bot, translated output |
+| Working system | 25% | Cited answers in four languages; mobile-matched status; honest escalation; DTMF fallback | English-first bot, translated |
 | Evaluation rigour | 20% | Per-language CIs, native raters, calibrated judge, fertility measured | One pooled number from translated queries |
-| Security and compliance | 15% | Provenance gate, split contexts, obligations with *verify* flags | "The LLM filters bad documents" |
+| Security and compliance | 15% | Provenance gate, split contexts, reasoned SGI applicability, *verify* flags | "The LLM filters bad documents" |
 | FDE artifacts | 20% | ADRs backed by numbers; a real change-management plan | Templates copied unfilled |
 | Demo and communication | 10% | Shows the Urdu gap honestly, with the plan | Hides weak languages |
 | Curveball handling | 10% | Containment, citizen correction, root cause | Hot-fixes the prompt |
