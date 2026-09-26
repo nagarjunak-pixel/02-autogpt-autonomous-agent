@@ -52,7 +52,7 @@ Many candidates were downgraded; the adversarial pass was deliberately hard on P
 | 12 | AI-era security of the orchestration layer | gap #1 (see project P07) | New turn 77a |
 | 13 | Regulation as obligations → controls (a global map) | gap #4, deepened by the [regulation map in D](gap-register/D-security-and-regulation.md) and Template 07 | New turn 79a |
 
-**Observation.** 6 of the 13 must-add topics are **FDE practice or delivery** (1–4, 10, 13), and only 2 are model-side (8, 9). The existing gap doc found only 5 of the 13.
+**Observation.** 6 of the 13 must-add topics are **FDE practice or delivery** (1–4, 10, 13), and only 2 concern model or agent-SDK features (8, 9). The existing gap doc found only 5 of the 13.
 
 ### Area files
 
@@ -61,7 +61,7 @@ Many candidates were downgraded; the adversarial pass was deliberately hard on P
 | [A · Models, inference and customisation](gap-register/A-models-and-inference.md) | 12 | MOD-1 |
 | [B · RAG, retrieval and data](gap-register/B-rag-and-data.md) | 10 | RAG-1, RAG-3, RAG-5 |
 | [C · Agents, protocols and tooling](gap-register/C-agents-and-tooling.md) | 10 | AGT-1 |
-| [D · Security, safety and regulation](gap-register/D-security-and-regulation.md) (includes a 46-row regulation map) | 12 | SEC-3 |
+| [D · Security, safety and regulation](gap-register/D-security-and-regulation.md) (includes a 48-row regulation map) | 12 | SEC-3 |
 | [E · FDE practice and operations](gap-register/E-fde-practice-and-operations.md) | 11 | FDE-1, FDE-2, FDE-3, FDE-7 |
 | [F · Emerging practice](gap-register/F-emerging-practice.md) (horizon items already in practice) | 7 | — |
 
@@ -93,7 +93,7 @@ Our verdict after fact-checking every candidate ([03-errata-and-fact-check.md](0
 | 9 | Frontier safety frameworks and gated release | P2 | **P3** | Deployers do not write these frameworks; they read them. Teach them as vendor due diligence. The US "June 2026 actions" are EO 14409, which is cyber-focused. | — |
 | 10 | Sycophancy as a production failure mode | P2 | **P2** | Agree. Put it in the evaluation spine: flip-rate and false-premise evals before every model upgrade. | — (see P11) |
 | 11 | Chain-of-thought monitorability | P2 | **P3** | Mostly a lab-side concern. The practical point for FDEs is "do not treat reasoning traces as explanations; set a logging policy for them." | — |
-| 12 | Agent memory architectures and products | P2 | **P2** | Agree. Memory ships as framework primitives. Merge with Turns 62, 118 and 130 (see 05). | — (see P06, P16) |
+| 12 | Agent memory architectures and products | P2 | **P2** | Agree. Memory ships as framework primitives. Merge with Turns 62 and 130 (see 05); Turn 118 stays Watch (see 04). | — (see P06, P16) |
 | 13 | Distribution inside AI assistants | P2 | **P2** | Agree. Fix: MCP Apps became an extension on 26 Jan 2026, and OpenAI's Apps SDK docs now call published units "plugins". | [AGT-5](gap-register/C-agents-and-tooling.md) |
 | 14 | Text-to-SQL, semantic layers, analytics agents | P2 | **P1** | Raise it. Enterprise error rates remain high on realistic benchmarks, every major data platform now ships an NL-to-SQL agent, and the gap doc's own claim that it is "the most common request" contradicts its P2 rating. | [RAG-5](gap-register/B-rag-and-data.md) |
 | 15 | AI crawler control and content licensing | P2 | **P3** | Niche: it matters to publishers and research agents. Also out of date: Cloudflare moved from pay-per-crawl to pay-per-use pilots in Jul 2026. | — (see P13, P16) |
@@ -164,7 +164,7 @@ Our verdict after fact-checking every candidate ([03-errata-and-fact-check.md](0
 | HOR-11 | Goal-driven agent misbehaviour with real credentials: credential misuse, secret-scanning evasion, covert channels and answer-seeking | **P2** | THIN | G · extend Turn 73 with a 2026 incident-case box (cross-link Turns 86, 71 and 132); co-teach with HOR-1 as one "misaligned-agent incidents" extension | [F](gap-register/F-emerging-practice.md) |
 | HOR-6 | Workforce-impact evidence and algorithmic-management law (AI in employment decisions) *(overlaps SEC-5 (the law); HOR-6 keeps the workforce-evidence part)* | **P2** | THIN | H · "AI in employment decisions" sub-box in gap #4's US regulation map; P3 Platform Work note in Turn 83; evidence paragraph in Turns 110 and 114 | [F](gap-register/F-emerging-practice.md) |
 | HOR-8 | Provenance, attribution and licensing of agent-written code | **P2** | THIN | J · extend Turn 101 (this is the content of the Turn 127 merge; cross-link Turns 85 and 127) | [F](gap-register/F-emerging-practice.md) |
-| HOR-9 | EU software liability and cyber-resilience for AI products (new Product Liability Directive + Cyber Resilience Act) *(duplicate of SEC-1; canonical entry there)* | **P2** | MISSING | H · new turn after Turn 79 (or a substantial extension of Turn 82) | [F](gap-register/F-emerging-practice.md) |
+| HOR-9 | EU software liability and cyber-resilience for AI products (new Product Liability Directive + Cyber Resilience Act) *(duplicate of SEC-1; canonical entry there)* | **P2** | MISSING | H · new turn after Turn 82 (Turn 82a, as for SEC-1) | [F](gap-register/F-emerging-practice.md) |
 | MOD-10 | Small specialised models inside agent systems (SLM-first, fine-tune-to-replace) | **P3** | THIN | B · extend Turn 23 (one paragraph) | [A](gap-register/A-models-and-inference.md) |
 | MOD-11 | Side effects of fine-tuning and distillation: emergent misalignment and subliminal trait transfer | **P3** | THIN | B · extend Turn 26 (one paragraph; cross-reference Turns 23 and 25) | [A](gap-register/A-models-and-inference.md) |
 | MOD-4 | Reinforcement fine-tuning (RFT) as a managed service: graders, rubric rewards and platform choice | **P3** | THIN | B · extend Turn 22 (move Turn 135's practical Q&As there; no new turn) | [A](gap-register/A-models-and-inference.md) |

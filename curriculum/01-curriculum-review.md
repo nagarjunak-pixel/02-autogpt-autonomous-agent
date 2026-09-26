@@ -3,7 +3,7 @@
 **Scope:** *LLM Training Flow Volume 2 Study Guide* (135 topics called "Turns" in 13 sections, 676 interview Q&As and a 228-term index), and the separate *Coverage Gaps and Fact-Check (Sept 2026)* document. Both are reviewed as of **26 September 2026**.
 **Question asked:** How good is this curriculum for training AI engineers and Forward Deployed Engineers (FDEs), what is missing, and what will be needed over the next 12–24 months?
 
-> **Limitation.** We reviewed the *study guide*, not the 890-page full-depth book, and we do not have Volume 1. Where we say a topic is "missing", we mean the study guide's summaries, Q&As and index do not teach it. The full book may mention it in passing.
+> **Limitation.** We reviewed the *study guide*, not the 890-page full-depth book, and we do not have Volume 1. Where we say a topic is "missing", we mean the study guide's summaries, Q&As and index do not teach it. The full book may mention it in passing. Legal points are summarised for teaching and are not legal advice.
 
 ---
 
@@ -66,7 +66,7 @@ Meanwhile Section L, the role the curriculum is named for, gets 5.8 pages per to
 ### 1.3 Assessment is recall-only
 
 Each turn ends with 4–8 short-answer interview questions (676 in total). There are **no labs, no design exercises, no graded artefacts and no projects**. FDEs are judged by artefacts: a discovery memo, a frozen eval set, an SOW with measurable acceptance criteria, a threat model, a running system, a handover drill.
-**Recommendation:** use the 16 projects in [projects/](projects/README.md) as the backbone. Each exercises 12–25 turns, uses the reusable engagement templates, and is graded on artefacts plus how students handle injected "curveball" incidents.
+**Recommendation:** use the 16 projects in [projects/](projects/README.md) as the backbone. Each exercises roughly 30–45 turns, uses the reusable engagement templates, and is graded on artefacts plus how students handle injected "curveball" incidents.
 
 ### 1.4 Dated facts are woven into the core, with no refresh mechanism
 
@@ -78,7 +78,7 @@ Section G ("Latest Developments") is entirely news: spec versions, launch dates,
 
 ### 1.5 Evaluation, the FDE's most important skill, is scattered
 
-Evaluation appears in at least six places: Turns 13 (base-model evaluation), 38 (evaluator loops), 49 (RAG evaluation tooling), 63 (simulation and pass^k), 97 (evaluation tools), 104 (testing AI code) and 132 (the science of agent evaluation). No single turn teaches an **evaluation strategy**: what to measure at which layer, how to build and freeze a golden set, how to calibrate judges, and how to gate releases.
+Evaluation appears in at least seven places: Turns 13 (base-model evaluation), 38 (evaluator loops), 49 (RAG evaluation tooling), 63 (simulation and pass^k), 97 (evaluation tools), 104 (testing AI code) and 132 (the science of agent evaluation). No single turn teaches an **evaluation strategy**: what to measure at which layer, how to build and freeze a golden set, how to calibrate judges, and how to gate releases.
 **Recommendation:** make evaluation a spine. Add one early "Evaluation Strategy" turn that the others hang off (Template [05-eval-plan.md](projects/templates/05-eval-plan.md) is a starting point), and make every project deliver an eval plan in week 2.
 
 ### 1.6 Overlapping turns that should be merged to make room
@@ -86,7 +86,7 @@ Evaluation appears in at least six places: Turns 13 (base-model evaluation), 38 
 | Overlap | Turns | Proposal |
 |---|---|---|
 | Agent identity | 71 (platforms) + 124 (trust fabric) | One turn with a "now" part and a "next" part |
-| Learning after deployment | 62 (self-improving) + 118 (continual learning) + 130 (lifelong memory) | One "agents that learn" turn plus a memory turn (the gap register adds memory architectures) |
+| Learning after deployment | 62 (self-improving) + 118 (continual learning) + 130 (lifelong memory) | Merge 62 and 130 into one "agents that learn" turn plus a memory turn (the gap register adds memory architectures); 118 stays a short Watch item ([04](04-future-topics-2026-2028.md)) |
 | Sovereignty | 92 (on-prem/air-gapped) + 134 (sovereign and open-weight) | One turn; keep the "future" material as an annex |
 | Serving | 27 (parallelism for serving) + 29 (serving engines) + 31 (prefix caching and disaggregation) | Two turns; parallelism depth goes to an elective |
 | Reasoning | 21 (reasoning models) + 121 (reasoning distillation and on-device) | Keep 21 in core; fold 121 into 34 (local inference) and 23 (distillation) |
@@ -101,7 +101,7 @@ Section M holds 18 "future" topics, the largest section by count, with the fewes
 
 ### 1.8 Sequencing is textbook order, not job order
 
-The sections run A→M, bottom-up from tokenizers to future topics. An FDE learner should start where engagements start (discovery, data readiness, RAG, agents, evaluation), then learn to harden and operate, and pull model internals in on demand. [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) gives a 16-week track, **Engage → Build → Evaluate → Harden → Operate → Scale**, with the projects placed in it.
+The sections run A→M, bottom-up from tokenizers to future topics. An FDE learner should start where engagements start (discovery, data readiness, RAG, agents, evaluation), then learn to harden and operate, and pull model internals in on demand. [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) gives a 16-week track, **Engage → Build → Evaluate → Harden → Operate → Deploy**, then electives and a capstone, with the projects placed in it.
 
 ## 2. What the curriculum does well (and why)
 
@@ -141,7 +141,7 @@ The gap doc is a useful peer review, and most of its conclusions survive. This s
    - honest impact measurement;
    - the field-to-product loop.
 
-   Vol 2's own Q539 already says projects fail because of the wrong problem, no data access, no measurable success or no adoption, and "rarely because the model was too weak". The MIT NANDA report (Aug 2025, based on interviews and surveys) calls the cause of stalled pilots a "learning gap", meaning tools that do not fit the workflow. Press coverage paraphrased that as "flawed enterprise integration". Either way, the gap is in delivery, not in models. See [section E of the register](gap-register/E-fde-practice-and-operations.md).
+   Vol 2's own Q539 already says projects fail because of the wrong problem, no data access, no measurable success or no adoption, and "rarely because the model was too weak". The MIT NANDA report (Aug 2025, based on interviews and surveys) calls the cause of stalled pilots a "learning gap", meaning tools that do not fit the workflow. Press coverage paraphrased that as "flawed enterprise integration" ([Fortune, 18 Aug 2025](https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/)). Either way, the gap is in delivery, not in models. See [section E of the register](gap-register/E-fde-practice-and-operations.md).
 8. **It misses regulation and product changes that were already in effect:**
    - US bank model-risk guidance was replaced on 17 Apr 2026 (SR 26-2), and the new guidance puts generative AI out of scope.
    - EU Cyber Resilience Act reporting duties began on 11 Sep 2026.
@@ -154,8 +154,8 @@ The gap doc is a useful peer review, and most of its conclusions survive. This s
 ### Where it is right (and we agree after testing it)
 
 - **Its MISSING/THIN labels mostly survive a grep of Vol 2.** There are two exceptions: Vol 2 does mention compaction (Turn 58), and it does cover some non-EU regulation.
-- **Most of its dated facts hold.** 30 of 60 checks verified outright, and 17 more were right but needed context.
-- **Its four strongest additions are the right ones**, and we keep all of them at P1:
+- **Most of its dated facts hold.** 30 of 57 checks verified outright, and 17 more were right but needed context.
+- **Its four strongest additions are the right ones**, and all four are P1 in our register:
   - prompt-injection-resistant architectures (CaMeL, the lethal trifecta);
   - context engineering;
   - text-to-SQL, which we raise to P1;

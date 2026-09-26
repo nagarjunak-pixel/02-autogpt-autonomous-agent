@@ -1,6 +1,6 @@
 # Gap Register · E · FDE Practice and Operations
 
-> Part of the [Gap Register](../02-gap-register.md). Verified as of 26 September 2026. Every entry was proposed by a research agent, then adversarially re-checked (coverage in Vol 2, evidence, priority) by a second agent; corrections were applied. Priorities: **P1** = most FDE engagements meet it, or it is legally in force for common deployments · **P2** = frequent but situational · **P3** = niche · **Watch** = future.
+> Part of the [Gap Register](../02-gap-register.md). Verified as of 26 September 2026. Every entry was proposed by a research agent, then adversarially re-checked (coverage in Vol 2, evidence, priority) by a second agent; corrections were applied. Priorities: **P1** = most FDE engagements meet it, or it is legally in force for common deployments · **P2** = frequent but situational · **P3** = niche · **Watch** = future. **Law and contract terms change often: re-verify them before teaching, and never treat this as legal advice.**
 
 
 *11 entries after adversarial verification: 4 P1, 5 P2, 2 P3. Nothing was rejected or merged. FDE-5 (P1 to P2), FDE-6 (P2 to P3) and FDE-10 (P2 to P3) were downgraded. FDE-10's noisy-neighbour and capacity material now sits in FDE-4. The verifier's added item FDE-M1 is renumbered FDE-11.*

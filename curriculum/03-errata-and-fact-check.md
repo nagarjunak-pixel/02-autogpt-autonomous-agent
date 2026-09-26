@@ -7,11 +7,12 @@ We ran two independent checks, each against dated sources, primary sources where
 | Document | Claims checked | Correct | Needs nuance | Outdated | Wrong | Unverifiable |
 |---|---|---|---|---|---|---|
 | Vol 2 study guide | 50 + 5 follow-ups | **41** | 11 | 3 | 0 | 0 |
-| Gap doc | 60 | **30** | 17 | 2 | 5 | 3 |
+| Gap doc | 57 | **30** | 17 | 2 | 5 | 3 |
 
 **What this says:**
-- Vol 2 is accurate for a fast-moving field. Its outdated claims are few but serious: US bank model-risk guidance changed in April 2026 (A1), AP2's mandate model changed in v0.2 (A10), and OpenAI is closing its fine-tuning platform (A13). A1–A9 come from the main check. A10–A14 are follow-ups that later research agents found and verifiers confirmed.
+- Vol 2 has 3 outdated claims, and they are serious: US bank model-risk guidance changed in April 2026 (A1), AP2's mandate model changed in v0.2 (A10), and OpenAI is closing its fine-tuning platform (A13). The other 11 corrections add nuance. A1–A9 come from the main check. A10–A14 are follow-ups that later research agents found and verifiers confirmed. For a fast-moving field, the rest of Vol 2 is accurate.
 - The gap doc's facts are mostly right, but its *citations* are weaker than its conclusions. Two arXiv IDs point to unrelated papers, one statistic is misattributed, and several legal claims rest on blogs where statutes or regulator pages exist.
+- This is a fact-check for teaching, not legal advice. Re-verify legal points before each cohort, and confirm them with counsel before relying on them in an engagement.
 - We spot-checked the two most consequential findings ourselves against primary sources: the SR 11-7 replacement (Federal Reserve SR 26-2; OCC Bulletin 2026-13) and the arXiv 2606.29175 mis-citation. Both held.
 
 ---
@@ -49,7 +50,7 @@ We ran two independent checks, each against dated sources, primary sources where
 
 ### A6. Turn 34, Q165: Ollama's default context now depends on VRAM (NEEDS NUANCE)
 - The Ollama docs now set the default context by detected VRAM: under 24 GiB → 4k tokens; 24–48 GiB → 32k; 48 GiB or more → 256k.
-- The silent failure is therefore hardware-dependent. Laptops still truncate long prompts, while big GPUs can allocate a huge KV cache and spill to CPU.
+- The silent failure is therefore hardware-dependent. Laptops still truncate long prompts, while big GPUs can allocate a very large KV cache and spill to CPU.
 - **Teach:** always set `num_ctx` / `OLLAMA_CONTEXT_LENGTH` explicitly and verify it with `ollama ps`.
 - Source: [docs.ollama.com/context-length](https://docs.ollama.com/context-length). The version and date come from secondary sources; verify them before teaching.
 
@@ -135,7 +136,7 @@ The following all hold:
 | Ref | Gap doc says | Correct |
 |---|---|---|
 | #2 | "Frontier agents exceed 85% on OSWorld-Verified by July 2026 (arXiv 2607.26041)" | **Mis-cited.** 2607.26041 is *Desktop-Delta Bench* and reports no OSWorld-Verified scores. Scores of 85% or more appear only on third-party aggregators in Sept 2026 and are mostly self-reported. The Q&A also mixes up OSWorld and OSWorld-Verified. |
-| #7 | "OpenClaw agent lost its constraint during compaction… (cited in arXiv 2606.29175)" | **Mis-cited; we verified this ourselves.** 2606.29175 is an international-humanitarian-law paper. The incident itself is real (23 Feb 2026: a "suggest, don't act" instruction was lost in compaction and 200+ emails were deleted), but it is documented only in secondary post-mortems ([vectara/awesome-agent-failures](https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/openclaw-email-deletion.md)). Label it "reported". |
+| #7 | "OpenClaw agent lost its constraint during compaction… (cited in arXiv 2606.29175)" | **Mis-cited; we verified this ourselves.** 2606.29175 is an international-humanitarian-law paper. The incident itself is real (23 Feb 2026: a "suggest, don't act" instruction was lost in compaction and 200+ emails were deleted), but it is documented only in secondary post-mortems ([vectara/awesome-agent-failures](https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/openclaw-email-deletion.md)). Label it "reported". Separately, its THIN note "no compaction" is slightly off: Turn 58 (Q284) mentions compaction, though it does not teach it. |
 | #18 | "Unit 42 counted 647,017 exposed n8n instances" | **Misattributed.** The figure is a FOFA search run by the *attacker's* AI agent during reconnaissance, which Unit 42 quoted (30 Jul 2026). Independent counts measure different things: Shadowserver ~105,753 instances vulnerable to CVE-2026-21858; Censys ~103,476. "Actively targeted" is right: CISA KEV added n8n CVE-2025-68613 (Mar 2026) and Langflow (Jul–Aug 2026). |
 | Dating | "as of 27 September 2026" | The document is dated after the actual check date (26 Sept 2026). Several of its figures were already stale (see B2). |
 | Internal counts | "Four need fixing"; "Add as P1" lists 7; "(a), (b), (i), (k) verified" | The document contradicts itself: it lists **9** problems, its table has **8** P1s (agentic-browser security is missing from the P1 list), and item (i) is never shown. Its (a)–(m) letters refer to a claim list the reader never sees. |
@@ -151,7 +152,6 @@ The following all hold:
 - **#5:** Tennessee SB 1580 (effective 1 Jul 2026) is **not** a companion-chatbot or minors law. It bars claiming an AI is a qualified mental-health professional, so it belongs to the adjacent "AI therapist" category. Washington's companion law is HB 2225, effective 1 Jan 2027, like Oregon SB 1546.
 - **#9:** The "June 2026 US executive actions" are **EO 14409** (signed 2 Jun 2026): a classified NSA/CISA cyber-capability benchmark that designates "covered frontier models", plus voluntary pre-release government access. It is cyber-focused, not a general frontier-safety regime. For FDEs, frontier safety frameworks are **P3** (vendor due diligence), not P2.
 - **#13:** MCP Apps became the first official MCP extension on **26 Jan 2026**. The 2026-07-28 release formalised the extensions framework. The real gap is distribution and review in app directories.
-- **#14:** The MISSING label for text-to-SQL is right, but "most common enterprise FDE request" has no supporting evidence. Either support it or drop the superlative. Note also that the gap doc ranks it only P2 while calling it the most common request, which is inconsistent.
 - **#17:** Both dated facts hold, but "a large share of production agent UIs and MCP servers are TypeScript" is unsupported: the Python MCP SDK also passed 1B downloads.
 - **#19:** The Responses API has had built-in web search since its launch on **11 Mar 2025**, not "2026".
 - **#21:** Ads in ChatGPT are live, not "Watch": US tests were announced 16 Jan 2026, ads went live around 9 Feb 2026, and pilots in Canada, Australia and New Zealand were announced 26 Mar 2026. The low priority is still justified, but by low FDE relevance rather than maturity.
@@ -166,6 +166,7 @@ The following all hold:
 ### B4. Unverifiable
 - The headline **"coverage is roughly 85–90%"** has no taxonomy, denominator or scoring rule behind it. Treat it as an impression. [01-curriculum-review.md](01-curriculum-review.md) replaces it with specific, checkable gaps.
 - Item (i) in "verified as stated" is never shown.
+- **#14:** The MISSING label for text-to-SQL is right, but "most common enterprise FDE request" has no supporting evidence. Either support it or drop the superlative. Note also that the gap doc ranks it only P2 while calling it the most common request, which is inconsistent.
 
 ### Verified as stated (30 items), for the record
 - **Cyber:** GTG-1002 (Nov 2025); Claude Mythos Preview withheld and released via Project Glasswing (7 Apr 2026) with $100M in credits; the 22 May 2026 Glasswing update (1,752 findings reviewed, 90.6% valid, 62.4% high or critical); Glasswing expanded in June 2026; Unit 42 and GTIG orchestration-layer targeting.

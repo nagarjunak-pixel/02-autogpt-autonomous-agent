@@ -77,9 +77,9 @@ Every brief lists 4–6 **curveballs**: realistic events that the instructor inj
 ## Suggested sequencing
 
 See [../05-revised-syllabus-and-learning-path.md](../05-revised-syllabus-and-learning-path.md) for where each project sits in the 16-week track. Recommended order:
-1. **One ★★☆ build-first project** in weeks 3–6: P01, P02 or P03.
-2. **One ★★★ hardening project** in weeks 7–11: P05, P06, P07 or P12.
-3. **One capstone chosen by the student's target industry** in weeks 12–16.
+1. **One ★★☆ build-first project** in weeks 3–8, for example P01, P02 or P03.
+2. **One ★★★ hardening or operations project** in weeks 9–12, for example P05, P06, P07 or P12.
+3. **One capstone chosen by the student's target industry** in weeks 13–16.
 
 ## Coverage matrix
 
