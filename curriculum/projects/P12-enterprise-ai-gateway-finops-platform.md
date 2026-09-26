@@ -217,7 +217,7 @@ flowchart LR
 
 **ADRs to write** ([04-solution-design-and-adr](templates/04-solution-design-and-adr.md)):
 1. **Gateway product:** OSS (LiteLLM, Agent Router, agentgateway), commercial (Kong, Prisma AIRS), cloud-native (APIM), or two layers (APIM at the edge, OSS for on-prem and MCP).
-2. **Topology:** one central gateway, per-region data planes, or per-BU data planes under a central control plane. The Consumer BU compromise lives here.
+2. **Topology:** one central gateway, per-region data planes, or per-BU data planes under a central control plane. The negotiation with the Consumer BU is settled here.
 3. **Routing:** static per use case, a cascade with validators, or a learned router.
 4. **Logging and retention:** metadata only by default; redacted payload samples; full payloads only for opted-in debug windows. Must reconcile CERT-In's 180 days in India, GDPR minimisation and the works council.
 5. **Chargeback model:** showback only, actuals, or blended rates with PTU amortisation (unused commitment charged to the platform, not the BUs).
@@ -385,18 +385,25 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 **Capacity.** 25M requests a month is about 10 req/s on average and about 100 req/s at peak. With ~8 s streams, that means ~800 concurrent streams at peak. Plan 3–6 replicas per region.
 
+**Quotas and reserved capacity.** Set per-key TPM/RPM quotas at the gateway, below provider quotas, and route PTU spillover to pay-as-you-go. Reserved options differ:
+- Azure PTU capacity is fungible across provisioned deployments ([Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)).
+- Amazon Bedrock Provisioned Throughput offers no-commitment, 1-month and 6-month terms ([AWS](https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html)).
+- Google sells fixed-term Provisioned Throughput subscriptions ([Google Cloud](https://cloud.google.com/vertex-ai/generative-ai/docs/provisioned-throughput/overview)).
+
+Review utilisation weekly against commitment minimums.
+
 **Cost model.** Ranges; prices change monthly, so recompute from current price pages or an open pricing dataset. Batch APIs typically cost about half the synchronous price at major providers.
 
 | Lever | Assumption | Saving (USD/month) |
 |---|---|---|
-| Cascade on eligible work (~40% of PAYG spend) | Cheap tier accepts 60–80%; cheap cost 10–25% of strong | 20–40k |
+| Cascade on eligible work (~40% of PAYG, now on the strong tier) | Cheap tier accepts 60–80%; cheap cost 10–25% of strong; new cost = 80k × (cheap share + escalation share) | 28–56k |
 | Caching (per tenant) + provider prompt caching | 3–10% of PAYG | 6–20k |
 | Batch for offline jobs | 15–25% of PAYG at ~50% discount | 15–25k |
 | PTU right-sizing | Utilisation 55% → 75–80%; spillover to PAYG | 20–35k |
 | SaaS seat consolidation | 20–40% of USD 40k | 8–16k |
-| **Gross saving** | | **≈ 69–136k (16–32%)** |
+| **Gross saving** (levers overlap: compute them in sequence, not as a sum, in the real model) | | **≈ 77–152k (18–36%)** |
 | Platform run cost | Infra 6–15k + 5 FTE platform team 20–35k | −26–50k |
-| **Net** | | **≈ +19k to +110k** |
+| **Net** | | **≈ +27k to +126k** |
 
 At the low end this is a governance programme that pays for itself, not a cost-cutting miracle. Say so in the business case.
 
@@ -410,28 +417,28 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 ## 11. Curveballs (instructor-injected events)
 
-1. **A provider announces a model retirement with 60 days' notice.**
-   - Both Anthropic and Azure Foundry commit to at least 60 days' notice for GA models ([Anthropic](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)). Azure retirement dates are not extendable, and provisioned deployments are **not** auto-upgraded.
+1. **Week 10: a provider announces a model retirement with 60 days' notice.**
+   - Both Anthropic and Microsoft Foundry commit to at least 60 days' notice for GA models ([Anthropic](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)). Foundry retirement dates are not extendable, and provisioned deployments are **not** auto-upgraded.
    - Query the registry for dependent aliases and use cases (say 43).
    - Run a **shadow** evaluation on 5% mirrored traffic, then canary at 5% → 25% → 100% with SLO-based rollback.
-   - Check API-contract changes as well as quality: newer Claude models return a 400 error for non-default `temperature`/`top_p`/`top_k`.
+   - Check API-contract changes as well as quality: Claude Opus 4.7 and later models return a 400 error for non-default `temperature`/`top_p`/`top_k`.
    - Re-check PTU capacity, and finish by day 40.
-2. **An agent loop burns a month's budget overnight.**
+2. **Week 5: an agent loop burns a month's budget overnight.**
    - Throttle or revoke the key and confirm spend has flattened.
    - Trace the cause (e.g. a failing tool call retried with growing context).
    - Add the hourly cap, per-run step limits, repeated-call detection and spend-velocity alerts against a 7-day baseline.
    - Hold a blameless review. Credits from the provider are not guaranteed; ADR-5 decides who pays.
-3. **The gateway package is compromised upstream (a LiteLLM-style event).**
+3. **Week 8: the gateway package is compromised upstream (a LiteLLM-style event).**
    - Compare deployed digests with the bad versions. Check whether the mirror ever served them; the cooldown should have blocked them.
    - Hunt for the `.pth` IoC in dev and CI.
    - If the package ran anywhere with provider keys, **rotate every provider key** and revoke sessions.
    - Check egress to the exfiltration domain.
    - File the CERT-In report within 6 hours if Indian systems are affected, and assess GDPR.
    - Brief the CISO with the timeline.
-4. **A provider has a regional outage.**
+4. **Week 11, during pilot traffic: a provider has a regional outage.**
    - Breakers open and fallback chains engage **within residency rules**. Diagnostics routes may use only in-country or self-hosted tiers, so they degrade to queueing rather than cross a border.
    - Measure fallback quality against pre-evaluated pairs, and post the drill metrics.
-5. **The Consumer BU refuses chargeback.**
+5. **Week 13: the Consumer BU refuses chargeback.**
    - Separate **mandatory controls** (vault keys, DLP, logging, inventory; group CISO policy) from **commercial terms**.
    - Offer a federated data plane under the central control plane, and start with showback of the BU's own cost per outcome.
    - Take a decision memo to the CFO. Record the compromise in ADR-2 and ADR-5.
