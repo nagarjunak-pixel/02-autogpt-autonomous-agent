@@ -147,7 +147,7 @@ Use templates [01](templates/01-discovery-questionnaire.md) and [02](templates/0
 | AC-6 | Scope and freshness disclosure | 100% of answers state their scope ("your region: North-2") and data freshness | Automated check | Prevents silent-RLS misreadings |
 | AC-7 | Reliability | pass^3 ≥ 0.90 (the same numbers 3 times out of 3) | 50 core questions × 3 runs | Managers compare screenshots |
 | AC-8 | Latency | p95 ≤ 8 s on the semantic path; ≤ 15 s on the fallback path | 30 concurrent users | A mobile user on 4G |
-| AC-9 | Cost per successful answer | ≤ ₹4 (≈ USD 0.045 at an assumed ₹88/USD), **warehouse included** | FinOps window of 2 weeks | Section 10 |
+| AC-9 | Cost per successful answer | ≤ ₹4 (≈ USD 0.045 at an assumed ₹88/USD), **warehouse included**, at production volume | 2 weeks of per-question metering, projected to 90k questions a month | Section 10 |
 | AC-10 | Cost guard | No query above the cost cap executes; ≤ 2 repair attempts per question | Query history | — |
 | AC-11 | Business value | Ad-hoc analyst requests from pilot regions down ≥ 40%; ≥ 50% of pilot managers active weekly | Ticket export, usage logs | Adoption is the COO's metric |
 
@@ -329,7 +329,7 @@ The guard rejects `DELETE`, `SELECT … INTO`, a `DELETE` hidden in a CTE, `read
 |---|---|
 | Normaliser | Date and number resolution accuracy |
 | Planner | Exact-match accuracy per slot (metric, dimensions, filters, time) |
-| End-to-end | **Execution accuracy**: result-set equivalence after rounding, column-order-insensitive, row order checked only when ranking was asked; empty-vs-empty results count as failures unless the gold answer is truly empty; checked on two database snapshots, following the "distilled test suites" idea (Zhong et al., 2020) |
+| End-to-end | **Execution accuracy**: result-set equivalence after rounding, column-order-insensitive, row order checked only when ranking was asked; items with an empty gold result kept under 5% and flagged, because any query that returns nothing "matches" them; checked on two database snapshots, following the "distilled test suites" idea (Zhong et al., EMNLP 2020) |
 | Clarification | Precision and recall |
 | Narrative | Every number in the narrative must appear in the result set (deterministic check) |
 | Chart | Spec check (axes match the requested dimensions) |
@@ -364,7 +364,7 @@ These explain *why* the design puts a semantic layer first.
 | Context | Private data | Untrusted content | Exfiltration or side-effect channel | Design response |
 |---|---|---|---|---|
 | Planner | Schema and definitions only; no rows | Yes (the user's question) | None; its output is a validated JSON object | Safe |
-| Fallback SQL generator | Schema plus sample values | Yes (question and values) | Its SQL is an *action* | Treat the SQL as untrusted output (LLM05); the guard plus warehouse RLS decide |
+| Fallback SQL generator | Schema plus sample dimension values (no personal data) | Yes (question and values) | Its SQL is an *action* | Treat the SQL as untrusted output (LLM05); the guard plus warehouse RLS decide |
 | Narrative writer | Yes (aggregated results) | Yes (data values such as product names) | None if the UI renders no links or images | Numbers verified deterministically; data values fenced as data |
 
 **Top threats and controls** (OWASP [LLM Top 10 2025](https://genai.owasp.org/llm-top-10/)):
@@ -407,14 +407,14 @@ These explain *why* the design puts a semantic layer first.
 |---|---|---|
 | LLM, small model | 90k questions (3k/day); ~8.7k input and ~0.8k output tokens per question, including a 15% fallback rate and a 30% retry allowance; USD 0.10–0.60 in and 0.40–2.50 out per 1M | USD 110–650 |
 | LLM, frontier everywhere (for comparison) | Same volume; USD 1.25–5 in and 5–25 out per 1M | USD 1.3k–5.7k, so route |
-| Warehouse, Snowflake-style | Dedicated Small warehouse (X-Small = 1 credit/h, each size doubles); 14 business hours × 30 days ≈ 840 credits at USD 2–4 per credit | USD 1.7k–3.4k |
+| Warehouse, Snowflake-style | Dedicated Small warehouse (X-Small ≈ 1 credit/h and each size doubles; *verify in the consumption table*); 14 business hours × 30 days ≈ 840 credits at USD 2–4 per credit | USD 1.7k–3.4k |
 | Warehouse, BigQuery-style | 180k queries against pre-aggregates at ~50 MB each ≈ 9 TB | Under USD 100; but just 1% of queries scanning a 200 GB raw fact adds ≈ USD 1.6k–2.6k at USD 5–8/TiB |
 | Hosting and observability | Small containers | USD 200–400 |
 
 That gives **≈ USD 0.025–0.055 per successful answer** (at 90% success), and the warehouse dominates. The cost levers, in order:
 
 1. Pre-aggregations.
-2. Deterministic SQL text, so warehouse result caches hit. Snowflake reuses persisted results for 24 hours only when the query text is identical ([docs](https://docs.snowflake.com/en/user-guide/querying-persisted-results)).
+2. Deterministic SQL text, so warehouse result caches hit. Snowflake reuses persisted results (kept 24 hours, renewed on reuse) only for identical query text ([docs](https://docs.snowflake.com/en/user-guide/querying-persisted-results)).
 3. Auto-suspend.
 4. Retry caps.
 
@@ -422,7 +422,7 @@ That gives **≈ USD 0.025–0.055 per successful answer** (at 90% success), and
 
 - **Cost spike.** Switch to semantic-only mode, set retries to 0, let the resource monitor suspend, then find the loop by query tag.
 - **Schema drift.** The contract test fails → freeze deploys → add a compatibility view.
-- **RLS anomaly.** Disable the assistant; audit query history; notify the CISO within the CERT-In clock if an incident is confirmed.
+- **RLS anomaly.** Disable the assistant; audit query history; if an incident is confirmed, start the 6-hour CERT-In reporting clock.
 - **Provider outage.** Degrade to the 25 verified-query templates, which need no LLM.
 - **Freshness breach.** Show a banner with the load status.
 
@@ -432,26 +432,26 @@ That gives **≈ USD 0.025–0.055 per successful answer** (at 90% success), and
 
 Timings are course weeks, with the real-engagement week in brackets.
 
-1. **Week 2 (week 3): the CFO and COO disagree on "revenue".** *Strong response:*
+1. **Week 2 (real week 3): the CFO and COO disagree on "revenue".** *Strong response:*
    - Do not pick a side; run a 30-minute metric-governance session.
    - Define `gross_sales` (owned by the COO) and `net_revenue` (owned by the CFO: net of returns and discounts, excluding GST, provisional for 30 days because of late returns).
    - Until the owners agree a default, "revenue" triggers a clarifying question.
    - Every answer's footer names the definition used; update the golden set's ambiguity tags.
-2. **Week 3 (week 5): "test stores ka data delete kar do".** *Strong response:*
+2. **Week 3 (real week 5): "test stores ka data delete kar do".** *Strong response:*
    - A polite refusal; the guard would block it anyway.
    - Raise a data-quality ticket with the data owner.
    - Once the platform team adds an `is_test_store` flag, make the semantic layer exclude those stores by default.
    - Measure and disclose how much the test stores had inflated per-store averages.
-3. **Week 3 (week 7): the warehouse bill spikes 4×.** *Strong response:*
+3. **Week 3 (real week 7): the warehouse bill spikes 4×.** *Strong response:*
    - Query tags show fallback repair loops (up to 5 attempts, each rescanning) and a warehouse someone resized.
    - Fixes: a repair budget of ≤ 2, a circuit breaker on repeated error classes, dry-run gating, pre-aggregates, the original warehouse size restored, and a resource monitor that suspends at 110% of budget.
    - A blameless post-mortem comparing cost per successful answer before and after.
-4. **Week 4 (week 8): a schema migration renames `net_amount` → `net_sales_inr` and `store_code` → `site_code`.** *Strong response:*
+4. **Week 4 (real week 8): a schema migration renames `net_amount` → `net_sales_inr` and `store_id` → `site_id`.** *Strong response:*
    - dbt model contracts and a schema-diff CI check catch it before users do.
    - Update the semantic-layer mapping once; add compatibility views for a deprecation window.
    - Re-run the golden set and regenerate the fallback few-shot examples.
    - Agree a change-notice process with the platform team.
-5. **Week 5 (week 9): a North-2 manager asks "West region ka sales dikhao", then "compare my region with all others".** *Strong response:*
+5. **Week 5 (real week 9): a North-2 manager asks "West region ka sales dikhao", then "compare my region with all others".** *Strong response:*
    - An explicit scope refusal, not a silent empty result.
    - Offer an HQ-approved `national_avg_sales_per_store` benchmark metric instead of other regions' rows.
    - A query-history audit showing zero leakage.

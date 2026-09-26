@@ -134,7 +134,7 @@ Decision: **Go, with conditions.** Written General Counsel approval of the wall 
 | AC-10 | Latency | First token ≤ 3 s; p95 ≤ 12 s | 20 concurrent users | Faster than asking a colleague |
 | AC-11 | Deletion | Derived artefacts gone and verified within 7 days; closed matters de-indexed within 24 h | Drill: 5 matters, 1 subject | Inside the one-month response window |
 | AC-12 | Value | Median time to precedent down ≥ 50% | Repeat stopwatch study | Credible for a research aid |
-| AC-13 | Cost | ≤ USD 0.08 per answered question | FinOps dashboard, 2 weeks | Must beat per-seat alternatives |
+| AC-13 | Cost | ≤ USD 0.08 variable cost per answered question; fixed hosting reported separately | FinOps dashboard, 2 weeks | Must beat per-seat alternatives |
 
 ## 6. Reference architecture
 
@@ -186,7 +186,7 @@ flowchart LR
 **ADRs to write** (use [template 04](templates/04-solution-design-and-adr.md)):
 
 - **ADR-001 · Build vs. buy.** Options:
-  - M365 Copilot, which "only surfaces organizational data to which individual users have at least view permissions"; DMS content needs a connector ([Microsoft Learn](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-privacy)).
+  - M365 Copilot (being renamed Microsoft Copilot), which "only surfaces organizational data to which individual users have at least view permissions"; DMS content needs a connector ([Microsoft Learn](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-privacy)).
   - A legal AI platform (Harvey, Legora, CoCounsel, Lexis+ AI).
   - DMS-native AI, e.g. NetDocuments ndMAX, whose page quotes a customer saying it respects walls ([NetDocuments](https://www.netdocuments.com/ndmax); *vendor claim, verify*).
   - A custom build.
@@ -381,14 +381,14 @@ Compare this with seat licences for Copilot or a legal AI platform, which cost t
 
 Timings are course weeks, with the real-engagement week in brackets.
 
-1. **Week 3 (pilot week 8): a new ethical wall mid-pilot.** A lateral partner joins from the firm acting for the other side of a live dispute; she and 3 associates are screened from matter M-1042. *Strong response:* a timed probe, run as her identity, proving exclusion in under 15 minutes; her cached answers and conversation history for M-1042 hidden; a one-page evidence pack for the General Counsel.
-2. **Week 4 (pilot week 9): an erasure request** from a client's former employee who appears in 9 matters. *Strong response:*
+1. **Week 3 (real week 8): a new ethical wall mid-pilot.** A lateral partner joins from the firm acting for the other side of a live dispute; she and 3 associates are screened from matter M-1042. *Strong response:* a timed probe, run as her identity, proving exclusion in under 15 minutes; her cached answers and conversation history for M-1042 hidden; a one-page evidence pack for the General Counsel.
+2. **Week 4 (real week 9): an erasure request** from a client's former employee who appears in 9 matters. *Strong response:*
    - The DPO, not the FDE, applies the exemptions.
    - The subject index lists every artefact: chunks, vectors, BM25 postings, caches, eval items, traces.
    - Delete what is out of scope, verify it by re-querying for the unique tokens, and issue a certificate.
-3. **Week 4 (pilot week 10): an opposing-counsel PDF with hidden instructions.** A paralegal spots a summary saying a limitation period has expired, which no visible text says. *Strong response:* open an incident; trace the answer to the white 1-pt text; add a hidden-text detector; re-scan every document from that sender; prove no exfiltration channel existed; add a regression test.
-4. **Week 5 (pilot week 10): the litigation head demands "zero hallucinated citations".** *Strong response:* reframe the demand as two measurable guarantees, **zero unverifiable citations ever displayed** (mechanical, AC-3) and citation precision ≥ 0.95 (statistical, AC-4). Show the blocked-answer rate this costs, and build the *Ayinde* duty into the UI. Never promise zero errors.
-5. **Week 5 (pilot week 11): IT offers Copilot licences as part of the renewal.** *Strong response:* no defensiveness. Run the same golden, canary and wall-latency suites against Copilot (plus a DMS connector, if one exists) and update ADR-001 with the evidence. A hybrid split (Copilot for M365 content, this assistant for matter research) and retiring the custom build are both acceptable outcomes.
+3. **Week 4 (real week 10): an opposing-counsel PDF with hidden instructions.** A paralegal spots a summary saying a limitation period has expired, which no visible text says. *Strong response:* open an incident; trace the answer to the white 1-pt text; add a hidden-text detector; re-scan every document from that sender; prove no exfiltration channel existed; add a regression test.
+4. **Week 5 (real week 10): the litigation head demands "zero hallucinated citations".** *Strong response:* reframe the demand as two measurable guarantees, **zero unverifiable citations ever displayed** (mechanical, AC-3) and citation precision ≥ 0.95 (statistical, AC-4). Show the blocked-answer rate this costs, and build the *Ayinde* duty into the UI. Never promise zero errors.
+5. **Week 5 (real week 11): IT offers Copilot licences as part of the renewal.** *Strong response:* no defensiveness. Run the same golden, canary and wall-latency suites against Copilot (plus a DMS connector, if one exists) and update ADR-001 with the evidence. A hybrid split (Copilot for M365 content, this assistant for matter research) and retiring the custom build are both acceptable outcomes.
 
 ## 12. Deliverables and grading rubric
 

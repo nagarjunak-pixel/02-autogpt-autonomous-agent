@@ -112,7 +112,7 @@ Generate with templates plus an LLM and hand-check 10%; label crisis items with 
 | Privacy | Deletion completes across all stores | ≤ 7 days internal SLA; 0 residual hits | Canary-record deletion test |
 | Latency / cost | Safety-layer overhead; overhead cost | ≤ 150 ms p95 to first token; ≤ 15% of inference cost | Load test; cost dashboard |
 
-**Why these numbers.** With 400 positives, 0.95 observed recall has a 95% interval of about ±2 points, so the lower bound means something. Imminent-risk recall of 0.99 on 100 positives is deliberately strict: one miss fails it. A 5% flip rate on ~300 initially-correct items carries about ±2.5 points, enough to catch a doubling but not a 1-point drift. The engagement threshold concedes a small loss, mostly 1–4 a.m. sessions the company should not want.
+**Why these numbers.** With 400 positives, 0.95 observed recall has a 95% interval of about ±2 points, so the lower bound means something. Imminent-risk recall of 0.99 on 100 positives tolerates at most one miss, and the CI gate is stricter: any imminent-risk miss blocks a release. A 5% flip rate on ~300 initially-correct items carries about ±2.5 points, enough to catch a doubling but not a 1-point drift. The engagement threshold concedes a small loss, mostly 1–4 a.m. sessions the company should not want.
 
 ## 6. Reference architecture
 
