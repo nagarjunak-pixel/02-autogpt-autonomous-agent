@@ -19,15 +19,15 @@ The conversation that decides the project is with the General Counsel. A single 
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
-| Managing Partner (sponsor) | A visible win and competitive parity | Funding |
+| Managing Partner (sponsor) | A visible win | Funding |
 | General Counsel / Head of Risk | Walls, conflicts, privilege, client consent | Go-live (a veto) |
 | CISO | Data egress, provider terms, logging, pen test | Security sign-off |
 | DPO (UK) and Grievance Officer (India) | Lawful basis, transfers, erasure, DPIA | DPIA approval |
 | Head of Knowledge (KM partner) | Precedent quality, adoption | Content scope, SME time |
 | Litigation practice head | "Zero hallucinated citations" | Her group's participation |
-| IT applications lead | DMS load, the Microsoft relationship, a Copilot offer | API access, tenancy |
+| IT applications lead | DMS load, Microsoft relationship | API access |
 | Records manager | Retention schedules, legal holds | Deletion design |
-| Associates and paralegals (users) | Speed, trust, not being blamed | Adoption |
+| Associates and paralegals | Speed, trust, not being blamed | Adoption |
 
 ## 2. Constraints
 
@@ -76,13 +76,10 @@ The conversation that decides the project is with the General Counsel. A single 
 
 **Budget, two paths:**
 
-- **API path (≤ USD 50).** A small model for contextualisation and judging, and a mid-tier model for answers. Use a frontier model only for the final acceptance runs.
-- **Local path.**
-  - Generation: an 8–14B open-weight instruct model (e.g. Qwen3 or Gemma 3; check the licences) on Ollama or vLLM.
-  - Retrieval: `bge-m3` embeddings and `bge-reranker-v2-m3`.
-  - Parsing and OCR: Docling plus Tesseract or PaddleOCR.
+- **API path (≤ USD 50).** A small model for contextualisation and judging, a mid-tier model for answers, a frontier model only for final acceptance runs.
+- **Local path.** An 8–14B open-weight model (e.g. Qwen3 or Gemma 3; check licences) on Ollama or vLLM; `bge-m3` embeddings and `bge-reranker-v2-m3`; Docling plus Tesseract or PaddleOCR.
 
-**Out of scope:** real iManage, NetDocuments or Intapp APIs; ingesting Teams chat; public case-law research; production high availability (HA); a legally complete DPIA (students draft one, and it is marked as a draft).
+**Out of scope:** real iManage, NetDocuments or Intapp APIs; Teams chat; public case-law research; production HA; a legally complete DPIA (students write a marked draft).
 
 ## 4. Discovery — what the FDE does in week 1
 
@@ -319,9 +316,9 @@ Run an ablation: breadcrumbs only vs. LLM-written context vs. late chunking. Ant
 
 | Context | Private data | Untrusted content | Exfiltration channel | Design response |
 |---|---|---|---|---|
-| Answer generation | Yes | Yes (received documents) | **Removed.** No tools, no web access; the UI renders no remote images or links; answers are text plus internal citation IDs | Trifecta broken |
-| Ingestion contextualiser | Yes (one document) | Yes | None; output is stored only as index text | Treat its output as untrusted data |
-| Future agent mode (stretch) | Yes | Yes | Possible (email or export tools) | Quarantined reader plus plan-then-execute; human approval for any send |
+| Answer generation | Yes | Yes (received documents) | **Removed:** no tools or web access; the UI renders no remote images or links | Trifecta broken |
+| Ingestion contextualiser | Yes (one document) | Yes | None; output stored as index text | Output treated as untrusted |
+| Agent mode (stretch) | Yes | Yes | Possible (email, export) | Quarantined reader, plan-then-execute, approval for sends |
 
 This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copilot" (CVSS 9.3, published 11 June 2025), allowed information disclosure over a network ([CVE record](https://www.cve.org/CVERecord?id=CVE-2025-32711)). A rendered link or image is itself an exfiltration channel.
 
@@ -337,8 +334,8 @@ This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copil
 
 | Obligation | Control | Evidence |
 |---|---|---|
-| SRA 6.5 "no real risk of disclosure" | Wall SLO, deny-overrides, canary probes | Hourly probe report, wall-latency dashboard |
-| *Ayinde*: verify AI research against authoritative sources | Citations only to firm documents, span verification, a "verify" banner, no external case law generated | Verifier logs, UI screenshot |
+| SRA 6.5 "no real risk of disclosure" | Wall SLO, deny-overrides, canary probes | Hourly probe report |
+| *Ayinde*: verify AI research against authoritative sources | Firm-document citations only, span verification, a "verify" banner | Verifier logs, UI screenshot |
 | UK GDPR Art. 5(1)(c), 25 (minimisation, privacy by design) | Index only the matters in scope; honour the AI opt-out flag | Ingestion manifest |
 | UK GDPR Art. 17 with 17(3)(e) and the Sch. 2 para 19 exemptions | Subject index; the DPO decides scope; derived copies deleted and verified | Deletion certificate |
 | UK GDPR Ch. V (transfers to India) | Region pinning; IDTA or Addendum plus a TRA | Gateway routing config |
@@ -356,7 +353,7 @@ This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copil
 - Canary leaks: 0. Any leak pages the on-call engineer and the General Counsel.
 - Deletion completed and verified within 7 days of approval.
 
-**Observability.** OpenTelemetry GenAI conventions (now maintained in their own repository and still evolving, [OTel](https://github.com/open-telemetry/semantic-conventions-genai)). Each trace spans retrieve → trim → LLM → verify and records `gen_ai.*` token counts, chunk IDs, ACL decisions and the entitlement version, but no document text.
+**Observability.** OpenTelemetry GenAI conventions (now in their own repository and still evolving, [OTel](https://github.com/open-telemetry/semantic-conventions-genai)). Traces span retrieve → trim → LLM → verify and record `gen_ai.*` token counts, chunk IDs, ACL decisions and the entitlement version, never document text.
 
 **Back-of-envelope cost** (assumptions stated; prices change, so re-quote them):
 
@@ -420,25 +417,25 @@ Timings are course weeks, with the real-engagement week in brackets.
 
 ## 14. Curriculum map
 
-| Turn(s) | How it is exercised |
+| Turn(s) · title | How it is exercised |
 |---|---|
-| 14 Hallucination in Depth | Citation verifier, abstention, the "zero hallucinations" curveball |
-| 42 Document Parsing; 43 Multimodal RAG; 105 Vision-Language Models | OCR routing, scanned bundles, page-region citations |
-| 45 Late Chunking and Contextual Retrieval | Ablation of context strategies |
-| 47 Long Context vs RAG vs CAG | Why per-user permissions rule out a shared context |
-| 48 Embedding-Model Selection; 50 Named Vector Databases | Filter-aware ANN with ACL fields |
-| 49 RAG Evaluation Tooling; 97 Evaluation Tools | Faithfulness, citation precision, CI gates |
+| 14 Hallucination in Depth | Citation verifier, abstention, "zero hallucinations" curveball |
+| 42 Document Parsing and Ingestion · 43 Multimodal RAG · 105 Vision-Language Models | OCR routing, scanned bundles, page-region citations |
+| 45 Late Chunking and Contextual Retrieval | Context-strategy ablation |
+| 47 Long Context vs RAG vs Cache-Augmented Generation | Per-user permissions rule out shared context |
+| 48 Embedding-Model Selection · 50 Named Vector Databases and Search Engines | Filter-aware ANN with ACL fields |
+| 49 RAG Evaluation Tooling · 97 Evaluation Tools | Faithfulness, citation precision, CI gates |
 | 52 Data Lineage and Deletion in RAG | Subject index, deletion certificate |
 | 55 Subagents and Context Isolation | Quarantined reader (stretch) |
-| 64 Trust Calibration and Automation Bias | "Verify" UI, the *Ayinde* duty |
-| 71 Agent Identity Platforms | On-behalf-of tokens, per-user entitlements |
-| 73 OWASP Agentic; 74 OWASP LLM; 75 Red-Teaming; 76 Poisoning | Canary and injection suites |
-| 78 PII Detection and DLP | Subject index, trace redaction |
-| 79 EU AI Act; 81 GDPR and DPDP; 82 Sector Compliance | Applicability screen, obligations, SRA duties |
-| 87 Model Upgrades; 88 Canaries; 89 Flywheel; 90 SLOs | Upgrade gates, rollout, wall SLO |
-| 91 FinOps; 92 Sovereign Deployment; 100 AI Gateways; 102 Providers | Cost model, region pinning, ZDR routing |
-| 96 Observability Tools | OTel GenAI traces carrying IDs only |
-| 109–116 FDE professional skills | Discovery, ROI, playbook, ADRs, demo, adoption, data readiness, SOW |
+| 64 Trust Calibration and Automation Bias | "Verify" UI, *Ayinde* duty |
+| 71 Agent Identity Platforms | On-behalf-of tokens, entitlements |
+| 73 OWASP Top 10 for Agentic Applications (2026) · 74 OWASP Top 10 for LLM Applications · 75 Jailbreaks and Red-Teaming Practice · 76 Data and Memory Poisoning | Canary and injection suites |
+| 78 PII Detection and Data-Loss Prevention | Subject index, trace redaction |
+| 79 The EU AI Act · 81 Privacy Law for AI: GDPR and India's DPDP · 82 Sector Compliance | Applicability screen, obligations, SRA duties |
+| 87 Model Upgrades and Deprecation Management · 88 Online A/B Testing and Canary Releases · 89 Feedback Loops and the Data Flywheel · 90 SLOs, Incident Response and On-Call for AI | Upgrade gates, rollout, wall SLO |
+| 91 LLM FinOps · 92 On-Prem, Air-Gapped and Sovereign Deployment · 100 AI Gateways · 102 Model Provider Landscape | Cost model, region pinning, ZDR routing |
+| 96 Observability Tools | ID-only OTel traces |
+| 109 Use-Case Discovery and Qualification · 110 Business Case and ROI · 111 POC → Pilot → Production Playbook · 112 Architecture Documents and ADRs · 113 Stakeholder Communication and Demos · 114 Change Management and Adoption · 115 Data-Readiness Assessment · 116 Scoping, Estimation and SOWs | The full engagement arc |
 
 **New or gap topics exercised:** prompt-injection-resistant architectures (lethal trifecta, removing the exfiltration channel); context engineering (context budget, pinned rules, fencing untrusted content); the global AI regulation map (UK DUAA 2025 changes alongside GDPR and DPDP); security of AI products bought through an existing vendor relationship (the Copilot bake-off).
 

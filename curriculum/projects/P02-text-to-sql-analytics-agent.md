@@ -488,23 +488,23 @@ Timings are course weeks, with the real-engagement week in brackets.
 
 ## 14. Curriculum map
 
-| Turn(s) | How it is exercised |
+| Turn(s) · title | How it is exercised |
 |---|---|
-| 1 Tokenisation Algorithms; 41 Multilingual Prompting | Hindi and Hinglish token cost; per-language evals; controlling the reply language |
-| 36 Constrained Decoding Engines; 61 ACI Design | `MetricQuery` schema as the tool interface |
-| 37 Self-Consistency (stretch); 38 Reflection and Evaluator-Optimizer Loops | Capped error-feedback SQL repair |
-| 40 Meta-Prompting and System-Prompt Design | Planner prompt; data fenced as data |
-| 51 Knowledge-Graph Tooling | Text-to-Cypher safety rules carried over to SQL |
-| 63 Simulation and Synthetic Users | Synthetic manager sessions |
-| 64 Trust Calibration | Scope, definition and freshness footer; "show SQL" |
-| 71 Agent Identity Platforms | On-behalf-of vs. role identity into the warehouse |
-| 73 OWASP Agentic; 74 OWASP LLM; 75 Red-Teaming; 76 Poisoning | Guard, adversarial set, poisoned data values |
-| 78 PII Detection and DLP; 81 GDPR and DPDP | Personal data excluded; DPDP phase-in; CERT-In |
-| 87 Model Upgrades; 88 Canaries; 89 Flywheel; 90 SLOs; 94 Failover | Gates, rollout, "wrong number" loop, template fallback |
-| 91 LLM FinOps; 100 AI Gateways; 102 Model Provider Landscape | Warehouse-inclusive cost per answer, budgets, routing |
-| 96 Observability Tools; 97 Evaluation Tools | Traces linked to query IDs; execution-accuracy CI |
-| 103 Python Engineering; 104 Testing AI Code | Pydantic models; unit and property tests for the guard |
-| 109–116 FDE professional skills | Discovery, ROI, playbook, ADRs, demo, adoption, data readiness, SOW |
+| 1 Tokenization Algorithms · 41 Multilingual Prompting | Hindi/Hinglish token cost, per-language evals |
+| 36 Constrained Decoding Engines · 61 Agent-Computer Interface (ACI) Design | `MetricQuery` schema as the tool |
+| 37 Self-Consistency and Tree/Graph-of-Thought · 38 Reflection and Evaluator-Optimizer Loops | Capped SQL repair; result voting (stretch) |
+| 40 Meta-Prompting and Agent System-Prompt Design | Planner prompt; data fenced as data |
+| 51 Knowledge-Graph Tooling | Text-to-Cypher safety rules applied to SQL |
+| 63 Simulation and Synthetic Users for Testing | Synthetic manager sessions |
+| 64 Trust Calibration and Automation Bias | Scope/definition/freshness footer |
+| 71 Agent Identity Platforms | On-behalf-of vs. role identity |
+| 73 OWASP Top 10 for Agentic Applications (2026) · 74 OWASP Top 10 for LLM Applications · 75 Jailbreaks and Red-Teaming Practice · 76 Data and Memory Poisoning | Guard, adversarial set, poisoned values |
+| 78 PII Detection and Data-Loss Prevention · 81 Privacy Law for AI: GDPR and India's DPDP | PII excluded; DPDP phase-in; CERT-In |
+| 87 Model Upgrades and Deprecation Management · 88 Online A/B Testing and Canary Releases · 89 Feedback Loops and the Data Flywheel · 90 SLOs, Incident Response and On-Call for AI · 94 Provider Failover and Disaster Recovery | Gates, rollout, "wrong number" loop, template fallback |
+| 91 LLM FinOps · 100 AI Gateways · 102 Model Provider Landscape | Warehouse-inclusive cost, budgets, routing |
+| 96 Observability Tools · 97 Evaluation Tools | Traces linked to query IDs; execution-accuracy CI |
+| 103 Python Engineering for AI Apps · 104 Testing AI Code | Pydantic; guard unit/property tests |
+| 109 Use-Case Discovery and Qualification · 110 Business Case and ROI · 111 POC → Pilot → Production Playbook · 112 Architecture Documents and ADRs · 113 Stakeholder Communication and Demos · 114 Change Management and Adoption · 115 Data-Readiness Assessment · 116 Scoping, Estimation and SOWs | The full engagement arc |
 
 **New or gap topics exercised:** text-to-SQL, semantic layers and analytics agents (gap #14: the core of this project); context engineering (catalogue pruning and schema linking within a context budget); prompt-injection-resistant architectures (the planner never sees rows; SQL treated as untrusted output); warehouse FinOps for agent retries.
 

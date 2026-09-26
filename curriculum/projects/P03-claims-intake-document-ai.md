@@ -1,6 +1,7 @@
 # P03 · Claims Intake Document AI with Human Review
 
-> Turn scanned bills, FIRs, damage photos and handwritten forms into schema-valid, evidence-linked claim files that adjusters verify quickly. The system never denies a claim, and it measures whether reviewers are really checking.
+> Turn scanned bills, FIRs, damage photos and handwritten forms into schema-valid, evidence-linked claim files that adjusters verify quickly, with no automated denials and measured reviewer vigilance.
+>
 > **Customer:** Sahyadri General Insurance (fictional) · **Industry:** General insurance (motor + retail health) · **Geography:** India (Pune HQ; Maharashtra, Goa, Madhya Pradesh) · **Real engagement:** 22 weeks, FDE lead + 2 FDEs + part-time UX researcher and security engineer · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 ## 1. Scenario: the customer and the ask

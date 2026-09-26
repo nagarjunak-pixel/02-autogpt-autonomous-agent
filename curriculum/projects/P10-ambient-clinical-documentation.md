@@ -1,6 +1,7 @@
 # P10 · Ambient Clinical Documentation
 
 > Consented exam-room audio in; a clinician-verified SOAP note in the EHR within minutes, with every medication and dose traceable to what was actually said.
+>
 > **Customer:** Lakeshore Community Health (fictional) · **Industry:** Healthcare: US federally qualified health centre (FQHC) network · **Geography:** California and Texas, USA; English/Spanish · **Real engagement:** 24 weeks, FDE lead + speech/ML FDE + EHR integration engineer, with a customer clinical informaticist and a security engineer part-time · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 ## 1. Scenario: the customer and the ask
@@ -61,7 +62,8 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
 - **Texas HB 149 (TRAIGA)**, effective 1 Jan 2026 ([text](https://capitol.texas.gov/tlodocs/89R/billtext/html/HB00149F.htm)). Sec. 552.051(f) requires providers to disclose AI used "in relation to health care service or treatment". Because it cross-references a governmental-agency duty, its reach to private providers is **debated; verify**.
 - **Texas biometric law** ([Bus. & Com. Code 503.001](https://texas.public.law/statutes/tex._bus._and_com._code_section_503.001)): voiceprints need notice and consent if enrolled for diarisation (whether non-profit clinical use is a "commercial purpose": verify).
 - **42 CFR Part 2** (amended Feb 2024; [LII](https://www.law.cornell.edu/cfr/text/42/part-2)) covers SUD programme records, which are excluded.
-- **Offshore access:** no PHI access from India by default; storage stays in the US (SB 1188). **Not applicable:** EU AI Act, DPDP.
+- **Offshore access:** no PHI access from India by default; storage stays in the US (SB 1188).
+- **Not applicable:** EU AI Act, DPDP.
 
 **Infrastructure.** Clinic phones and tablets run under MDM, and exam-room Wi-Fi has dead zones, so capture needs an encrypted local buffer. Both EHRs expose FHIR R4, but *writing* notes typically needs vendor app registration, with lead times of weeks to months (verify).
 
@@ -89,7 +91,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation, and t
 - *API path (≤ USD 50):* hosted Whisper-class ASR plus a mid-tier LLM, for about 150 encounters × 5 eval runs. Synthetic data needs no BAA, but students list which vendors *would*.
 - *Local path:* faster-whisper/WhisperX + pyannote.audio, an 8-14B instruct model via Ollama or vLLM, and a small NLI model, on one 16-24 GB GPU (CPU works, slowly).
 
-**Out of scope:** real PHI, vendor app certification, claims submission, orders or e-prescribing from the note, and behavioural-health notes.
+**Out of scope:** real PHI, vendor app certification, claims submission, CPT codes (AMA-licensed content), orders or e-prescribing from the note, and behavioural-health notes.
 
 ## 4. Discovery: what the FDE does in week 1
 
