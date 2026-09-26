@@ -2,15 +2,15 @@
 
 > A real-time Hindi/Telugu/English voice agent that resolves the four biggest call reasons, hands off to humans with context, keeps payments and SIM swaps out of the LLM path, and never authenticates anyone by voice alone.
 >
-> **Customer:** Nimbus Telecom (fictional) · **Industry:** Mobile telecom (prepaid and postpaid) · **Geography:** India; pilot in one Telugu-majority and one Hindi-majority circle · **Real engagement:** 18–20 weeks; 2 FDEs, 1 telephony/voice engineer, 1 applied scientist (speech and evals), a part-time security architect, plus Nimbus's IVR, CRM and fraud teams · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
+> **Customer:** Kavrona Telecom (fictional) · **Industry:** Mobile telecom (prepaid and postpaid) · **Geography:** India; pilot in one Telugu-majority and one Hindi-majority circle · **Real engagement:** 18–20 weeks; 2 FDEs, 1 telephony/voice engineer, 1 applied scientist (speech and evals), a part-time security architect, plus Kavrona's IVR, CRM and fraud teams · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
 
 ---
 
 ## 1. Scenario — the customer and the ask
 
-Nimbus's care line takes about **40,000 calls a day** (peaks of ~3,500 an hour) through a 2014-era, five-language DTMF IVR. 58% of callers press "0" until they reach an agent, AHT is 5.2 minutes, and about 600 outsourced BPO seats take the calls. After a vendor demo, the CX head wants to **"replace the IVR with an AI agent"** before the festive season.
+Kavrona's care line takes about **40,000 calls a day** (peaks of ~3,500 an hour) through a 2014-era, five-language DTMF IVR. 58% of callers press "0" until they reach an agent, AHT is 5.2 minutes, and about 600 outsourced BPO seats take the calls. After a vendor demo, the CX head wants to **"replace the IVR with an AI agent"** before the festive season.
 
-What Nimbus needs is narrower and harder: a **real-time voice agent for four intents that make up about 55% of volume**:
+What Kavrona needs is narrower and harder: a **real-time voice agent for four intents that make up about 55% of volume**:
 - recharge and plan questions (≈24%)
 - postpaid bill explanation (≈12%)
 - SIM/eSIM issues (≈9%)
@@ -45,7 +45,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 - **TRAI MNP (Ninth Amendment) Regulations 2024**, in force 1 July 2024. No porting code is issued within 7 days of a SIM swap ([TRAI](https://www.trai.gov.in/sites/default/files/2024-10/Regulation_14032024.pdf), [PIB](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2029389)).
 - **CERT-In Directions (28 Apr 2022).** Covered incidents must be reported within 6 hours ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)); telecom cyber-security rules may add duties (*verify*).
 - **TRAI QoS Regulations 2024** (in force 1 Oct 2024) and complaint-redressal rules set customer-care duties such as dockets and reaching a human; pull exact parameters (*verify*) from the [regulation](https://trai.gov.in/standards-quality-service-access-wireline-and-wireless-and-broadband-wireline-and-wireless-service).
-- **IT Rules SGI amendment** (G.S.R. 120(E), in force 20 Feb 2026). Its duties, including a "prominently prefixed audio disclosure", fall on **intermediaries** ([Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)). Nimbus's own bot is most likely out of scope (confirm with counsel); we copy the pattern anyway.
+- **IT Rules SGI amendment** (G.S.R. 120(E), in force 20 Feb 2026). Its duties, including a "prominently prefixed audio disclosure", fall on **intermediaries** ([Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)). Kavrona's own bot is most likely out of scope (confirm with counsel); we copy the pattern anyway.
 - **AI disclosure and recording.** We found no Indian statute mandating AI disclosure for voice bots, and no specific consent rule for the recording party (*verify with counsel*); recording rests on DPDP notice and purpose limitation. MeitY's voluntary [AI Governance Guidelines](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/) (5 Nov 2025) favour disclosure. EU AI Act Art. 50 (from 2 Aug 2026) applies if the design is reused for EU customers.
 - **PCI DSS v4.x** applies contractually. Card data must never reach the bot, transcripts or recordings.
 
@@ -131,7 +131,7 @@ flowchart LR
   subgraph U["UNTRUSTED: caller and public network"]
     C["Caller (may be impostor or cloned voice)"]
   end
-  subgraph E["Nimbus telephony edge (trusted infra, untrusted audio)"]
+  subgraph E["Kavrona telephony edge (trusted infra, untrusted audio)"]
     SBC["SBC / CCaaS router"]
     IVR["Legacy DTMF IVR (failover)"]
     PAY["PCI-scoped payment IVR (DTMF masked)"]
@@ -169,7 +169,7 @@ flowchart LR
 
 | Component | Responsibility | Self-hostable option | Managed option | Owner |
 |---|---|---|---|---|
-| Telephony edge | SIP, media fork, routing, failover | FreeSWITCH/Asterisk | Amazon Connect, Genesys Cloud, Exotel | Nimbus telephony |
+| Telephony edge | SIP, media fork, routing, failover | FreeSWITCH/Asterisk | Amazon Connect, Genesys Cloud, Exotel | Kavrona telephony |
 | Orchestration | Streaming pipeline, interruptions | Pipecat, LiveKit Agents | Agentforce Voice, hosted voice platforms | FDE → CX engineering |
 | VAD / turn detection | End of turn, barge-in | Silero VAD + [LiveKit turn detector](https://huggingface.co/livekit/turn-detector) (lists Hindi, **not Telugu**) or Pipecat smart-turn | Provider endpointing | FDE |
 | ASR | Streaming hi/te/en/mixed | IndicConformer | [Sarvam Saaras](https://docs.sarvam.ai/), Google/Azure (check te-IN streaming) | Applied scientist |
@@ -196,7 +196,7 @@ flowchart LR
 | POC | 3–6 | Telugu cascade vs S2S latency spike; ASR bake-off; recharge and complaint-status flows; synthetic-caller harness | p50 ≤ 1.0 s; intent ≥ 88%; ADRs 1–3 accepted | ADRs, [eval plan](templates/05-eval-plan.md), [threat model](templates/06-threat-model-and-controls.md) |
 | Pilot | 7–12 | Bill explanation, SIM routing, handoff packet, payment-IVR transfer, red team; 1% → 5% traffic | Section 5 thresholds met; no open Sev-1/2 | [Security pack](templates/08-security-review-pack.md), [obligations map](templates/07-compliance-obligations-to-controls.md), [weekly status](templates/10-demo-script-and-status-report.md) |
 | Production | 13–17 | 25% per circle, canary per model change, failover drills, per-resolution BPO contract | 2 clean drills; SLOs met for 3 weeks | [Runbook and SLOs](templates/09-runbook-slos-and-handover.md) |
-| Handover | 18–20 | Train CX engineering; eval-set ownership; on-call shadowing | Nimbus ships a prompt change and a model canary unaided | Handover checklist |
+| Handover | 18–20 | Train CX engineering; eval-set ownership; on-call shadowing | Kavrona ships a prompt change and a model canary unaided | Handover checklist |
 
 **Course build:** W1 discovery memo · W2 pipeline and latency budget · W3 workflows and read-back · W4 handoff, payments, guard · W5 synthetic-caller evals and red team · W6 curveballs and demo.
 

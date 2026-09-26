@@ -2,7 +2,7 @@
 
 > One governed front door for every model call and tool call across 12 business units, with budgets, routing, chargeback, lifecycle management and shadow-AI discovery, built so that the gateway itself does not become the weakest link.
 >
-> **Customer:** Orion Holdings (fictional) · **Industry:** Diversified conglomerate (retail, FMCG, cement, logistics, hospitality, diagnostics, an NBFC, real estate, media, chemicals, renewables, IT services) · **Geography:** HQ Mumbai; business units (BUs) in India, the UAE, the UK and Germany · **Real engagement:** 16 weeks; FDE lead, 1 FDE, a part-time security architect, plus Orion's platform team (4), a FinOps analyst and a BU champion per wave · **Course build:** 5 weeks, team of 3–4 · **Difficulty:** ★★★
+> **Customer:** Tavrenhill Holdings (fictional) · **Industry:** Diversified conglomerate (retail, FMCG, cement, logistics, hospitality, diagnostics, an NBFC, real estate, media, chemicals, renewables, IT services) · **Geography:** HQ Mumbai; business units (BUs) in India, the UAE, the UK and Germany · **Real engagement:** 16 weeks; FDE lead, 1 FDE, a part-time security architect, plus Tavrenhill's platform team (4), a FinOps analyst and a BU champion per wave · **Course build:** 5 weeks, team of 3–4 · **Difficulty:** ★★★
 
 ## 1. Scenario — the customer and the ask
 
@@ -52,7 +52,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 
 | Instrument | Why it applies | What it means for the platform |
 |---|---|---|
-| **CERT-In Directions**, 28 Apr 2022 ([PDF](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)) | Orion's Indian entities | Report listed incidents within **6 hours**; item (xx) covers attacks on "Artificial Intelligence and Machine Learning" systems. Keep ICT logs for a **rolling 180 days within India** |
+| **CERT-In Directions**, 28 Apr 2022 ([PDF](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)) | Tavrenhill's Indian entities | Report listed incidents within **6 hours**; item (xx) covers attacks on "Artificial Intelligence and Machine Learning" systems. Keep ICT logs for a **rolling 180 days within India** |
 | **DPDP Act 2023 + [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), 13 Nov 2025) | Personal data of Indian customers and staff | Consent-manager rule 12 months, most duties 18 months from notification (May 2027), including Rule 6 safeguards (logs kept **one year**) and Rule 7 breach notice. Build to the standard now |
 | **[GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj) / UK GDPR** | German and UK BUs | Minimisation for logs; Art. 28 terms with providers; Chapter V rules for EU prompts routed outside the EEA |
 | German co-determination ([BetrVG §87(1) no. 6](https://www.gesetze-im-internet.de/betrvg/__87.html)) | Prompt logs can monitor employees | Works-council agreement needed before identity-linked logging of German staff (confirm with counsel) |
@@ -170,7 +170,7 @@ flowchart LR
     P2["Provider B"]
     P3["Provider C"]
   end
-  subgraph ONP["ORION DC"]
+  subgraph ONP["TAVRENHILL DC"]
     V["vLLM open-weight models"]
   end
   subgraph TL["TOOL plane"]
@@ -370,7 +370,7 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 **SLOs:** availability 99.95% per month; gateway-attributable errors ≤ 0.05%; overhead p95 ≤ 30 ms; spend data fresh within 5 minutes; chargeback closed by working day 5.
 
-**Observability.** Emit OTel GenAI spans with `gen_ai.request.model`, `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens`, plus `orion.bu`, `orion.use_case`, `orion.tier` and `orion.outcome`. The GenAI conventions are still at **Development** status in a separate repository ([OTel](https://opentelemetry.io/docs/specs/semconv/gen-ai/)): pin the version.
+**Observability.** Emit OTel GenAI spans with `gen_ai.request.model`, `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens`, plus `tavrenhill.bu`, `tavrenhill.use_case`, `tavrenhill.tier` and `tavrenhill.outcome`. The GenAI conventions are still at **Development** status in a separate repository ([OTel](https://opentelemetry.io/docs/specs/semconv/gen-ai/)): pin the version.
 
 **Capacity.** 25M requests a month ≈ 10 req/s average, ~100 req/s peak; with ~8 s streams, ~800 concurrent streams at peak. Plan 3–6 replicas per region.
 
