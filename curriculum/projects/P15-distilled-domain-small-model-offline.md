@@ -39,9 +39,9 @@ The key insight is to **fine-tune for behaviour, not knowledge.** Citation forma
 | [OSHA 29 CFR 1910.147](https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.147) | The energy control program requires documented, specific procedures ((c)(1), (c)(4)). **The written procedure is the authority.** The assistant quotes it and never substitutes for it. |
 | [OSHA 29 CFR 1910.269](https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.269) | (c) job briefings, (d) energy control at generation installations, (m) de-energising lines and equipment. The assistant supports briefings and switching orders; it never replaces them. |
 | [NERC CIP-010-4](https://www.nerc.com/pa/Stand/Reliability%20Standards/CIP-010-4.pdf) R4, Att. 1 §2 | If laptops connect to a client's medium/high-impact BES Cyber Systems, they are third-party-managed Transient Cyber Assets. The utility reviews the contractor's patching and malware mitigation (including allowlisting), so model packages become auditable software changes. Confirm per client and which version is in force. |
-| Teacher-provider terms | Anthropic Commercial Terms D.4 (effective 17 Jun 2025): no accessing the Services "to build a competing product or service, including to train" competing models. [Gemini API Additional Terms](https://ai.google.dev/gemini-api/terms) (modified 28 Apr 2026): "may not use the Services to develop models that compete". OpenAI's terms restrict similar use (wording not re-fetched; verify). OpenAI is also retiring self-serve fine-tuning, with no new jobs from 6 Jan 2027 (announced 7 May 2026). |
+| Teacher-provider terms | [Anthropic Commercial Terms](https://www.anthropic.com/legal/commercial-terms) D.4 (effective 17 Jun 2025): no accessing the Services "to build a competing product or service, including to train" competing models. [Gemini API Additional Terms](https://ai.google.dev/gemini-api/terms) (modified 28 Apr 2026): "may not use the Services to develop models that compete". OpenAI's terms restrict similar use (wording not re-fetched; verify). OpenAI is also retiring self-serve fine-tuning, with no new jobs from 6 Jan 2027 (announced 7 May 2026; [deprecations](https://developers.openai.com/api/docs/deprecations)). Providers also monitor for distillation. |
 | Model licences (read on the repos, Sept 2026) | Students: Gemma 4 E2B/E4B (Apache-2.0, with QAT 4-bit GGUF releases), Qwen3.5-2B/4B (Apache-2.0, hybrid linear attention), Ministral 3 3B/8B (Apache-2.0), Phi-4-mini (MIT). Teachers: gpt-oss-120b, Qwen3.8-27B (Apache-2.0), DeepSeek-V4 (MIT). EmbeddingGemma-300m is under the Gemma licence, not Apache. |
-| OEM manual copyright | Distributing manuals to technicians is usually licensed. Training on them may not be, and US law on training is unsettled (*Thomson Reuters v. Ross*, the first AI-training appeal, was argued 11 Jun 2026 and was undecided in Sept 2026). Get legal sign-off per OEM. |
+| OEM manual copyright | Distributing manuals to technicians is usually licensed. Training on them may not be, and US law on training is unsettled (*Thomson Reuters v. Ross*, the first AI-training appeal, was [argued 11 Jun 2026](https://www.bakerbotts.com/thought-leadership/publications/2026/july/third-circuit-hears-oral-argument) and was undecided in Sept 2026). Get legal sign-off per OEM. |
 
 **Infrastructure.** 1,400 rugged Windows 11 laptops with 16 GB RAM (some 32 GB), BitLocker and Intune. IT says the 2025 refresh "gave every unit an NPU". Sync happens on depot Wi-Fi daily or weekly, and storm crews can be offline for three weeks. Training runs on rented GPUs with a USD 20k compute budget. There is no per-query cloud cost.
 
@@ -146,7 +146,7 @@ The **safety router** is deterministic (rules plus a small classifier tuned for 
 |---|---|---|---|
 | Parsing: OCR, tables, revisions | Docling, Tesseract | Cloud document-AI (training side only) | ML |
 | Teacher: synthetic data | gpt-oss-120b, Qwen3.8-27B, DeepSeek-V4 on vLLM | Hosted APIs where terms permit | ML + Legal |
-| SFT: LoRA/QLoRA, distillation | Hugging Face TRL + PEFT, Unsloth, Axolotl | Cloud ML tuning jobs (OpenAI self-serve is retiring) | ML |
+| SFT: LoRA/QLoRA, distillation | Hugging Face TRL + PEFT, Unsloth, Axolotl | Managed open-weight tuning (e.g., Tinker, Bedrock, Foundry); **weights must be exportable** for on-device use. OpenAI self-serve is retiring | ML |
 | Embeddings: retrieval | bge-small-en-v1.5, Qwen3-Embedding-0.6B + sentence-transformers | Managed training only | ML |
 | On-device store | SQLite + sqlite-vec, LanceDB | Commercial embedded vector DBs (verify) | Edge |
 | Runtime | llama.cpp (GGUF), OpenVINO GenAI (CPU/GPU/NPU), ONNX Runtime GenAI (CPU, DirectML, QNN, OpenVINO EPs), LiteRT-LM, ExecuTorch | Vendor stacks such as Windows ML / Foundry Local, Qualcomm AI Hub (verify names) | Edge |
@@ -293,9 +293,9 @@ Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (the frozen 4
 
 | Item | Assumption | Per release |
 |---|---|---|
-| Synthetic generation | ≈ 72M tokens (40k Q&A × 1.5k + 3k dialogues × 4k); self-hosted teacher at ~2k tokens/s on one rented H100-class GPU ≈ 10 GPU-h × USD 2–4/h, ×3 with judge passes | USD 60–150 |
+| Synthetic generation | ≈ 72M tokens (40k Q&A × 1.5k + 3k dialogues × 4k); self-hosted teacher at ~2k tokens/s on one rented H100-class GPU ≈ 10 GPU-h × USD 2–4/h, ×3 with judge passes | USD 60–120 |
 | Same via API (only if terms allow) | 72M × USD 0.4–15 per million, blended | USD 30–1,100 |
-| QLoRA sweeps | ~100M training tokens per run, 7–14 GPU-h, 8–10 runs | USD 150–600 |
+| QLoRA sweeps | ~100M training tokens per run at 2–4k tokens/s ≈ 7–14 GPU-h, 8–10 runs | USD 110–560 |
 | Distribution | Full 4B Q4 model ≈ 2.5–3 GB × 1,400 ≈ 4 TB, vs adapter + pack deltas of tens to hundreds of MB | Depot bandwidth |
 
 The marginal cost per answer is about zero. People and HSE review dominate, so the business case rests on hotline deflection and fewer repeat visits, measured against control crews.
