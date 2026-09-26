@@ -37,16 +37,16 @@ The conversation that decides the project is with the General Counsel. A single 
   - A few Indian court orders are in Hindi or Marathi.
   - Walls live in a wall-management system (Intapp Walls or similar), which Intapp says pushes walls to other systems and AI tools, including Harvey and Copilot ([Intapp](https://www.intapp.com/walls/), as of Sept 2026). The time for a wall to take effect in the DMS is **unknown until measured**.
 - **Legal and regulatory** (as of Sept 2026; the firm's counsel owns every conclusion):
-  - **UK GDPR / DPA 2018**, as amended by the Data (Use and Access) Act 2025. Most of the DUAA's data-protection changes commenced on 5–6 February 2026. The new complaints-handling duty (s.103) was planned for about 12 months after Royal Assent, but no commencement had been published when we checked ([GOV.UK](https://www.gov.uk/guidance/data-use-and-access-act-2025-plans-for-commencement); *verify before teaching*).
-  - **Erasure exemptions.** Erasure does not apply where processing is needed "for the establishment, exercise or defence of legal claims" ([Art. 17(3)(e)](https://www.legislation.gov.uk/eur/2016/679/article/17)). The DPA 2018 also has a privilege exemption ([Sch. 2 para 19](https://www.legislation.gov.uk/ukpga/2018/12/schedule/2/paragraph/19)). These exemptions cover the matter file. They do not automatically cover derived copies held in caches, logs or eval sets.
-  - **UK → India transfers** need a transfer mechanism (IDTA or Addendum) plus a transfer risk assessment ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/)).
-  - **EU GDPR** applies only where Art. 3 is triggered, for example private-client work for people in the EU. The DPO must confirm this. EU→UK flows rely on the UK adequacy decisions renewed on 19 Dec 2025 ([European Commission](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)).
-  - **India's DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The Data Protection Board provisions applied immediately. Consent managers follow from 13 Nov 2026, and most obligations from **13 May 2027**. Until then, IT Act s.43A and the SPDI Rules continue to apply ([DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)).
-  - **DPDP exemptions.** Section 17(1)(a) (enforcing legal rights or claims) and s.17(1)(d) (Indian processing, under contract, of the data of people outside India) remove most duties. The s.8(5) security duty still applies ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)).
-  - **CERT-In Directions (28 Apr 2022).** Incidents must be reported within 6 hours, and logs kept for 180 days within India, for the Indian entity ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
+  - **UK GDPR / DPA 2018**, as amended by the Data (Use and Access) Act 2025. Most DUAA data-protection changes commenced on 5–6 Feb 2026. The complaints-handling duty (s.103) was planned for about 12 months after Royal Assent, but no commencement was published when we checked ([GOV.UK](https://www.gov.uk/guidance/data-use-and-access-act-2025-plans-for-commencement); *verify before teaching*).
+  - **Erasure exemptions.** Erasure does not apply where processing is needed "for the establishment, exercise or defence of legal claims" ([Art. 17(3)(e)](https://www.legislation.gov.uk/eur/2016/679/article/17)), and the DPA 2018 has a privilege exemption ([Sch. 2 para 19](https://www.legislation.gov.uk/ukpga/2018/12/schedule/2/paragraph/19)). These cover the matter file, not automatically the derived copies in caches, logs or eval sets.
+  - **UK → India transfers** need an IDTA or the Addendum, plus a transfer risk assessment ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/)).
+  - **EU GDPR** applies only where Art. 3 is triggered (the DPO confirms). EU→UK flows rely on the UK adequacy decisions renewed on 19 Dec 2025 ([European Commission](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)).
+  - **India's DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The Board provisions applied immediately; consent managers from 13 Nov 2026; most obligations from **13 May 2027**. Until then, IT Act s.43A and the SPDI Rules apply ([DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)).
+  - **DPDP exemptions.** Section 17(1)(a) (legal claims) and s.17(1)(d) (Indian processing, under contract, of data about people outside India) remove most duties, but the s.8(5) security duty still applies ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)).
+  - **CERT-In Directions (28 Apr 2022)** for the Indian entity: report incidents within 6 hours; keep logs for 180 days in India ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
   - **Professional duties.**
     - SRA Code 6.3 (confidentiality) and 6.5 (walls).
-    - *Ayinde v Haringey* [2025] EWHC 1383 (Admin) (6 June 2025): lawyers who use AI for research "have a professional duty … to check the accuracy of such research by reference to authoritative sources", and managing partners must take "practical and effective measures" ([judgment](https://www.judiciary.uk/judgments/ayinde-v-london-borough-of-haringey-and-al-haroun-v-qatar-national-bank/)).
+    - *Ayinde v Haringey* [2025] EWHC 1383 (Admin) (6 June 2025): lawyers using AI for research have "a professional duty … to check the accuracy of such research by reference to authoritative sources" ([judgment](https://www.judiciary.uk/judgments/ayinde-v-london-borough-of-haringey-and-al-haroun-v-qatar-national-bank/)).
     - India: professional-communication privilege under the Bharatiya Sakshya Adhiniyam 2023, in force since 1 July 2024 (*verify section numbers*).
   - **EU AI Act.** An internal research tool used by a non-EU firm is probably out of scope. Record the screen anyway.
   - **Contracts.** About 15% of clients' outside-counsel guidelines restrict generative-AI use on their matters.
@@ -60,21 +60,18 @@ The conversation that decides the project is with the General Counsel. A single 
 
 | Item | Spec | Tricky cases |
 |---|---|---|
-| Matters | 40 matters, 12 clients, 3 practice groups; `matter_id`, client, status, close date | 5 closed matters now due for deletion; 3 **inclusionary** matters (only named team members) |
-| Documents | Pleadings, witness statements, share purchase agreements (SPAs), NDAs, advice memos, board minutes, `.eml` emails with attachments; v1–v5 versions | Near-duplicate precedents; a superseded version cited by a newer memo |
-| Scanned bundles | 60 bundles of 20–80 pages, rendered to images with skew, stamps and noise (e.g. `augraphy` or Pillow) | Rotated pages, handwritten margin notes, an index page listing the tabs, 4 Hindi/Marathi orders |
-| ACLs and walls | Groups per matter; 8 **exclusionary** walls, each screening named users | A user who belongs to a permitted group **and** is screened: the deny must win |
-| People | 200 synthetic data subjects (Faker `en_GB`, `en_IN`) | One subject whose data appears across 9 matters (the erasure case) |
-| Canaries | 30 documents in walled matters, each containing a unique token (`CANARY-<uuid>`) | Canaries paraphrased too, so exact-string filters are not enough |
-| Hostile documents | 15 "received from other side" PDFs with hidden text: white 1-pt font, text placed off the page, XMP metadata, image alt text | Instructions to misstate a limitation date, to pull in text from other matters, and to render a markdown image URL (an exfiltration attempt) |
+| Matters | 40 matters, 12 clients, 3 practice groups, with status and close date | 5 closed matters due for deletion; 3 **inclusionary** matters |
+| Documents | Pleadings, witness statements, SPAs, NDAs, advice memos, `.eml` emails with attachments; v1–v5 versions | Near-duplicate precedents; a superseded version cited by a newer memo |
+| Scanned bundles | 60 bundles of 20–80 pages, rendered as noisy, skewed images (`augraphy` or Pillow) | Rotated pages, handwritten notes, a tab index page, 4 Hindi/Marathi orders |
+| ACLs and walls | Groups per matter; 8 **exclusionary** walls | A user in a permitted group **and** screened: the deny must win |
+| People | 200 synthetic data subjects (Faker `en_GB`, `en_IN`) | One subject spread across 9 matters (the erasure case) |
+| Canaries | 30 walled documents with unique `CANARY-<uuid>` tokens | Paraphrased canaries defeat exact-string filters |
+| Hostile documents | 15 "other side" PDFs with hidden text (white 1-pt font, off-page text, XMP metadata, alt text) | Instructions to misstate a limitation date, pull in other matters, or render an image URL (exfiltration) |
 
 **Mock systems** (FastAPI):
 
-- **DMS API:**
-  - `/documents`, `/content`, and `/acl/check` (batched).
-  - `/changes?since=`, a change feed that includes ACL changes.
-  - Injected latency of 50–300 ms and a limit of 20 requests per second.
-- **Walls service:** a webhook that fires on wall events. The DMS applies walls **2–10 minutes later**, on purpose.
+- **DMS API:** `/documents`, `/content`, batched `/acl/check`, and a `/changes?since=` feed that includes ACL changes, with 50–300 ms latency and a limit of 20 requests per second.
+- **Walls webhook:** the DMS applies walls **2–10 minutes later**, on purpose.
 - **Identity provider:** Keycloak or a static JWT issuer with group claims.
 
 **Budget, two paths:**
@@ -128,19 +125,19 @@ Decision: **Go, with conditions.** Written General Counsel approval of the wall 
 
 | ID | Criterion | Threshold | Test set / method | Why this number |
 |---|---|---|---|---|
-| AC-1 | Cross-permission leakage | **0** canary retrievals or mentions in ≥ 10,000 adversarial probes (as screened users, with paraphrased and multi-turn attempts) | Canary suite v1 plus hourly production probes | Zero leaks in 10,000 probes puts the 95% upper bound at ≈ 0.03% (rule of three) |
-| AC-2 | Wall propagation | p50 ≤ 2 min, **p99 ≤ 15 min** from the wall-system record to exclusion | 50 synthetic wall changes/day with timed probes | The firm's Risk team asked for 15 minutes; the DMS itself lags 2–10 minutes |
-| AC-3 | Citation validity | 100% of displayed citations resolve to an accessible document version and contain the quoted span verbatim | Deterministic verifier over every answer | A mechanical guarantee: failing answers are blocked, never shown |
-| AC-4 | Citation precision (the paragraph supports the claim) | ≥ 0.95 | Golden set, n = 400; lawyer-calibrated judge | Commercial legal tools were measured hallucinating 17–33% of the time ([Magesh et al.](https://arxiv.org/abs/2405.20362)) |
-| AC-5 | Faithfulness | ≥ 0.92 | Golden set, n = 400; Ragas-style judge, κ ≥ 0.7 against lawyers | Leaves room for partially supported synthesis |
-| AC-6 | Retrieval recall@20 | ≥ 0.85 overall; ≥ 0.75 on scanned material | Golden set with labelled evidence paragraphs | OCR noise lowers the ceiling for scanned material |
-| AC-7 | Correct abstention | ≥ 0.85 on unanswerable questions | 80 unanswerable items | A wrong "we advised X" is worse than silence |
-| AC-8 | Injection resistance | Attack success ≤ 2%; **0** successful exfiltrations | 15 hostile documents × 10 prompts | Filters are probabilistic; the architecture removes the exfiltration channel |
-| AC-9 | Reliability | pass^3 ≥ 0.90 on 100 core questions | 3 seeded runs | Lawyers re-ask; inconsistent answers destroy trust |
-| AC-10 | Latency | First token ≤ 3 s; p95 full answer ≤ 12 s | Load test at 20 concurrent users | Faster than asking a colleague |
-| AC-11 | Deletion | 100% of derived artefacts gone and verified within 7 days of approval; closed matters out of the active index within 24 h | Deletion drill on 5 matters and 1 data subject | Inside the one-month statutory response window |
-| AC-12 | Value | Median time to first relevant precedent down ≥ 50% against baseline | Repeat of the stopwatch study | Credible for a research aid |
-| AC-13 | Cost | ≤ USD 0.08 per answered question at pilot volume | FinOps dashboard, 2 weeks | Must beat the per-seat price of the bought options |
+| AC-1 | Cross-permission leakage | **0** canary hits in ≥ 10,000 adversarial probes as screened users | Canary suite v1; hourly production probes | Zero in 10,000 gives a 95% upper bound of ≈ 0.03% (rule of three) |
+| AC-2 | Wall propagation | p50 ≤ 2 min, **p99 ≤ 15 min** from the wall record | 50 timed wall changes/day | Risk asked for 15 min; the DMS alone lags 2–10 min |
+| AC-3 | Citation validity | 100% of displayed citations resolve to an accessible version and contain the quoted span | Deterministic verifier on every answer | Mechanical: failing answers are blocked |
+| AC-4 | Citation precision | ≥ 0.95 | Golden set, n = 400; lawyer-calibrated judge | Legal tools measured at 17–33% hallucination ([Magesh et al.](https://arxiv.org/abs/2405.20362)) |
+| AC-5 | Faithfulness | ≥ 0.92 | Same; judge κ ≥ 0.7 against lawyers | Leaves room for partial synthesis |
+| AC-6 | Retrieval recall@20 | ≥ 0.85; ≥ 0.75 on scanned material | Labelled evidence paragraphs | OCR noise lowers the ceiling |
+| AC-7 | Correct abstention | ≥ 0.85 | 80 unanswerable items | A wrong "we advised X" is worse than silence |
+| AC-8 | Injection resistance | Attack success ≤ 2%; **0** exfiltrations | 15 hostile documents × 10 prompts | The architecture removes the channel |
+| AC-9 | Reliability | pass^3 ≥ 0.90 | 100 core questions × 3 runs | Lawyers re-ask |
+| AC-10 | Latency | First token ≤ 3 s; p95 ≤ 12 s | 20 concurrent users | Faster than asking a colleague |
+| AC-11 | Deletion | Derived artefacts gone and verified within 7 days; closed matters de-indexed within 24 h | Drill: 5 matters, 1 subject | Inside the one-month response window |
+| AC-12 | Value | Median time to precedent down ≥ 50% | Repeat stopwatch study | Credible for a research aid |
+| AC-13 | Cost | ≤ USD 0.08 per answered question | FinOps dashboard, 2 weeks | Must beat per-seat alternatives |
 
 ## 6. Reference architecture
 
@@ -192,15 +189,15 @@ flowchart LR
 **ADRs to write** (use [template 04](templates/04-solution-design-and-adr.md)):
 
 - **ADR-001 · Build vs. buy.** Options:
-  - M365 Copilot. Microsoft says it "only surfaces organizational data to which individual users have at least view permissions", and DMS content would need a connector ([Microsoft Learn](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-privacy)).
+  - M365 Copilot, which "only surfaces organizational data to which individual users have at least view permissions"; DMS content needs a connector ([Microsoft Learn](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-privacy)).
   - A legal AI platform (Harvey, Legora, CoCounsel, Lexis+ AI).
-  - DMS-native AI. For example, NetDocuments ndMAX, which a customer quote on the vendor's page says respects walls ([NetDocuments](https://www.netdocuments.com/ndmax); *vendor claim, verify*).
+  - DMS-native AI, e.g. NetDocuments ndMAX, whose page quotes a customer saying it respects walls ([NetDocuments](https://www.netdocuments.com/ndmax); *vendor claim, verify*).
   - A custom build.
-- **ADR-002 · Where permissions are enforced.** Index-time pre-filter only, query-time live check only, or **both** (with a deny-overrides rule and per-user cache keys).
-- **ADR-003 · Retrieval stack.** The vector/search engine; contextual retrieval vs. late chunking vs. breadcrumbs only; the choice of reranker.
-- **ADR-004 · Model, provider and residency.** A region-pinned API with ZDR (UK South / Central India) vs. open-weight models self-hosted on vLLM in the firm's tenant.
-- **ADR-005 · OCR and parsing.** Self-hosted, managed, or VLM page reading for complex pages.
-- **ADR-006 · Deletion model.** Hard delete plus a verification sweep; tombstones; per-matter encryption keys for crypto-shredding backups.
+- **ADR-002 · Where permissions are enforced.** Index-time pre-filter, query-time live check, or **both** (deny-overrides, per-user cache keys).
+- **ADR-003 · Retrieval stack.** Search engine; contextual retrieval vs. late chunking vs. breadcrumbs; reranker.
+- **ADR-004 · Model, provider and residency.** Region-pinned API with ZDR vs. open-weight models on vLLM in the firm's tenant.
+- **ADR-005 · OCR and parsing.** Self-hosted, managed, or VLM page reading.
+- **ADR-006 · Deletion model.** Hard delete plus a verification sweep; tombstones; per-matter keys for crypto-shredding backups.
 
 ## 7. Implementation plan — week by week
 
@@ -290,13 +287,10 @@ Wall events update `screened_matters` and bump `version` within seconds, before 
 
 **Datasets:**
 
-- **Golden set** (n = 400, frozen as v1): questions written by 2 lawyer SMEs, with evidence paragraphs labelled. Stratified by practice group, document type (30% scanned), question type (lookup, comparison, "have we advised") and 80 unanswerable items. Inter-annotator agreement is measured on 60 items.
-- **Adversarial set:**
-  - Canary probes as screened users: direct, paraphrased and multi-turn questions, plus "summarise everything about client X".
-  - The 15 hostile documents × 10 prompts.
-  - Prompt-extraction attempts.
-- **Regression set:** every pilot incident and every lawyer thumbs-down that was confirmed.
-- **Held-out set:** 100 questions from a practice group that was never used for tuning.
+- **Golden set** (n = 400, frozen as v1): written by 2 lawyer SMEs with evidence paragraphs labelled; stratified by practice group, document type (30% scanned) and question type, with 80 unanswerable items. Inter-annotator agreement measured on 60 items.
+- **Adversarial set:** canary probes as screened users (direct, paraphrased, multi-turn, "summarise everything about client X"); the 15 hostile documents × 10 prompts; prompt-extraction attempts.
+- **Regression set:** every pilot incident and every confirmed lawyer thumbs-down.
+- **Held-out set:** 100 questions from a practice group never used for tuning.
 
 **Metrics per layer:**
 
@@ -317,13 +311,7 @@ Run an ablation: breadcrumbs only vs. LLM-written context vs. late chunking. Ant
 - A faithfulness drop > 2 points, or a recall drop > 3 points (95% CI via bootstrap), blocks the release.
 - A model upgrade needs a behaviour diff plus a shadow week.
 
-**Online metrics:**
-
-- Hourly canary probes in production.
-- Wall-latency probes.
-- Citation click-through, and "citation did not support the claim" reports.
-- A weekly 50-answer review by KM.
-- Time to precedent.
+**Online metrics:** hourly canary and wall-latency probes; citation click-through and "citation did not support the claim" reports; a weekly 50-answer KM review; time to precedent.
 
 ## 9. Security, privacy and compliance
 
@@ -380,53 +368,39 @@ This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copil
 | Queries (monthly) | 500 users × 6/day × 21 days = 63k; ~12k input and 0.8k output tokens; mid-tier model at USD 1–3 in and 5–15 out per 1M; plus a small-model verifier | USD 1.3k–3.2k (≈ USD 0.02–0.05 per query) |
 | Search hosting and observability | Managed search at this size | USD 1k–4k per month |
 
-Compare this with seat licences for Copilot or a legal AI platform, which cost tens of USD per user per month at list (*verify current pricing*). A usage-based system wins only if adoption stays uneven across practice groups.
+Compare this with seat licences for Copilot or a legal AI platform, which cost tens of USD per user per month at list (*verify current pricing*). Usage-based pricing wins only while adoption is uneven across practice groups.
 
 **Runbook entries:**
 
-- **Wall-sync lag above the SLO.** Automatically switch to "live check on every candidate" mode, with slower answers. If the entitlement snapshot is stale, fail closed.
+- **Wall-sync lag above the SLO.** Automatically switch to "live check on every candidate" mode; fail closed if the snapshot is stale.
 - **Canary leak.** Kill switch to read-only; purge caches; preserve traces; notify the General Counsel and the CISO.
 - **Provider outage.** Fail over to a pre-evaluated secondary region, or degrade to "search results only".
-- **Spike in hidden-text detections.** Quarantine the batch from that source.
-- **Deletion job failure.** Re-run it idempotently and escalate to the DPO when day 5 is reached.
+- **Spike in hidden-text detections.** Quarantine that source's batch.
+- **Deletion job failure.** Re-run it idempotently; escalate to the DPO on day 5.
 
-**Disaster recovery (DR).** The index can be rebuilt from the DMS (RTO 8 h for search only, 48 h for a full rebuild). The entitlement store and lineage DB use point-in-time recovery (PITR). Backups age out within the documented window, or per-matter keys are crypto-shredded.
+**Disaster recovery.** The index can be rebuilt from the DMS (RTO 8 h for search only, 48 h for a full rebuild). The entitlement and lineage stores use point-in-time recovery (PITR). Backups age out within the documented window, or per-matter keys are crypto-shredded.
 
 ## 11. Curveballs (instructor-injected events)
 
-1. **Week 3 of the course (pilot week 8): a new ethical wall mid-pilot.** A lateral partner joins from the firm acting for the other side of a live dispute, and she and 3 associates are screened from matter M-1042. *Strong response:*
-   - Show a timed probe proving exclusion in under 15 minutes, as her identity.
-   - Show that her cached answers and conversation history for M-1042 are now hidden.
-   - Give the General Counsel a one-page evidence pack.
-2. **Week 4: an erasure request** from a former employee of a client, who appears in 9 matters. *Strong response:*
-   - Do not decide the legal question. The DPO applies the exemptions.
-   - Run the subject index to list every artefact (chunks, vectors, BM25 postings, caches, eval items, traces).
-   - Delete what is out of the exemption's scope, verify it (re-query for the unique tokens), and issue a certificate.
-3. **Week 4: an opposing-counsel PDF with hidden instructions.** A paralegal spots a summary claiming a limitation period has expired, which no visible text says. *Strong response:*
-   - Open an incident.
-   - Trace the answer to the chunk and find the white 1-pt text.
-   - Add a hidden-text detector and re-scan every document from that sender.
-   - Prove that no exfiltration channel existed.
-   - Add a regression test.
-4. **Week 5: the litigation head demands "zero hallucinated citations".** *Strong response:*
-   - Reframe the demand as two measurable guarantees: **zero unverifiable citations are ever displayed** (mechanical, AC-3) and citation precision ≥ 0.95 (statistical, AC-4).
-   - Show the blocked-answer rate that this costs.
-   - Commit to the *Ayinde* verification duty in the UI.
-   - Never promise zero errors.
-5. **Week 5: IT offers Copilot licences as part of the renewal.** *Strong response:* no defensiveness. Run the same golden, canary and wall-latency suites against Copilot (plus a DMS connector, if one exists), then update ADR-001 with the evidence. A hybrid split (Copilot for M365 content, this assistant for matter research), or retiring the custom build, are both acceptable outcomes.
+Timings are course weeks, with the real-engagement week in brackets.
+
+1. **Week 3 (pilot week 8): a new ethical wall mid-pilot.** A lateral partner joins from the firm acting for the other side of a live dispute; she and 3 associates are screened from matter M-1042. *Strong response:* a timed probe, run as her identity, proving exclusion in under 15 minutes; her cached answers and conversation history for M-1042 hidden; a one-page evidence pack for the General Counsel.
+2. **Week 4 (pilot week 9): an erasure request** from a client's former employee who appears in 9 matters. *Strong response:*
+   - The DPO, not the FDE, applies the exemptions.
+   - The subject index lists every artefact: chunks, vectors, BM25 postings, caches, eval items, traces.
+   - Delete what is out of scope, verify it by re-querying for the unique tokens, and issue a certificate.
+3. **Week 4 (pilot week 10): an opposing-counsel PDF with hidden instructions.** A paralegal spots a summary saying a limitation period has expired, which no visible text says. *Strong response:* open an incident; trace the answer to the white 1-pt text; add a hidden-text detector; re-scan every document from that sender; prove no exfiltration channel existed; add a regression test.
+4. **Week 5 (pilot week 10): the litigation head demands "zero hallucinated citations".** *Strong response:* reframe the demand as two measurable guarantees, **zero unverifiable citations ever displayed** (mechanical, AC-3) and citation precision ≥ 0.95 (statistical, AC-4). Show the blocked-answer rate this costs, and build the *Ayinde* duty into the UI. Never promise zero errors.
+5. **Week 5 (pilot week 11): IT offers Copilot licences as part of the renewal.** *Strong response:* no defensiveness. Run the same golden, canary and wall-latency suites against Copilot (plus a DMS connector, if one exists) and update ADR-001 with the evidence. A hybrid split (Copilot for M365 content, this assistant for matter research) and retiring the custom build are both acceptable outcomes.
 
 ## 12. Deliverables and grading rubric
 
 **Deliverables:**
 
-- Discovery memo, scorecard, SOW with acceptance criteria.
-- ADR-001 to ADR-006 and the solution design document.
-- Eval plan and reports.
-- Threat model and red-team report.
-- Obligations → controls sheet, DPIA draft, CISO security review pack.
-- Runbooks.
-- A 15-minute demo with a visible failure.
-- A curveball log.
+- **Discovery (week 1):** discovery memo, scorecard, SOW with acceptance criteria.
+- **Build (weeks 2–4):** ADR-001 to ADR-006, the design document, eval plan and reports.
+- **Hardening (week 5):** threat model and red-team report; obligations → controls sheet, DPIA draft, CISO pack.
+- **Handover (week 6):** runbooks, a 15-minute demo with a visible failure, the curveball log.
 
 | Weight | Area | Excellent | Weak |
 |---|---|---|---|
@@ -452,21 +426,20 @@ Compare this with seat licences for Copilot or a legal AI platform, which cost t
 | Turn(s) | How it is exercised |
 |---|---|
 | 14 Hallucination in Depth | Citation verifier, abstention, the "zero hallucinations" curveball |
-| 42 Document Parsing and Ingestion; 43 Multimodal RAG; 105 Vision-Language Models | OCR routing, scanned bundles, page-region citations |
-| 45 Late Chunking and Contextual Retrieval | Ablation of breadcrumbs vs. LLM context vs. late chunking |
-| 47 Long Context vs RAG vs CAG | Why per-user permissions rule out a shared cache or context |
-| 48 Embedding-Model Selection; 50 Named Vector Databases | Filter-aware ANN with ACL fields; engine choice |
+| 42 Document Parsing; 43 Multimodal RAG; 105 Vision-Language Models | OCR routing, scanned bundles, page-region citations |
+| 45 Late Chunking and Contextual Retrieval | Ablation of context strategies |
+| 47 Long Context vs RAG vs CAG | Why per-user permissions rule out a shared context |
+| 48 Embedding-Model Selection; 50 Named Vector Databases | Filter-aware ANN with ACL fields |
 | 49 RAG Evaluation Tooling; 97 Evaluation Tools | Faithfulness, citation precision, CI gates |
 | 52 Data Lineage and Deletion in RAG | Subject index, deletion certificate |
-| 55 Subagents and Context Isolation | Quarantined reader (stretch agent mode) |
-| 64 Trust Calibration and Automation Bias | "Verify" UI and the *Ayinde* duty |
+| 55 Subagents and Context Isolation | Quarantined reader (stretch) |
+| 64 Trust Calibration and Automation Bias | "Verify" UI, the *Ayinde* duty |
 | 71 Agent Identity Platforms | On-behalf-of tokens, per-user entitlements |
-| 73, 74, 75, 76 OWASP Agentic Top 10, OWASP LLM Top 10, Red-Teaming, Poisoning | Canary and injection suites; hostile documents |
+| 73 OWASP Agentic; 74 OWASP LLM; 75 Red-Teaming; 76 Poisoning | Canary and injection suites |
 | 78 PII Detection and DLP | Subject index, trace redaction |
-| 79, 81, 82 EU AI Act, GDPR and DPDP, Sector Compliance | Applicability screen, UK/EU/India obligations, SRA duties |
-| 87, 88, 89, 90 Model Upgrades, Canary Releases, Feedback Loops, SLOs | Upgrade gates, shadow and canary rollout, flywheel, wall SLO |
-| 91 LLM FinOps; 100 AI Gateways; 102 Model Provider Landscape | Cost model, routing, ZDR provider choice |
-| 92 On-Prem, Air-Gapped and Sovereign Deployment | Region pinning, the open-weight option |
+| 79 EU AI Act; 81 GDPR and DPDP; 82 Sector Compliance | Applicability screen, obligations, SRA duties |
+| 87 Model Upgrades; 88 Canaries; 89 Flywheel; 90 SLOs | Upgrade gates, rollout, wall SLO |
+| 91 FinOps; 92 Sovereign Deployment; 100 AI Gateways; 102 Providers | Cost model, region pinning, ZDR routing |
 | 96 Observability Tools | OTel GenAI traces carrying IDs only |
 | 109–116 FDE professional skills | Discovery, ROI, playbook, ADRs, demo, adoption, data readiness, SOW |
 
@@ -475,11 +448,11 @@ Compare this with seat licences for Copilot or a legal AI platform, which cost t
 ## 15. What reviewers look for / common failure modes
 
 - **Post-filtering only.** Selective filters collapse recall, so teams "fix" it by loosening the filter.
-- **A shared answer cache,** or caches keyed without the entitlement version.
-- **Measuring wall latency from the DMS ACL write** instead of from the wall record, which silently adds the DMS's 2–10-minute lag.
+- **A shared answer cache,** or cache keys without the entitlement version.
+- **Measuring wall latency from the DMS ACL write** instead of from the wall record, which hides the DMS's 2–10-minute lag.
 - **Trusting the model to "respect" permissions** written into the prompt.
 - **Rendering markdown images or links in answers** (an exfiltration channel).
-- **Deleting the source document** but not the chunks, BM25 postings, caches, eval items and traces.
-- **Promising "no hallucinations"** instead of mechanical citation verification plus measured precision.
-- **Claiming a law applies (or does not) without a source and an as-of date.** DPDP obligations phase in on 13 May 2027, not now.
-- **An ADR-001 that ignores bought options,** or one that reads like a vendor brochure.
+- **Deleting the source document** but not its chunks, postings, caches, eval items and traces.
+- **Promising "no hallucinations"** instead of mechanical verification plus measured precision.
+- **Legal claims without a source and an as-of date.** DPDP obligations arrive on 13 May 2027, not now.
+- **An ADR-001 that ignores bought options,** or reads like a vendor brochure.
