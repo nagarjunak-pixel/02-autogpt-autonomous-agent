@@ -1,6 +1,6 @@
 # P05 · Computer-Use Agent Replacing Brittle RPA for Customs Filing
 
-> Replace weekly-breaking RPA bots with a gated, durable, auditable computer-use layer, and use it as a bridge to a real API instead of a destination.
+> Replace weekly-breaking RPA bots with a gated, durable, auditable computer-use layer that serves as a bridge to a real API.
 > **Customer:** Northwind Freight Forwarders (fictional) · **Industry:** Freight forwarding and customs brokerage · **Geography:** Rotterdam (NL/EU) and Chennai (IN) · **Real engagement:** 14 weeks; 1 FDE lead, 2 FDEs, a part-time security engineer, plus the customer's RPA CoE engineer and a customs SME · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 ## 1. Scenario — the customer and the ask
@@ -21,7 +21,7 @@ Fourteen RPA bots do this keying with selectors and screen coordinates. Tickets 
 - gets **human confirmation before every submission**;
 - includes a plan to push the vendor for an API.
 
-The RPA CoE lead wants to keep the platform they built. Compliance fears "an AI hallucinating into a customs declaration", because Northwind carries the liability.
+The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating into a declaration", because Northwind carries the liability.
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
@@ -54,7 +54,7 @@ The RPA CoE lead wants to keep the platform they built. Compliance fears "an AI 
 
 **Infrastructure.** BrokerLink is a single-page app with 15-minute sessions and per-user TOTP MFA. CargoDesk runs on Windows Server VDI with a partial UI Automation (UIA) tree. Chennai–Rotterdam round-trip time is about 150 ms.
 
-**Security.** All 14 bots share one operator's credentials and MFA seed, stored in a config file. Northwind holds ISO 27001 and Authorised Economic Operator status (UCC Art. 38), so customs can audit its IT controls.
+**Security.** All 14 bots share one operator's credentials and MFA seed, stored in a config file. As an ISO 27001-certified Authorised Economic Operator (UCC Art. 38), Northwind can have its IT controls audited by customs.
 
 **Budget and politics.**
 - Budget: EUR 180k. Run cost must beat the RPA TCO of about EUR 240k/yr (licences, 1.5 FTE maintenance, overtime). This is an assumption to validate in week 1.
@@ -86,7 +86,7 @@ The RPA CoE lead wants to keep the platform they built. Compliance fears "an AI 
 
 ## 4. Discovery — what the FDE does in week 1
 
-**Map the process.** Booking in the TMS → invoice and packing list received → Excel prep → bot keys the portal → broker validates and lodges → reference returned → bot writes the reference back into the TMS. Build a **screen map**: every screen, every control's accessible name, and which screens can commit something irreversible.
+**Map the process:** TMS booking → invoice and packing list → Excel prep → bot keys the portal → broker lodges → reference written back to the TMS. Build a **screen map**: every screen, each control's accessible name, and which screens commit irreversibly.
 
 **Baseline metrics:**
 - breakages per week and MTTR, from 26 weeks of tickets, classified by cause (label, layout, timing, MFA, certificate);
@@ -124,7 +124,7 @@ The RPA CoE lead wants to keep the platform they built. Compliance fears "an AI 
 | 4a. DOM / accessibility-tree automation | Works: Playwright role locators and UIA via pywinauto | **Default executor.** Deterministic, cheap, testable |
 | 4b. Pixel-level computer use | Needed when UI drift defeats 4a, and for CargoDesk screens with a poor accessibility tree | **Gated fallback only** |
 
-Rules validate the data (for example, net mass ≤ gross mass). A single vision-language model (VLM) call proposes locator repairs. A durable workflow owns each filing. The computer-use agent is the last resort. Pure computer use for every filing is rejected on cost, latency and injection surface (§10).
+Below the ladder: rules validate the data (net ≤ gross mass), and a single vision-language model (VLM) call proposes locator repairs. Pure computer use everywhere is rejected on cost, latency and injection surface (§10).
 
 ## 5. Success criteria and acceptance tests
 
@@ -140,9 +140,9 @@ Rules validate the data (for example, net mass ≤ gross mass). A single vision-
 | Safety | Navigations off the allow-list | 0 | Proxy logs |
 | Human review | Median approval time; seeded-error catch rate | ≤ 45 s; ≥ 90% | Vigilance probes on 2% of filings |
 | Latency | p95 per filing | ≤ 3 min scripted; ≤ 12 min computer-use fallback | Traces |
-| Cost | Blended cost per successful filing, excluding approver time | ≤ EUR 0.60 | Cost model (§10) plus billing |
+| Cost | Blended cost per successful filing, excluding approver time | ≤ EUR 1.00 (RPA baseline ≈ EUR 3.10) | Cost model (§10) plus billing |
 
-The critical fields are held at 100% because Art. 15 UCC and s.114AA make Northwind liable for them, so no statistical tolerance is acceptable. That is why the pre-submit diff against the source record, not the model, is the control. pass^5 ≥ 0.85 on variants is set low deliberately: a redesign should degrade the system to **safe escalation**, not to wrong filings.
+Critical fields are held at 100% because UCC Art. 15 and s.114AA leave no statistical tolerance, so the control is the pre-submit diff, not the model. The 0.85 variant threshold is deliberately lower: a redesign should degrade to **safe escalation**, never to wrong filings.
 
 ## 6. Reference architecture
 
@@ -181,41 +181,41 @@ flowchart LR
   GATE -->|allowed action| WIN
   BR --> PORTAL
   BR -->|screenshot per step| EVID
-  VAULT -.->|fills secret fields; model never sees them| BR
-  REM -.->|rendered on screen = untrusted input| CUA
+  VAULT -.->|fills secret fields, model never sees them| BR
+  REM -.->|rendered on screen as untrusted input| CUA
   CUA <--> LLM
 ```
 
 | Component | Responsibility | Self-hostable option | Managed option | Owner |
 |---|---|---|---|---|
-| Durable workflow | Per-filing state, timers (MFA, approvals), retries with non-retryable submit | Temporal, DBOS, Restate | Temporal Cloud, AWS Step Functions, Azure Durable Functions | Northwind platform team |
-| Scripted executor | Fast path using role/UIA locators | Playwright, pywinauto | Existing RPA platform robots (keeps the CoE involved) | RPA CoE |
+| Durable workflow | Per-filing state, timers, non-retryable submit | Temporal, DBOS, Restate | Temporal Cloud, AWS Step Functions, Azure Durable Functions | Northwind platform team |
+| Scripted executor | Fast path via role/UIA locators | Playwright, pywinauto | Existing RPA robots (keeps the CoE involved) | RPA CoE |
 | Computer-use model | Grounding and actions when locators fail | UI-TARS-1.5, Qwen-VL family on vLLM | Computer-use tools from Anthropic, OpenAI or Google (verify current models) | AI platform |
-| Sandbox | Ephemeral browser and VM per run; no persistent profile | Docker plus noVNC, Firecracker microVMs, Hyper-V VMs | Browserbase or Steel (browsers); Azure Virtual Desktop / Windows 365 (TMS) | IT infrastructure |
-| Credential broker | Secrets and TOTP kept out of the model context | HashiCorp Vault TOTP engine, OpenBao | Azure Key Vault, CyberArk | Security |
+| Sandbox | Ephemeral browser/VM per run | Docker plus noVNC, Firecracker microVMs, Hyper-V VMs | Browserbase or Steel (browsers); Azure Virtual Desktop / Windows 365 (TMS) | IT infrastructure |
+| Credential broker | Secrets and TOTP outside model context | HashiCorp Vault TOTP engine, OpenBao | Azure Key Vault, CyberArk | Security |
 | Action gate and idempotency store | Classification, approvals, exactly-once claim | Custom code plus Postgres | Managed Postgres | FDE, then platform |
 | Evidence store | Screenshots and action log kept ≥ 3 years (UCC Art. 51) | MinIO with object lock | S3 Object Lock, Azure immutable blob | Compliance |
 | Observability | Traces per filing and per step | OTel GenAI conventions plus Langfuse or Phoenix | Datadog, Grafana Cloud | SRE |
 
 **ADRs to write** (template: [04-solution-design-and-adr](templates/04-solution-design-and-adr.md)):
-1. **Automation rung per system and screen.** Options: EDI or API, MCP over TMS import, WebMCP (vendor-dependent), DOM/UIA scripts, pixel computer use.
-2. **Executor strategy.** Options: pure computer use; scripted plus computer-use fallback; scripted plus LLM locator repair only; keep RPA and add monitoring.
-3. **Durable execution platform.** Options: Temporal vs DBOS/Restate vs cloud step functions vs the RPA orchestrator.
-4. **Isolation and credentials.** Options: ephemeral vs pooled VMs; vault-injected TOTP vs a vendor service credential vs human-in-the-loop MFA.
-5. **Idempotency and reconciliation.** Options: intent record before click; pre-submit portal search; customer-reference stamping; broker-side duplicate check.
-6. **Approval policy.** Options: 100% approval; risk-tiered sampling after evidence; approval batching at cut-off peaks.
+1. **Automation rung per screen:** EDI/API, MCP over TMS import, WebMCP (needs the vendor), DOM/UIA scripts, or pixel computer use.
+2. **Executor strategy:** pure computer use, scripted plus computer-use fallback, scripted plus LLM locator repair only, or keep RPA and add monitoring.
+3. **Durable execution:** Temporal, DBOS/Restate, cloud step functions, or the RPA orchestrator.
+4. **Isolation and credentials:** ephemeral or pooled VMs; vault TOTP, a vendor service credential, or human MFA.
+5. **Idempotency and reconciliation:** intent record, pre-submit portal search, reference stamping, or a broker-side duplicate check.
+6. **Approval policy:** 100% approval, risk-tiered sampling once evidence exists, or batching at peaks.
 
 ## 7. Implementation plan — week by week
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
 |---|---|---|---|
-| Discovery (1–2) | Process and screen map; breakage taxonomy; ladder assessment; vendor API request letter; credential and MFA review | Signed qualification memo and SOW with the §5 thresholds | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md) |
-| POC (3–5) | Scripted executor on the staging portal for the Rotterdam export lane; action gate; idempotency; computer-use fallback on 3 variants; pass^k harness; chaos harness | pass^5 ≥ 0.9 on baseline; 0 duplicates in chaos runs; ADRs 1–5 drafted | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
-| Pilot (6–10) | **Shadow mode** for 2 weeks: the agent fills up to the review screen but does not submit, and results are compared with the RPA bots. Then live with 100% approval on one lane per site; CargoDesk on a Windows VM | §5 met on ≥ 1,500 live filings | [07](templates/07-compliance-obligations-to-controls.md), [08](templates/08-security-review-pack.md), weekly [10](templates/10-demo-script-and-status-report.md) |
-| Production (11–13) | All lanes; VM autoscaling; kill-switch and DR drills; risk-tiered approval proposal with evidence | SLOs met for 2 consecutive weeks | [09](templates/09-runbook-slos-and-handover.md) |
-| Handover (14) | RPA CoE becomes the owner; API-migration plan; incident drill run by the customer's own team | Customer team closes a drill incident without FDE help | Handover pack |
+| Discovery (1–2) | Process and screen map; breakage taxonomy; ladder assessment; vendor API letter; MFA review | Signed qualification memo and SOW with the §5 thresholds | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md) |
+| POC (3–5) | Scripted executor (Rotterdam export lane, staging portal); gate; idempotency; computer-use fallback on 3 variants; pass^k and chaos harnesses | pass^5 ≥ 0.9 on baseline; 0 duplicates; ADRs drafted | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
+| Pilot (6–10) | 2 weeks of **shadow mode** (fill up to the review screen, compare with RPA), then live with 100% approval on one lane per site | §5 met on ≥ 1,500 live filings | [07](templates/07-compliance-obligations-to-controls.md), [08](templates/08-security-review-pack.md), weekly [10](templates/10-demo-script-and-status-report.md) |
+| Production (11–13) | All lanes; autoscaling; kill-switch and DR drills; evidence-based approval-tiering proposal | SLOs met 2 weeks running | [09](templates/09-runbook-slos-and-handover.md) |
+| Handover (14) | RPA CoE takes ownership; API-migration plan | Customer closes a drill incident unaided | Handover pack |
 
-**Code sketch: the action gate.** Every executor (scripted or computer-use) proposes actions through this wrapper. The irreversible class covers any non-safe control on a mapped commit screen. A submit-like control on an unmapped screen is treated as **UI drift** and escalated. That turns the classifier into a redesign detector.
+**Code sketch: the action gate.** Every executor proposes its actions through this wrapper. On a mapped commit screen, any control not on the safe list is irreversible. A submit-like control on an unmapped screen is escalated as **UI drift**, which makes the classifier double as a redesign detector.
 
 ```python
 import hashlib, re, sqlite3, time
@@ -281,8 +281,8 @@ class ActionGate:
 ```
 
 **Design notes.**
-- The danger zone is between clicking Submit and recording the portal reference. The `SUBMITTING` intent record is written **before** the click. A restart that finds it must run **reconciliation** (search the portal by the customer reference stamped into every declaration), never a retry.
-- In production, add a data-flow check. A `type` action is allowed only if its text equals the planned value for that field. That stops remarks-borne values from being typed anywhere.
+- The danger zone is between clicking Submit and recording the portal reference. The `SUBMITTING` intent record is written **before** the click. A restart that finds it must **reconcile** (search the portal by the customer reference stamped on every declaration), never retry.
+- In production, add a data-flow check: a `type` action passes only if its text equals the planned value for that field. That way, remarks-borne values can never be typed into the portal.
 - In the durable engine, mark the submit activity as non-retryable.
 
 ## 8. Evaluation plan
@@ -331,24 +331,24 @@ Never put seeds in agent config or prompts, never reuse a person's MFA, and neve
 
 | Threat | Control | Test |
 |---|---|---|
-| Injection via remarks or portal content | Plan-bound typed values; off-plan actions blocked; remarks never mapped to fields | Adversarial suite (300) |
-| Credential or session theft | Ephemeral profiles; vault; short sessions; egress allow-list | Red team: lookalike login page |
-| Double submission | Intent record, reconciliation, non-retryable activity | Chaos suite (2,000) |
-| Wrong field after UI drift | Commit-screen map; UI-drift escalation; pre-submit diff against source | Variants v2–v5 |
-| Personal data over-retained in screenshots | Masking; role-based access; retention = 3 years + 1 then delete | Evidence audit |
-| Runaway loops / denial of wallet | 80-step cap; per-filing token budget; loop detection | Chaos suite |
+| Injection via remarks or portal content | Plan-bound values; off-plan actions blocked | Adversarial suite |
+| Credential or session theft | Ephemeral profiles; vault; egress allow-list | Lookalike login page |
+| Double submission | Intent record; reconciliation; non-retryable submit | Chaos suite |
+| Wrong field after UI drift | Commit-screen map; drift escalation; pre-submit diff | Variants v2–v5 |
+| Personal data in screenshots | Masking; access control; delete after 3 years + 1 | Evidence audit |
+| Denial of wallet | 80-step cap; token budget; loop detection | Chaos suite |
 
 **Obligations → controls** (template: [07](templates/07-compliance-obligations-to-controls.md)):
 
 | Obligation | Control | Evidence |
 |---|---|---|
-| UCC Art. 15(2) accuracy | Pre-submit diff against source; 100% human approval in pilot; field-level evals | Diff logs, approvals |
-| UCC Art. 51 retention ≥ 3 years | WORM evidence store with a per-step screenshot and action log | Retention policy, object-lock config |
+| UCC Art. 15(2) accuracy | Pre-submit diff; 100% approval in pilot; field-level evals | Diff logs, approvals |
+| UCC Art. 51 retention ≥ 3 years | WORM store of per-step screenshots and actions | Object-lock config |
 | UCC Arts. 173–174 | Amendment/invalidation runbook via the broker | Runbook, drill record |
-| Customs Act s.114AA | No autonomous edits of declared values; licensed staff approve; immutable audit trail | Approval records |
-| GDPR Arts. 5, 28, 32, Ch. V | Screenshot minimisation; DPAs with model and browser vendors; SCCs for India and non-EU providers | DPIA, contracts |
+| Customs Act s.114AA | No autonomous value edits; licensed staff approve | Approval records |
+| GDPR Arts. 5, 28, 32, Ch. V | Screenshot minimisation; vendor DPAs; SCCs | DPIA, contracts |
 | DPDP Act and Rules (phased) | Notice and breach-readiness plan ahead of May 2027 | Gap memo |
-| EU AI Act Art. 4 | Approver training on automation bias and injection | Training log |
+| EU AI Act Art. 4 | Approver training (automation bias, injection) | Training log |
 | WOR Art. 27 | Works-council consent before vigilance metrics go live | Consent letter |
 
 ## 10. Operations and cost model
@@ -375,6 +375,8 @@ Never put seeds in agent config or prompts, never reuse a person's MFA, and neve
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are real-engagement weeks. In the course build, inject them in weeks 3–6.
+
 1. **Portal redesign overnight (week 7, Monday 06:10 CET).** Fingerprints fail on 4 screens and the gate blocks submit-like controls that are off the map.
    - *Strong:* the lane switches automatically to computer-use fallback with 100% approval. A VLM proposes locator repairs and a human signs off the new screen map. The variant suite is re-run and the COO gets a 30-minute status note with numbers.
    - *Weak:* letting the agent free-run.
@@ -386,16 +388,16 @@ Never put seeds in agent config or prompts, never reuse a person's MFA, and neve
    - *Never:* move the seed into the agent.
 4. **The vendor announces an API in 3 months (week 9).**
    - *Strong:* continue, and re-cut the business case. The gate, idempotency, approval and evidence layers are independent of the executor. The MCP server gains a `lodge_declaration` tool that will call the API. Ask for a sandbox, idempotency keys and status webhooks, and write the API into the contract renewal. Computer use shrinks to an outage fallback.
-5. **Double submission (week 10).** The engine retried a timed-out submit whose click had actually succeeded, and the idempotency check lived in worker memory.
+5. **Double submission (week 10).** The engine retried a timed-out submit whose click had actually succeeded. The retry reused the cached approval, and the idempotency check lived in worker memory.
    - *Strong:* kill the lane and identify both references. Have the broker invalidate the duplicate before release (UCC Art. 174) and inform compliance. Run a blameless postmortem. Fix with an intent record before the click, reconciliation and a non-retryable activity. Prove duplicates = 0 over 2,000 chaos runs.
 
 ## 12. Deliverables and grading rubric
 
-**Deliverables by phase:**
+**Deliverables:**
 - **Discovery:** questionnaire, screen map, breakage taxonomy, ladder memo, SOW.
-- **POC:** gate and idempotency code with tests, scripted executor, computer-use fallback, eval harness, ADRs 1–5, threat model.
-- **Pilot and production:** pass^k report across variants, chaos report, compliance mapping, security pack, runbook, cost report, vendor-API migration plan.
-- **Final:** a 10-minute demo that includes a live redesign (v5).
+- **POC:** gate code and tests, executors, eval harness, ADRs, threat model.
+- **Pilot:** pass^k and chaos reports, compliance mapping, security pack, runbook, cost report, API-migration plan.
+- **Final:** a 10-minute demo that includes a live v5 redesign.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -408,11 +410,11 @@ Never put seeds in agent config or prompts, never reuse a person's MFA, and neve
 
 ## 13. Stretch goals
 
-- Implement WebMCP tools on the mock portal, as if the vendor had adopted them, and compare cost, latency and pass^k with computer use.
-- Evaluate a local VLM against a managed model on the same suite.
-- Add PII masking of screenshots with a measured recall.
-- Build a statistically justified risk-tiered approval-sampling design.
-- Extract fields from scanned invoices (VLM) with a confidence-gated human review.
+- Add WebMCP tools to the mock portal and compare cost, latency and pass^k with computer use.
+- Compare a local VLM with a managed model on the same suite.
+- Mask PII in screenshots and measure its recall.
+- Design statistically justified risk-tiered approval sampling.
+- Extract invoice fields with a VLM, gated by confidence.
 
 ## 14. Curriculum map
 
@@ -427,16 +429,18 @@ Never put seeds in agent config or prompts, never reuse a person's MFA, and neve
 | 65 | The MCP Specification 2026-07-28 | Internal MCP server over TMS and the future API |
 | 69 | WebMCP | Ladder rung 3; stretch goal |
 | 71 | Agent Identity Platforms | Named service identity instead of a shared human login |
-| 73, 74 | OWASP Agentic / LLM Top 10 | Goal hijack, excessive agency, unbounded consumption |
+| 73, 74 | OWASP Top 10 for Agentic Applications (2026); OWASP Top 10 for LLM Applications | Goal hijack, excessive agency, unbounded consumption |
 | 75 | Jailbreaks and Red-Teaming Practice | Adversarial suite |
-| 79, 81 | EU AI Act; GDPR and DPDP | Art. 4 literacy; screenshots and transfers |
+| 79, 81 | The EU AI Act; Privacy Law for AI: GDPR and India's DPDP | Art. 4 literacy; screenshots and transfers |
 | 86 | Code-Execution Sandboxes | Ephemeral VMs and browsers |
-| 87, 94 | Model Upgrades; Provider Failover | Re-qualify grounding before any switch |
-| 90, 91 | SLOs and Incidents; LLM FinOps | Cut-off SLOs; cost per filing |
-| 96, 97, 99 | Observability; Evaluation Tools; Durable Workflow Platforms | OTel traces; harness; Temporal-class engine |
+| 87, 94 | Model Upgrades and Deprecation Management; Provider Failover and Disaster Recovery | Re-qualify grounding before any switch |
+| 90, 91 | SLOs, Incident Response and On-Call for AI; LLM FinOps | Cut-off SLOs; cost per filing |
+| 96, 97, 99 | Observability Tools; Evaluation Tools; Durable Workflow Platforms | OTel traces; harness; Temporal-class engine |
 | 105 | Vision-Language Models | Screenshot grounding |
-| 109–116 | FDE practice turns | Qualification, ROI, POC→pilot, ADRs, demos, change management, SOW |
-| 122, 132 | The Agentic Web; Science of Agent Evaluation | API/WebMCP trajectory; benchmark scepticism |
+| 109, 110 | Use-Case Discovery and Qualification; Business Case and ROI | Ladder memo; cost per filing against RPA TCO |
+| 111, 112 | POC → Pilot → Production Playbook; Architecture Documents and ADRs | Shadow-mode pilot; six ADRs |
+| 113, 114, 116 | Stakeholder Communication and Demos; Change Management and Adoption; Scoping, Estimation and SOWs | COO notes; RPA CoE and Chennai adoption; SOW thresholds |
+| 122, 132 | The Agentic Web; The Science of Agent Evaluation | API/WebMCP trajectory; benchmark scepticism |
 
 **New/gap topics exercised:** computer-use and browser-driving agents; agentic-browser and computer-use security; prompt-injection-resistant architecture (plan-bound values); context engineering (screenshot-history trimming).
 

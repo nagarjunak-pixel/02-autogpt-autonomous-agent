@@ -179,7 +179,7 @@ flowchart LR
 | Component | Responsibility | Open-source / self-hosted | Managed | Owner |
 |---|---|---|---|---|
 | Ingestion and parsing | Route by page (text layer, OCR or VLM); detect hidden text; split bundles by their index page; keep page coordinates | Docling, Tesseract/PaddleOCR, Unstructured | Azure AI Document Intelligence, AWS Textract, Google Document AI | FDE |
-| Contextualisation | Deterministic breadcrumbs (matter, document type, parties, heading path), plus an LLM-written chunk context where evals show a gain | Local 8–14B model | Any API model with prompt caching | FDE |
+| Contextualisation | Deterministic breadcrumbs (matter, type, parties, headings), plus LLM-written context where evals show a gain | Local 8–14B model | Any API model with prompt caching | FDE |
 | Hybrid index | Vectors and BM25 with ACL fields; filter-aware ANN; a physically separate index for inclusionary matters | OpenSearch (document-level security), Qdrant, Postgres with pgvector and RLS | Azure AI Search (security filters are GA; native ACL/Entra token trimming is **preview**, per [Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/search-document-level-access-overview)), Elastic Cloud | FDE → firm platform team |
 | Entitlement service | Transitive groups, screened matters and version; wall events applied as denies within seconds | Custom service with Redis | Entra ID groups via Microsoft Graph | Firm IAM |
 | Answer workflow | Context budget, pinned system rules, generation with quoted spans | Plain Python or LangGraph | Azure AI Foundry, Bedrock | FDE |
@@ -203,11 +203,11 @@ flowchart LR
 
 | Phase (real) | Weeks | Tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|---|
-| Discovery | 1–2 | Interviews, stopwatch baseline, measure wall lag, sample 2,000 documents, first security review pack | Discovery memo signed; General Counsel agrees to the wall design in principle | Discovery memo, data-readiness scorecard, draft pack ([08](templates/08-security-review-pack.md)) |
+| Discovery | 1–2 | Interviews, stopwatch baseline, wall-lag measurement, 2,000-document sample | Memo signed; General Counsel accepts the wall design in principle | Discovery memo, data-readiness scorecard, draft pack ([08](templates/08-security-review-pack.md)) |
 | POC | 3–6 | Ingest 1 practice group (≈ 150k documents); ACL sync; canary harness; golden set v0 (n = 150) | AC-1 and AC-3 pass on the POC corpus; recall@20 ≥ 0.75 | Eval plan ([05](templates/05-eval-plan.md)), threat model ([06](templates/06-threat-model-and-controls.md)), ADR-002 and ADR-003 |
 | Pilot | 7–11 | 60 users across 3 groups; production canary probes; deletion drill; red team; Copilot bake-off | AC-1 to AC-12 met on frozen set v1 (n = 400); no open Sev-1/Sev-2 | SOW phase-2 acceptance ([03](templates/03-sow-and-acceptance-criteria.md)), weekly status reports ([10](templates/10-demo-script-and-status-report.md)), DPIA draft ([07](templates/07-compliance-obligations-to-controls.md)) |
-| Production | 12–15 | Scale to all practice groups; HA; pen test; SLO burn alerts; cost guards | SLOs met for 2 weeks; pen test has no open Highs | Runbooks ([09](templates/09-runbook-slos-and-handover.md)), final ADR-001 |
-| Handover | 16 | Firm team runs a wall drill, a deletion drill and a model rollback without the FDEs | All drills passed | Handover checklist, field-to-product notes |
+| Production | 12–15 | All practice groups; HA; pen test; burn alerts; cost guards | SLOs met for 2 weeks; no open pen-test Highs | Runbooks ([09](templates/09-runbook-slos-and-handover.md)), final ADR-001 |
+| Handover | 16 | Firm team runs wall, deletion and rollback drills unaided | All drills passed | Handover checklist, field-to-product notes |
 
 **Course build (6 weeks):**
 
@@ -362,9 +362,9 @@ This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copil
 
 | Line | Assumption | Range |
 |---|---|---|
-| Embedding (one-off) | 1.5M documents at ~3k tokens each = 4.5B tokens, at USD 0.02–0.15 per 1M | USD 90–675 |
+| Embedding (one-off) | 1.5M pilot-scope documents × ~3k tokens = 4.5B tokens, at USD 0.02–0.15 per 1M | USD 90–675 |
 | LLM chunk context (one-off) | Only 30% of high-value documents (1.35B tokens), at USD 0.3–1.5 per 1M with caching | USD 400–2,000 |
-| OCR (one-off) | 12% of documents scanned, averaging 25 pages = 4.5M pages, at USD 1–10 per 1,000 pages managed | USD 4.5k–45k; self-hosted is cheaper but costs ops time |
+| OCR (one-off) | 12% scanned × 25 pages = 4.5M pages, at USD 1–10 per 1,000 pages (managed) | USD 4.5k–45k; self-hosted is cheaper but costs ops time |
 | Queries (monthly) | 500 users × 6/day × 21 days = 63k; ~12k input and 0.8k output tokens; mid-tier model at USD 1–3 in and 5–15 out per 1M; plus a small-model verifier | USD 1.3k–3.2k (≈ USD 0.02–0.05 per query) |
 | Search hosting and observability | Managed search at this size | USD 1k–4k per month |
 
@@ -413,13 +413,10 @@ Timings are course weeks, with the real-engagement week in brackets.
 
 ## 13. Stretch goals
 
-- An agentic "research memo" mode using plan-then-execute and a quarantined reader.
-- Late-interaction reranking (ColBERT-style).
-- Fine-tuning embeddings on firm queries.
-- A clause knowledge graph (parties, governing law).
-- A Teams entry point via an MCP server with OAuth on-behalf-of.
-- An A/B test of contextual retrieval against breadcrumbs.
-- Vector compression to cut index cost.
+- An agentic "research memo" mode (plan-then-execute with a quarantined reader).
+- ColBERT-style late-interaction reranking; embedding fine-tuning on firm queries.
+- A clause knowledge graph; a Teams entry point via an MCP server with OAuth on-behalf-of.
+- An A/B test of contextual retrieval; vector compression to cut index cost.
 
 ## 14. Curriculum map
 

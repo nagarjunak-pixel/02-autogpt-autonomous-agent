@@ -71,7 +71,7 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
 
 **Timeline.** The pilot must go live before the Diwali motor peak. The last two weeks of March are an IT change freeze.
 
-**Organisation and politics.** Adjusters fear "AI productivity" quotas. The FCU wants to "auto-reject suspicious claims", which is legally and ethically off the table. The CRC wants proof of real human review.
+**Politics.** Adjusters fear "AI productivity" quotas. The FCU wants to "auto-reject suspicious claims", which is off the table. The CRC wants proof of real review.
 
 ## 3. What students are given (course build)
 
@@ -117,14 +117,13 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
 1. Which fields drive a decision, and which are keyed only because the form has a box?
 2. When a bill and a discharge summary disagree, who resolves it, and is that recorded?
 3. What share of health volume already arrives structured (NHCX FHIR bundles, TPA feeds)?
-4. What is the adjusters' incentive scheme, and will "claims per hour" appear on anyone's scorecard?
-5. What exactly does the CRC see before approving a repudiation?
+4. Will "claims per hour" appear on any adjuster's scorecard?
+5. What does the CRC see before approving a repudiation?
 6. What would the Grievance Officer need to explain a delay within 14 days?
-7. Does the board-approved claims policy need amending before AI assistance goes live?
-8. Will the CISO accept a managed model endpoint in an India region on the empanelled cloud?
-9. How are Aadhaar copies stored today?
-10. Can the network team get the top five hospital chains to send structured bills?
-11. Which claims must never wait on AI, such as cashless pre-auth inside the one-hour clock?
+7. Will the CISO accept a managed model endpoint in an India region on the empanelled cloud?
+8. How are Aadhaar copies stored today?
+9. Can the top five hospital chains send structured bills?
+10. Which claims must never wait on AI (cashless pre-auth inside the one-hour clock)?
 
 **Qualification: the lowest rung that works.**
 - *Rules* handle policy terms (waiting periods, sub-limits, co-pay), dates and arithmetic. An LLM must never do these.
@@ -444,10 +443,10 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 ## 15. What reviewers look for / common failure modes
 
 - **An LLM doing arithmetic or policy checks** that belong in code.
-- **Self-reported confidence treated as a probability** without calibration curves.
+- **Uncalibrated self-reported confidence** used for routing.
 - **A "reject" route that silently becomes a claim rejection.**
-- **Seeded errors that can leak into records, or that are used to discipline staff.**
+- **Seeded errors that can leak into records** or discipline staff.
 - **Accuracy reported only on clean English PDFs.**
 - **No wait-reason codes**, so nobody can answer the ombudsman.
-- **Injection treated as a filtering problem** rather than removing the action channel.
-- **A 99% approval rate celebrated as adoption** instead of investigated as automation bias.
+- **Injection treated as filtering** rather than removing the action channel.
+- **A 99% approval rate celebrated** instead of investigated as automation bias.
