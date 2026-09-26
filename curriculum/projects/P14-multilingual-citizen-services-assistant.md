@@ -308,12 +308,7 @@ On a synthetic run with Urdu hit@5 at about 0.64, the harness reports a gap of a
 
 ## 10. Operations and cost model
 
-**SLOs:**
-- WhatsApp path availability 99.5%, bounded by Meta.
-- IVR 99.9%, with DTMF fallback.
-- Answer p95 as in Section 5.
-- Rule-change freshness ≤ 4 working hours.
-- Human callback on escalations within 1 working day.
+**SLOs:** WhatsApp path 99.5% (bounded by Meta); IVR 99.9% with DTMF fallback; answer p95 as in Section 5; rule-change freshness ≤ 4 working hours; human callback on escalations within 1 working day.
 
 **Observability.** Emit OTel GenAI spans tagged with language, scheme, cited GO IDs and index version. Keep per-language dashboards, plus a content-ops queue showing pending approvals.
 
@@ -328,7 +323,7 @@ On a synthetic run with Urdu hit@5 at about 0.64, the harness reports a gap of a
 | WhatsApp fees | Replies inside the window free; status templates outside it charged per message | Check the current India rate card |
 | IVR | Toll-free telephony + speech + LLM | $0.01–0.05 per minute |
 
-These give **≈ ₹0.1–3 per resolved text query** and **≈ ₹3–15 per IVR call**. The IVR's upper range breaks the ₹8 target unless speech is self-hosted in the SDC, which is the key input to ADR 2. Fertility is the swing factor, so choose the tokeniser *before* the model.
+This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **≈ ₹3–15 per IVR call**. The IVR's upper range breaks the ₹8 target unless speech is self-hosted in the SDC, the key input to ADR 2. Fertility is the swing factor, so compare tokenisers *before* choosing the model.
 
 **Runbook entries:**
 
@@ -344,45 +339,26 @@ These give **≈ ₹0.1–3 per resolved text query** and **≈ ₹3–15 per IV
 
 ## 11. Curveballs (instructor-injected events)
 
-1. **Week 3: a forged scheme circular enters the corpus.** A district clerk uploads a WhatsApp-forwarded "GO" that raises the pension income limit and asks for a ₹500 fee to a UPI ID. The bot quotes it 212 times.
-   - Freeze the scheme's answers and roll back the index.
-   - Trace every affected conversation from the logs and send corrected utility templates.
-   - Report the incident within the CERT-In window if it qualifies.
-   - Fix the root cause (registry-only ingestion), with a post-mortem that has no blame on the clerk.
+1. **Week 3: a forged scheme circular enters the corpus.** A district clerk uploads a WhatsApp-forwarded "GO" that raises the pension income limit and asks for a ₹500 fee to a UPI ID; the bot quotes it 212 times.
+   - Freeze the scheme's answers and roll back the index. Trace every affected conversation and send corrected utility templates.
+   - Report within the CERT-In window if it qualifies, fix the root cause (registry-only ingestion), and run a post-mortem that does not blame the clerk.
 2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect.
-   - Effective-dated rules and index entries (valid_from) let the officer approve the change once.
-   - Clear the answer caches, re-run that scheme's golden set, and brief helpline agents.
-   - Publish the freshness SLO result.
+   - Effective-dated rules and index entries (valid_from) let the officer approve the change once. Clear answer caches, re-run that scheme's golden set, brief agents, and publish the freshness SLO result.
 3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning:
    - **Code points:** Arabic vs Urdu forms of *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC).
    - **Coverage:** Roman-Urdu queries, and few Urdu source documents, so retrieval is really cross-lingual.
    - **OCR:** poor recognition of Nastaliq script.
 
    The fixes are normalisation, a pivot translation for retrieval with the answer returned in Urdu, BM25 hybrid search, and a curated Urdu FAQ. If needed, fine-tune the embeddings on native Urdu pairs. Report with CIs, and keep Urdu routed to Urdu-speaking agents until the gate passes.
-4. **Week 5: a politically sensitive question during the election period.** A user asks, *"Which party started this scheme; will it stop if X wins?"*
-   - Give a neutral answer covering only the GO facts and date. There is no commentary, and no promotion of new schemes while the MCC is in force.
-   - Log the exchange and agree the wording with I&PR in advance.
+4. **Week 5: a politically sensitive question during the election period.** *"Which party started this scheme; will it stop if X wins?"*
+   - Give a neutral answer with only the GO facts and date: no commentary, and no promotion of new schemes under the MCC. Log it, using wording agreed with I&PR in advance.
 5. **Week 5: WhatsApp template or policy restrictions block a flow.** The "application approved" utility template is recategorised as marketing and paused, or the BSP flags the account under the AI-provider clause.
-   - Switch to SMS or IVR callback.
-   - Redesign the template to stay within utility rules.
-   - Document why the assistant is ancillary to a government service.
-   - Show that the channel-risk ADR anticipated this.
+   - Switch to SMS or IVR callback and redesign the template within utility rules.
+   - Document why the assistant is ancillary to a government service, showing that the channel-risk ADR anticipated this.
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:**
-- Discovery memo and data scorecard
-- SOW
-- ADRs 1–6
-- Tokeniser-fertility study
-- Per-language eval report with CIs
-- Threat model and obligations map
-- Working WhatsApp and IVR simulators with the provenance gate
-- Accessibility test notes
-- Runbook
-- Change-management plan
-- 15-minute demo, in Telugu and Urdu, that shows a visible failure
-- Curveball log
+**Checklist:** discovery memo and data scorecard; SOW; ADRs 1–6; tokeniser-fertility study; per-language eval report with CIs; threat model and obligations map; working WhatsApp and IVR simulators with the provenance gate; accessibility test notes; runbook; change-management plan; a 15-minute demo in Telugu and Urdu that shows a visible failure; curveball log.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
