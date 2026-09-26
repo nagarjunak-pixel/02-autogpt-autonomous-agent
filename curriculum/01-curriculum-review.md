@@ -9,7 +9,7 @@
 
 ## Bottom line
 
-1. **The content is mostly accurate and unusually current on the agent-protocol layer.** We checked 50 time-sensitive claims: 41 are correct and 9 need fixing (details in [03-errata-and-fact-check.md](03-errata-and-fact-check.md)). The most damaging error is in Turn 82: it still teaches SR 11-7 as the US bank model-risk standard. SR 11-7 was replaced on 17 Apr 2026, and the replacement guidance puts generative and agentic AI **out of scope**.
+1. **The content is mostly accurate and unusually current on the agent-protocol layer.** We checked 50 time-sensitive claims: 41 are correct and 9 need fixing. Follow-up research found 5 more, for 14 corrections in total (details in [03-errata-and-fact-check.md](03-errata-and-fact-check.md)). The most damaging error is in Turn 82: it still teaches SR 11-7 as the US bank model-risk standard. SR 11-7 was replaced on 17 Apr 2026, and the replacement guidance puts generative and agentic AI **out of scope**.
 2. **As an FDE curriculum it has four structural problems, and they matter more than any single missing topic.**
    - Priority inflation: 51% of the core topics are labelled P1.
    - Effort is inverted relative to the job: model internals get the most pages per topic, and FDE practice gets some of the fewest.
@@ -78,7 +78,7 @@ Each turn ends with 4–8 short-answer interview questions (676 in total). There
 
 ### 2.4 Dated facts are woven into the core, with no refresh mechanism
 
-Section G ("Latest Developments") is entirely news: spec versions, launch dates, foundation memberships. Sections H, I and J also embed dated facts (regulatory deadlines, product ownership, default settings). They rot fast. Within weeks of publication, the two fact-checks found **13 claims that are outdated or need nuance**: 9 in Vol 2 and 4 in the gap doc's own list of corrections.
+Section G ("Latest Developments") is entirely news: spec versions, launch dates, foundation memberships. Sections H, I and J also embed dated facts (regulatory deadlines, product ownership, default settings). They rot fast. Within weeks of publication, the fact-checks found **14 Vol 2 claims** that are outdated or need nuance (3 of them outdated: SR 11-7, AP2 mandates, OpenAI fine-tuning), plus **24 problems in the gap doc itself**.
 **Recommendation:**
 - Split every turn into an **evergreen core** (principles, patterns, maths) and a **dated annex** (versions, dates, vendors, laws).
 - Stamp each annex item with an *as-of* date, a source link, an owner and a *review-by* date.

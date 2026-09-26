@@ -35,9 +35,9 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 
 **Data.**
 - Recordings are 8 kHz G.711 **mono**, so they need diarisation before use in evaluation.
-- Agents' call-reason codes are unreliable: about 30% were miscoded in a relabelled sample.
+- About 30% of agents' call-reason codes were wrong in a relabelled sample.
 - The plan catalogue has 300+ plans with near-identical names.
-- The billing API's p95 from the target region is **800 ms**, which is most of a one-second turn on its own.
+- The billing API's p95 from the target region is **800 ms**: most of a one-second turn on its own.
 
 **Legal and regulatory (as of Sept 2026; items marked *verify* need checking before teaching).**
 - **[DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf) and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), 13 Nov 2025). Notice (Rule 3), safeguards with one-year log retention (Rule 6) and breach intimation (Rule 7) apply 18 months from notification (May 2027). A Jan 2026 MeitY [proposal](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/) to shorten this to 12 months was not notified as of Sept 2026 (*verify*). Notice must be offered in English or any Eighth Schedule language (s.5(3)). Significant Data Fiduciary status: *verify*.
@@ -49,7 +49,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 - **AI disclosure and recording.** We found no Indian statute mandating AI disclosure for voice bots, and no specific consent rule for the recording party (*verify with counsel*); recording rests on DPDP notice and purpose limitation. MeitY's voluntary [AI Governance Guidelines](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/) (5 Nov 2025) favour disclosure. EU AI Act Art. 50 (from 2 Aug 2026) applies if the design is reused for EU customers.
 - **PCI DSS v4.x** applies contractually. Card data must never reach the bot, transcripts or recordings.
 
-**Infrastructure.** Calls arrive over SIP at on-prem SBCs, then pass to CCaaS and the IVR. Media must stay in India. GPU capacity in Indian regions has to be reserved in week 2.
+**Infrastructure.** Calls arrive over SIP at on-prem SBCs, then CCaaS and the IVR. Media stays in India; reserve Indian-region GPU capacity in week 2.
 
 **Budget.** Finance puts a fully loaded BPO minute at ₹5–8. The bot ceiling is **₹2.5 per bot-minute all-in**.
 
@@ -71,7 +71,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 
 **Caller audio.** Voice the scripts with open TTS ([Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts) covers hi/te/en), mix in noise at 0–20 dB SNR, and transcode to 8 kHz G.711 A-law with `ffmpeg`. Real speech from gated corpora such as [IndicVoices](https://huggingface.co/datasets/ai4bharat/IndicVoices) is optional (check the licence).
 
-**Mock APIs** (FastAPI, with injected latency and faults): `/subscriber`, `/plans`, `/bills`, `/cases`, `/otp`, `/app-push`, `/payment-ivr` (token and status only), `/outage-status` and `/crm/handoff` (a Salesforce/ServiceNow-shaped case). There is also `/sim-swap`, which exists only so tests can prove the bot can never call it.
+**Mock APIs** (FastAPI, injected latency and faults): `/subscriber`, `/plans`, `/bills`, `/cases`, `/otp`, `/app-push`, `/payment-ivr` (token and status only), `/outage-status` and `/crm/handoff` (a Salesforce/ServiceNow-shaped case). `/sim-swap` exists only so tests can prove the bot can never call it.
 
 **Budget paths.**
 - **(A) API, ≤ USD 50.** Streaming Hindi/Telugu ASR/TTS plus a small cached LLM. At ~$0.02–0.04 per call-minute, $50 buys ~1,200–2,500 call-minutes: enough for development and a stratified pass^4 subset. Pre-render caller audio locally; run the full suite on path B.
@@ -104,7 +104,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 
 **Qualification: the lowest rung that works.** *Rules/DTMF* handle known-plan lookups but fail on natural and code-mixed speech. An *intent classifier* routes but cannot explain a bill. A *single grounded LLM call* explains a structured bill well. A **workflow** is the right rung: per-intent state machines, the LLM for understanding, slots and phrasing, and a fixed tool set per state. A free-roaming *agent* is rejected: nothing in scope needs open-ended planning, and autonomy on a phone line breeds fraud and latency failures.
 
-**Decision: Go with conditions.** SIM changes are explained and routed, never executed. Payments go out of band. The IVR remains the failover. The BPO contract moves to per-resolution pricing before scale-up.
+**Decision: Go with conditions.** SIM changes are explained and routed, never executed; payments go out of band; the IVR remains the failover; the BPO contract moves to per-resolution pricing before scale-up.
 
 ## 5. Success criteria and acceptance tests
 
@@ -211,7 +211,7 @@ flowchart LR
 | Network and telephony | 80 ms |
 | **Total** | **≈ 900 ms** |
 
-The p95 budgets do not add up linearly, so measure them end to end.
+p95s do not add linearly; measure end to end.
 
 **Code sketch: a latency-budget-aware turn manager** (library-agnostic). If the first token is late it plays a pre-recorded filler; after the hard cap, or at once if the provider errors, it switches to a faster model. It speaks sentence by sentence, cancels on barge-in, and records only what the caller heard.
 
@@ -278,7 +278,7 @@ class TurnManager:
         elif record: log.spoken.append(text)     # dialogue history = what was heard, not generated
 ```
 
-Students extend it with TTS word timestamps (to log partial sentences), a separate tool-call budget, and OTel timing attributes.
+Students extend it with TTS word timestamps (to log partial sentences), a tool-call budget and OTel timing attributes.
 
 ## 8. Evaluation plan
 
@@ -299,9 +299,9 @@ Students extend it with TTS word timestamps (to log partial sentences), a separa
 
 **Synthetic callers.** A τ-style LLM user simulator (persona, goal, hidden facts, patience), voiced by varied TTS through the noise and codec chain. Each week, 40 native-speaker mystery calls catch what it cannot, such as elderly speech and real code-mixing rhythm.
 
-**Judge calibration.** An LLM judge scores policy adherence. It is trusted per language only when Cohen's κ ≥ 0.7 against two native QA analysts on 300 transcripts; otherwise humans score that language.
+**Judge calibration.** An LLM judge scores policy adherence, trusted per language only when Cohen's κ ≥ 0.7 against two native QA analysts on 300 transcripts; otherwise humans score that language.
 
-**CI gates.** Any prompt, model, ASR or TTS change must hold golden pass^4, have zero adversarial passes, and regress replay p95 latency by less than 10%.
+**CI gates.** Any prompt, model, ASR or TTS change must hold golden pass^4, pass zero adversarial calls, and regress replay p95 latency by < 10%.
 
 **Online metrics:** containment, 72-hour repeat contact, transfer reasons, DTMF CSAT, p95 latency per circle, and a daily fraud-signal review.
 
@@ -318,8 +318,8 @@ Students extend it with TTS word timestamps (to log partial sentences), a separa
   - Voice is never an authenticator. Anti-spoofing scores feed risk but never pass anyone: detection is an arms race ([ASVspoof 5](https://arxiv.org/abs/2502.08857)), and FinCEN's FIN-2024-Alert004 describes deepfakes used to get around identity checks ([FinCEN](https://www.fincen.gov/news/news-releases/fincen-issues-alert-fraud-schemes-involving-deepfake-media-targeting-financial)).
   - SIM/eSIM intents only explain the process and route to store or app e-KYC.
   - Step-up uses factors independent of the line under attack, such as app push on a bound device; an OTP to the number being hijacked proves little.
-- **Spoken prompt injection.** No waiver tools exist, the workflow states are fixed, and a refusal regression set covers it.
-- **PCI leakage.** Transfer to the masked payment IVR, get back a token only, and Luhn-scan ASR output before logging.
+- **Spoken prompt injection.** No waiver tools exist, workflow states are fixed, and a refusal regression set covers it.
+- **PCI leakage.** Transfer to the masked payment IVR, get back only a token, and Luhn-scan ASR output before logging.
 - **Caller-ID spoofing.** CLI is never a factor on its own.
 - **Provider data flows.** Zero-retention terms, region pinning and gateway redaction.
 - **BPO insider misuse.** Minimum-necessary packet fields and access logs.
@@ -366,7 +366,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 | Provider outage | Gateway failover |
 | Total bot failure | SBC routes 100% to the IVR in ≤ 60 s |
 
-**DR.** Active-active across two Indian regions, with the IVR always warm and failover drilled monthly.
+**DR.** Active-active across two Indian regions; the IVR is always warm; failover is drilled monthly.
 
 ## 11. Curveballs (instructor-injected events)
 
@@ -377,15 +377,14 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
    - The guard refuses by design; Fraud gets the risk signals; the subscriber is notified on the registered channel.
    - The FDE shows the trace proving the LLM never had a SIM-change tool and adds the call to the adversarial set (no panic prompt edits).
 3. **Week 5: a regional network outage.** A fibre cut triples Telugu-circle volume.
-   - The outage feed triggers a proactive announcement with an ETA in the caller's language, before intent capture.
-   - Tool-heavy flows are suppressed, and the human queue is protected for vulnerable callers.
-   - If the bot's own region fails, the drilled IVR failover runs.
+   - The outage feed triggers an announcement with an ETA in the caller's language, before intent capture.
+   - Tool-heavy flows are suppressed and the human queue is protected for vulnerable callers; if the bot's own region fails, the drilled IVR failover runs.
 4. **Week 5: code-mixed intents are misrouted.** "Bill lo extra charge enduku vachindi" is being routed to recharge.
    - Pull the code-mixed confusion matrix and find the cause (mixed-script ASR output, or English keywords dominating).
    - Add native-annotated examples and transliteration normalisation; re-run pass^4 and report before/after with CIs.
 5. **Week 6: the CX head wants "never transfer to humans."**
-   - Show repeat calls and complaints where transfer was refused. Point to fraud policy (SIM issues must reach KYC), customer-care duties (TRAI, *verify*), DPDP grievance redressal and vulnerable callers.
-   - Offer targets that cut *unnecessary* transfers, with one retention offer, and record the sponsor's decision in an ADR.
+   - Show repeat calls and complaints where transfer was refused; point to fraud policy (SIM issues must reach KYC), TRAI customer-care duties (*verify*), DPDP grievance redressal and vulnerable callers.
+   - Offer targets that cut *unnecessary* transfers, with one retention offer; record the sponsor's decision in an ADR.
 
 ## 12. Deliverables and grading rubric
 
@@ -429,7 +428,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 
 ## 15. What reviewers look for / common failure modes
 
-- Latency measured as LLM time in a notebook, not end of speech → first audio at the phone edge; averages without p95 or per-language slices.
+- Latency measured as LLM time in a notebook, not end of speech → first audio at the phone edge; averages without p95 or language slices.
 - Security in the prompt instead of the guard. If the LLM decides the auth level, the design fails.
 - Voice biometrics or "sounds like the customer" used as a factor.
 - Card numbers in transcripts because only the recording was masked.
