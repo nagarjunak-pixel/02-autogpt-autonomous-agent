@@ -87,7 +87,7 @@ Priorities and full entries are in the [gap register](02-gap-register.md). "New 
 | 80a | Shadow-AI discovery and the enterprise AI inventory | SEC-10 | P2 | Operate elective / W10 |
 | 81a | India's sectoral AI governance (RBI, SEBI, MeitY, CERT-In) | SEC-11 | P2 (India BFSI track: core) | Engage elective / W15 |
 | 82a | EU Cyber Resilience Act and revised Product Liability Directive | SEC-1 (= HOR-9) | P2 | Horizon and responsibility / W15 |
-| 83a | Automated-decision and AI-in-hiring rules beyond GDPR Art. 22 | SEC-5 (+ HOR-6 workforce evidence) | P2 | Horizon and responsibility / W15 |
+| 83a | Automated-decision and AI-in-hiring rules beyond GDPR Art. 22 | SEC-5 (overlaps HOR-6, whose workforce evidence goes in Turns 110 and 114) | P2 | Horizon and responsibility / W15 |
 | 83b | Companion AI, minors and age assurance | SEC-6 (gap #5) | P2 (P1 for consumer products) | Horizon and responsibility / W15 (core for the consumer/edtech track) |
 
 ### Extensions of existing turns
@@ -173,5 +173,7 @@ Each week has roughly 10–12 hours of study plus project work. Projects run in 
 | Project 1 (★★☆, weeks 3–8) | [P01](projects/P01-permission-aware-knowledge-assistant.md) · [P02](projects/P02-text-to-sql-analytics-agent.md) · [P03](projects/P03-claims-intake-document-ai.md) · [P09](projects/P09-legacy-modernisation-with-coding-agents.md) · [P11](projects/P11-teen-safe-study-companion-compliance.md) · [P13](projects/P13-agent-ready-commerce-mcp.md) · [P14](projects/P14-multilingual-citizen-services-assistant.md) · [P16](projects/P16-due-diligence-deep-research-agent.md) | They exercise weeks 1–8 (engage, retrieval, evaluation, tools, hardening) without needing ops depth |
 | Project 2 (★★★, weeks 9–12) | [P04](projects/P04-contact-centre-voice-agent.md) · [P05](projects/P05-computer-use-agent-replacing-rpa.md) · [P06](projects/P06-injection-resistant-inbox-agent.md) · [P07](projects/P07-ai-vulnerability-triage-and-patch-pipeline.md) · [P08](projects/P08-sovereign-air-gapped-llm-platform.md) · [P10](projects/P10-ambient-clinical-documentation.md) · [P12](projects/P12-enterprise-ai-gateway-finops-platform.md) · [P15](projects/P15-distilled-domain-small-model-offline.md) | Hardening, operations, deployment or real-time constraints |
 | Capstone | Any brief not yet done, chosen for the learner's target industry | Portfolio piece plus design defence |
+
+**Timing.** The briefs' course builds run 4–6 weeks. Project 2 and the capstone have 4-week slots, so either trim a 5–6-week brief to its core milestones or choose P08 or P15, which are written for 4 weeks.
 
 **Coverage.** Across the 16 projects, every core topic above is exercised by at least one project. See the coverage matrix in [projects/README.md](projects/README.md#coverage-matrix).

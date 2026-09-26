@@ -90,7 +90,7 @@ Evaluation appears in at least seven places: Turns 13 (base-model evaluation), 3
 | Sovereignty | 92 (on-prem/air-gapped) + 134 (sovereign and open-weight) | One turn; keep the "future" material as an annex |
 | Serving | 27 (parallelism for serving) + 29 (serving engines) + 31 (prefix caching and disaggregation) | Two turns; parallelism depth goes to an elective |
 | Reasoning | 21 (reasoning models) + 121 (reasoning distillation and on-device) | Keep 21 in core; fold 121 into 34 (local inference) and 23 (distillation) |
-| Evaluation | 13, 49, 97, 132 | Evaluation spine (see 1.5) |
+| Evaluation | 13, 49, 97, 104, 132 | Evaluation spine (see 1.5) |
 
 These merges free about 6–8 turns of budget, roughly what the verified gap topics need.
 
