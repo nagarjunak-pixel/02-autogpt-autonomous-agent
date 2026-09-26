@@ -317,8 +317,8 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 | Router/resilience | Fallback success, breaker open time, p95 under chaos (429/5xx/latency/region down), pass^3 |
 | Budget | Time-to-throttle, overspend, false throttles on month-end spikes |
 | DLP | Precision/recall per entity × language; encoded-evasion recall; added latency |
-| Isolation | Cross-tenant hit count; prefix-cache timing test with and without `cache_salt` |
-| Lifecycle | Shadow-eval deltas per use case; canary SLO breaches; rollback time |
+| Isolation | Cross-tenant hits; prefix-cache timing with and without `cache_salt` |
+| Lifecycle | Shadow-eval deltas; canary SLO breaches; rollback time |
 | FinOps | Reconciliation error; unallocated share; cost-per-outcome trend |
 | Discovery | Seeded-case recall; flagged-domain precision; detection-to-inventory time |
 
@@ -374,7 +374,7 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 **Observability.** Emit OTel GenAI spans with `gen_ai.request.model`, `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens`, plus `orion.bu`, `orion.use_case`, `orion.tier` and `orion.outcome`. The GenAI conventions are still at **Development** status in a separate repository ([OTel](https://opentelemetry.io/docs/specs/semconv/gen-ai/)): pin the version.
 
-**Capacity.** 25M requests a month is about 10 req/s on average and about 100 req/s at peak. With ~8 s streams, that means ~800 concurrent streams at peak. Plan 3–6 replicas per region.
+**Capacity.** 25M requests a month ≈ 10 req/s average, ~100 req/s peak; with ~8 s streams, ~800 concurrent streams at peak. Plan 3–6 replicas per region.
 
 **Quotas and reserved capacity.** Set per-key TPM/RPM quotas at the gateway, below provider quotas; route PTU spillover to pay-as-you-go; handle 429s as in §7. Reserved options differ: Azure PTU capacity is fungible across provisioned deployments ([Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)); Bedrock Provisioned Throughput has no-commitment, 1-month and 6-month terms ([AWS](https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html)); Google sells fixed-term subscriptions ([Google Cloud](https://cloud.google.com/vertex-ai/generative-ai/docs/provisioned-throughput/overview)). Review utilisation weekly against commitment minimums.
 
@@ -411,8 +411,7 @@ At the low end this is a governance programme that pays for itself, not a cost-c
    - Re-check PTU capacity, and finish by day 40.
 2. **Week 5: an agent loop burns a month's budget overnight.**
    - Throttle or revoke the key and confirm spend has flattened.
-   - Trace the cause (e.g. a failing tool call retried with growing context).
-   - Add the hourly cap, per-run step limits, repeated-call detection and spend-velocity alerts against a 7-day baseline.
+   - Trace the cause (e.g. a failing tool call retried with growing context); add the hourly cap, per-run step limits, repeated-call detection and spend-velocity alerts against a 7-day baseline.
    - Blameless review. Provider credits are not guaranteed; ADR-5 decides who pays.
 3. **Week 8: the gateway package is compromised upstream (a LiteLLM-style event).**
    - Compare deployed digests with the bad versions; check whether the mirror ever served them (the cooldown should have blocked them).
@@ -422,10 +421,10 @@ At the low end this is a governance programme that pays for itself, not a cost-c
    - File with CERT-In within 6 hours if Indian systems are affected; assess GDPR; brief the CISO with the timeline.
 4. **Week 11, during pilot traffic: a provider has a regional outage.**
    - Breakers open and fallback chains engage **within residency rules**: diagnostics routes may use only in-country or self-hosted tiers, so they queue rather than cross a border.
-   - Measure fallback quality against pre-evaluated pairs, and post the drill metrics.
+   - Measure fallback quality against pre-evaluated pairs; post the drill metrics.
 5. **Week 13: the Consumer BU refuses chargeback.**
    - Separate **mandatory controls** (vault keys, DLP, logging, inventory; group CISO policy) from **commercial terms**.
-   - Offer a federated data plane under the central control plane, and start with showback of the BU's own cost per outcome.
+   - Offer a federated data plane under the central control plane, starting with showback of the BU's own cost per outcome.
    - Take a decision memo to the CFO; record the compromise in ADR-2 and ADR-5.
 
 ## 12. Deliverables and grading rubric
@@ -468,7 +467,7 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 | 109–116 | FDE practice turns | Census, ROI, ADRs, change management, SOW |
 | 128 | Governance-as-Code | Policy repo with tests |
 
-**New/gap topics exercised:** #1 AI-era security of the orchestration layer (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture (trifecta-breaking tool policy); MOD-7 cache isolation (per-tenant keys, `cache_salt`, provider cache scope); FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; FDE-3 deploying inside the customer's network; AGT-7 agent sprawl and the AI inventory; AGT-9 low-code builders (exposed n8n); #4 obligations → controls; SEC (shadow-AI inventory); SEC (multi-tenant side channels); SEC (incident clocks and record retention).
+**New/gap topics exercised:** #1 orchestration-layer security (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture; MOD-7 cache isolation; FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; AGT-7 agent sprawl and inventory; AGT-9 low-code builders (exposed n8n); SEC (shadow-AI inventory); SEC (multi-tenant side channels); SEC (incident clocks and record retention).
 
 ## 15. What reviewers look for / common failure modes
 

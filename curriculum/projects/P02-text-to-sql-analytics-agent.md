@@ -1,11 +1,11 @@
 # P02 · Governed Text-to-SQL Analytics Assistant for a Retail Chain
 
 > Store and regional managers ask questions in English, Hindi or Hinglish and get correct, correctly scoped numbers and charts. Answers come from a governed metrics layer, not from an LLM writing whatever SQL it likes.
-> **Customer:** Kirana Mart (fictional) · **Industry:** Grocery and FMCG retail · **Geography:** India (about 900 stores in 8 regions; HQ in Pune) · **Real engagement:** 12 weeks; an FDE lead and an analytics engineer, plus the customer's data-platform engineer (50%), a FinOps analyst (20%) and 4 pilot regional managers · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆
+> **Customer:** Annavara Retail (fictional) · **Industry:** Grocery and FMCG retail · **Geography:** India (about 900 stores in 8 regions; HQ in Pune) · **Real engagement:** 12 weeks; an FDE lead and an analytics engineer, plus the customer's data-platform engineer (50%), a FinOps analyst (20%) and 4 pilot regional managers · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆
 
 ## 1. Scenario — the customer and the ask
 
-Kirana Mart runs about 900 hypermarket, supermarket and express stores. POS data lands in the warehouse in hourly micro-batches, about 16 million sales lines a day. Twelve HQ analysts answer about 1,500 ad-hoc requests a month that arrive through WhatsApp and email, with a 2–3-day turnaround. Store managers rarely open the 40 BI dashboards. The COO's ask: **"Let store and regional managers ask questions in English and Hindi and get answers and charts."**
+Annavara Retail runs about 900 hypermarket, supermarket and express stores. POS data lands in the warehouse in hourly micro-batches, about 16 million sales lines a day. Twelve HQ analysts answer about 1,500 ad-hoc requests a month that arrive through WhatsApp and email, with a 2–3-day turnaround. Store managers rarely open the 40 BI dashboards. The COO's ask: **"Let store and regional managers ask questions in English and Hindi and get answers and charts."**
 
 **The real need is governed answers:** one owned definition per metric, a clarifying question whenever a metric is ambiguous, scope limited to the user's own stores or region, read-only guarded execution with cost caps, results checked before they are shown, and correctness measured as **execution accuracy** on a golden set.
 
@@ -116,7 +116,7 @@ flowchart LR
   subgraph DEV["Manager devices - untrusted input"]
     U["PWA chat: English, Hindi, Hinglish"]
   end
-  subgraph APP["Kirana Mart app VPC - trust boundary"]
+  subgraph APP["Annavara Retail app VPC - trust boundary"]
     API["API: SSO, role, region and store claims"]
     NORM["Language and date normaliser"]
     PLAN["Metric-query planner: structured output"]

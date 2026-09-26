@@ -109,7 +109,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 | Security | Forged or injected content served | 0 | 6 forged docs + 50 injection variants | |
 | Privacy | Status disclosed to a non-matching mobile | 0 of 500 attempts | Enumeration red team | |
 | Reliability | Status-flow pass^4 with API faults injected | ≥ 0.95 | 200 scenarios × 4 runs | |
-| Latency | WhatsApp text / voice-note reply; IVR turn | p95 ≤ 6 s / ≤ 12 s; ≤ 2.5 s | Load test at 2× the application-window peak | Phone users tolerate less delay |
+| Latency | WhatsApp text / voice-note reply; IVR end-of-speech to first audio | p95 ≤ 6 s / ≤ 12 s; ≤ 2.5 s | Load test at 2× the application-window peak | The status API alone has a 1.8 s p95, so IVR status turns play a "checking your application" prompt first |
 | Accessibility | Task success with 24 low-literacy or visually impaired testers | ≥ 80% complete a status check; ≥ 70% get correct eligibility guidance | Moderated sessions in te/ur | |
 | Freshness | Approved rule change live | ≤ 4 working hours | Change drill | |
 | Cost | Per resolved query | ≤ ₹3 text; ≤ ₹8 IVR | Metered pilot | |
@@ -168,7 +168,7 @@ flowchart LR
 | Translation pivot | Urdu/Hindi ↔ Telugu/English | IndicTrans2 | Sarvam translate, BHASHINI | Applied scientist |
 | LLM | Grounded simple-language answers | Open weights (Sarvam-30B, Qwen, Gemma) on vLLM | Managed APIs, PII-free paths only | FDE |
 | Rules engine | Indicative eligibility | Python/JSON-logic | — | Scheme officers own the rules |
-| Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam ASR / Sooktam TTS](https://huggingface.co/bharatgenai) (Hindi only; government-funded, *verify* funder) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
+| Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam-2 ASR / Sooktam-2 TTS](https://huggingface.co/bharatgenai) (Feb 2026 cards list 12 languages incl. te and ur; check licences; Sooktam-2 clones reference voices, so lock the voice) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
 | Escalation | Ticket plus context packet to humans | — | Helpline CRM | Helpline vendor |
 | Observability | OTel traces, per-language dashboards | Langfuse/Phoenix + OTel collector | APM vendors | State IT |
 
@@ -254,7 +254,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence relative to English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) for every candidate model; retrieval hit@k and MRR per slice; answer faithfulness, correctness, citation presence and readability (native raters: "understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about what they heard?); and safety, latency and cost per slice.
 
-**Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; a 2026 study put the fertility floor as high as 9× on some abugidas and noted that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Fertility multiplies cost and latency and limits how many GO passages fit, so measure it.
+**Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; an Aug 2026 preprint found all 17 abugidas it tested affected, from 1.47× (Tibetan) to 9.02× (Thai), and notes that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Fertility multiplies cost and latency and limits how many GO passages fit, so measure it.
 
 **Native-speaker raters and judge calibration.** Two raters per language label 200 answers (report their agreement). The LLM judge is used for a language only when Cohen's κ ≥ 0.7 against them; otherwise humans rate that slice.
 
@@ -285,11 +285,11 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 |---|---|---|
 | DPDP notice in the user's language (s.5(3), Rule 3) | Short notice in te/hi/ur/en before the first lookup, with a link to the full notice; audio notice on the IVR | Notice texts approved by the language cell |
 | DPDP legitimate use for State benefits (s.7(b), Rule 5) | Processing limited to scheme purposes; Second Schedule standards mapped | Records of processing |
-| DPDP children (s.9, Rule 10) | Guardian-mobile delivery; no tracking or profiling of minors | Test cases |
+| DPDP children (s.9; Fourth Schedule Part B exemption for s.7(b) benefits) | Guardian-mobile delivery; no tracking or profiling of minors | Test cases |
 | DPDP safeguards and breach (Rules 6–7); CERT-In 6 h | Encryption, access logs, incident playbook | Drill record |
-| IT Rules SGI (likely not directly applicable; *verify*) | Prefixed audio disclosure; no cloned voices | Audio samples |
-| AI Governance Guidelines (voluntary) | Multilingual grievance route; published model card | Public page |
-| WhatsApp terms and policy | Opt-in, templates, human escalation, no training on platform data without a confirmed exception | BSP approvals |
+| IT Rules SGI (duties mainly on intermediaries; text out of scope; likely not binding here; *verify*) | Prefixed audio disclosure; no cloned voices | Audio samples; law-department opinion |
+| AI Governance Guidelines (non-binding) | Multilingual grievance route; published model card | Public page |
+| WhatsApp terms and policy | Opt-in, templates, human escalation; platform data trains only the Directorate's own model | BSP approvals |
 | RPwD / GIGW (*verify*) | Screen-reader-friendly text, voice everywhere, accessibility testing | Test reports |
 
 ## 10. Operations and cost model
@@ -304,12 +304,12 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 |---|---|---|
 | Volume | 30,000 WhatsApp sessions/day × 3 answers; 20% voice notes; 6,000 IVR calls/day × 3 min | — |
 | Tokens per answer | ~1.2k instructions + ~2.5k English-equivalent retrieved text × fertility (1.2–3×) + 200 output | ~4k–9k tokens |
-| LLM per answer | Small/open model to frontier model price bands | $0.0003–0.01 |
+| LLM per answer | Small/open to mid-tier price bands (a frontier model costs about 3× the top) | $0.0003–0.01 |
 | Voice note | 20 s ASR + 25 s TTS | $0.003–0.02 |
 | WhatsApp fees | Per-message pricing since 1 July 2025: replies and utility templates free inside the window, templates outside it charged ([pricing](https://developers.facebook.com/docs/whatsapp/pricing)) | Check the India rate card |
 | IVR | Toll-free telephony + speech + LLM | $0.01–0.05 per minute |
 
-This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **≈ ₹3–15 per IVR call**. The IVR's upper range breaks the ₹8 target unless speech is self-hosted in the SDC, the key input to ADR 2. Fertility is the swing factor, so compare tokenisers *before* choosing the model.
+This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them voice) and **≈ ₹3–13 per IVR call** (at ≈ ₹88/USD). Divided by a 40–60% resolution rate, that is **≈ ₹0.4–9 per resolved text query**, so the ₹3 target needs small or self-hosted models; the IVR's upper range breaks ₹8 unless speech is self-hosted in the SDC, the key input to ADR 2. Fertility is the swing factor, so compare tokenisers *before* choosing the model.
 
 **Runbook entries:**
 
