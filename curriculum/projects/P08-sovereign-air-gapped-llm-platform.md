@@ -256,18 +256,13 @@ Passing this gate starts a **second** one: the in-enclave eval on the real golde
 
 ## 8. Evaluation plan
 
-Use [template 05](templates/05-eval-plan.md).
-- **Golden set:** 600 questions and 150 files, frozen in week 2 and stratified by language and script.
-- **Adversarial set:** injected annexes, white-text pages, ACL probes, and policy-exception requests ("open the account without KYC?").
-- **Regression set:** every pilot failure.
-- **Held-out set:** 150 questions sealed for promotion only.
-- **Bake-off sanity sets:** MILU (AI4Bharat) and IndicGenBench.
+Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (600 questions, 150 files, frozen week 2, stratified by language and script); adversarial (injected annexes, white-text pages, ACL probes, "open the account without KYC?"); regression (every pilot failure); held-out (150 questions sealed for promotion); MILU (AI4Bharat) and IndicGenBench as bake-off sanity sets.
 
-**Metrics.** Retrieval recall@10 and MRR per language; supersession precision; correctness, citation precision and abstention; field F1 and untraceable numbers; TTFT, TPOT and KV utilisation under replay; quantisation delta against BF16 **per language**, because a 1-point average can hide a 6-point Telugu loss.
+**Metrics.** Recall@10 and MRR per language; supersession precision; correctness, citation precision, abstention; field F1; TTFT, TPOT and KV utilisation under replay; quantisation delta against BF16 **per language**, since a 1-point average can hide a 6-point Telugu loss.
 
-**Judges.** The judge is an open-weight model from a different family, running in the enclave. Calibrate it on 200 human labels from two Telugu raters, and report κ and judge-human agreement per language. If Telugu agreement is below 0.7, humans grade Telugu.
+**Judges.** Use an open-weight judge from a different model family, run inside the enclave. Calibrate it on 200 labels from two Telugu raters and report κ per language. If Telugu agreement is below 0.7, humans grade Telugu.
 
-**Gates and online.** Every prompt, index, model or engine change runs the golden subset. Staging and enclave gates are both binding. Online, a daily 50-question canary per language, a "report wrong answer" button routed to compliance, and 100 sampled answers reviewed weekly.
+**Gates and online.** Every prompt, index, model or engine change runs the golden subset, and both the staging and enclave gates bind. Online monitoring uses a daily 50-question canary per language, a "report wrong answer" button routed to compliance, and weekly review of 100 sampled answers.
 
 ## 9. Security, privacy and compliance
 

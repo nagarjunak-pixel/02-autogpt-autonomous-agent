@@ -42,7 +42,6 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 - **WhatsApp Business Platform** (a contract, not law, but it can stop the service).
   - Government entities must use a Solution Provider. Opt-in is required, business-initiated messages need approved templates, free replies are allowed inside the 24-hour window, and "prompt, clear, and direct escalation paths" are mandatory ([policy](https://whatsappbusiness.com/policy/)).
   - Meta's terms prohibit "AI Providers" whose *primary* functionality is general-purpose AI (Meta decides), and restrict using platform data to train AI models ([terms](https://www.facebook.com/legal/Meta-Terms-for-WhatsApp-Business-Platform)), so chats cannot simply feed a fine-tuning flywheel.
-  - Pricing is per message since 1 July 2025; utility templates are free inside the window and charged outside ([pricing](https://developers.facebook.com/docs/whatsapp/pricing)).
 - **CERT-In Directions (2022).** Government organisations must report covered incidents within 6 hours ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
 - **Accessibility** duties under the RPwD Act 2016 and the government web/app guidelines (GIGW) apply; exact clauses, and whether they reach WhatsApp and IVR, are *verify*.
 - **Election Model Code of Conduct** restrictions on government publicity during polls: current ECI instructions, including any on AI-generated content, are *verify*.
@@ -51,7 +50,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Budget.** The opex target is ≤ ₹3 per resolved text query and ≤ ₹8 per resolved IVR call. A human-handled call costs about ₹25–40.
 
-**Politics.** I&PR wants a launch event with an election about five months away; the helpline vendor fears losing seats; officers fear blame for bot answers.
+**Politics.** I&PR wants a launch event before an election five months away; the vendor fears losing seats; officers fear blame.
 
 ## 3. What students are given (course build)
 
@@ -307,7 +306,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 | Tokens per answer | ~1.2k instructions + ~2.5k English-equivalent retrieved text × fertility (1.2–3×) + 200 output | ~4k–9k tokens |
 | LLM per answer | Small/open model to frontier model price bands | $0.0003–0.01 |
 | Voice note | 20 s ASR + 25 s TTS | $0.003–0.02 |
-| WhatsApp fees | Replies inside the window free; status templates outside it charged per message | Check the current India rate card |
+| WhatsApp fees | Per-message pricing since 1 July 2025: replies and utility templates free inside the window, templates outside it charged ([pricing](https://developers.facebook.com/docs/whatsapp/pricing)) | Check the India rate card |
 | IVR | Toll-free telephony + speech + LLM | $0.01–0.05 per minute |
 
 This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **≈ ₹3–15 per IVR call**. The IVR's upper range breaks the ₹8 target unless speech is self-hosted in the SDC, the key input to ADR 2. Fertility is the swing factor, so compare tokenisers *before* choosing the model.
@@ -356,7 +355,6 @@ This gives **≈ ₹0.1–3.5 per resolved text query** (three answers) and **�
 ## 13. Stretch goals
 
 - Fine-tune the embeddings for Urdu and Tenglish (Turn 24) and show the before/after CIs.
-- Test speech-to-speech for the IVR against the cascade.
 - Build a content-ops UI where officers diff GO clauses and approve rule changes.
 
 ## 14. Curriculum map
