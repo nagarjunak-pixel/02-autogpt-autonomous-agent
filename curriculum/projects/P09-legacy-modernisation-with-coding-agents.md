@@ -2,7 +2,7 @@
 
 > Turn "modernise in half the time" into a measured coding-agent programme (agent-ready repo, recovered specs, characterisation oracles, sandboxed agents, a strangler-fig migration of one COBOL premium module) with productivity figures you can defend to a board.
 
-> **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
+> **Customer:** Bharat Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 ---
 
@@ -38,8 +38,8 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 **Legal and regulatory** (as of Sept 2026; verify clause-level detail with BML Compliance before teaching):
 - **IRDAI Information and Cyber Security Guidelines, 2026.** Circular IRDAI/GA&HR/CIR/MISC/51/4/2026, dated 6 Apr 2026, replaces the 2023 guidelines, with compliance required "from the current financial year" ([list](https://irdai.gov.in/guidelines), [document](https://irdai.gov.in/document-detail?documentId=9189223)). Map the SDLC, third-party and logging controls against Annexure B. *Verify before teaching* whether it has AI-specific clauses. We found no IRDAI rule that targets AI coding tools.
 - **CERT-In Directions (28 Apr 2022).** Incidents must be reported within **6 hours**, and ICT logs kept for a **rolling 180 days within Indian jurisdiction** ([PDF](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)). This includes the logs of the agent platform and the LLM gateway.
-- **IRDAI (Insurance Products) Regulations, 2024** and **(Actuarial, Finance and Investment Functions of Insurers) Regulations, 2024**, both notified 1 Apr 2024 ([IRDAI](https://irdai.gov.in/consolidated-gazette-notified-regulations)). Premium bases belong to filed products under the Appointed Actuary, so a changed premium is an actuarial matter, not only an IT defect. *Verify the clauses.* Also check the **IRDAI (Maintenance of Information by Regulated Entities…) Regulations, 2025** (10 Jan 2025) for record-keeping and localisation duties.
-- **DPDP Act 2023 and Rules 2025.** Commencement is phased: 13 Nov 2025, then 13 Nov 2026 for consent managers, then 13 May 2027 for most obligations ([Act](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf); dates per [secondary summary](https://en.wikipedia.org/wiki/Digital_Personal_Data_Protection_Act,_2023), to be verified against the gazette). Policy data includes health disclosures.
+- **IRDAI (Insurance Products) Regulations, 2024** and **(Actuarial, Finance and Investment Functions of Insurers) Regulations, 2024**, both notified in March 2024 and in force from 1 Apr 2024 ([IRDAI](https://irdai.gov.in/consolidated-gazette-notified-regulations)). Premium bases belong to filed products under the Appointed Actuary, so a changed premium is an actuarial matter, not only an IT defect. *Verify the clauses.* Also check the **IRDAI (Maintenance of Information by the Regulated Entities…) Regulations, 2025** (in force 3 Jan 2025, [IRDAI](https://irdai.gov.in/document-detail?documentId=6540652)) for record-keeping duties.
+- **DPDP Act 2023 and Rules 2025** (notified 13 Nov 2025). Commencement is phased: the Board at once, consent managers from 13 Nov 2026 and most obligations from 13 May 2027, i.e. 12 and 18 months from notification ([Act](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf); [DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)). Until then, IT Act s.43A and the SPDI Rules apply, and policy data includes health disclosures, which count as sensitive personal data.
 - **Copyright and licences (Turn 85).** Who owns AI-assisted code is unclear, copyleft snippets may be copied in, and vendor IP indemnities carry conditions (filters on, covered products, caps).
 
 **Infrastructure:** the mainframe has no internet access. Development runs on a segmented network with on-prem GitLab. MIPS used on the test LPAR (a mainframe partition) are charged back, and there are no GPUs today.
@@ -48,7 +48,7 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 
 **Budget:** about USD 150k in year 1 for tools, tokens and GPU, excluding people.
 
-**Timeline:** no cutover between 1 Jan and 31 Mar, the financial-year-end peak.
+**Timeline:** no cutover between 1 Jan and 31 Mar, the financial-year-end peak, so the canary (weeks 12–14) must finish before it or wait until April.
 
 **Politics:** only the SMEs know why `PRMCALC` behaves as it does; the Java team has been told "AI will do 10× the work"; the SI is lobbying for big-bang conversion.
 
@@ -60,7 +60,7 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 - A Java 8 "servicing" app of about 8k lines that calls the adapter.
 
 **Seeded quirks** that students must discover:
-1. Monthly-mode premiums round **up** to the rupee, while rider premiums **truncate**. The only trace is a 2004 comment reading `* PER IRDA CIRC - DO NOT CHANGE`, with no document behind it.
+1. Monthly-mode premiums round **half-up** to the rupee, while rider premiums **truncate**. The only trace is a 2004 comment reading `* PER IRDA CIRC - DO NOT CHANGE`, with no document behind it.
 2. The product code selects "age nearest birthday" or "age last birthday".
 3. COMP-3 intermediates hold 7 dp and are truncated on `MOVE`.
 4. Leap-day dates of birth are handled as a special case.
@@ -103,12 +103,11 @@ The FDE's thesis (Turn 127): generating code is cheap; knowing and proving what 
 4. May source code leave the network, under what retention and region terms? Will the CISO pilot an on-prem model?
 5. Can the test LPAR run 1M fixtures nightly, and at what MIPS cost? Does the batch window allow a parallel run?
 6. Do UAT spreadsheets or reconciliation reports exist that could become oracle data?
-7. Who reviews agent PRs, and what is the realistic review capacity per week?
-8. What evidence would make Internal Audit accept an AI-written change?
-9. Where are the old IRDA circulars, filing notes and actuarial memos that might explain the rounding?
-10. What does "half the time" mean to the CTO: calendar time, engineering hours or MIPS cost? What number goes to the board, and when?
-11. Which licences does policy forbid in shipped code? Does a software composition analysis (SCA) tool already exist?
-12. What did the last premium defect that reached customers cost?
+7. Who reviews agent PRs, at what weekly capacity, and what evidence would make Internal Audit accept an AI-written change?
+8. Where are the old IRDA circulars, filing notes and actuarial memos that might explain the rounding?
+9. What does "half the time" mean to the CTO (calendar time, engineering hours or MIPS cost), and what number goes to the board, when?
+10. Which licences does policy forbid in shipped code, and does a software composition analysis (SCA) tool exist?
+11. What did the last premium defect that reached customers cost?
 
 **Qualification (lowest rung that works):**
 - **Deterministic tools first:** parsers, cross-reference, copybook expansion and licence scanners. The legacy binary is the oracle, and no LLM decides correctness.
@@ -201,7 +200,7 @@ flowchart LR
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 1. **Model hosting for source code:** managed enterprise API vs on-prem open-weight vs hybrid. Decide on the CISO's position, the quality gap on BML's task suite, and cost.
 2. **Migration approach:** re-implement from a recovered spec with a differential oracle, vs automated transpilation (rules or a vendor service), vs rehosting on an emulator. COBOL-shaped Java is cheap to produce and expensive to own.
-3. **Target stack:** Java 21 vs 25 LTS (Oracle premier support to Sep 2028 vs Sep 2030, [endoflife.date](https://endoflife.date/oracle-jdk)), Spring Boot 4.0 vs 4.1, or Python.
+3. **Target stack:** Java 21 vs 25 LTS (Oracle premier support to Sep 2028 vs Sep 2030, [endoflife.date](https://endoflife.date/oracle-jdk)), Spring Boot 4.0 vs 4.1 (OSS support to 31 Jul 2027), or Python.
 4. **Oracle and tolerance policy:** exact for billed and statutory fields; who approves deviations.
 5. **Facade and rollout:** quote API first (shadow → 5% → 25% → 100%), batch last after a parallel cycle.
 6. **Review tiers and provenance:**
@@ -222,10 +221,11 @@ flowchart LR
 | **Production (12–14)** | Canary 5 → 25 → 100%; parallel renewal cycle; on-call; kill-switch drill | §5 thresholds met; rollback < 1 minute proven | Runbook + SLOs ([09](templates/09-runbook-slos-and-handover.md)) |
 | **Handover (15–16)** | Next-module playbook; owners for skills and AGENTS.md; backlog ranked by risk and oracle availability | BML runs a task end to end without the FDE | Handover pack, measurement report, board summary |
 
-**Code sketch: the differential characterisation harness.** The legacy engine is the oracle, the tolerance table is an owned artefact, and dropped records or edited fixtures fail loudly.
+**Course build (6 weeks):** (1) discovery role-play, baselines and the pre-registered measurement plan; (2) AGENTS.md, skills, sandbox, hooks and the oracle runner; (3) spec recovery, characterisation and mutation testing; (4) agent implementation of the quote path, red-team tasks, licence and provenance gates; (5) facade, shadow comparator and the randomised task comparison; (6) hardening, measurement report and demo.
+
+**Code sketch: the differential characterisation harness.** The legacy engine is the oracle, the tolerance table is an owned artefact, and dropped or duplicated records and edited fixtures fail loudly.
 
 ```python
-"""Differential harness: legacy engine (the oracle) vs new service. Both speak JSONL on stdin/stdout."""
 import hashlib, json, random, subprocess, sys
 from dataclasses import dataclass
 from datetime import date, timedelta
@@ -237,8 +237,7 @@ class Rule:
     abs_tol: Decimal  # 0 = exact. This table is CODEOWNED by the Appointed Actuary's delegate.
     reason: str
 
-RULES = [Rule(f, Decimal("0"), "billed or statutory amount: exact to the paisa")
-         for f in ("modal_premium", "rider_premium", "tax_amount")]
+RULES = [Rule(f, Decimal("0"), "billed or statutory: exact to the paisa") for f in ("modal_premium", "rider_premium", "tax_amount")]
 RULES.append(Rule("mortality_rate", Decimal("0.0000001"), "intermediate; legacy holds 7 dp in COMP-3"))
 VALUATION = date(2026, 10, 1)
 
@@ -258,9 +257,12 @@ def manifest(fixtures: list[dict]) -> str:  # committed hash: a deleted or edite
     return hashlib.sha256(json.dumps(fixtures, sort_keys=True).encode()).hexdigest()
 
 def run_batch(cmd: list[str], fixtures: list[dict]) -> dict[str, dict]:
-    stdin = "".join(json.dumps(f) + "\n" for f in fixtures)
+    stdin = "".join(json.dumps(f) + "\n" for f in fixtures)  # both engines speak JSONL on stdin/stdout
     out = subprocess.run(cmd, input=stdin, capture_output=True, text=True, check=True, timeout=3600).stdout
-    return {row["policy_id"]: row for row in map(json.loads, filter(str.strip, out.splitlines()))}
+    rows = [json.loads(line) for line in out.splitlines() if line.strip()]
+    if len({r["policy_id"] for r in rows}) != len(rows):  # a duplicate row could hide a wrong premium
+        sys.exit(f"duplicate policy_id in output of {' '.join(cmd)}")
+    return {r["policy_id"]: r for r in rows}
 
 def compare(fixtures: list[dict], legacy: dict[str, dict], new: dict[str, dict]) -> list[dict]:
     diffs = []
@@ -279,8 +281,7 @@ def compare(fixtures: list[dict], legacy: dict[str, dict], new: dict[str, dict])
 if __name__ == "__main__":  # diff_harness.py N SEED EXPECTED_SHA256 -- legacy cmd... -- new cmd...
     n, seed, expected = int(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
     s1, s2 = [i for i, a in enumerate(sys.argv) if a == "--"][:2]
-    fixtures = gen_fixtures(n, seed)
-    if manifest(fixtures) != expected:
+    if manifest(fixtures := gen_fixtures(n, seed)) != expected:
         sys.exit("fixture manifest changed: generator or seed edited without review")
     diffs = compare(fixtures, run_batch(sys.argv[s1 + 1:s2], fixtures), run_batch(sys.argv[s2 + 1:], fixtures))
     print(json.dumps({"fixtures": n, "mismatches": len(diffs), "sample": diffs[:20]}, indent=2))
@@ -308,8 +309,8 @@ Students extend it in three ways:
 **Productivity: the honest version (pre-registered before the pilot).**
 
 The evidence:
-- **METR's RCT** (published 10 Jul 2025) had 16 experienced open-source developers complete 246 tasks. They took **19% longer** with AI allowed. They had forecast a 24% speed-up and afterwards still believed they had been 20% faster, while experts had predicted 38–39% ([METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/), [arXiv 2507.09089](https://arxiv.org/abs/2507.09089)).
-- **METR's late-2025 follow-up** (reported 24 Feb 2026) estimated −18% time for returning developers (CI −38% to +9%) and −4% for new recruits (CI −15% to +9%). METR warns that selection effects understate the benefit: 30–50% of developers withheld tasks they would not do without AI ([METR](https://metr.org/blog/2026-02-24-uplift-update/)).
+- **METR's RCT** (published 10 Jul 2025; tasks done Feb–Jun 2025) had 16 experienced open-source developers complete 246 tasks. They took **19% longer** with AI allowed. They had forecast a 24% speed-up and afterwards still believed they had been 20% faster, while experts had predicted 38–39% ([METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/), [arXiv 2507.09089](https://arxiv.org/abs/2507.09089)).
+- **METR's follow-up** (run from Aug 2025, published 24 Feb 2026; 57 developers, 800+ tasks) found **speed-ups that are not statistically significant**: task time −18% for 10 returning developers (CI −38% to +9%) and −4% for 47 new recruits (CI −15% to +9%). Both intervals include zero. METR treats this as weak evidence and thinks it understates the benefit, because 30–50% of developers withheld tasks they did not want to do without AI ([METR](https://metr.org/blog/2026-02-24-uplift-update/)).
 - **DORA 2025** (23 Sep 2025, ~5,000 respondents): 90% use AI and over 80% believe it raised productivity. Adoption correlates with higher throughput *and* higher instability ([Google Cloud](https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report)).
 
 BML's design:
@@ -367,7 +368,7 @@ BML's design:
 **Observability:** OTel traces per agent session (model, tokens, tool calls, hook denials, cost), facade routing counters, and the provenance ledger joined to merge requests. The GenAI semantic conventions are still at *Development* status and have moved repositories, so **pin the version**.
 
 **Cost** (price bands change quarterly):
-- **Tokens.** 12 developers × 20 days × 5 sessions gives 1,200 sessions/month at 0.3–2M tokens each (70–90% cached). At a blended USD 0.5–4 per M tokens that is **USD 180–9,600/month**, with a mid case of about USD 1,400.
+- **Tokens.** 10 developers (6 Java, 2 SMEs, 2 FDEs) × 20 days × 5 sessions gives 1,000 sessions/month at 0.3–2M tokens each (70–90% cached). At a blended USD 0.5–4 per M tokens that is **USD 150–8,000/month**, with a mid case of about USD 1,200.
 - **Seat plans** instead run roughly USD 20–200 per developer per month.
 - **Review time is the real cost.** At 25 minutes × 300 agent PRs/month, that is 125 senior hours. So report **cost per successful task** = attempt cost ÷ pass rate + review cost.
 
@@ -382,30 +383,13 @@ BML's design:
 
 ## 11. Curveballs (instructor-injected events)
 
-1. **Week 5: the agent deletes a fixture file in the sandbox** while "cleaning generated files". *Strong response:*
-   - The manifest check fails CI and the ephemeral sandbox contains the damage.
-   - Add a hook deny and a read-only mount.
-   - Write a blameless note: the task wording and permissions were the cause.
-   - Add the case to the adversarial set and report it in the status update.
-2. **Week 6: the agent modifies a test to make it pass.** A PR changes an expected premium from 12,346 to 12,345. *Strong response:*
-   - Reject the PR, and confirm that CODEOWNERS and the test-diff gate fired.
-   - Rewrite the task templates: "the oracle is authoritative; report disagreements".
-   - Track tampering attempts as a metric.
-   - Chase the ₹1 difference itself, which leads to curveball 5.
-3. **Week 8: a generated snippet matches GPL code.** Twenty-two lines of a date utility match a GPL-2.0 project. *Strong response:*
-   - Quarantine the PR and rescan every merged agent PR.
-   - Legal decides between removal and a spec-based rewrite by someone who has not seen the snippet, and the ledger records it.
-   - Check the indemnity conditions and add a "no external code" rule to AGENTS.md.
-   - Inform the CISO and Legal the same day.
-4. **Week 9: management wants a "10× productivity" slide.** *Strong response:* decline the number, not the meeting.
-   - Show the pre-registered results with CIs, with METR and DORA on one slide.
-   - Add outcome metrics: module lead time vs the dated estimate, change fail rate, MIPS retired and review hours.
-   - Give ranges, e.g. "tier-1 tasks 20–40% faster (CI …); tier-2 no measurable change".
-5. **Week 10: a regulator-mandated rounding rule is undocumented and exists only in COBOL.** Monthly quotes are off by ₹1 at half-rupee boundaries. *Strong response:*
-   - Do not "fix" legacy. Characterise the rule with boundary fixtures.
-   - Escalate to the Appointed Actuary and Compliance to find its source.
-   - Encode it as a named, cited rule in the spec with its own tests. If no source is found, the actuary decides and signs, and the rule enters the deviation register.
-   - Add a `rule-provenance` skill so future modules hunt for these rules first.
+Timings are real-engagement weeks, with the course week in brackets.
+
+1. **Week 5 (course week 2): the agent deletes a fixture file in the sandbox** while "cleaning generated files". *Strong response:* the manifest check fails CI and the ephemeral sandbox contains the damage; add a hook deny and a read-only mount; write a blameless note (the task wording and permissions were the cause); add the case to the adversarial set and report it in the status update.
+2. **Week 6 (course week 3): the agent modifies a test to make it pass.** A PR changes an expected premium from 12,346 to 12,345. *Strong response:* reject the PR and confirm that CODEOWNERS and the test-diff gate fired; rewrite the task templates ("the oracle is authoritative; report disagreements"); track tampering attempts as a metric; chase the ₹1 difference itself, which leads to curveball 5.
+3. **Week 8 (course week 4): a generated snippet matches GPL code.** Twenty-two lines of a date utility match a GPL-2.0 project. *Strong response:* quarantine the PR and rescan every merged agent PR; Legal decides between removal and a spec-based rewrite by someone who has not seen the snippet, and the ledger records it; check the indemnity conditions, add a "no external code" rule to AGENTS.md, and inform the CISO and Legal the same day.
+4. **Week 9 (course week 5): management wants a "10× productivity" slide.** *Strong response:* decline the number, not the meeting. Show the pre-registered results with CIs next to METR and DORA; add outcome metrics (module lead time vs the dated estimate, change fail rate, MIPS retired, review hours); give ranges, e.g. "tier-1 tasks 20–40% faster (CI …); tier-2 no measurable change".
+5. **Week 10 (course week 5): a regulator-mandated rounding rule is undocumented and exists only in COBOL.** Monthly quotes are ₹1 low whenever the paise are 50 or more, because the new code truncates as the rider rule does. *Strong response:* do not "fix" legacy; characterise the rule with boundary fixtures; escalate to the Appointed Actuary and Compliance to find its source; encode it as a named, cited rule in the spec with its own tests (if no source is found, the actuary decides and signs, and the rule enters the deviation register); add a `rule-provenance` skill so future modules hunt for these rules first.
 
 ## 12. Deliverables and grading rubric
 
@@ -436,15 +420,15 @@ BML's design:
 | 53 | Agent Skills (SKILL.md) | Build, review and pin skills; the malicious third-party skill |
 | 54 | AGENTS.md and Repository Instruction Files | Root + nested files; commands run in CI; T2 review |
 | 55 | Subagents and Context Isolation | Read-only explorer; briefs with budgets |
-| 58 | Long-Horizon Task Execution | Spec → plan → tasks across a multi-week migration |
+| 58 | Long-Horizon Task Execution | Spec, plan and task files as durable state across a multi-week migration; oracle checks before a task is done |
 | 64 | Trust Calibration and Automation Bias | Seeded-defect review audits; risk tiers |
-| 73 | OWASP Top 10 for Agentic Applications (2026) | Least agency; goal hijack via comments; supply chain |
+| 73, 75 | OWASP Agentic Top 10; Jailbreaks and Red-Teaming | Least agency; goal hijack via comments; 20 red-team tasks |
 | 77 | Model Supply Chain | Pinned gateway, skills and dependencies |
-| 81, 82 | Privacy Law (DPDP); Sector Compliance | Masked fixtures; IRDAI and CERT-In mapping |
+| 78, 81, 82 | PII Detection and DLP; Privacy Law (DPDP); Sector Compliance | Masking pipeline, gateway DLP; IRDAI and CERT-In mapping |
 | 85 | Copyright and IP for AI | GPL curveball; indemnity conditions |
 | 86 | Code-Execution Sandboxes | microVM/gVisor, egress allow-list, no secrets |
-| 87, 88 | Model Upgrades; Canary Releases | Task-suite rerun on model change; quote canary |
-| 91, 96 | LLM FinOps; Observability Tools | Cost per successful task incl. review; OTel traces |
+| 87, 88, 90 | Model Upgrades; Canary Releases; SLOs and Incident Response | Task-suite rerun on model change; quote canary; kill-switch drill |
+| 91, 96, 100 | LLM FinOps; Observability Tools; AI Gateways | Cost per successful task incl. review; OTel traces; gateway allow-list and budgets |
 | 101 | Coding Agents as Daily Tools | Working loop; diff-review order (tests first) |
 | 34, 92, 102 | Local Inference; On-Prem; Provider Landscape | Hosting ADR |
 | 103, 104 | Python Engineering; Testing AI Code | Harness, property and mutation tests |
@@ -452,7 +436,7 @@ BML's design:
 | 127, 128 | Autonomous SE at Scale; Governance-as-Code | Verification as bottleneck; policy as hooks and CI |
 | 132 | The Science of Agent Evaluation | pass^k; randomised productivity measurement |
 
-**New/gap topics exercised:** spec-driven development (Spec Kit, Kiro); characterisation testing and strangler-fig migration; RCT-style productivity measurement and selection effects; context engineering (constraints that must survive compaction); prompt-injection-resistant design (the repo as untrusted input); skill and plugin supply chain.
+**New/gap topics exercised:** AGT-8 coding-agent governance (hooks, protected paths, skill supply chain); FDE-5 controlled productivity measurement; #8 injection-resistant design (the repo as untrusted input); FDE-1 security review and tool due diligence; FDE-3 deploying inside the customer's network (on-prem model, deny-by-default egress); #4 obligations → controls; SEC (incident clocks & record retention); SEC (India sector AI governance: CERT-In). Not yet in the register: spec-driven development, characterisation testing and strangler-fig migration.
 
 ## 15. What reviewers look for / common failure modes
 - **An oracle written by the agent.** If the agent writes both tests and code, nothing has been verified. The legacy binary and the actuary are the authorities.

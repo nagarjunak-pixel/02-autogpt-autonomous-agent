@@ -47,9 +47,9 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
   - Arts. 173–174: amendment and invalidation.
 - **India, Customs Act 1962:** [s.114AA](https://indiankanoon.org/doc/117480706/) penalises knowingly using a false or incorrect declaration with up to **five times the value of goods**. Bills of entry and shipping bills fall under ss. 46 and 50 (verify before teaching).
 - **GDPR:** Art. 5(1)(c) minimisation of screenshots, Art. 28 processor terms (model and browser vendors), Art. 32 security, and Chapter V transfers (Rotterdam→Chennai, non-EU providers).
-- **India DPDP Act 2023 and Rules 2025:** phased in, with most duties from 13 May 2027 (per the gap register; verify). Design for them now.
-- **EU AI Act:** this use is not Annex III high-risk. The Art. 4 AI-literacy duty has applied since 2 Feb 2025 and was softened by the 2026 Digital Omnibus to "take measures to support" ([text](https://artificialintelligenceact.eu/article/4/)). Train approvers either way.
-- **Dutch WOR Art. 27(1)(l):** the works council has a consent right over staff-monitoring systems, which covers the reviewer-vigilance metrics ([wetten.overheid.nl](https://wetten.overheid.nl/BWBR0002747/); verify).
+- **India DPDP Act 2023 and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), notified 13 Nov 2025): the consent-manager rule applies 12 months and most duties 18 months from notification (May 2027). Design for them now.
+- **EU AI Act:** this use is not Annex III high-risk. The Art. 4 AI-literacy duty has applied since 2 Feb 2025; the Digital Omnibus (Reg. (EU) 2026/1744) softened it to "take measures to support" AI literacy ([text](https://artificialintelligenceact.eu/article/4/)). Train approvers either way.
+- **Dutch WOR Art. 27(1)(l):** the works council has a consent right over facilities "suitable for" observing staff behaviour or performance, which covers the reviewer-vigilance metrics ([wetten.overheid.nl](https://wetten.overheid.nl/BWBR0002747/)).
 - **BrokerLink terms of service:** automated access has never been confirmed in writing. Get that confirmation.
 
 **Infrastructure.** BrokerLink is a single-page app with 15-minute sessions and per-user TOTP MFA. CargoDesk runs on Windows Server VDI with a partial UI Automation (UIA) tree. Chennai–Rotterdam round-trip time is about 150 ms.
@@ -79,8 +79,8 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 3. **Vendor API stub:** an OpenAPI spec released in course week 4, for curveball 4.
 
 **Budget.**
-- **API path (≤ USD 50):** a computer-use-capable mid-tier model. Use 1280×800 screenshots, keep the last 3, cap runs at 80 steps and prefer the scripted path. Expect USD 0.30–1.50 per computer-use run, which is about 60 runs plus evals.
-- **Local path:** UI-TARS-1.5-7B (Apache-2.0; its model card reports 27.5 on OSWorld) or a Qwen-VL-family model on vLLM with a 24 GB GPU, plus Ollama for text components. Grading rewards controls and evidence, not model strength.
+- **API path (≤ USD 50):** a computer-use-capable mid-tier model. Use 1280×800 screenshots, keep the last 3, cap runs at 80 steps and prefer the scripted path. Expect USD 0.30–1.50 per computer-use run, so USD 50 buys only about 35–165 runs. Run the full pass^k suite on the scripted executor (or the local path) and spend API credit on a small computer-use subset.
+- **Local path:** UI-TARS-1.5-7B (Apache-2.0; its 2025 model card self-reports 27.5 on the original OSWorld) or a Qwen-VL-family model on vLLM with a 24 GB GPU, plus Ollama for text components. Grading rewards controls and evidence, not model strength.
 
 **Out of scope:** real customs systems (Dutch customs, ICEGATE), real credentials, OCR of scanned invoices (a stretch goal), duty payment.
 
@@ -110,8 +110,8 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 **State of the art the FDE shows the COO (Sept 2026):**
 - **OSWorld** has 369 tasks and a 72.36% human baseline ([site](http://osworld-v1.xlang.ai/)). OSWorld-Verified launched 28 Jul 2025.
 - The top rows on [Steel.dev's leaderboard](https://leaderboard.steel.dev/leaderboards/osworld/) (4 Sep 2026) show 83–86%, but **all are self-reported**, with differing step limits and harnesses.
-- **OSWorld 2.0** ([arXiv 2606.29537](https://arxiv.org/abs/2606.29537), v2 13 Jul 2026) has 108 workflows at a median of about 1.6 human-hours each. The best agent scores **20.6% binary / 54.8% partial**, and agents "lose track of constraints … and skip verification".
-- An audit of public trajectories found **15.3% of FAIL verdicts were wrong** ([arXiv 2607.28367](https://arxiv.org/abs/2607.28367)).
+- **OSWorld 2.0** ([arXiv 2606.29537](https://arxiv.org/abs/2606.29537), v1 28 Jun 2026) has 108 workflows at a median of about 1.6 human-hours each. At publication (June 2026) the best agent scored **20.6% binary / 54.8% partial** with a 500-step budget, and agents "lose track of constraints … and skip verification".
+- An audit of 150 failure-scored trajectories from five benchmarks found **15.3% of FAIL verdicts were wrong** ([arXiv 2607.28367](https://arxiv.org/abs/2607.28367), 30 Jul 2026).
 - **Conclusion:** measure pass^k on Northwind's own screens.
 
 **Qualification: the lowest rung that works**
@@ -120,7 +120,7 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 |---|---|---|
 | 1. Official API / EDI | None today; vendor says "on roadmap" | Push commercially (contract renewal is in 5 months); design for it |
 | 2. MCP server | Possible over CargoDesk's import folder and reporting DB (about 60% of TMS fields) | Build a thin internal MCP server; it later wraps the vendor API |
-| 3. WebMCP / structured page tools | Only the site owner can add WebMCP tools (Chrome origin trial in 2026, W3C community-group draft; see Turn 69) | Ask the vendor; not in our control |
+| 3. WebMCP / structured page tools | Only the site owner can add WebMCP tools (`document.modelContext`; Chrome origin trial 149–156; W3C community-group draft; see Turn 69) | Ask the vendor; not in our control |
 | 4a. DOM / accessibility-tree automation | Works: Playwright role locators and UIA via pywinauto | **Default executor.** Deterministic, cheap, testable |
 | 4b. Pixel-level computer use | Needed when UI drift defeats 4a, and for CargoDesk screens with a poor accessibility tree | **Gated fallback only** |
 
@@ -190,7 +190,7 @@ flowchart LR
 |---|---|---|---|---|
 | Durable workflow | Per-filing state, timers, non-retryable submit | Temporal, DBOS, Restate | Temporal Cloud, AWS Step Functions, Azure Durable Functions | Northwind platform team |
 | Scripted executor | Fast path via role/UIA locators | Playwright, pywinauto | Existing RPA robots (keeps the CoE involved) | RPA CoE |
-| Computer-use model | Grounding and actions when locators fail | UI-TARS-1.5, Qwen-VL family on vLLM | Computer-use tools from Anthropic, OpenAI or Google (verify current models) | AI platform |
+| Computer-use model | Grounding and actions when locators fail | UI-TARS-1.5, Qwen-VL family on vLLM | Computer-use tools from Anthropic, OpenAI or Google. OpenAI retired only the `computer-use-preview` model (23 Jul 2026); its computer tool continues on GPT-5.6 models | AI platform |
 | Sandbox | Ephemeral browser/VM per run | Docker plus noVNC, Firecracker microVMs, Hyper-V VMs | Browserbase or Steel (browsers); Azure Virtual Desktop / Windows 365 (TMS) | IT infrastructure |
 | Credential broker | Secrets and TOTP outside model context | HashiCorp Vault TOTP engine, OpenBao | Azure Key Vault, CyberArk | Security |
 | Action gate and idempotency store | Classification, approvals, exactly-once claim | Custom code plus Postgres | Managed Postgres | FDE, then platform |
@@ -215,7 +215,7 @@ flowchart LR
 | Production (11–13) | All lanes; autoscaling; kill-switch and DR drills; evidence-based approval-tiering proposal | SLOs met 2 weeks running | [09](templates/09-runbook-slos-and-handover.md) |
 | Handover (14) | RPA CoE takes ownership; API-migration plan | Customer closes a drill incident unaided | Handover pack |
 
-**Code sketch: the action gate.** Every executor proposes its actions through this wrapper. On a mapped commit screen, any control not on the safe list is irreversible. A submit-like control on an unmapped screen is escalated as **UI drift**, which makes the classifier double as a redesign detector.
+**Code sketch: the action gate.** Every executor proposes its actions through this wrapper. On a mapped commit screen, any control not on the safe list is irreversible, and keyboard input is refused (Enter or Space would submit). A submit-like control on an unmapped screen is escalated as **UI drift**, which makes the classifier double as a redesign detector. A pixel click on the portal must first be resolved to an accessible name.
 
 ```python
 import hashlib, re, sqlite3, time
@@ -226,9 +226,8 @@ from urllib.parse import urlparse
 class Kind(Enum):
     READ = "read"; WRITE = "reversible_write"; SUBMIT = "irreversible_submit"
 class Blocked(Exception): pass
-
-ALLOWED_HOSTS = {"portal.broker.example", "tms.northwind.internal"}
-COMMIT_SCREEN = re.compile(r"/declarations/[^/]+/(review|confirm)$")   # from the discovery screen map
+PORTAL = "portal.broker.example"; ALLOWED_HOSTS = {PORTAL, "tms.northwind.internal"}
+COMMIT_SCREEN = re.compile(r"/declarations/[^/#?]+/(review|confirm)\b")  # screen map; path or #route
 SAFE_ON_COMMIT = re.compile(r"^(back|cancel|edit|previous)$", re.I)
 SUBMIT_LIKE = re.compile(r"\b(submit|lodge|transmit|send to customs|confirm)\b", re.I)
 
@@ -241,10 +240,11 @@ class Action:
 
 def classify(a: Action) -> Kind:
     if a.type in ("screenshot", "scroll", "wait", "navigate"): return Kind.READ
-    on_commit = bool(COMMIT_SCREEN.search(urlparse(a.url).path))
-    if on_commit and ((a.type == "key" and a.text.lower() == "enter")
-                      or (a.type == "click" and not SAFE_ON_COMMIT.match(a.target))):
-        return Kind.SUBMIT                                  # fail closed on commit screens
+    if COMMIT_SCREEN.search(a.url):                         # fail closed on commit screens
+        if a.type != "click": raise Blocked("keys/typing on a commit screen (Enter submits): escalate")
+        return Kind.WRITE if SAFE_ON_COMMIT.match(a.target) else Kind.SUBMIT
+    if a.type == "click" and not a.target and urlparse(a.url).hostname == PORTAL:
+        raise Blocked("unnamed portal click: resolve the element by DOM hit-test first")
     if a.type == "click" and SUBMIT_LIKE.search(a.target):  # submit-like control on an unmapped screen
         raise Blocked(f"'{a.target}' off a mapped commit screen: possible UI drift, escalate")
     return Kind.WRITE
@@ -447,7 +447,7 @@ Timings are real-engagement weeks. In the course build, inject them in weeks 3�
 ## 15. What reviewers look for / common failure modes
 
 - **Skipping the ladder:** choosing computer use before asking about EDI, TMS import or a vendor API.
-- **Trusting leaderboards:** quoting self-reported 85% OSWorld as a reliability promise, when OSWorld 2.0 tops out near 21%.
+- **Trusting leaderboards:** quoting a self-reported 85% OSWorld score (Sept 2026) as a reliability promise, when OSWorld 2.0's best was about 21% at publication (June 2026).
 - **Fragile idempotency:** kept in memory, written after the click, or retried on submit.
 - **Decorative approval:** 3-second approvals with no seeded-error checks.
 - **Bad MFA:** seeds in environment variables, or a person's phone acting as the bot's MFA.

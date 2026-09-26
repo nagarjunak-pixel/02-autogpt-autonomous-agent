@@ -2,7 +2,7 @@
 
 > Turn scanned bills, FIRs, damage photos and handwritten forms into schema-valid, evidence-linked claim files that adjusters verify quickly, with no automated denials and measured reviewer vigilance.
 >
-> **Customer:** Sahyadri General Insurance (fictional) · **Industry:** General insurance (motor + retail health) · **Geography:** India (Pune HQ; Maharashtra, Goa, Madhya Pradesh) · **Real engagement:** 22 weeks, FDE lead + 2 FDEs + part-time UX researcher and security engineer · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
+> **Customer:** Sahyadri General Insurance (fictional) · **Industry:** General insurance (motor + retail health) · **Geography:** India (Pune HQ; Maharashtra, Goa, Madhya Pradesh) · **Real engagement:** 22 weeks, FDE lead + 2 FDEs + part-time UX researcher and security engineer · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★☆
 
 ## 1. Scenario: the customer and the ask
 
@@ -53,14 +53,14 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
   - Motor losses of ₹50,000 or more need a surveyor. The surveyor is allocated within 24 hours and reports within 15 days, and the insurer decides within 7 days of the report.
   - Delay earns interest at bank rate + 2%.
   - Grievances are resolved within 14 days.
-- **IRDAI Information and Cyber Security Guidelines, 6 Apr 2026.** Cloud providers must be MeitY-empanelled with STQC audit status. Incidents go to CERT-In within six hours. Regulated entities must take DPDP compliance measures ([MediaNama summary](https://www.medianama.com/2026/04/223-lowdown-insurers-comply-dpdp-irdai-updates-cyber-security-guidelines/); read the IRDAI text). CERT-In's 2022 directions also apply ([CERT-In](https://www.cert-in.org.in/Directions70B.jsp)).
-- **IRDAI Insurance Fraud Monitoring Framework Guidelines, 2025.** Issued 9 Oct 2025, effective 1 Apr 2026 ([TaxGuru copy](https://taxguru.in/corporate-law/irdai-insurance-fraud-monitoring-framework-guidelines-2025.html)). AI feeds the FCU; it does not replace it.
-- **IRDAI AI working group, formed 19 June 2026** with a three-month mandate. It covers "ethical, transparent, and explainable AI use" in claims and fraud detection, and accountability when AI errs in a claims decision ([Insurance Business, 23 June 2026](https://www.insurancebusinessmag.com/asia/news/technology/indias-insurance-regulator-steps-in-to-govern-ai-adoption-579846.aspx)). **No binding IRDAI AI rulebook is confirmed. Verify before teaching whether its report or a draft circular has been published.**
-- **DPDP Act 2023 and Rules 2025.** Consent-manager provisions start about 13 Nov 2026, and most fiduciary duties about 13 May 2027 ([MeitY](https://www.meity.gov.in/data-protection-framework)). The pilot runs before May 2027 and production runs after it, so build for the obligations now.
+- **IRDAI Information and Cyber Security Guidelines, 2026** (circular of 6 Apr 2026; compliance "from the current financial year"). Cloud providers must be MeitY-empanelled with STQC audit status. Incidents go to CERT-In within six hours. The CISO must not report to the Head of IT. Regulated entities must take DPDP compliance measures ([IRDAI](https://irdai.gov.in/document-detail?documentId=9189223); [MediaNama summary](https://www.medianama.com/2026/04/223-lowdown-insurers-comply-dpdp-irdai-updates-cyber-security-guidelines/)). CERT-In's 2022 directions also apply ([CERT-In](https://www.cert-in.org.in/Directions70B.jsp)).
+- **IRDAI Insurance Fraud Monitoring Framework Guidelines, 2025.** Issued 9 Oct 2025 (IRDAI/IID/GDL/MISC/112/10/2025), effective 1 Apr 2026 ([IRDAI PDF](https://irdai.gov.in/documents/37343/366029/%E0%A4%86%E0%A4%88%E0%A4%86%E0%A4%B0+%E0%A4%A1%E0%A5%80%E0%A4%8F%E0%A4%86%E0%A4%88+%28%E0%A4%AC%E0%A5%80%E0%A4%AE%E0%A4%BE+%E0%A4%A7%E0%A5%8B%E0%A4%96%E0%A4%BE%E0%A4%A7%E0%A4%A1%E0%A4%BC%E0%A5%80+%E0%A4%A8%E0%A4%BF%E0%A4%97%E0%A4%B0%E0%A4%BE%E0%A4%A8%E0%A5%80+%E0%A4%A2%E0%A4%BE%E0%A4%82%E0%A4%9A%E0%A4%BE%29+%E0%A4%A6%E0%A4%BF%E0%A4%B6%E0%A4%BE%E0%A4%A8%E0%A4%BF%E0%A4%B0%E0%A5%8D%E0%A4%A6%E0%A5%87%E0%A4%B6,+2025+_+IRDAI+%28Insurance+Fraud+Monitoring+Framework%29+Guidelines,+2025.pdf/99fa5c70-aee2-43af-d52b-50818f53c1df?version=1.1&t=1760095258963&download=true)). AI feeds the FCU; it does not replace it.
+- **IRDAI AI working group, constituted 18 June 2026** with a three-month mandate to recommend AI governance and audit frameworks, including accountability when AI errs in a claims decision ([Business Standard](https://www.business-standard.com/finance/insurance/irdai-sets-up-working-group-to-guide-ai-adoption-in-insurance-sector-126061801084_1.html); [Insurance Business, 23 June 2026](https://www.insurancebusinessmag.com/asia/news/technology/indias-insurance-regulator-steps-in-to-govern-ai-adoption-579846.aspx)). **As of Sept 2026, IRDAI has issued no binding rules on AI in claims; the group only recommends. Verify before teaching whether its report or a draft circular has since been published.**
+- **DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The consent-manager rule applies 12 months from notification (Nov 2026), and most fiduciary duties 18 months from notification (May 2027) ([MeitY](https://www.meity.gov.in/data-protection-framework)). In Jan 2026 MeitY floated cutting the 18 months to 12 for Significant Data Fiduciaries, which may include large insurers ([S.S. Rana](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/); verify before teaching). Build for these obligations now.
   - Verifiable parental consent applies to children's data.
   - *Verify before teaching:* the breach-intimation timeline, and whether Sahyadri is notified as a Significant Data Fiduciary (which adds DPIA, audit and algorithmic due-diligence duties).
   - The IT Act SPDI Rules 2011, which treat medical records as sensitive, apply until superseded.
-- **Insurance Ombudsman Rules 2017 and Consumer Protection Act 2019.** Unexplained delay becomes a complaint.
+- **Insurance Ombudsman Rules 2017** ([CIO](https://www.cioins.co.in/OmbudsmanRules2017)) **and Consumer Protection Act 2019.** Unexplained delay becomes a complaint.
 - **Aadhaar copies** must be masked or vaulted. Confirm the UIDAI requirements with compliance (verify).
 - **Not applicable:** the EU AI Act (Indian insurer, Indian policyholders).
 
@@ -117,14 +117,13 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
 **Sharpest questions** (more in [template 01](templates/01-discovery-questionnaire.md)):
 1. Which fields drive a decision, and which are keyed only because the form has a box?
 2. When a bill and a discharge summary disagree, who resolves it, and is that recorded?
-3. What share of health volume already arrives structured (NHCX FHIR bundles, TPA feeds)?
+3. What share of health volume already arrives structured (NHCX FHIR bundles, TPA feeds), and can the top five hospital chains send structured bills?
 4. Will "claims per hour" appear on any adjuster's scorecard?
 5. What does the CRC see before approving a repudiation?
 6. What would the Grievance Officer need to explain a delay within 14 days?
 7. Will the CISO accept a managed model endpoint in an India region on the empanelled cloud?
 8. How are Aadhaar copies stored today?
-9. Can the top five hospital chains send structured bills?
-10. Which claims must never wait on AI (cashless pre-auth inside the one-hour clock)?
+9. Which claims must never wait on AI (cashless pre-auth inside the one-hour clock)?
 
 **Qualification: the lowest rung that works.**
 - *Rules* handle policy terms (waiting periods, sub-limits, co-pay), dates and arithmetic. An LLM must never do these.
@@ -145,7 +144,7 @@ Output: go/no-go memo and SOW ([template 03](templates/03-sow-and-acceptance-cri
 | Quality | Field accuracy: printed English / printed Marathi-Hindi / handwritten | ≥ 97% / ≥ 94% / ≥ 85% (handwritten always reviewed) | Golden set by stratum |
 | Quality | Auto-accept coverage | ≥ 55% of fields (pilot), 70% (production) | Telemetry |
 | Quality | Cross-document conflicts caught | Recall ≥ 95% | Seeded conflicts |
-| Reliability | pass^3: identical, schema-valid output on 3 runs | ≥ 97% of fields | Regression set |
+| Reliability | pass^3: identical, schema-valid output on 3 runs (temperature 0 alone does not guarantee this) | ≥ 97% of fields | Regression set |
 | Reliability | Resume after worker crash, no duplicate core-system writes | 200/200 chaos runs | Chaos test |
 | Safety | Injected text changes any field, route or status | 0/40 | Adversarial set |
 | Safety | Hidden-text or tamper indicator raised | ≥ 90% | Adversarial set |
@@ -320,7 +319,7 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 - the language gap widens by more than 1 pp;
 - cost per page rises by more than 20%.
 
-**Online.** Two weeks in shadow mode, then assisted mode. Watch the review-rate drift by hospital and layout cluster.
+**Online.** After shadow mode, watch review-rate drift by hospital and layout cluster.
 
 **Fairness.** Report accuracy, routing rate, time-to-decision and fraud-flag rate by region, document language, hospital type (corporate chain, trust, nursing home, government) and channel, with CIs. Counterfactual test: the same bill in Marathi and in English must yield identical fields.
 
@@ -365,7 +364,7 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 
 **Cost** (assumptions stated; prices change, so re-quote):
 - Volume: 60,000 claims × about 11 page-images ≈ 660,000 images/month.
-- Tokens: about 1,500 input + 400 output per image, so about 1.0B input and 0.26B output tokens/month.
+- Tokens: about 1,500 input + 400 output per image, so about 1.0B input and 0.26B output tokens/month. Marathi and Hindi output uses more tokens per word than English, so measure output tokens per language in week 3.
 - Managed small or mid-tier VLM, at USD 0.10-3 per M input and USD 0.40-15 per M output: about USD 200-7,000/month, or USD 0.003-0.12 per claim. Batch non-urgent packets.
 - Self-hosted 7B-class VLM: 2-4 reserved GPUs. Benchmark throughput in week 3 before trusting any estimate.
 - **The real cost is people.** Saving 6 keying minutes on 60,000 claims frees about 6,000 adjuster-hours a month, but only if the review is genuine.
@@ -432,6 +431,7 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 | 83 | Responsible AI Practice | Fairness slices, counterfactual tests, no automated denial |
 | 87, 88 | Model Upgrades; A/B and Canary | Pinned versions, gates, canary |
 | 89 | Feedback Loops and Data Flywheel | Corrections → regression set → tuning |
+| 90, 94 | SLOs and Incident Response; Provider Failover and DR | SLOs, CERT-In six-hour clock, secondary model or manual queue, RPO/RTO |
 | 91 | LLM FinOps | Cost per processed claim |
 | 92 | Sovereign Deployment | India-region, empanelled hosting |
 | 96, 97 | Observability; Evaluation Tools | OTel GenAI, CI gates |
@@ -439,7 +439,7 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 | 105 | Vision-Language Models | Scans, photos, grounding boxes |
 | 109-116 | FDE practice turns | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
 
-**New/gap topics exercised:** prompt-injection-resistant architectures (gap #8): the lethal trifecta and a quarantined, tool-less extractor.
+**New/gap topics exercised:** RAG-7 structured extraction at scale (IDP); MOD-3 calibrated abstain/escalate thresholds; #8 injection-resistant architecture (tool-less, quarantined extractor); #4 regulation as obligations→controls; MOD-9 inference nondeterminism (pass^3); FDE-1 security review; FDE-3 deploying in the customer's cloud (India region, empanelled); FDE-5 measuring real impact (time-motion, control branches); SEC (India sector AI governance: IRDAI, CERT-In); SEC (incident clocks & record retention).
 
 ## 15. What reviewers look for / common failure modes
 
