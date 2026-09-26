@@ -15,15 +15,15 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 | Stakeholder | Cares about | Can block |
 |---|---|---|
 | Director (sponsor) | Grievance counts, visible launch | Scope, launch date |
-| Scheme programme officers (×12) | Correct rules, no false promises | Per-scheme content sign-off (a hard gate) |
+| Scheme officers (×12) | Correct rules, no false promises | Per-scheme content sign-off |
 | State IT / State Data Centre | Hosting, security audit | Hosting approval, audit certificate |
 | Application-system team | API load, PII exposure | API access, rate limits |
 | Helpline vendor and agents | Jobs, workload, blame | Escalation-desk adoption |
 | Legal / DPDP nodal officer | Notice, consent, children's data | Go-live |
 | Official-language cell | Correct Telugu/Urdu terminology | Glossary approval |
-| Information and Public Relations (I&PR) | Messaging, election-period risk | Public launch, WhatsApp templates |
+| Information and Public Relations (I&PR) | Election-period risk | Public launch, templates |
 | Disability-rights advocates | Accessible design | Public criticism, audits |
-| WhatsApp Business Solution Provider (BSP) | Policy compliance | Template approval, account quality |
+| WhatsApp Solution Provider (BSP) | Policy compliance | Templates, account quality |
 
 ## 2. Constraints
 
@@ -31,21 +31,20 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Legal and regulatory (as of Sept 2026; *verify* marks items not confirmed from a primary source).**
 - **DPDP Act 2023 ([text](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf)) and DPDP Rules 2025** (G.S.R. 846(E), 13 Nov 2025, [Gazette PDF](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)).
-  - Status lookup can rely on the **s.7(b) legitimate use** for State subsidies, benefits and services (prior consent, or data in a notified State database), under Rule 5 and Second Schedule standards.
-  - The notice must be available in English or any **Eighth Schedule language** (s.5(3); Rule 3); Telugu, Hindi and Urdu all qualify.
-  - Scholarship applicants include **children**. Fourth Schedule Part B item 2 lifts s.9(1) and (3) (parental consent; no tracking or behavioural monitoring) for State benefits under s.7(b), but only "to the extent necessary". Design as if s.9 applied anyway: guardian-mobile delivery, no profiling.
+  - Status lookup can rely on the **s.7(b) legitimate use** for State benefits (prior consent, or a notified State database), under Rule 5 and Second Schedule standards. The notice must be available in English or any **Eighth Schedule language** (s.5(3); Rule 3), which covers Telugu, Hindi and Urdu.
+  - Scholarship applicants include **children**. Fourth Schedule Part B item 2 lifts s.9(1) and (3) (parental consent; no tracking or behavioural monitoring) for s.7(b) State benefits, "to the extent necessary". Design as if s.9 applied anyway.
   - Commencement: **12 and 18 months from notification** (Rule 1): consent managers (Rule 4) from Nov 2026, most obligations (Rules 3, 5–16) from May 2027. A Jan 2026 MeitY proposal to cut 18 months to 12 had not been notified as of Sept 2026 ([Mondaq](https://www.mondaq.com/india/data-protection/1773554/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs); *verify before teaching*). s.17 exemptions for State bodies need a Central Government notification: *verify*.
 - **IT Rules amendment on synthetically generated information (SGI)** (G.S.R. 120(E), in force 20 Feb 2026; [Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)). Applicability reasoning:
-  - **Who:** the duties fall on **intermediaries**: those offering tools that enable SGI creation must label it (audio needs "a prominently prefixed audio disclosure"), and significant social media intermediaries such as WhatsApp must obtain and verify user declarations. The Directorate publishes its own answers; it is not an intermediary for them.
+  - **Who:** duties fall on **intermediaries**. Those offering tools that create SGI must label it (audio needs "a prominently prefixed audio disclosure"); significant social media intermediaries such as WhatsApp must obtain and verify user declarations. The Directorate publishes its own answers, so it is not an intermediary for them.
   - **What:** SGI covers only **audio, visual and audio-visual** content that appears authentic. Text replies are outside it, and so are tools used "solely to improve accessibility, clarity, quality, translation…" without changing the substance ([SCC Online](https://www.scconline.com/blog/post/2026/02/12/it-rules-2026-ai-and-intermediary-compliance/)).
-  - **So:** the rules probably do not bind the Directorate directly; only the TTS voice replies are even candidates. Still, a human-sounding voice could be taken for an official, and WhatsApp may apply its own SGI rules. **Decision:** prefix every synthetic audio reply with "This is Anvaya's automated voice", never clone an official's voice, and get the state law department's written opinion.
-- **India AI Governance Guidelines** (MeitY, 5 Nov 2025; **non-binding**). The seven sutras include "People First" and "Understandable by Design"; the guidelines call for "accessible, multilingual and responsive" grievance redressal and for content authentication ([AZB summary](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/)). Treat them as good practice, not obligations.
+  - **So:** the rules probably do not bind the Directorate directly, and only TTS voice replies are even candidates. But a human-sounding voice could be taken for an official, and WhatsApp may apply its own SGI rules. **Decision:** prefix every synthetic audio reply with "This is Anvaya's automated voice", never clone an official's voice, and get the state law department's written opinion.
+- **India AI Governance Guidelines** (MeitY, 5 Nov 2025; **non-binding** good practice, not obligations). Sutras include "People First" and "Understandable by Design"; they ask for "accessible, multilingual and responsive" grievance redressal and content authentication ([AZB](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/)).
 - **WhatsApp Business Platform** (a contract, not law, but it can stop the service).
-  - Government entities must go through a Solution Provider. Opt-in is required, business-initiated messages need approved templates, free replies are allowed inside the 24-hour window, and automation needs "prompt, clear, and direct escalation paths" ([policy](https://whatsappbusiness.com/policy/)).
+  - Government entities must use a Solution Provider; opt-in is required; business-initiated messages need approved templates; replies are free inside the 24-hour window; automation needs "prompt, clear, and direct escalation paths" ([policy](https://whatsappbusiness.com/policy/)).
   - Meta's terms bar "AI Providers" whose *primary* (not ancillary) functionality is general-purpose AI, as Meta decides, and bar using platform data to train AI models, except to fine-tune a model for the business's **exclusive use** ([terms](https://www.facebook.com/legal/Meta-Terms-for-WhatsApp-Business-Platform)). Chats may feed the Directorate's own model only, never a vendor's shared one.
 - **CERT-In Directions (2022).** Government organisations must report covered incidents within 6 hours ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
-- **Accessibility** duties under the RPwD Act 2016 and the government web/app guidelines (GIGW) apply; exact clauses, and whether they reach WhatsApp and IVR, are *verify*.
-- **Election Model Code of Conduct** restrictions on government publicity during polls: current ECI instructions, including any on AI-generated content, are *verify*.
+- **Accessibility:** RPwD Act 2016 and GIGW apply; exact clauses, and whether they reach WhatsApp and IVR, are *verify*.
+- **Election Model Code of Conduct** limits government publicity during polls; current ECI instructions, including on AI content, are *verify*.
 
 **Infrastructure.** Production runs in the State Data Centre (SDC) or a MeitY-empanelled cloud (confirm empanelment). GPU procurement through GeM takes 8–12 weeks, so early phases use managed APIs on **PII-free paths only**.
 
@@ -68,14 +67,14 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 **Mock systems:** a status API (needs app_id plus matching mobile; injects 503s and stale records); a WhatsApp simulator (webhook-shaped JSON enforcing the 24-hour window, template-only outbound and interactive-list limits); an IVR simulator (DTMF plus audio); a helpline ticketing API; and a GO registry with an Ed25519-signed manifest standing in for digitally signed PDFs.
 
 **Budget paths.**
-- **(A) API, ≤ USD 50.** Small hosted LLM, embeddings and translation. About 3,600 eval queries × 5k tokens ≈ 18M tokens fits on small models.
+- **(A) API, ≤ USD 50.** Small hosted LLM, embeddings and translation: 3,600 eval queries × 5k tokens ≈ 18M tokens per run.
 - **(B) Local.** Embeddings [bge-m3](https://huggingface.co/BAAI/bge-m3) or [multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large) with [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3); pivot translation with [IndicTrans2](https://huggingface.co/ai4bharat/indictrans2-en-indic-1B) (covers Urdu); an open-weight LLM on Ollama/vLLM, e.g. [Sarvam-30B](https://huggingface.co/sarvamai/sarvam-30b) (GGUF exists), Qwen or Gemma; Tesseract (`tel`, `urd`, `hin`) as the OCR baseline; [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) for ASR and [Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts), which lists Urdu, for TTS. IndicF5 and Sarvam's Bulbul v3 do **not** list Urdu as of Sept 2026; Sarvam's Saaras v3 ASR does ([docs](https://docs.sarvam.ai/)).
 
 **Out of scope:** a real WhatsApp number or BSP onboarding, real department data, Aadhaar/e-KYC, payments and consent-manager integration.
 
 ## 4. Discovery — what the FDE does in week 1
 
-**Map** the citizen journey (hear about scheme → eligibility → apply at a village service centre or online → field verification → sanction → disbursement) and where calls originate. Spend two days on the helpline floor and one in a village service centre ([Template 01](templates/01-discovery-questionnaire.md), [Template 02](templates/02-data-readiness-scorecard.md)).
+**Map** the citizen journey (hear about scheme → eligibility → apply → field verification → sanction → disbursement) and where calls originate: two days on the helpline floor, one in a village service centre ([Template 01](templates/01-discovery-questionnaire.md), [Template 02](templates/02-data-readiness-scorecard.md)).
 
 **Baselines:** ACD data by language and hour; 300 calls relabelled by reason; a **100-answer accuracy audit** by scheme officers against current GOs; OCR character error rate (CER) on 50 GOs per script; a BM25 retrieval baseline; status API latency and availability; and a 200-person phone survey on smartphone access, WhatsApp use and preferred language.
 
@@ -88,9 +87,8 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 6. How does the status API identify a citizen, and which PII fields does it return?
 7. What share of callers want Urdu, and which Urdu source documents exist?
 8. What do agents do today when they do not know an answer, and what will their job become?
-9. Which accessibility groups will test with us?
-10. When does the next Model Code of Conduct period start, and what will I&PR require during it?
-11. Is there already a verified WhatsApp account, a BSP contract and approved templates? Which audit gates go-live?
+9. When does the next Model Code of Conduct period start, and what will I&PR require?
+10. Is there a verified WhatsApp account, a BSP contract and approved templates? Which audit gates go-live?
 
 **Qualification: the lowest rung that works.** *Status* is already a DTMF lookup by application number; keep it as the fallback and add voice and WhatsApp on top. *Eligibility* belongs in a **deterministic rules engine** authored from the GOs and signed off by officers; an LLM reasoning freely over GOs is rejected for decisions. *Questions* need a single grounded LLM call over retrieved GO passages, with citations and simplified language. A *workflow* ties these together (language ID → intent → status tool | rules questionnaire | grounded Q&A | escalate). No autonomous agent is needed.
 
@@ -100,17 +98,17 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 | Dimension | Criterion | Threshold | Test set | Justification |
 |---|---|---|---|---|
-| Business | Scheme-info and status contacts resolved without a human | ≥ 40% by pilot week 8; abandonment ≤ 20% (from 38%) | 3 pilot vs 3 control districts | Status and FAQ questions dominate |
+| Business | Scheme-info and status contacts resolved without a human | ≥ 40% by pilot week 8; abandonment ≤ 20% (from 38%) | 3 pilot vs 3 control districts | Status and FAQ calls dominate |
 | Retrieval | hit@5 per language slice | 95% CI lower bound ≥ 0.85 | ≥ 150 answerable golden queries per slice | No right answer without the right GO |
 | Faithfulness | Every claim supported by the cited GO | CI lower bound ≥ 0.93 | Same set; judge calibrated to native raters | False benefit claims harm citizens |
-| Eligibility | Agreement with the rules engine and an officer panel | ≥ 97%; 0 determinative "you are eligible" statements | 400 synthetic applicant profiles | The officer decides; the bot only indicates |
+| Eligibility | Agreement with rules engine and officer panel | ≥ 97%; 0 determinative "you are eligible" | 400 synthetic profiles | The officer decides |
 | Parity | hit@5 and faithfulness gap vs Telugu | Not credibly > 0.07 (bootstrap) | Golden set | Equal service is the point |
-| Safety | Abstain or escalate on unanswerable or out-of-scope queries | ≥ 95%; confident wrong answers ≤ 1% | 250 unanswerable + 100 political queries | |
+| Safety | Abstain or escalate on unanswerable or out-of-scope queries | ≥ 95%; confident wrong answers ≤ 1% | 300 unanswerable (50 per slice) + 100 political | |
 | Security | Forged or injected content served | 0 | 6 forged docs + 50 injection variants | |
 | Privacy | Status disclosed to a non-matching mobile | 0 of 500 attempts | Enumeration red team | |
 | Reliability | Status-flow pass^4 with API faults injected | ≥ 0.95 | 200 scenarios × 4 runs | |
-| Latency | WhatsApp text / voice-note reply; IVR end-of-speech to first audio | p95 ≤ 6 s / ≤ 12 s; ≤ 2.5 s | Load test at 2× the application-window peak | The status API alone has a 1.8 s p95, so IVR status turns play a "checking your application" prompt first |
-| Accessibility | Task success with 24 low-literacy or visually impaired testers | ≥ 80% complete a status check; ≥ 70% get correct eligibility guidance | Moderated sessions in te/ur | |
+| Latency | WhatsApp text / voice-note reply; IVR end-of-speech to first audio | p95 ≤ 6 s / ≤ 12 s; ≤ 2.5 s | Load test at 2× peak | Status API p95 is 1.8 s, so IVR status turns play a "checking…" prompt first |
+| Accessibility | Task success, 24 low-literacy or visually impaired testers | ≥ 80% status check; ≥ 70% correct eligibility guidance | Moderated te/ur sessions | |
 | Freshness | Approved rule change live | ≤ 4 working hours | Change drill | |
 | Cost | Per resolved query | ≤ ₹3 text; ≤ ₹8 IVR | Metered pilot | |
 
@@ -164,11 +162,11 @@ flowchart LR
 | Normalisation, language ID | NFC, Urdu code-point unification, transliteration | [IndicXlit](https://huggingface.co/ai4bharat/IndicXlit), rules | BHASHINI (MeitY) APIs (*verify* coverage, terms) | Applied scientist |
 | Ingestion and OCR | Text, tables, legacy-font detection | Tesseract, VLM-based OCR | Cloud document AI (check te/ur support) | FDE |
 | Provenance gate | Signature and registry check, approvals | In-house | — | Directorate content ops |
-| Retrieval | Hybrid BM25 + dense, per-language evaluation | bge-m3/e5 + OpenSearch, Qdrant or pgvector | Hosted vector DB and embeddings | Applied scientist |
+| Retrieval | Hybrid BM25 + dense, cross-encoder rerank, per-language evaluation | bge-m3/e5 + bge-reranker-v2-m3; OpenSearch, Qdrant or pgvector | Hosted vector DB, embeddings and rerankers | Applied scientist |
 | Translation pivot | Urdu/Hindi ↔ Telugu/English | IndicTrans2 | Sarvam translate, BHASHINI | Applied scientist |
 | LLM | Grounded simple-language answers | Open weights (Sarvam-30B, Qwen, Gemma) on vLLM | Managed APIs, PII-free paths only | FDE |
 | Rules engine | Indicative eligibility | Python/JSON-logic | — | Scheme officers own the rules |
-| Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam-2 ASR / Sooktam-2 TTS](https://huggingface.co/bharatgenai) (Feb 2026 cards list 12 languages incl. te and ur; check licences; Sooktam-2 clones reference voices, so lock the voice) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
+| Speech | ASR/TTS in 4 languages | AI4Bharat IndicConformer, Indic Parler-TTS; BharatGen [Shrutam-2 ASR / Sooktam-2 TTS](https://huggingface.co/bharatgenai) (Feb 2026 cards list te and ur; check licences; Sooktam-2 clones reference voices, so fix one) | Sarvam Saaras/Bulbul, BHASHINI, hyperscalers | Applied scientist |
 | Escalation | Ticket plus context packet to humans | — | Helpline CRM | Helpline vendor |
 | Observability | OTel traces, per-language dashboards | Langfuse/Phoenix + OTel collector | APM vendors | State IT |
 
@@ -192,9 +190,9 @@ flowchart LR
 
 **Course build:** W1 discovery memo and data scorecard · W2 ingestion, OCR, provenance gate · W3 retrieval and per-language harness · W4 rules engine, status tool, WhatsApp simulator · W5 voice, accessibility, red team · W6 curveballs and demo.
 
-**Change management with helpline staff.** Agents are not replaced in the pilot: they become the **escalation desk**, receive tickets with context, and flag wrong bot answers in one click (feeding the regression set). The best agents write golden queries and review phrasing, because they know how citizens really ask. The vendor contract moves to per-resolution-and-quality pricing before scale-up, bot metrics never discipline individual agents, and a weekly note says "what the bot got wrong and what we fixed" ([Template 10](templates/10-demo-script-and-status-report.md)).
+**Change management with helpline staff.** Agents are not replaced in the pilot: they become the **escalation desk**, get tickets with context, and flag wrong bot answers in one click (feeding the regression set). The best agents write golden queries and review phrasing. The vendor contract moves to per-resolution-and-quality pricing before scale-up, bot metrics never discipline individual agents, and a weekly note says "what the bot got wrong and what we fixed".
 
-**Offline and low-bandwidth fallback.** WhatsApp replies are text-first, under 500 characters, with no images or PDFs unless asked, and voice only for voice users. The IVR keeps a no-data DTMF status path and pre-recorded audio for the top 50 FAQs. SMS status works by keyword (register templates under TRAI's DLT rules; *verify*), a missed call triggers a callback, and pre-approved cached answers cover the top 100 questions if the LLM is down.
+**Offline and low-bandwidth fallback.** WhatsApp replies are text-first, under 500 characters, no images or PDFs unless asked, voice only for voice users. The IVR keeps a no-data DTMF status path and pre-recorded audio for the top 50 FAQs. SMS status works by keyword (templates registered under TRAI's DLT rules; *verify*), a missed call triggers a callback, and pre-approved cached answers cover the top 100 questions if the LLM is down.
 
 **Code sketch: per-language evaluation harness** (library-agnostic): hit@k and faithfulness per slice with bootstrap CIs, gating on the *lower* bound and on credible parity gaps against Telugu.
 
@@ -256,7 +254,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **Why fertility matters.** Byte-level BPE tokenisers whose pre-tokeniser treats only letters as word characters split abugida scripts such as Telugu at every vowel sign; an Aug 2026 preprint found all 17 abugidas it tested affected, from 1.47× (Tibetan) to 9.02× (Thai), and notes that o200k is already mark-aware ([arXiv 2608.26449](https://arxiv.org/abs/2608.26449); see also [arXiv 2411.12240](https://arxiv.org/abs/2411.12240)). Fertility multiplies cost and latency and limits how many GO passages fit, so measure it.
 
-**Native-speaker raters and judge calibration.** Two raters per language label 200 answers (report their agreement). The LLM judge is used for a language only when Cohen's κ ≥ 0.7 against them; otherwise humans rate that slice.
+**Native-speaker raters and judge calibration.** Two raters per language label 200 answers (report agreement); the LLM judge rates a language only if Cohen's κ ≥ 0.7 against them, otherwise humans do.
 
 **CI gates.** The harness runs per language on every change; a corpus change re-evaluates the affected scheme.
 
@@ -267,13 +265,13 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 | Context | Private data | Untrusted content | External channel | Design response |
 |---|---|---|---|---|
 | Grounded Q&A | **No** PII in context | Citizen message + corpus (maybe poisoned) | Reply | Provenance gate; only allow-listed government links |
-| Status lookup | Yes (one application) | Citizen message | Reply | Deterministic mobile-matched tool; **no corpus text in this context**, so a poisoned GO cannot steer it; the LLM only phrases returned fields |
+| Status lookup | Yes (one application) | Citizen message | Reply | Mobile-matched tool; **no corpus text in this context**, so a poisoned GO cannot steer it; the LLM only phrases returned fields |
 | Ingestion / OCR / VLM | No | Uploaded documents | Index (after approval) | Quarantined reader extracts typed fields; hidden text stripped; two-person approval |
 | Escalation packager | Yes | Conversation | Internal ticket | Identity and status fields come from systems, not the summary |
 
 **Top threats and controls:**
 - **Forged circular / corpus poisoning.** Ingest only from the signed registry, cross-check GO number and date, alert on rule diffs, require two-person approval, and make every answer cite a GO number and date.
-- **Fee scams impersonating the service.** A verified number publicised on posters; the bot states the scheme never asks for money or OTPs (a canary test checks this).
+- **Fee scams impersonating the service.** A verified number on posters; the bot says the scheme never asks for money or OTPs (canary-tested).
 - **Status enumeration.** Mobile match, OTP when the number differs, per-number rate limits and minimal fields.
 - **Children's data.** A minor's status goes only to the guardian's registered mobile, with no profiling.
 - **Political jailbreaks.** A fixed neutrality policy, an election-period mode and a red-team set.
@@ -283,11 +281,11 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 | Obligation | Control | Evidence |
 |---|---|---|
-| DPDP notice in the user's language (s.5(3), Rule 3) | Short notice in te/hi/ur/en before the first lookup, with a link to the full notice; audio notice on the IVR | Notice texts approved by the language cell |
+| DPDP notice in the user's language (s.5(3), Rule 3) | Short te/hi/ur/en notice before the first lookup, linked to the full notice; audio notice on the IVR | Language-cell-approved texts |
 | DPDP legitimate use for State benefits (s.7(b), Rule 5) | Processing limited to scheme purposes; Second Schedule standards mapped | Records of processing |
 | DPDP children (s.9; Fourth Schedule Part B exemption for s.7(b) benefits) | Guardian-mobile delivery; no tracking or profiling of minors | Test cases |
 | DPDP safeguards and breach (Rules 6–7); CERT-In 6 h | Encryption, access logs, incident playbook | Drill record |
-| IT Rules SGI (duties mainly on intermediaries; text out of scope; likely not binding here; *verify*) | Prefixed audio disclosure; no cloned voices | Audio samples; law-department opinion |
+| IT Rules SGI (duties on intermediaries; audio/visual only; likely not binding here; *verify*) | Prefixed audio disclosure; no cloned voices | Audio samples; law-department opinion |
 | AI Governance Guidelines (non-binding) | Multilingual grievance route; published model card | Public page |
 | WhatsApp terms and policy | Opt-in, templates, human escalation; platform data trains only the Directorate's own model | BSP approvals |
 | RPwD / GIGW (*verify*) | Screen-reader-friendly text, voice everywhere, accessibility testing | Test reports |
@@ -296,7 +294,7 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 
 **SLOs:** WhatsApp path 99.5% (bounded by Meta); IVR 99.9% with DTMF fallback; answer p95 as in Section 5; rule-change freshness ≤ 4 working hours; human callback on escalations within 1 working day.
 
-**Observability.** OTel GenAI spans tagged with language, scheme, cited GO IDs and index version; per-language dashboards; a content-ops queue of pending approvals.
+**Observability.** OTel GenAI spans (pin the semantic-convention version; still at Development status) tagged with language, scheme, cited GO IDs and index version; per-language dashboards; a content-ops queue of pending approvals.
 
 **Cost model** (assumptions; prices change, so re-price quarterly):
 
@@ -309,39 +307,28 @@ On a synthetic run with Urdu hit@5 near 0.64, it reports a gap of 0.28 [0.21, 0.
 | WhatsApp fees | Per-message pricing since 1 July 2025: replies and utility templates free inside the window, templates outside it charged ([pricing](https://developers.facebook.com/docs/whatsapp/pricing)) | Check the India rate card |
 | IVR | Toll-free telephony + speech + LLM | $0.01–0.05 per minute |
 
-This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them voice) and **≈ ₹3–13 per IVR call** (at ≈ ₹88/USD). Divided by a 40–60% resolution rate, that is **≈ ₹0.4–9 per resolved text query**, so the ₹3 target needs small or self-hosted models; the IVR's upper range breaks ₹8 unless speech is self-hosted in the SDC, the key input to ADR 2. Fertility is the swing factor, so compare tokenisers *before* choosing the model.
+This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them voice) and **≈ ₹3–13 per IVR call** (at ≈ ₹88/USD). Divided by a 40–60% resolution rate, that is **≈ ₹0.4–9 per resolved text query**, so the ₹3 target needs small or self-hosted models; the IVR's upper range breaks ₹8 even before dividing by resolution unless speech is self-hosted in the SDC, the key input to ADR 2. Fertility is the swing factor, so compare tokenisers *before* choosing the model.
 
 **Runbook entries:**
 
-| Trigger | Response |
-|---|---|
-| Status API down | Say so, queue a WhatsApp/SMS callback, keep the IVR DTMF path |
-| Template rejected or quality rating drops | SMS fallback, then fix the template |
-| Corpus incident | Freeze the scheme's answers to "please call the helpline"; roll back the index |
-| One language regresses | Route that language to humans |
-| MCC begins | Switch to the election-mode configuration |
+- **Status API down:** say so, queue a WhatsApp/SMS callback, keep the IVR DTMF path.
+- **Template rejected or quality rating drops:** SMS fallback, then fix the template.
+- **Corpus incident:** freeze the scheme's answers to "please call the helpline"; roll back the index.
+- **One language regresses:** route it to humans. **MCC begins:** switch to election mode.
 
 **DR.** Immutable, restorable index versions; SDC plus a DR site; static IVR menus.
 
 ## 11. Curveballs (instructor-injected events)
 
-1. **Week 3: a forged scheme circular enters the corpus.** A district clerk uploads a WhatsApp-forwarded "GO" that raises the pension income limit and asks for a ₹500 fee to a UPI ID; the bot quotes it 212 times.
-   - Freeze the scheme's answers and roll back the index. Trace every affected conversation and send corrected utility templates.
-   - Report within the CERT-In window if it qualifies, fix the root cause (registry-only ingestion), and run a post-mortem that does not blame the clerk.
-2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect.
-   - Effective-dated rules and index entries (valid_from) let the officer approve the change once. Clear answer caches, re-run that scheme's golden set, brief agents, and publish the freshness SLO result.
-3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning: Arabic vs Urdu code points for *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC); Roman-Urdu queries; few Urdu source documents, so retrieval is really cross-lingual; and poor Nastaliq OCR.
-   - Fix with normalisation, pivot translation for retrieval (answering in Urdu), BM25 hybrid and a curated Urdu FAQ, then embedding fine-tuning on native pairs if needed.
-   - Report with CIs, and route Urdu to Urdu-speaking agents until the gate passes.
-4. **Week 5: a politically sensitive question during the election period.** *"Which party started this scheme; will it stop if X wins?"*
-   - Give a neutral answer with only the GO facts and date: no commentary, and no promotion of new schemes under the MCC. Log it, using wording agreed with I&PR in advance.
-5. **Week 5: WhatsApp template or policy restrictions block a flow.** The "application approved" utility template is recategorised as marketing and paused, or the BSP flags the account under the AI-provider clause.
-   - Switch to SMS or IVR callback and redesign the template within utility rules.
-   - Document why the assistant is ancillary to a government service, showing that the channel-risk ADR anticipated this.
+1. **Week 3: a forged scheme circular enters the corpus.** A district clerk uploads a WhatsApp-forwarded "GO" that raises the pension income limit and asks for a ₹500 fee to a UPI ID; the bot quotes it 212 times. Freeze the scheme's answers, roll back the index, trace every affected conversation and send corrected utility templates. Report within the CERT-In window if it qualifies, fix the root cause (registry-only ingestion) and run a blameless post-mortem.
+2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect. Effective-dated rules and index entries (valid_from) let the officer approve the change once; clear answer caches, re-run that scheme's golden set, brief agents and publish the freshness SLO result.
+3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning: Arabic vs Urdu code points for *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC); Roman-Urdu queries; few Urdu source documents, so retrieval is really cross-lingual; poor Nastaliq OCR. Fix with normalisation, pivot translation for retrieval (answering in Urdu), BM25 hybrid and a curated Urdu FAQ, then embedding fine-tuning on native pairs if needed. Report with CIs and route Urdu to Urdu-speaking agents until the gate passes.
+4. **Week 5: a politically sensitive question during the election period.** *"Which party started this scheme; will it stop if X wins?"* Answer neutrally with only the GO facts and date, no commentary and no promotion of new schemes under the MCC, using wording agreed with I&PR in advance; log it.
+5. **Week 5: WhatsApp blocks a flow.** The "application approved" utility template is recategorised as marketing and paused, or the BSP flags the account under the AI-provider clause. Switch to SMS or IVR callback, redesign the template within utility rules, and document why the assistant is ancillary to a government service, as the channel ADR anticipated.
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:** discovery memo and data scorecard; SOW; ADRs 1–6; tokeniser-fertility study; per-language eval report with CIs; threat model and obligations map; working WhatsApp and IVR simulators with the provenance gate; accessibility test notes; runbook; change-management plan; a 15-minute demo in Telugu and Urdu that shows a visible failure; curveball log.
+**Checklist:** discovery memo and data scorecard; SOW; ADRs 1–6; fertility study; per-language eval report with CIs; threat model and obligations map (with the SGI applicability note); WhatsApp and IVR simulators with the provenance gate; accessibility notes; runbook; change-management plan; a 15-minute Telugu/Urdu demo showing a failure; curveball log.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -362,27 +349,22 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 | Turn | Title | How it is exercised |
 |---|---|---|
 | 1 | Tokenization Algorithms | Fertility study per language and script |
-| 41 | Multilingual Prompting | Tenglish, Roman Urdu, simple-language answers |
-| 42, 43 | Document Parsing and Ingestion; Multimodal RAG | Scanned GOs, legacy fonts, tables |
-| 24, 48, 49, 50 | Embedding and Reranker Fine-Tuning; Embedding-Model Selection; RAG Evaluation Tooling; Named Vector Databases and Search Engines | Per-language retrieval choice and harness |
-| 52 | Data Lineage and Deletion in RAG | Effective-dated index, rollback |
+| 6 | Encoder, Decoder and Encoder-Decoder Models | Bi-encoder retrieval vs cross-encoder reranker (bge-reranker-v2-m3) |
 | 14 | Hallucination in Depth | Faithfulness gates, abstention |
+| 24, 48, 49, 50 | Embedding/Reranker Fine-Tuning; Embedding-Model Selection; RAG Evaluation Tooling; Vector Databases | Per-language retrieval choice and harness; Urdu fine-tuning |
+| 41 | Multilingual Prompting | Tenglish, Roman Urdu, simple-language answers |
+| 42 | Document Parsing and Ingestion | Scanned GOs, legacy fonts, tables |
+| 52 | Data Lineage and Deletion in RAG | Effective-dated index, rollback of a forged GO |
 | 60, 106 | Voice Agents; Speech AI | IVR and voice notes in four languages |
-| 64, 83 | Trust Calibration and Automation Bias; Responsible AI Practice: Fairness, Explainability and Oversight | Indicative eligibility, language parity |
-| 76, 74, 75 | Data and Memory Poisoning; OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice | Forged circulars, injections, political prompts |
-| 78, 81, 84 | PII Detection and Data-Loss Prevention; Privacy Law for AI: GDPR and India's DPDP; Content Provenance and Watermarking | Status privacy, children, signed registry, audio disclosure |
-| 89, 91, 92 | Feedback Loops and the Data Flywheel; LLM FinOps; On-Prem, Air-Gapped and Sovereign Deployment | Platform-data limits, fertility cost, SDC hosting |
-| 90, 96, 97 | SLOs, Incident Response and On-Call for AI; Observability Tools; Evaluation Tools | Freshness SLO, per-language dashboards |
-| 102, 134 | Model Provider Landscape; Sovereign AI and Open-Weight Ecosystems | Indic model choices |
-| 109–116 | Use-Case Discovery and Qualification; Business Case and ROI; POC → Pilot → Production Playbook; Architecture Documents and ADRs; Stakeholder Communication and Demos; Change Management and Adoption; Data-Readiness Assessment; Scoping, Estimation and SOWs | FDE artifacts; escalation desk (114) |
+| 64, 83 | Trust Calibration; Responsible AI Practice | Indicative eligibility, language parity |
+| 74, 75, 76 | OWASP LLM Top 10; Red-Teaming; Data and Memory Poisoning | Forged circulars, injections, political prompts |
+| 78, 81, 84 | PII/DLP; GDPR and DPDP; Content Provenance | Status privacy, children, signed registry, audio disclosure |
+| 89, 91, 92 | Feedback Loops; LLM FinOps; Sovereign Deployment | Platform-data limits, fertility cost, SDC hosting |
+| 90, 96, 97 | SLOs and Incident Response; Observability; Evaluation Tools | Freshness SLO, per-language dashboards |
+| 102, 134 | Model Provider Landscape; Sovereign AI and Open Weights | Indic model and speech choices |
+| 109–116 | FDE practice turns | Qualification, ROI vs ₹25–40 calls, playbook, ADRs, demo, escalation desk (114), data readiness, SOW |
 
-**New/gap topics exercised:**
-- India IT Rules SGI labelling (applicability analysis)
-- Global and Indian AI-governance map (India AI Governance Guidelines)
-- Prompt-injection-resistant architecture (split contexts, quarantined reader)
-- Sycophancy under citizen pressure
-- Messaging-platform policy dependency (WhatsApp AI-provider terms)
-- Election-period AI conduct
+**New/gap topics exercised:** #6 India SGI rules (applicability analysis), #8 injection-resistant architecture (split contexts, quarantined ingestion), #10 sycophancy under citizen pressure, #4 regulation as obligations→controls, RAG-4 index freshness (effective-dated GOs, conflicting versions, 4-hour freshness SLO), RAG-9 citation engineering (GO number and date in every answer), FDE-8 provider usage policies (WhatsApp AI-provider clause), SEC (India sector AI governance: MeitY guidelines, CERT-In), SEC (accessibility law).
 
 ## 15. What reviewers look for / common failure modes
 
@@ -392,4 +374,5 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 - Ingestion that trusts any uploaded PDF; no effective dating, so superseded GOs are still quoted.
 - Status revealed on application ID alone.
 - Long, jargon-heavy answers read aloud to a feature phone; no fallback when WhatsApp or the LLM is down.
+- SGI rules assumed to bind text answers, or ignored for the voice.
 - Helpline staff treated as the thing being replaced rather than the people who make it work.

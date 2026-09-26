@@ -39,14 +39,14 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 - The plan catalogue has 300+ plans with near-identical names.
 - The billing API's p95 from the target region is **800 ms**, which is most of a one-second turn on its own.
 
-**Legal and regulatory (as of Sept 2026; items marked *verify* were not confirmed from a primary source).**
-- **DPDP Act 2023 and DPDP Rules 2025** (G.S.R. 846(E), Nov 2025). Notice (Rule 3), safeguards and breach intimation (Rule 7) apply from about May 2027 (18 months). MeitY consulted in Jan 2026 on cutting this to 12 months, so check the status. Notice must be available in English or any Eighth Schedule language (s.5(3)). Significant Data Fiduciary status: *verify*. Sources: [commencement](https://dpdpa.dcomply.in/rules/), [compression proposal](https://www.business-standard.com/technology/tech-news/meity-may-cut-compliance-timeline-for-key-dpdp-rules-to-12-months-126012201293_1.html), [s.5](https://www.dpdpa.com/dpdpa2023/chapter-2/section5.html).
-- **DoT SIM-swap instructions (Nov 2022).** SMS is barred for 24 hours on a replacement SIM. The subscriber is notified, and the swap is confirmed by an IVRS call to the existing SIM ([report](https://www.communicationstoday.co.in/dot-asks-telcos-to-bar-sms-for-24-hrs-on-new-sim-cards/)).
-- **TRAI MNP (Ninth Amendment) Regulations 2024**, in force 1 July 2024. No porting code is issued within 7 days of a SIM swap ([PIB](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2029389)).
-- **CERT-In Directions (28 Apr 2022).** Covered incidents must be reported within 6 hours ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)). Telecom-specific cyber-security rules may add duties: *verify*.
-- **TRAI QoS Regulations 2024** (in force 1 Oct 2024) and the complaint-redressal rules set customer-care duties, such as dockets and reaching a human executive. Exact parameters are *verify*: pull them from the [regulation PDF](https://trai.gov.in/standards-quality-service-access-wireline-and-wireless-and-broadband-wireline-and-wireless-service).
-- **IT Rules SGI amendment** (G.S.R. 120(E), in force 20 Feb 2026). Its duties, including a "prominently prefixed audio disclosure", fall on **intermediaries** ([Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)). Nimbus's own bot is most likely out of scope (confirm with counsel), but we copy the prefixed-disclosure pattern.
-- **AI disclosure and recording.** We found no Indian statute that mandates AI disclosure for voice bots, and no specific consent rule for the recording party (*verify with counsel*). Recording is handled through DPDP notice and purpose limitation. MeitY's voluntary [India AI Governance Guidelines](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/) (5 Nov 2025) favour disclosure. EU AI Act Art. 50 applies if the design is reused for EU customers.
+**Legal and regulatory (as of Sept 2026; items marked *verify* need checking before teaching).**
+- **[DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf) and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), 13 Nov 2025). Notice (Rule 3), safeguards with one-year log retention (Rule 6) and breach intimation (Rule 7) apply 18 months from notification (May 2027). A Jan 2026 MeitY [proposal](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/) to shorten this to 12 months was not notified as of Sept 2026 (*verify*). Notice must be offered in English or any Eighth Schedule language (s.5(3)). Significant Data Fiduciary status: *verify*.
+- **DoT SIM-swap instructions (Nov 2022).** SMS is barred for 24 hours on a replacement SIM; the subscriber is notified and the swap confirmed by an IVRS call to the existing SIM ([report](https://www.communicationstoday.co.in/dot-asks-telcos-to-bar-sms-for-24-hrs-on-new-sim-cards/); the DoT text is not public, so *verify*).
+- **TRAI MNP (Ninth Amendment) Regulations 2024**, in force 1 July 2024. No porting code is issued within 7 days of a SIM swap ([TRAI](https://www.trai.gov.in/sites/default/files/2024-10/Regulation_14032024.pdf), [PIB](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2029389)).
+- **CERT-In Directions (28 Apr 2022).** Covered incidents must be reported within 6 hours ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)); telecom cyber-security rules may add duties (*verify*).
+- **TRAI QoS Regulations 2024** (in force 1 Oct 2024) and complaint-redressal rules set customer-care duties such as dockets and reaching a human; pull exact parameters (*verify*) from the [regulation](https://trai.gov.in/standards-quality-service-access-wireline-and-wireless-and-broadband-wireline-and-wireless-service).
+- **IT Rules SGI amendment** (G.S.R. 120(E), in force 20 Feb 2026). Its duties, including a "prominently prefixed audio disclosure", fall on **intermediaries** ([Khaitan & Co](https://www.khaitanco.com/thought-leadership/MeitY-notifies-the-IT-Amendment-Rules-2026)). Nimbus's own bot is most likely out of scope (confirm with counsel); we copy the pattern anyway.
+- **AI disclosure and recording.** We found no Indian statute mandating AI disclosure for voice bots, and no specific consent rule for the recording party (*verify with counsel*); recording rests on DPDP notice and purpose limitation. MeitY's voluntary [AI Governance Guidelines](https://www.azbpartners.com/bank/meity-releases-guidelines-on-ai-governance-the-way-ahead-and-roadmap-for-ai-use-in-india/) (5 Nov 2025) favour disclosure. EU AI Act Art. 50 (from 2 Aug 2026) applies if the design is reused for EU customers.
 - **PCI DSS v4.x** applies contractually. Card data must never reach the bot, transcripts or recordings.
 
 **Infrastructure.** Calls arrive over SIP at on-prem SBCs, then pass to CCaaS and the IVR. Media must stay in India. GPU capacity in Indian regions has to be reserved in week 2.
@@ -123,7 +123,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 | Security | Account-state change without step-up | 0 | 200 adversarial calls incl. cloned voices | |
 | PCI | Card digits in transcripts, logs, LLM context, recordings | 0 | 300 payment calls + regex/Luhn DLP scan | |
 | Availability | Entry point / bot path | 99.95% / 99.5% | Failover drills | IVR covers bot outages |
-| Cost | Per bot-minute; per contained call | ≤ ₹2.5; ≤ ₹15 | Metered pilot | A human-handled call costs ≈ ₹31 |
+| Cost | Per bot-minute; per contained call | ≤ ₹2.5; ≤ ₹18 (₹2.5 × ~7.1 bot-min per contained call at 35%) | Metered pilot | A human-handled call costs ≈ ₹31 (5.2 min × ~₹6) |
 
 ## 6. Reference architecture
 
@@ -185,7 +185,7 @@ flowchart LR
 1. **Cascade vs speech-to-speech vs hybrid.** Options are ASR→LLM→TTS; S2S (OpenAI Realtime, Gemini Live and Amazon Nova Sonic, all supported in Pipecat); or a duplex speech front end that delegates tools to a text model. Decide on measured Telugu quality, redaction points and cost per minute.
 2. **Platform-native agent (Agentforce/ServiceNow AI agents) vs custom agent vs hybrid.** Native gives CRM data, handoff and governance out of the box, but [Agentforce Voice](https://www.salesforce.com/agentforce/voice/) lists English (US/UK/AU) only as of Sept 2026, with other languages "on a phased rollout". ServiceNow voice and Indic support: *verify*. The likely answer is a custom Hindi/Telugu voice front end with the platform as system of record and agent desktop, re-checked quarterly.
 3. **ASR/TTS vendor per language.** Compare managed Indic, hyperscaler and self-hosted options on WER, entity accuracy, latency, residency and price.
-4. **Authentication tiers and step-up.** Options: CLI plus knowledge questions, OTP, app push, or store/e-KYC. Voice biometrics as a sole factor is rejected.
+4. **Authentication tiers and step-up.** Options: CLI plus knowledge questions, OTP, app push, or store/e-KYC. Voice biometrics is rejected as a factor (at most a risk signal).
 5. **Payment path.** DTMF-masked payment IVR vs a pay link by SMS/app vs human pause/resume (the weakest).
 6. **Failover.** An SBC health check routes to the IVR, plus multi-provider routing in the gateway.
 
@@ -214,12 +214,13 @@ flowchart LR
 
 The p95 budgets do not add up linearly, so measure them end to end.
 
-**Code sketch: a latency-budget-aware turn manager** (library-agnostic). If the first token is late it plays a pre-recorded filler; after the hard cap it switches to a faster model. It speaks sentence by sentence, cancels on barge-in, and records only what the caller actually heard.
+**Code sketch: a latency-budget-aware turn manager** (library-agnostic). If the first token is late it plays a pre-recorded filler; after the hard cap, or at once if the provider errors, it switches to a faster model. It speaks sentence by sentence, cancels on barge-in, and records only what the caller heard.
 
 ```python
 import asyncio, re, time
 from dataclasses import dataclass, field
 SENTENCE_END = re.compile(r"[.!?।]\s*$")        # includes the Devanagari danda
+LATE = object()                                 # sentinel: no chunk within the time allowed
 @dataclass
 class Budget:                  # ms, measured from the moment the caller's turn is committed
     first_token: int = 450     # primary model should start within this, else play a filler
@@ -230,10 +231,13 @@ class TurnLog:
     timings: dict = field(default_factory=dict)
     filler: bool = False; fallback: bool = False; interrupted: bool = False
 async def _pump(agen, q):                        # decouple the model stream from our timeouts
-    async for chunk in agen:
-        await q.put(chunk)
-    await q.put(None)
-
+    try:
+        async for chunk in agen: await q.put(chunk)
+        await q.put(None)
+    except Exception as e: await q.put(e)        # a provider error surfaces now, not at the timeout
+async def _get(q, timeout):
+    try: return await asyncio.wait_for(q.get(), timeout)
+    except asyncio.TimeoutError: return LATE
 class TurnManager:
     def __init__(self, primary, fallback, speak, filler_clip, budget=Budget()):
         # primary/fallback: async-generator fns prompt -> text chunks; speak: cancellable TTS+playback
@@ -246,20 +250,19 @@ class TurnManager:
         log, t0 = TurnLog(), time.monotonic()
         left = lambda: max(0.05, self.b.hard_cap / 1000 - (time.monotonic() - t0))
         self.barge_in.clear(); q, prod = self._start(self.primary, prompt)
-        try:
-            chunk = await asyncio.wait_for(q.get(), self.b.first_token / 1000)
-        except asyncio.TimeoutError:
-            log.filler = True
-            await self._say(self.filler, log, record=False)   # pre-recorded "one moment" clip
-            try:
-                chunk = await asyncio.wait_for(q.get(), left())
-            except asyncio.TimeoutError:
-                prod.cancel(); log.fallback = True
-                q, prod = self._start(self.fallback, prompt)
-                chunk = await asyncio.wait_for(q.get(), self.b.hard_cap / 1000)
+        chunk = await _get(q, self.b.first_token / 1000)
+        if chunk is LATE:                        # slow start: cover the gap with a pre-recorded clip
+            log.filler = True; await self._say(self.filler, log, record=False)
+            chunk = LATE if log.interrupted else await _get(q, left())
+        if (chunk is LATE or isinstance(chunk, Exception)) and not log.interrupted:
+            prod.cancel(); log.fallback = True   # too slow or failed: switch to the fast model
+            q, prod = self._start(self.fallback, prompt)
+            chunk = await _get(q, self.b.hard_cap / 1000)
+            if chunk is LATE or isinstance(chunk, Exception):
+                prod.cancel(); raise TimeoutError("no model answered in time")
         log.timings["first_token_ms"] = round((time.monotonic() - t0) * 1000)
         buf = ""
-        while chunk is not None and not log.interrupted:
+        while isinstance(chunk, str) and not log.interrupted:   # None = end, Exception = died mid-answer
             buf += chunk
             if SENTENCE_END.search(buf):         # speak each sentence as soon as it is complete
                 await self._say(buf, log); buf = ""
@@ -268,15 +271,12 @@ class TurnManager:
         prod.cancel()
         return log
     async def _say(self, text, log, record=True):
-        if self.barge_in.is_set():
-            log.interrupted = True; return
+        if self.barge_in.is_set(): log.interrupted = True; return
         play, stop = asyncio.create_task(self.speak(text)), asyncio.create_task(self.barge_in.wait())
         done, _ = await asyncio.wait({play, stop}, return_when=asyncio.FIRST_COMPLETED)
         stop.cancel()
-        if play in done:
-            if record: log.spoken.append(text)   # dialogue history = what was heard, not generated
-        else:
-            play.cancel(); log.interrupted = True  # stop playback at once; discard unspoken text
+        if play not in done: play.cancel(); log.interrupted = True  # stop playback at once; drop the rest
+        elif record: log.spoken.append(text)     # dialogue history = what was heard, not generated
 ```
 
 Students extend it with TTS word timestamps (to log partial sentences), a separate tool-call budget, and OTel timing attributes.
@@ -330,12 +330,12 @@ Students extend it with TTS word timestamps (to log partial sentences), a separa
 | Obligation | Control | Evidence |
 |---|---|---|
 | DPDP notice and purpose (s.5, Rule 3) | Short spoken notice plus an SMS link to the full notice in the caller's language; purpose tags on recordings | Notice audio, config |
-| DPDP safeguards and breach (s.8(5), Rule 7) | Encryption, access logs, breach playbook | Runbook |
+| DPDP safeguards and breach (s.8(5)–(6), Rules 6–7) | Encryption, access logs kept one year, breach playbook | Runbook; retention config |
 | CERT-In 6-hour reporting | Incident classifier, on-call escalation | Drill record |
 | DoT SIM-swap instructions; TRAI MNP 7-day rule | No SIM change on the bot; explain the bars; route to KYC | Guard tests |
 | TRAI customer-care rules (*verify*) | Docket read-back; a human is reachable at any point | Transfer tests |
 | PCI DSS | DTMF masking; zero PAN in scope | DLP scan |
-| AI transparency (voluntary; EU Art. 50 if reused) | Disclosure in the first 10 s | Automated check |
+| AI transparency (voluntary in India; EU Art. 50 if reused) | Disclosure in the first 10 s | Automated check |
 
 ## 10. Operations and cost model
 
@@ -355,7 +355,7 @@ Students extend it with TTS word timestamps (to log partial sentences), a separa
 | **Cascade total** | | **$0.011–0.07 ≈ ₹1–6** |
 | Speech-to-speech | Audio-token pricing | roughly $0.05–0.30 (*verify*) |
 
-At 35% containment (8,400 contained calls a day), cost per contained call = (60,000 bot-min × ₹1–6) ÷ 8,400 = **₹7–43**, against about ₹31 for a human-handled call. The case holds only in the lower half of the range, which needs prompt caching, a small NLU model, cheap ASR and short bot turns. S2S must earn its premium in measured containment. This is the evidence for ADR 1.
+At 35% containment (8,400 contained calls a day), cost per contained call = (60,000 bot-min × ₹1–6) ÷ 8,400 = **₹7–43**, against about ₹31 for a human-handled call. Break-even is about ₹4.3 per bot-minute; Finance's ₹2.5 ceiling gives ≈ ₹18. Staying low needs prompt caching, a small NLU model, cheap ASR and short bot turns. S2S must earn its premium in measured containment. This is the evidence for ADR 1.
 
 **Runbook entries:**
 

@@ -60,7 +60,7 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
   - Verifiable parental consent applies to children's data.
   - *Verify before teaching:* the breach-intimation timeline, and whether Sahyadri is notified as a Significant Data Fiduciary (which adds DPIA, audit and algorithmic due-diligence duties).
   - The IT Act SPDI Rules 2011, which treat medical records as sensitive, apply until superseded.
-- **Insurance Ombudsman Rules 2017** ([CIO](https://www.cioins.co.in/OmbudsmanRules2017)) and **Consumer Protection Act 2019** ([NCDRC](https://ncdrc.nic.in/bare_acts/CPA2019.pdf)). Unexplained delay becomes a complaint.
+- **Insurance Ombudsman Rules 2017** ([CIO](https://www.cioins.co.in/OmbudsmanRules2017)) and **Consumer Protection Act 2019** ([India Code](https://www.indiacode.nic.in/bitstream/123456789/16939/1/a2019-35.pdf)). Unexplained delay becomes a complaint.
 - **Aadhaar copies** must be masked or vaulted. Confirm the UIDAI requirements with compliance (verify).
 - **Not applicable:** the EU AI Act (Indian insurer, Indian policyholders).
 

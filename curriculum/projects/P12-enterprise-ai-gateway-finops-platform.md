@@ -35,13 +35,13 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 | Stakeholder | Cares about | Can block |
 |---|---|---|
 | Group CIO (sponsor) | Visibility, fewer incidents, a platform story | Budget, mandate |
-| Group CFO | Predictable spend; chargeback for the FY 2027-28 budget cycle | Chargeback policy |
+| Group CFO | Predictable spend; chargeback for FY 2027-28 budgets | Chargeback policy |
 | Group CISO | Keys, DLP, logging, supply chain | Go-live; egress blocking |
 | Group DPO/Legal | DPDP, GDPR, cross-border prompts | Logging scope, providers |
 | 12 BU CTOs (esp. the Consumer BU's own AI team) | Autonomy, latency, no "platform tax" | Onboarding waves |
 | German works council | Employee monitoring through prompt logs | Logging for German staff |
 | Procurement | Committed-spend minimums, renewals | Provider changes |
-| Platform/SRE team (future owner) | Operability, on-call load | Handover |
+| Platform/SRE team (future owner) | Operability, on-call | Handover |
 | Internal audit | Evidence, inventory completeness | Sign-off |
 
 ## 2. Constraints
@@ -92,11 +92,11 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 **Processes to map:** getting model access (ticket → procurement → a key pasted in chat); paying for AI (enterprise agreement, card, cloud marketplace); choosing and upgrading models; outages; risk review of new use cases, if any.
 
 **Baselines and how to measure them:**
-- **Spend census:** 6 months of invoices, card data and cloud billing in one ledger.
+- **Spend census:** 6 months of invoices, card and cloud billing in one ledger.
 - **Key census:** secret scanning of repos and CI, plus provider consoles (count, age, owner).
 - **Gateway traffic share:** egress logs matched to provider domains (baseline 0%).
-- **Cost per successful outcome** for 3 anchors (FMCG invoice extraction, retail email triage, diagnostics summarisation), from the success signal, not token counts.
-- **Latency p50/p95** per anchor; hourly PTU utilisation; a 6-month incident log.
+- **Cost per successful outcome** for 3 anchors (FMCG invoice extraction, retail email triage, diagnostics summarisation), from the success signal.
+- **Latency p50/p95** per anchor; hourly PTU utilisation; 6 months of incidents.
 
 **Sharpest discovery questions:**
 1. Which three use cases would the CFO defend in a budget cut, and what shows they work?
@@ -303,11 +303,9 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 ## 8. Evaluation plan
 
 **Datasets:**
-- **Golden:** 1,000 frozen items per anchor, labelled by BU experts.
-- **Adversarial:** DLP evasions, the poisoned MCP description, cache probes, the loop script.
+- **Golden:** 1,000 frozen items per anchor, labelled by BU experts. **Held-out:** two weeks of pilot traffic, labelled afterwards.
+- **Adversarial:** DLP evasions, the poisoned MCP description, cache probes, the loop script, the 40 seeded shadow-AI cases.
 - **Regression:** every escaped PII case, bad cascade acceptance and failed drill.
-- **Held-out:** two weeks of live pilot traffic, labelled afterwards.
-- **Seeded discovery:** the 40 shadow-AI cases.
 
 **Metrics by layer:**
 
@@ -405,18 +403,17 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 1. **Week 10: a provider announces a model retirement with 60 days' notice.**
    - Anthropic and Microsoft Foundry both give at least 60 days' notice for GA models ([Anthropic](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)); Foundry dates are not extendable and provisioned deployments are **not** auto-upgraded.
-   - Query the registry for dependent aliases and use cases (say 43).
+   - Query the registry for dependent aliases (say 43 use cases).
    - **Shadow**-evaluate on 5% mirrored traffic, then canary 5% → 25% → 100% with SLO-based rollback.
    - Check API contracts as well as quality: Claude Opus 4.7 and later return a 400 for non-default `temperature`/`top_p`/`top_k`.
-   - Re-check PTU capacity, and finish by day 40.
+   - Re-check PTU capacity; finish by day 40.
 2. **Week 5: an agent loop burns a month's budget overnight.**
-   - Throttle or revoke the key and confirm spend has flattened.
+   - Throttle or revoke the key; confirm spend has flattened.
    - Trace the cause (e.g. a failing tool call retried with growing context); add the hourly cap, per-run step limits, repeated-call detection and spend-velocity alerts against a 7-day baseline.
    - Blameless review. Provider credits are not guaranteed; ADR-5 decides who pays.
 3. **Week 8: the gateway package is compromised upstream (a LiteLLM-style event).**
    - Compare deployed digests with the bad versions; check whether the mirror ever served them (the cooldown should have blocked them).
-   - Hunt for the `.pth` IoC in dev and CI.
-   - If the package ran anywhere with provider keys, **rotate every provider key** and revoke sessions.
+   - Hunt for the `.pth` IoC in dev and CI. If the package ran anywhere with provider keys, **rotate every provider key** and revoke sessions.
    - Check egress to the exfiltration domain (`models.litellm.cloud` in the real incident).
    - File with CERT-In within 6 hours if Indian systems are affected; assess GDPR; brief the CISO with the timeline.
 4. **Week 11, during pilot traffic: a provider has a regional outage.**
@@ -456,9 +453,9 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 | 90, 94 | SLOs and Incident Response; Provider Failover and DR | Breakers, `Retry-After` handling, drills, error budgets |
 | 96, 97, 98 | Observability; Evaluation; Guardrail Tools | OTel GenAI spans; golden-set harness; DLP tooling |
 | 78 | PII Detection and DLP | Checksum validators; multilingual evaluation |
-| 65, 66, 71 | MCP Specification; MCP Authorization; Agent Identity | Pinned tool descriptions; MCP auth at the gateway; per-agent virtual keys, not shared keys |
+| 65, 66, 71 | MCP Specification; MCP Authorization; Agent Identity | Pinned tool descriptions; MCP auth at the gateway; per-agent keys |
 | 68 | The Agentic AI Foundation | agentgateway and Agent Router governance |
-| 73, 74, 77 | OWASP Agentic and LLM Top 10s; Model Supply Chain | Denial of wallet, tool poisoning, pinning plus KEV patching |
+| 73, 74, 77 | OWASP Agentic and LLM Top 10s; Model Supply Chain | Denial of wallet, tool poisoning, pinning and KEV patching |
 | 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity Planning; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
 | 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon Execution | Cascade validators; spend caps; stuck-loop detection |
 | 79, 80, 81 | EU AI Act; NIST AI RMF and ISO/IEC 42001; GDPR and DPDP | Inventory screening and risk tiers; logging scope |
@@ -471,11 +468,11 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 ## 15. What reviewers look for / common failure modes
 
-- **Savings without quality.** A cascade reported without non-inferiority tests or a validator false-accept rate.
+- **Savings without quality.** No non-inferiority test or validator false-accept rate.
 - **Pinning without patching.** A cooldown with no KEV fast path.
 - **Fallback that ignores residency.** An outage moves health or KYC prompts offshore.
 - **Shared caches across BUs.** Semantic or prefix caches keyed only on prompt text.
 - **Full prompt logging by default,** or logs outside India when CERT-In applies.
-- **Budgets as monthly alerts only.** No hourly burn-rate cap, so the July incident repeats.
+- **Monthly budget alerts only.** No hourly burn-rate cap, so the July incident repeats.
 - **Raw model IDs in app code.** Every retirement becomes a 12-team fire drill.
 - **Chargeback as a technical problem.** It is a negotiation; bring the BU's own numbers. Charging BUs for unused PTU invites bypass.

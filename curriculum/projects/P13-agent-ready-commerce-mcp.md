@@ -53,9 +53,9 @@ Saree Sutra sells sarees, lehengas, blouses and kurtas: about ₹250 crore of an
 | Crawl control and licensing | Cloudflare moved from pay per crawl (HTTP 402; private beta, Jul 2025) to piloting **pay per use**, which pays when content is used in an AI answer (1 Jul 2026); Content Signals (`search`, `ai-input`, `ai-train`; 24 Sep 2025); IETF aipref drafts; RSL 1.0 | [pay per use](https://blog.cloudflare.com/making-ai-search-smarter/), [signals](https://blog.cloudflare.com/content-signals-policy/), [aipref](https://datatracker.ietf.org/wg/aipref/about/), [RSL](https://rslstandard.org/) |
 
 **Legal and policy (as of Sept 2026; counsel owns the conclusions).**
-- *Privacy:* India's DPDP Act and Rules for Indian shoppers: consent managers 12 months and most obligations 18 months from notification (Nov 2026, May 2027); a Jan 2026 MeitY proposal would cut 18 to 12 months for Significant Data Fiduciaries ([S.S. Rana](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/); verify before teaching). UK GDPR; US state privacy law (CCPA thresholds, to confirm with counsel).
+- *Privacy:* India's DPDP Act and Rules for Indian shoppers: consent managers 12 months and most obligations 18 months from notification (Nov 2026, May 2027); a Jan 2026 MeitY proposal would cut 18 to 12 months for Significant Data Fiduciaries ([S.S. Rana](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/); verify before teaching). UK GDPR ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/)); US state privacy law ([CCPA](https://oag.ca.gov/privacy/ccpa) thresholds, to confirm with counsel).
 - *Consumer protection:* the FTC's fake-reviews rule, announced 14 Aug 2024 ([FTC](https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials)); the UK Digital Markets, Competition and Consumers Act 2024, whose Part 4 unfair-trading and fake-review rules apply from 6 Apr 2025 ([legislation.gov.uk](https://www.legislation.gov.uk/ukpga/2024/13/contents); [CMS](https://cms.law/en/gbr/legal-updates/the-dmcc-act-consumer-elements-come-into-force-from-6-april-2025)); India's Consumer Protection (E-Commerce) Rules 2020 and the CCPA dark-patterns guidelines of 30 Nov 2023 ([PIB](https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1983994)).
-- *Payments:* PCI DSS through the PSPs (keep card numbers out of scope, Turn 82). RBI's authentication directions (two factors, one dynamic, from 1 Apr 2026; [Khaitan](https://www.khaitanco.com/thought-leadership/RBI-Authentication-Mechanisms-for-Digital-Payments-Transactions-Directions)) and UK strong customer authentication mean agent-initiated payments must fit the PSP's authentication flows. *Confirm with each PSP.*
+- *Payments:* [PCI DSS](https://www.pcisecuritystandards.org/) through the PSPs (keep card numbers out of scope, Turn 82). RBI's authentication directions (two factors, one dynamic, from 1 Apr 2026; [Khaitan](https://www.khaitanco.com/thought-leadership/RBI-Authentication-Mechanisms-for-Digital-Payments-Transactions-Directions)) and UK strong customer authentication mean agent-initiated payments must fit the PSP's authentication flows. *Confirm with each PSP.*
 - *Platform policy (binding for distribution):* Google counts hidden text and "attempting to manipulate generative AI responses" as spam ([policy](https://developers.google.com/search/docs/essentials/spam-policies)). OpenAI's guidelines forbid tool descriptions that manipulate model selection.
 
 **Infrastructure and organisation.** Next.js storefront, Node 22, Postgres, Redis, managed CDN/WAF; no Python in production. Card-testing bots hit checkout last festive season. **Code freeze in weeks 5–8** (the Oct–Nov peak). The SEO agency's retainer rewards "AI visibility". Pilot infrastructure budget: at most USD 3k/month.
@@ -88,7 +88,7 @@ Saree Sutra sells sarees, lehengas, blouses and kurtas: about ₹250 crore of an
 
 **Sharpest discovery questions:**
 1. Where, and in which markets, do your shoppers already ask assistants about ethnic wear? Logs first.
-2. Can your customer IdP act as an OAuth 2.1 authorization server (PKCE, resource indicators, Client ID Metadata Documents), or do we add one?
+2. Can your customer IdP act as an OAuth 2.1 authorization server (PKCE, resource indicators, CIMD), or do we add one?
 3. Who is merchant of record for artisan-seller items, and who absorbs returns on agent-placed orders?
 4. What do your PSPs support today for agent-initiated payments in India, the US and the UK: delegated tokens, mandates, authentication flows?
 5. What spend would customers let an assistant commit without asking again, and who carries an agent's over-buy?
@@ -114,7 +114,7 @@ Saree Sutra sells sarees, lehengas, blouses and kurtas: about ₹250 crore of an
 | Quality: search | nDCG@10 on labelled shopper queries (40% Hinglish/transliterated) | ≥ 0.75, and Hinglish within 0.05 of English | 300 labelled queries |
 | Quality: facts | Tool price, stock and size facts match the system of record | 100% | Diff over all SKUs |
 | Quality: size | `size_guidance` outcome correct | 100% | 200 rule-derived cases |
-| Reliability | Synthetic shoppers complete (or correctly decline) the task | pass^3 ≥ 0.85 | 100 `shopper_tasks` × 3 runs |
+| Reliability | Synthetic shoppers complete (or correctly decline) the task | pass^3 ≥ 0.85 | 100 `shopper_tasks` (incl. the 50 held out) × 3 runs |
 | Reliability | Duplicate cart lines or orders under retries and replays | 0 | 10k chaos-replayed calls |
 | Security: auth | Wrong-audience, expired or passed-through tokens rejected | 100% | Auth conformance suite |
 | Security: mandate | Purchases above mandate | 0 of 1,000 adversarial attempts | Mandate-abuse suite |
