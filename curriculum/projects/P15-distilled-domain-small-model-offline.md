@@ -189,9 +189,9 @@ The **safety router** is deterministic (rules plus a small classifier tuned for 
 """Synthetic-data filter: decontaminate against the frozen test set, then verify answers against the source manual."""
 import re
 
-SAFETY = re.compile(r"\b(lockout|tagout|loto|de-?energi[sz]\w*|ground(?:ing)?|rack(?:ing)? (?:in|out)|"
+SAFETY = re.compile(r"\b(lockout|tagout|loto|de-?energi[sz]\w*|ground(?:s|ed|ing)?|rack(?:ing)? (?:in|out)|"
                     r"arc[- ]flash|high[- ]voltage|\d+(?:\.\d+)?\s?kv)\b", re.I)
-NUM = re.compile(r"\d+(?:\.\d+)?")                      # torque values, clearances, voltages, times
+NUM = re.compile(r"(?<![\w.-])\d+(?:\.\d+)?")  # standalone values only: "15" in "VCB-15R" is a model ID, not a value
 
 def toks(text: str) -> list[str]:
     return re.findall(r"[a-z0-9]+(?:\.[0-9]+)?", text.lower())
@@ -236,11 +236,11 @@ def verify_against_source(item: dict, passage: str, safety: bool) -> str | None:
     support = sum(t in p_set for t in content) / max(1, len(content))
     return None if support >= 0.6 else f"low lexical support ({support:.2f}); send to judge or drop"
 
-def filter_items(items: list[dict], passages: dict[str, str], dec: Decontaminator):
+def filter_items(items: list[dict], passages: dict[str, str], dec: Decontaminator, safety_ids=frozenset()):
     kept, rejected = [], []
     for it in items:
         passage = passages[it["passage_id"]]
-        safety = bool(SAFETY.search(it["question"] + " " + passage))
+        safety = it["passage_id"] in safety_ids or bool(SAFETY.search(it["question"] + " " + passage))  # pack labels first
         why = dec.reason(it) or verify_against_source(it, passage, safety)
         (rejected if why else kept).append({**it, "safety_critical": safety, "reject_reason": why})
     return kept, rejected

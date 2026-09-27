@@ -259,8 +259,8 @@ def is_internal(addr: str) -> bool:
     return bool(m) and m.group(1) in INTERNAL_DOMAINS
 
 def send_email(to: list, body: Val, mode: str, approved: bool = False) -> str:
-    if mode == "draft_only":             # pinned constraint enforced in code, not in the prompt
-        raise PolicyViolation("send is disabled in draft-only mode")
+    if mode != "internal_auto_send":     # pinned constraint enforced in code; unknown modes fail closed
+        raise PolicyViolation(f"send is disabled in {mode} mode")
     for r in to:
         if not is_internal(str(r.data)):
             raise PolicyViolation(f"external recipient blocked: {r.data}")
