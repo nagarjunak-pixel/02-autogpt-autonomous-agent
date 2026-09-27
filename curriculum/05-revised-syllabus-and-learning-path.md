@@ -142,38 +142,40 @@ Priorities and full entries are in the [gap register](02-gap-register.md). "New 
 
 ## 5. The 16-week FDE track
 
-Each week has roughly 10–12 hours of study plus project work. Projects run in three waves:
-- **Project 1** (weeks 3–8): a ★★☆ build-first project.
-- **Project 2** (weeks 9–12): a ★★★ hardening/operations project.
-- **Capstone** (weeks 13–16): chosen by target industry.
+Each week has roughly 10–12 hours of study plus project work. The briefs' course builds need 4–6 weeks each, so three full projects cannot fit in 16 weeks. The track therefore runs **two full projects and a scoped capstone**:
+- **Project 1** (weeks 2–7, six weeks): a ★★☆ build-first project. Its discovery happens in week 2.
+- **Project 2** (weeks 8–13, six weeks): a ★★★ hardening or operations project. Six weeks fits every ★★★ brief (their course builds run 4–6 weeks).
+- **Capstone sprint** (weeks 14–16, three weeks). Choose one:
+  - **(a) Discovery-to-POC on a new brief**, in the learner's target industry: discovery memo, data-readiness scorecard, SOW, frozen evaluation set and a POC demo. This is exactly what an FDE ships in the first three weeks of a real engagement.
+  - **(b) Production hardening and handover of Project 2**: SLOs, runbook drills, a red-team regression run, and a handover drill in which another team plays the customer and runs the system without you.
+
+  Both options end with the design defence (Turn 117) and a field-to-product memo.
 
 | Week | Module | Topics | Project milestone |
 |---|---|---|---|
 | 1 | Engage I | FDE operating model (108a) · 109 · 110 · 115 · literacy crash course: 1, 102, 21 | Read all 16 briefs; choose Project 1 |
-| 2 | Engage II: trust | 111 · 116 · 115a security review · 79a obligations → controls · 81 privacy | **Discovery memo + data-readiness scorecard + draft SOW** (Templates 01–03) |
-| 3 | Build I: retrieval | 42 · 50a permission-aware retrieval · 52 · 40a context engineering · 47 | Project 1 kickoff; security pack skeleton (Template 08) |
-| 4 | Evaluate | 12a evaluation strategy · 14 · 63 · (49, 97 annexes) | **Frozen golden and adversarial sets; eval plan** (Template 05) |
-| 5 | Build II: data and tools | 51a text-to-SQL · 61 ACI + decision ladder · 36 · 65 · 66 MCP auth | POC build |
-| 6 | Build III: agents | 95 harness engineering · 55 orchestration · 71 identity · 100a systems of record · 21a reasoning controls · 112 ADRs · 113 demos | **POC demo** (Template 10), design doc + ADRs (Template 04) |
-| 7 | Harden I | 73a injection-resistant architecture · 73/74 OWASP · 75 red-teaming · 76 poisoning · 74 multi-tenant side channels (SEC-8) | Threat model (Template 06); red-team run |
-| 8 | Harden II | 78 DLP · 86 sandboxes · 77a orchestration-layer security + 77 supply chain · 99a low-code builders | **Project 1 final + curveballs**; compliance map (Template 07) |
-| 9 | Operate I | 100 gateways · 96 observability · 91 FinOps + capacity · 101 coding agents | Project 2 kickoff (★★★) |
-| 10 | Operate II | 87 upgrades · 88 canaries · 89 flywheel · 90 SLOs + legal incident clocks (SEC-3) · 80a shadow-AI inventory | Eval CI gates; SLOs and runbook (Template 09) |
-| 11 | Deploy | 92 customer environments + sovereignty · 29/30 serving + quantisation · 29a serving fidelity · 33 capacity · 93 IaC | **Project 2 pilot** |
-| 12 | Multimodal | 105 VLMs · 43 multimodal RAG · (elective: 60/106 voice track) | **Project 2 final + curveballs + handover drill** |
-| 13 | Customisation | 22 fine-tuning decisions · 23 distillation + teacher terms · 24 · 34 on-device | Capstone kickoff; discovery memo |
-| 14 | Frontier practice | 61a computer use · 101a distribution in assistants · 69 WebMCP · 70 commerce protocols · agent-written code at scale (ex-127, now part of 101; HOR-8) | Capstone POC |
-| 15 | Horizon and responsibility | [04](04-future-topics-2026-2028.md) horizon review · 83 responsible AI · 82 sector compliance · 82a CRA/PLD · 83a ADM and hiring laws · 83b companion AI and minors · 81a India sector rules · 114 change management | Capstone pilot |
-| 16 | Capstone | — | **Demo, design defence (Turn 117), handover drill** |
+| 2 | Engage II: trust | 111 · 116 · 115a security review · 79a obligations → controls · 81 privacy | **P1: discovery memo, data-readiness scorecard, draft SOW** (Templates 01–03) |
+| 3 | Build I: retrieval | 42 · 50a permission-aware retrieval · 52 · 40a context engineering · 47 | P1: SOW agreed; security pack skeleton (Template 08); POC build starts |
+| 4 | Evaluate | 12a evaluation strategy · 14 · 63 · (49, 97 annexes) | **P1: frozen golden and adversarial sets; eval plan** (Template 05) |
+| 5 | Build II: data and tools | 51a text-to-SQL · 61 ACI + decision ladder · 36 · 65 · 66 MCP auth | P1: POC build |
+| 6 | Build III: agents | 95 harness engineering · 55 orchestration · 71 identity · 100a systems of record · 21a reasoning controls · 112 ADRs · 113 demos | **P1: POC demo** (Template 10); design doc and ADRs (Template 04); pilot slice |
+| 7 | Harden I | 73a injection-resistant architecture · 73/74 OWASP · 75 red-teaming · 76 poisoning · 74 multi-tenant side channels (SEC-8) | **P1 final: threat model (Template 06), red-team run, compliance map (Template 07), curveballs, design defence** |
+| 8 | Harden II | 78 DLP · 86 sandboxes · 77a orchestration-layer security + 77 supply chain · 99a low-code builders | **P2 kickoff (★★★):** discovery memo and SOW |
+| 9 | Operate I | 100 gateways · 96 observability · 91 FinOps + capacity · 101 coding agents | P2: frozen eval set; POC build |
+| 10 | Operate II | 87 upgrades · 88 canaries · 89 flywheel · 90 SLOs + legal incident clocks (SEC-3) · 80a shadow-AI inventory | **P2: POC demo**; eval CI gates; SLOs and runbook (Template 09) |
+| 11 | Deploy | 92 customer environments + sovereignty · 29/30 serving + quantisation · 29a serving fidelity · 33 capacity · 93 IaC | P2: pilot; threat model and compliance map |
+| 12 | Multimodal | 105 VLMs · 43 multimodal RAG · (elective: 60/106 voice track) | P2: pilot results; curveballs |
+| 13 | Customisation | 22 fine-tuning decisions · 23 distillation + teacher terms · 24 · 34 on-device | **P2 final: handover drill, field-to-product memo, design defence** |
+| 14 | Frontier practice | 61a computer use · 101a distribution in assistants · 69 WebMCP · 70 commerce protocols · agent-written code at scale (ex-127, now part of 101; HOR-8) | Capstone sprint week 1: (a) discovery memo and SOW, or (b) hardening plan and SLOs |
+| 15 | Horizon and responsibility | [04](04-future-topics-2026-2028.md) horizon review · 83 responsible AI · 82 sector compliance · 82a CRA/PLD · 83a ADM and hiring laws · 83b companion AI and minors · 81a India sector rules · 114 change management | Capstone sprint week 2: (a) frozen eval set and POC build, or (b) runbook drills and red-team regression |
+| 16 | Capstone | — | **Capstone demo, design defence (Turn 117), handover drill, field-to-product memo** |
 
 ### Which projects fit which wave
 
 | Wave | Recommended briefs | Why |
 |---|---|---|
-| Project 1 (★★☆, weeks 3–8) | [P01](projects/P01-permission-aware-knowledge-assistant.md) · [P02](projects/P02-text-to-sql-analytics-agent.md) · [P03](projects/P03-claims-intake-document-ai.md) · [P09](projects/P09-legacy-modernisation-with-coding-agents.md) · [P11](projects/P11-teen-safe-study-companion-compliance.md) · [P13](projects/P13-agent-ready-commerce-mcp.md) · [P14](projects/P14-multilingual-citizen-services-assistant.md) · [P16](projects/P16-due-diligence-deep-research-agent.md) | They exercise weeks 1–8 (engage, retrieval, evaluation, tools, hardening) without needing ops depth |
-| Project 2 (★★★, weeks 9–12) | [P04](projects/P04-contact-centre-voice-agent.md) · [P05](projects/P05-computer-use-agent-replacing-rpa.md) · [P06](projects/P06-injection-resistant-inbox-agent.md) · [P07](projects/P07-ai-vulnerability-triage-and-patch-pipeline.md) · [P08](projects/P08-sovereign-air-gapped-llm-platform.md) · [P10](projects/P10-ambient-clinical-documentation.md) · [P12](projects/P12-enterprise-ai-gateway-finops-platform.md) · [P15](projects/P15-distilled-domain-small-model-offline.md) | Hardening, operations, deployment or real-time constraints |
-| Capstone | Any brief not yet done, chosen for the learner's target industry | Portfolio piece plus design defence |
-
-**Timing.** The briefs' course builds run 4–6 weeks. Project 2 and the capstone have 4-week slots, so either trim a 5–6-week brief to its core milestones or choose P08 or P15, which are written for 4 weeks.
+| Project 1 (★★☆, weeks 2–7) | [P01](projects/P01-permission-aware-knowledge-assistant.md) · [P02](projects/P02-text-to-sql-analytics-agent.md) · [P03](projects/P03-claims-intake-document-ai.md) · [P09](projects/P09-legacy-modernisation-with-coding-agents.md) · [P11](projects/P11-teen-safe-study-companion-compliance.md) · [P13](projects/P13-agent-ready-commerce-mcp.md) · [P14](projects/P14-multilingual-citizen-services-assistant.md) · [P16](projects/P16-due-diligence-deep-research-agent.md) | Course builds of 5–6 weeks. They exercise engagement, retrieval, evaluation, tools and first-level hardening without needing ops depth |
+| Project 2 (★★★, weeks 8–13) | [P04](projects/P04-contact-centre-voice-agent.md) · [P05](projects/P05-computer-use-agent-replacing-rpa.md) · [P06](projects/P06-injection-resistant-inbox-agent.md) · [P07](projects/P07-ai-vulnerability-triage-and-patch-pipeline.md) · [P08](projects/P08-sovereign-air-gapped-llm-platform.md) · [P10](projects/P10-ambient-clinical-documentation.md) · [P12](projects/P12-enterprise-ai-gateway-finops-platform.md) · [P15](projects/P15-distilled-domain-small-model-offline.md) | Course builds of 4–6 weeks. They add hardening, operations, deployment or real-time constraints |
+| Capstone sprint (weeks 14–16) | (a) Discovery-to-POC on any brief not yet done, chosen for the learner's target industry, or (b) hardening and handover of Project 2 | A portfolio piece that shows the first three weeks of a real engagement, or production readiness; both end with a design defence |
 
 **Coverage.** Across the 16 projects, every core topic above is exercised by at least one project. See the coverage matrix in [projects/README.md](projects/README.md#coverage-matrix).
