@@ -13,6 +13,7 @@ Everything here is **verified as of 26 September 2026**. Dated facts carry sourc
 | What is coming in 2026–2028, and a dated calendar | [04 · Future topics and horizon scan](04-future-topics-2026-2028.md) |
 | The revised syllabus and a 16-week FDE track | [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md) |
 | Real-world FDE projects and engagement templates | [projects/](projects/README.md) |
+| Offline starter kits: data, the key control with tests, a baseline and an eval harness per project | [projects/starter-kits/](projects/starter-kits/README.md) |
 
 ## Headline findings
 
@@ -45,7 +46,7 @@ Everything here is **verified as of 26 September 2026**. Dated facts carry sourc
    - Seven merge into existing turns.
    - Only six stay on the watch list.
    - It also gains five new seeds, and there is a verified 35-event calendar to 2028 ([04](04-future-topics-2026-2028.md)).
-6. **16 projects make the course job-shaped.** Each is a fictional customer engagement with discovery, an SOW, an architecture and ADRs, an eval plan, a threat model, a compliance mapping, operations, instructor-injected curveballs and a grading rubric. Each comes in a real-engagement version and a course-scaled version ([projects/](projects/README.md)).
+6. **16 projects make the course job-shaped.** Each is a fictional customer engagement with discovery, an SOW, an architecture and ADRs, an eval plan, a threat model, a compliance mapping, operations, instructor-injected curveballs and a grading rubric. Each comes in a real-engagement version and a course-scaled version ([projects/](projects/README.md)). Each also has an offline starter kit that runs without an API key: 371 tests in total, and every baseline fails several acceptance criteria by design ([starter-kits/](projects/starter-kits/README.md)).
 
 ## How this was produced
 

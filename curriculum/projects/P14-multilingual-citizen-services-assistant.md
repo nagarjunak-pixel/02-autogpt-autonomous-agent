@@ -4,6 +4,8 @@
 >
 > **Customer:** Anvaya Welfare Directorate (fictional), welfare department of a fictional Telugu-majority Indian state where Urdu is also an official language · **Industry:** Public sector / social welfare · **Geography:** India · **Real engagement:** 22–24 weeks. Team: 2 FDEs, 1 applied scientist (multilingual retrieval and speech), 1 conversation designer/linguist, part-time security and accessibility specialists, plus the state IT cell, the application-system team and the helpline vendor · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
+**Starter kit:** [`starter-kits/P14-multilingual-citizen-services-assistant/`](starter-kits/P14-multilingual-citizen-services-assistant/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `language_gate.py` (with a mock status API) with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ---
 
 ## 1. Scenario — the customer and the ask

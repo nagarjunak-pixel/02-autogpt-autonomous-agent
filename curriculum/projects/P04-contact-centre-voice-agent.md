@@ -4,6 +4,8 @@
 >
 > **Customer:** Kavrona Telecom (fictional) · **Industry:** Mobile telecom (prepaid and postpaid) · **Geography:** India; pilot in one Telugu-majority and one Hindi-majority circle · **Real engagement:** 18–20 weeks; 2 FDEs, 1 telephony/voice engineer, 1 applied scientist (speech and evals), a part-time security architect, plus Kavrona's IVR, CRM and fraud teams · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★★
 
+**Starter kit:** [`starter-kits/P04-contact-centre-voice-agent/`](starter-kits/P04-contact-centre-voice-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `turn_manager.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ---
 
 ## 1. Scenario — the customer and the ask

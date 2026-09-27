@@ -3,6 +3,8 @@
 > A research assistant over the firm's matter files. It answers with paragraph-level citations and never shows anyone a document they could not open themselves, including documents behind an ethical wall.
 > **Customer:** Carrowby & Varadan LLP (fictional) · **Industry:** Legal services (disputes, M&A, regulatory) · **Geography:** London, Mumbai, Bengaluru; clients in the UK, EU and India · **Real engagement:** 16 weeks; 2 FDEs and a security engineer at 50%, plus the firm's KM lead, a DMS administrator and 2 lawyer SMEs (4 h/week each) · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
+**Starter kit:** [`starter-kits/P01-permission-aware-knowledge-assistant/`](starter-kits/P01-permission-aware-knowledge-assistant/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `permission_trim.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario — the customer and the ask
 
 Carrowby & Varadan has about 1,200 staff, around 550 of them fee earners. Its iManage/NetDocuments-style DMS holds about 9 million documents and emails across about 60,000 matters, and newer work lives in SharePoint and Teams. The Managing Partner asked for **"ChatGPT for our documents"**. Associates are already pasting clauses into consumer chatbots, which the CISO keeps blocking.

@@ -4,6 +4,8 @@
 >
 > **Customer:** Tavrenhill Holdings (fictional) · **Industry:** Diversified conglomerate (retail, FMCG, cement, logistics, hospitality, diagnostics, an NBFC, real estate, media, chemicals, renewables, IT services) · **Geography:** HQ Mumbai; business units (BUs) in India, the UAE, the UK and Germany · **Real engagement:** 16 weeks; FDE lead, 1 FDE, a part-time security architect, plus Tavrenhill's platform team (4), a FinOps analyst and a BU champion per wave · **Course build:** 5 weeks, team of 3–4 · **Difficulty:** ★★★
 
+**Starter kit:** [`starter-kits/P12-enterprise-ai-gateway-finops-platform/`](starter-kits/P12-enterprise-ai-gateway-finops-platform/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `router.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario — the customer and the ask
 
 A spend census found AI costs of about **USD 420k/month**, up roughly 4× in a year:

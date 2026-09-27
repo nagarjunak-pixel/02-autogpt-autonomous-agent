@@ -4,6 +4,8 @@
 
 > **Customer:** Corriemuir Capital (fictional) · **Industry:** Private equity (mid-market buyout and growth) · **Geography:** UK (London) and India (Mumbai) · **Real engagement:** 14 weeks. The FDE lead and one FDE work with Corriemuir's data engineer, a part-time compliance officer and 2 analyst champions · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
+**Starter kit:** [`starter-kits/P16-due-diligence-deep-research-agent/`](starter-kits/P16-due-diligence-deep-research-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `citation_verifier.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ---
 
 ## 1. Scenario — the customer and the ask

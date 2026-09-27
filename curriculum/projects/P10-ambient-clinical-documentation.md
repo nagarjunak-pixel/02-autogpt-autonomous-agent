@@ -4,6 +4,8 @@
 >
 > **Customer:** Almarosa Community Health (fictional) · **Industry:** Healthcare: US federally qualified health centre (FQHC) network · **Geography:** California and Texas, USA; English/Spanish · **Real engagement:** 24 weeks, FDE lead + speech/ML FDE + EHR integration engineer, with a customer clinical informaticist and a security engineer part-time · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
+**Starter kit:** [`starter-kits/P10-ambient-clinical-documentation/`](starter-kits/P10-ambient-clinical-documentation/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `note_verifier.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario: the customer and the ask
 
 **The customer.** Almarosa runs 14 clinics: 9 in California's Central Valley, 5 in South Texas. About 110 prescribing clinicians (physicians, NPs, PAs) see roughly 2,000 visits a day. Just over half of patients prefer Spanish, many conversations code-switch, and some visits use in-person, phone or video interpreters.

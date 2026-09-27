@@ -3,6 +3,8 @@
 > Store and regional managers ask questions in English, Hindi or Hinglish and get correct, correctly scoped numbers and charts. Answers come from a governed metrics layer, not from an LLM writing whatever SQL it likes.
 > **Customer:** Annavara Retail (fictional) · **Industry:** Grocery and FMCG retail · **Geography:** India (about 900 stores in 8 regions; HQ in Pune) · **Real engagement:** 12 weeks; an FDE lead and an analytics engineer, plus the customer's data-platform engineer (50%), a FinOps analyst (20%) and 4 pilot regional managers · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆
 
+**Starter kit:** [`starter-kits/P02-text-to-sql-analytics-agent/`](starter-kits/P02-text-to-sql-analytics-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `sql_guard.py` and `semantic_layer.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario — the customer and the ask
 
 Annavara Retail runs about 900 hypermarket, supermarket and express stores. POS data lands in the warehouse in hourly micro-batches, about 16 million sales lines a day. Twelve HQ analysts answer about 1,500 ad-hoc requests a month that arrive through WhatsApp and email, with a 2–3-day turnaround. Store managers rarely open the 40 BI dashboards. The COO's ask: **"Let store and regional managers ask questions in English and Hindi and get answers and charts."**

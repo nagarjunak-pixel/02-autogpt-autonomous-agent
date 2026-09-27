@@ -4,6 +4,8 @@
 >
 > **Customer:** Neyyarasi (fictional) · **Industry:** D2C fashion / ethnic wear with an artisan-seller marketplace · **Geography:** India (HQ), US, UK · **Real engagement:** 14 weeks; FDE lead, two TypeScript engineers, part-time security engineer · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆ · **Stack:** TypeScript-first
 
+**Starter kit:** [`starter-kits/P13-agent-ready-commerce-mcp/`](starter-kits/P13-agent-ready-commerce-mcp/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `add_to_cart.ts` (TypeScript, Node 22) with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ---
 
 ## 1. Scenario — the customer and the ask

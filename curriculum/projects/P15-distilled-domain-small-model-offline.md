@@ -4,6 +4,8 @@
 
 > **Customer:** Kilnridge Energy Services (fictional) · **Industry:** Utility maintenance contracting (substations, switchgear, distribution) · **Geography:** US Gulf Coast field operations (Texas, Louisiana); engineering centre in Hyderabad · **Real engagement:** 18 weeks; FDE lead, ML engineer (SFT, distillation, evals), edge engineer (runtimes, packaging), part-time HSE safety SME and security engineer · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
+**Starter kit:** [`starter-kits/P15-distilled-domain-small-model-offline/`](starter-kits/P15-distilled-domain-small-model-offline/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `synth_filter.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario — the customer and the ask
 
 Kilnridge's 1,100 technicians maintain breakers, transformers, relays and switchgear for utilities and electric co-ops. Substations often have no signal, some clients forbid network connections, and after hurricanes crews can be offline for weeks. Today technicians scroll PDFs or queue for the desk-engineer hotline. The VP of Field Operations asks for **"an offline assistant for our technicians."**

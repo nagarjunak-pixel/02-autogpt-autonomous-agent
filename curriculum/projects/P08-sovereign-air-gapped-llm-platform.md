@@ -4,6 +4,8 @@
 
 > **Customer:** Nallamala Cooperative Bank (fictional) · **Industry:** Banking (multi-state urban co-operative bank, RBI-regulated) · **Geography:** Andhra Pradesh and Telangana, India · **Real engagement:** 16 weeks; FDE lead, platform/SRE engineer, ML engineer, part-time security architect and a Telugu/Hindi language lead · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
+**Starter kit:** [`starter-kits/P08-sovereign-air-gapped-llm-platform/`](starter-kits/P08-sovereign-air-gapped-llm-platform/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `bundle_verifier.py` and `kv_capacity.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario — the customer and the ask
 
 Nallamala Cooperative Bank (about 6,000 staff, 380 branches) found staff pasting circulars, and sometimes customer details, into consumer chatbots. The CGM (IT) wants a sanctioned alternative: **"ChatGPT for staff, but nothing may leave our data centre."**

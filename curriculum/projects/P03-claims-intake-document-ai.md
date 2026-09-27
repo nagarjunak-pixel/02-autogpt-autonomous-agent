@@ -4,6 +4,8 @@
 >
 > **Customer:** Kalsubai General Insurance (fictional) · **Industry:** General insurance (motor + retail health) · **Geography:** India (Pune HQ; Maharashtra, Goa, Madhya Pradesh) · **Real engagement:** 22 weeks, FDE lead + 2 FDEs + part-time UX researcher and security engineer · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★☆
 
+**Starter kit:** [`starter-kits/P03-claims-intake-document-ai/`](starter-kits/P03-claims-intake-document-ai/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `review_router.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ## 1. Scenario: the customer and the ask
 
 Kalsubai is an IRDAI-regulated general insurer. It handles about **60,000 claims a month**: roughly 33,000 motor and 27,000 retail health (cashless and reimbursement).

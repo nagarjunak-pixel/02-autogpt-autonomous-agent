@@ -30,6 +30,16 @@ The Vol 2 study guide assesses recall only (676 short-answer questions). FDEs ar
 | [P15](P15-distilled-domain-small-model-offline.md) | Distilled domain small model for offline technicians | Utility contractor · global | SFT/LoRA, distillation, synthetic data, quantisation, on-device, safety erosion | ★★★ |
 | [P16](P16-due-diligence-deep-research-agent.md) | Due-diligence deep-research agent | Private equity · UK + India | Deep research, citation verification, MNPI barriers, content licensing | ★★☆ |
 
+## Starter kits
+
+Every brief has an offline starter kit in [starter-kits/](starter-kits/README.md). No API key, network access or installs are needed; Python 3.11 standard library, except P02 (duckdb and sqlglot) and P13 (Node 22). Each kit has:
+- a deterministic generator for the brief's synthetic data, with the tricky cases labelled;
+- the brief's §7 control as a tested module;
+- a deliberately weak baseline;
+- an eval harness that prints `AC-ID | metric | value | threshold | result` against §5.
+
+Every baseline fails several criteria by design, and metrics that need people or production traffic are marked "not computable offline". Teams start week 1 by running their kit, then replace the baseline and track the numbers. A kit is a scaffold, not a solution: the §8 evaluation plan, the calibrated judges and the engagement artefacts are still the team's work.
+
 ## How every project runs
 
 ```mermaid

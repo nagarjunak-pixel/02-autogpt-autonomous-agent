@@ -4,6 +4,8 @@
 >
 > **Customer:** Taruvana Learning (fictional) · **Industry:** Consumer K-12 edtech (ages 13–18) · **Geography:** India (2M students), launching in California and New York · **Real engagement:** 12 weeks; FDE lead, FDE/ML engineer and part-time safety-evaluation specialist, with the customer's product, trust and safety (T&S), counsel and clinical adviser · **Course build:** 5 weeks, team of 3–4 · **Difficulty:** ★★☆ (moderate engineering, hard judgement)
 
+**Starter kit:** [`starter-kits/P11-teen-safe-study-companion-compliance/`](starter-kits/P11-teen-safe-study-companion-compliance/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `flip_rate.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
+
 ---
 
 ## 1. Scenario — the customer and the ask
