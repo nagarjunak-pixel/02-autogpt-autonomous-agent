@@ -161,7 +161,7 @@ The following all hold:
 - **Secondary (f), DPDP:** Teach the dates as "12 and 18 months from notification (Nov 2026, May 2027)"; sources disagree on the exact day.
 - **Secondary (g), ANI v. OpenAI:** Both documents miss that **ANI has appealed**; Bar & Bench reported on 7 Sep 2026 that the appeal is pending before the Delhi High Court.
 - **Secondary (c) and (d):** A2A v1.0 was released on 12 Mar 2026, and A2A joined AAIF on 17 Aug 2026 (AAIF's own post). Vol 2 never states a wrong date for either, so these are not errors in the guide.
-- **Secondary (m):** The ~4-month open-weight lag is confirmed (see A-list). Epoch's "probably understated" remark could not be confirmed.
+- **Secondary (m):** The ~4-month open-weight lag is confirmed (see A-list). Epoch's caveat is milder than "probably understated": its Limitations section says the estimate "may tend to understate the true gap", because open models do worse on private benchmarks and closed labs do not always release their best models ([Epoch AI, 29 May 2026](https://epoch.ai/data-insights/open-closed-eci-gap), checked 27 Sep 2026).
 
 ### B4. Unverifiable
 - The headline **"coverage is roughly 85–90%"** has no taxonomy, denominator or scoring rule behind it. Treat it as an impression. [01-curriculum-review.md](01-curriculum-review.md) replaces it with specific, checkable gaps.
