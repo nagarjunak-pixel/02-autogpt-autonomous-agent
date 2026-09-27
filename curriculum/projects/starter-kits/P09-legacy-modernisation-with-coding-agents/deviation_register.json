@@ -1,0 +1,10 @@
+[
+  {
+    "rule_id": "DEV-EXAMPLE-001",
+    "field": "modal_premium",
+    "quirk": "rounding_monthly",
+    "description": "EXAMPLE ENTRY, NOT APPROVED. It shows the format. A diff counts as explained only when an entry names its field and quirk AND carries the Appointed Actuary's sign-off.",
+    "source": "none found yet: 2004 comment '* PER IRDA CIRC - DO NOT CHANGE', no circular located",
+    "actuary_signoff": null
+  }
+]

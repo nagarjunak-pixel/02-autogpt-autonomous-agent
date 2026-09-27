@@ -132,13 +132,10 @@ def supported(out, truth):
 def deletion_drill(make, truth, erasure):
     sysm, due = make(), [m for m in truth.matters.values() if m["due_for_deletion"]]
     scope = sorted(mid for mid, d in erasure["dpo_decision"].items() if d == "erase")
-    warm = []
-    for m in due:  # warm the caches first: derived copies are what deletions usually miss
-        uid = next(u for u in sorted(truth.users) if truth.can_access(u, m["matter_id"], T0))
-        warm.append((uid, f"What are the key documents on Project {m['codename']}?"))
-    for mid in scope:
-        uid = next(u for u in sorted(truth.users) if truth.can_access(u, mid, T0))
-        warm.append((uid, f"Which meeting did {erasure['subject']} attend as operations manager?"))
+    reader = lambda mid: next((u for u in sorted(truth.users) if truth.can_access(u, mid, T0)), None)
+    warm = [(reader(m["matter_id"]), f"What are the key documents on Project {m['codename']}?") for m in due]
+    warm += [(reader(mid), f"Which meeting did {erasure['subject']} attend as operations manager?") for mid in scope]
+    warm = [(uid, q) for uid, q in warm if uid]  # warm the caches first: derived copies are what deletions miss
     for uid, q in warm:
         sysm.answer(uid, q, T0)
     for m in due:
