@@ -16,7 +16,7 @@ class BudgetExceeded(Exception):
 class ProviderError(Exception):  # addition: timeouts, 5xx, 404/410 (retired model) and 429s
     def __init__(self, message="provider error", retry_after=None):
         super().__init__(message)
-        self.retry_after = retry_after  # 429: Retry-After seconds; math.inf for a spend-cap 429 (park until a human acts)
+        self.retry_after = retry_after  # 429: Retry-After seconds; math.inf for a spend-cap 429 (wait for a human)
 
 
 @dataclass

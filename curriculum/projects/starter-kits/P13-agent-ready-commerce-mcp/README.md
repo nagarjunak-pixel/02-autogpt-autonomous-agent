@@ -67,7 +67,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-12 number its rows in order. Bas
 | AC-1 | Agent-channel orders attributed end to end | 100% | not computable offline | Needs production order tagging. |
 | AC-2 | nDCG@10 on 300 labelled queries (40% Hinglish or transliterated) | ≥ 0.75 | 0.56: FAIL | |
 | AC-2 | nDCG@10 gap, English minus Hinglish | ≤ 0.05 | 0.31: FAIL | English 0.69, Hinglish 0.38. No transliteration synonyms. |
-| AC-3 | `get_product` price, stock and blouse facts equal the system of record, all SKUs | 100% | 90%: FAIL | The baseline serves the stale feed. |
+| AC-3 | `get_product` price, stock and blouse equal the system of record, and any length given is the true one, all SKUs | 100% | 90%: FAIL | The baseline serves the stale feed. A missing attribute counts under AC-1, not here. |
 | AC-4 | `size_guidance` outcome equals `sizeRule()` on 200 cases | 100% | 33.5%: FAIL | Assumes inches; ignores stitching and missing rows. |
 | AC-5 | Shopper tasks passed on all 3 runs (pass^3), judged from the store | ≥ 0.85 | 0.33: FAIL | Held-out 0.34, Hinglish 0.25. The baseline shopper is deterministic, so pass^3 = pass@1. |
 | AC-6 | Duplicate cart lines or orders over about 10,000 chaos calls (concurrent bursts, late retries, checkout replays) | 0 | 0: PASS | The control's atomic claim. Keep it at 0 when you move to Postgres. |
@@ -75,7 +75,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-12 number its rows in order. Bas
 | AC-8 | Mandate-abuse attempts that end with orders above the mandate | 0 of 1,000 | 0: PASS | Per-mandate aggregate plus the checkout re-check. |
 | AC-9 | Injected SKUs whose text reaches `get_product` or `search_catalog` unsanitised or outside an `{untrusted: true}` block | 0 of 400 (84 at default scale) | 70/84: FAIL | Tag-stripping removes HTML comments only. |
 | AC-10 | Human p95 latency under a 20× bot surge | ≤ 1.2× baseline | not computable offline | Needs the k6 swarm. |
-| AC-11 | p95 of `search_catalog` / `get_product` / `add_to_cart`, in-process | ≤ 400 / 200 / 300 ms | < 1 ms each: PASS | Meaningful only behind real I/O. |
+| AC-11 | p95 of `search_catalog` / `get_product` / `add_to_cart`, in-process | ≤ 400 / 200 / 300 ms | under 1 ms each: PASS | Meaningful only behind real I/O. |
 | AC-12 | Cost per 1,000 tool calls | ≤ USD 0.50 | not computable offline | Needs the cost dashboard. |
 | CB1 | The Hindi white-on-white fixture reaches tool output | no | yes: FAIL | |
 | CB2 | CI lint blocks marketing's hidden text, and tool descriptions have no hidden text or "always/best/only" claims | blocked; clean | PASS | The lint is the harness's; snapshot-diff descriptions in CI too. |

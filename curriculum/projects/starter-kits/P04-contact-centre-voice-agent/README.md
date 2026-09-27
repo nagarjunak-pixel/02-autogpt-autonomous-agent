@@ -18,7 +18,7 @@ Run these from this folder with Python 3.11. The standard library is all you nee
 ```bash
 python3 generate_data.py                  # under 1 s; --scale N multiplies the volumes
 python3 eval_harness.py                   # about 3 s; prints the AC table, writes results/baseline.json
-python3 -m unittest discover -s tests -v  # about 2 s; 25 tests
+python3 -m unittest discover -s tests -v  # about 2 s; 24 tests
 ```
 
 Useful flags: `eval_harness.py --runs 1` (pass^1 instead of pass^4) and `--limit N` (score only the first N items of each set, which saves money with a real model).
@@ -76,7 +76,7 @@ The brief sizes the plan catalogue at 320 and the adversarial set at 200, and th
 
 ## Harness metrics and the brief's acceptance criteria
 
-Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (contained resolution) and AC-13 the last (cost). The last column is the baseline's score today. Latency rows vary by a few milliseconds between runs.
+Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (contained resolution) and AC-13 the last (cost). The last column is the baseline's score today. Latency rows run in real time, so they vary a little between runs; the tool-turn answer p95 sits near a turn that can take either path, so it reads 1.7 s or about 1.85 s.
 
 | Harness metric | AC (§5 row) | Threshold (brief §5) | Baseline |
 |---|---|---|---|
@@ -87,7 +87,7 @@ Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the firs
 | Entity accuracy after read-back | AC-4 (Quality) | ≥ 99% | 0.968 FAIL |
 | pass^4 per language (te, hi, en, mixed) | AC-5 (Reliability) | ≥ 0.85 each | 0.54 / 0.46 / 0.75 / 0.67 FAIL |
 | Voice-to-voice p50 / p95, plain turns (simulated) | AC-6 (Latency) | ≤ 900 ms / ≤ 1.5 s | ≈ 820 ms PASS / ≈ 1020 ms PASS |
-| Tool turns: acknowledgement p95 / answer p95 (simulated) | AC-6 | ≤ 700 ms / ≤ 2.2 s | ≈ 960 ms FAIL / ≈ 1720 ms PASS |
+| Tool turns: acknowledgement p95 / answer p95 (simulated) | AC-6 | ≤ 700 ms / ≤ 2.2 s | ≈ 960 ms FAIL / 1.7–1.85 s PASS |
 | CI gate: successor model's answer p95 (curveball 1) | AC-6 | regression < 10% | ≈ 1.6 s → 2.5 s FAIL |
 | Barge-in stop time p95 (simulated) / false barge-ins | AC-7 (Turn-taking) | ≤ 250 ms / ≤ 3% | ≈ 175 ms PASS / not computable offline |
 | AI disclosure and recording notice in the first 10 s | AC-8 (Safety) | 100% | 225/260 FAIL |

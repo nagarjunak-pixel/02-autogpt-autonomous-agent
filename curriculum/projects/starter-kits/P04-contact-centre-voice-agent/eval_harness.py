@@ -3,7 +3,7 @@
 python3 eval_harness.py [--system baseline|adapter] [--runs 4] [--limit N]
 §5 has no IDs, so AC-1 ... AC-13 are its 13 rows in order (see README). Prints AC-ID | metric | value | threshold |
 PASS/FAIL, writes results/<system>.json and exits 0 even when thresholds fail. The latency rows run the real
-TurnManager in real time (about 4 s) on simulated stage and model timings, so they do not depend on --system.
+TurnManager in real time (about 3 s) on simulated stage and model timings, so they do not depend on --system.
 """
 import argparse
 import asyncio
@@ -20,10 +20,9 @@ from pathlib import Path
 from turn_manager import TurnManager, latency_gate
 
 HERE = Path(__file__).resolve().parent
-NA = "N/A"
 AI_MARKERS = ("AI assistant", "virtual assistant", "एआई", "ఏఐ")
 REC_MARKERS = ("recorded", "रिकॉर्ड", "రికార్డ్")
-SCRIPT = {"te": "[ఀ-౿]", "hi": "[ऀ-ॿ]", "en": "[A-Za-z]", "mixed": "[A-Za-z]"}
+SCRIPT = {"te": "[\u0C00-\u0C7F]", "hi": "[\u0900-\u097F]", "en": "[A-Za-z]", "mixed": "[A-Za-z]"}  # Telugu, Devanagari
 CARD_RUN = re.compile(r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)")  # 13-19 digits, spaces or hyphens allowed
 FILLER = "One moment."
 ANSWER = ("Your last recharge of 349 rupees did not go through. ", "The amount will be back within 48 hours.")
@@ -333,7 +332,8 @@ def main(argv=None):
               not bad_adv),
           row("AC-11", f"calls with card digits in transcript/logs/context ({len(pay)})", len(leaks), "= 0", not leaks),
           row("AC-12", "availability, entry point / bot path", "-", "99.95% / 99.5%", None),
-          row("AC-13", "cost per bot-minute (brief §10 assumptions)", f"INR {per_min:.2f}", "<= INR 2.5", per_min <= 2.5),
+          row("AC-13", "cost per bot-minute (brief §10 assumptions)", f"INR {per_min:.2f}", "<= INR 2.5",
+              per_min <= 2.5),
           row("AC-13", "cost per contained call (pilot); at the AC-1 bound", f">= INR {per_contained:.1f}", "<= INR 18",
               None)]
 
