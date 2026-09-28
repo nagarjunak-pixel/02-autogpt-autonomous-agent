@@ -15,7 +15,7 @@
    - Effort is inverted relative to the job: model internals get the most pages per topic, and FDE practice gets some of the fewest.
    - Assessment is recall-only: there are 676 short-answer questions and zero projects.
    - Fast-rotting facts are mixed into the core, with no mechanism to refresh them.
-2. **The content needs 14 factual corrections, but is otherwise mostly accurate and current on the agent-protocol layer.** We checked 50 time-sensitive claims: 41 are correct and 9 need fixing. Follow-up research found 5 more, for 14 corrections in total (details in [03-errata-and-fact-check.md](03-errata-and-fact-check.md)). The most damaging error is in Turn 82: it still teaches SR 11-7 as the US bank model-risk standard. SR 11-7 was replaced on 17 Apr 2026, and the replacement guidance puts generative and agentic AI **out of scope**.
+2. **The content needs 14 factual corrections, but is otherwise mostly accurate and current on the agent-protocol layer.** We checked 50 time-sensitive claims: 41 are correct and 9 need fixing. Follow-up research found 5 more, for 14 corrections in total (details in [03 · Errata and fact-check](03-errata-and-fact-check.md)). The most damaging error is in Turn 82: it still teaches SR 11-7 as the US bank model-risk standard. SR 11-7 was replaced on 17 Apr 2026, and the replacement guidance puts generative and agentic AI **out of scope**.
 3. **The existing gap analysis is a useful peer review, but it has blind spots of its own.**
    - It is driven by news items.
    - It proposes eight new P1 topics without cutting anything.
@@ -25,8 +25,8 @@
    - Re-tier the priorities to a 46-topic FDE core, about 30% of the expanded syllabus instead of 51%.
    - Add the 16 real-world projects in [projects/](projects/README.md) as the assessment backbone.
    - Split dated facts into a versioned annex with owners and review dates.
-   - Add the verified gap topics in [02-gap-register.md](02-gap-register.md).
-   - Merge overlapping turns to make room (see [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md)).
+   - Add the verified gap topics in [02 · Gap register](02-gap-register.md).
+   - Merge overlapping turns to make room (see [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md)).
 
 ---
 
@@ -43,7 +43,7 @@
 
 A learner with 10–12 weeks cannot cover 60 "most important" topics in depth. Adding the existing gap doc's eight P1 candidates would push P1 to about 68.
 
-**Recommendation:** define an explicit **FDE core** (P1), move the rest to P2/P3 electives, and justify each P1 by "an FDE meets this in most engagements, or it is legally required for common deployments". Applied honestly, that rule gives 46 core topics across Vol 2 and the gap register, about 30% of the expanded syllabus. [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) proposes the re-tiering.
+**Recommendation:** define an explicit **FDE core** (P1), move the rest to P2/P3 electives, and justify each P1 by "an FDE meets this in most engagements, or it is legally required for common deployments". Applied honestly, that rule gives 46 core topics across Vol 2 and the gap register, about 30% of the expanded syllabus. [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md) proposes the re-tiering.
 
 ### 1.2 Effort is inverted relative to the target role
 
@@ -79,13 +79,13 @@ Section G ("Latest Developments") is entirely news: spec versions, launch dates,
 **Recommendation:**
 - Split every turn into an **evergreen core** (principles, patterns, maths) and a **dated annex** (versions, dates, vendors, laws).
 - Stamp each annex item with an *as-of* date, a source link, an owner and a *review-by* date.
-- Re-verify the annex quarterly. Use [03-errata-and-fact-check.md](03-errata-and-fact-check.md) as the first run and [04-future-topics-2026-2028.md](04-future-topics-2026-2028.md)'s dated calendar as the watch-list.
+- Re-verify the annex quarterly. Use [03 · Errata and fact-check](03-errata-and-fact-check.md) as the first run and [04 · Future topics and horizon scan](04-future-topics-2026-2028.md)'s dated calendar as the watch-list.
 
 ### 1.5 Evaluation, the FDE's most important skill, is scattered
 
 Evaluation appears in at least seven places: Turns 13 (base-model evaluation), 38 (evaluator loops), 49 (RAG evaluation tooling), 63 (simulation and pass^k), 97 (evaluation tools), 104 (testing AI code) and 132 (the science of agent evaluation). No single turn teaches an **evaluation strategy**: what to measure at which layer, how to build and freeze a golden set, how to calibrate judges, and how to gate releases.
 
-**Recommendation:** make evaluation a spine. Add one early "Evaluation Strategy" turn that the others hang off (Template [05-eval-plan.md](projects/templates/05-eval-plan.md) is a starting point), and make every project deliver an eval plan in week 2.
+**Recommendation:** make evaluation a spine. Add one early "Evaluation Strategy" turn that the others hang off (Template [05 · Evaluation plan](projects/templates/05-eval-plan.md) is a starting point), and make every project deliver an eval plan in week 2.
 
 ### 1.6 Overlapping turns that should be merged to make room
 
@@ -103,11 +103,11 @@ These merges free about 6–8 turns of budget, roughly what the verified gap top
 ### 1.7 Section M is large, unprioritised and partly mislabelled
 
 Section M holds 18 "future" topics, the largest section by count, with the fewest pages per topic, no priorities, no promotion criteria and no review dates. Some are no longer future: parts of 128 (governance-as-code), 132 (agent evaluation science) and 134 (sovereign and open-weight) are already everyday practice.
-[04-future-topics-2026-2028.md](04-future-topics-2026-2028.md) re-assesses each one (promote, keep, demote or merge) with dated signals and a *promotion trigger*.
+[04 · Future topics and horizon scan](04-future-topics-2026-2028.md) re-assesses each one (promote, keep, demote or merge) with dated signals and a *promotion trigger*.
 
 ### 1.8 Sequencing is textbook order, not job order
 
-The sections run A→M, bottom-up from tokenizers to future topics. An FDE learner should start where engagements start (discovery, data readiness, RAG, agents, evaluation), then learn to harden and operate, and pull model internals in on demand. [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) gives a 16-week track, **Engage → Build → Evaluate → Harden → Operate → Deploy**, then electives and a capstone, with the projects placed in it.
+The sections run A→M, bottom-up from tokenizers to future topics. An FDE learner should start where engagements start (discovery, data readiness, RAG, agents, evaluation), then learn to harden and operate, and pull model internals in on demand. [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md) gives a 16-week track, **Engage → Build → Evaluate → Harden → Operate → Deploy**, then electives and a capstone, with the projects placed in it.
 
 ## 2. What the curriculum does well (and why)
 
@@ -121,7 +121,7 @@ The sections run A→M, bottom-up from tokenizers to future topics. An FDE learn
 
 ## 3. Stress-test of the existing gap analysis
 
-The gap doc is a useful peer review, and most of its conclusions survive. This section starts with the problems, because those are what a reader needs to act on. Full fact-check details are in [03-errata-and-fact-check.md](03-errata-and-fact-check.md), Part B, and its 23 candidates are re-ranked in [02-gap-register.md](02-gap-register.md).
+The gap doc is a useful peer review, and most of its conclusions survive. This section starts with the problems, because those are what a reader needs to act on. Full fact-check details are in [03 · Errata and fact-check](03-errata-and-fact-check.md), Part B, and its 23 candidates are re-ranked in [02 · Gap register](02-gap-register.md).
 
 ### Where it is wrong or weak
 
@@ -174,8 +174,8 @@ The gap doc is a useful peer review, and most of its conclusions survive. This s
 
 | Deliverable | What it contains |
 |---|---|
-| [02-gap-register.md](02-gap-register.md) | Every verified missing or thin topic: the gap doc's 23 candidates re-ranked, plus the new gaps this review found. Each has dated evidence, placement, priority and interview Q&As. |
-| [03-errata-and-fact-check.md](03-errata-and-fact-check.md) | Corrections to Vol 2 and to the gap doc, with primary sources. |
-| [04-future-topics-2026-2028.md](04-future-topics-2026-2028.md) | Horizon scan: a re-assessment of Section M, new future topics, and a dated calendar of known events up to 2028. |
-| [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) | Re-tiered priorities, merges, where new turns go, and a 16-week FDE track with the projects placed in it. |
+| [02 · Gap register](02-gap-register.md) | Every verified missing or thin topic: the gap doc's 23 candidates re-ranked, plus the new gaps this review found. Each has dated evidence, placement, priority and interview Q&As. |
+| [03 · Errata and fact-check](03-errata-and-fact-check.md) | Corrections to Vol 2 and to the gap doc, with primary sources. |
+| [04 · Future topics and horizon scan](04-future-topics-2026-2028.md) | Horizon scan: a re-assessment of Section M, new future topics, and a dated calendar of known events up to 2028. |
+| [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md) | Re-tiered priorities, merges, where new turns go, and a 16-week FDE track with the projects placed in it. |
 | [projects/](projects/README.md) | 16 real-world FDE engagement briefs, 10 reusable engagement templates, and a coverage matrix. |

@@ -78,7 +78,7 @@ Each area file ends with that area's verified disagreements with Vol 2 and with 
 
 ## 2. The existing gap doc's 23 candidates, re-ranked
 
-Our verdict after fact-checking every candidate ([03-errata-and-fact-check.md](03-errata-and-fact-check.md), Part B) and adversarially re-testing its priority for an FDE. **Deepened** means this register carries a fuller, corrected entry.
+Our verdict after fact-checking every candidate ([03 · Errata and fact-check](03-errata-and-fact-check.md), Part B) and adversarially re-testing its priority for an FDE. **Deepened** means this register carries a fuller, corrected entry.
 
 | # | Gap-doc topic | Gap doc | **Ours** | Why we changed it (or agree) | Deepened entry |
 |---|---|---|---|---|---|

@@ -21,13 +21,13 @@ We ran two independent checks, each against dated sources, primary sources where
 
 ### A1. Turn 82, Q406 and the index: SR 11-7 has been superseded (OUTDATED, high impact)
 - **Vol 2 says:** US bank model-risk management follows SR 11-7, and LLM systems should be validated "like any other model".
-- **Correct as of Sept 2026:** On **17 Apr 2026** the Fed, OCC and FDIC issued *Revised Guidance on Model Risk Management* (Fed **SR 26-2**, OCC **Bulletin 2026-13**). It "supersedes and replaces SR letter 11-7". The OCC bulletin also rescinds Bulletin 2011-12, and the guidance states twice: *"Generative AI and agentic AI models are novel and rapidly evolving. As such, they are not within the scope of this guidance."* The agencies plan a separate request for information on AI.
+- **Correct as of Sep 2026:** On **17 Apr 2026** the Fed, OCC and FDIC issued *Revised Guidance on Model Risk Management* (Fed **SR 26-2**, OCC **Bulletin 2026-13**). It "supersedes and replaces SR letter 11-7". The OCC bulletin also rescinds Bulletin 2011-12, and the guidance states twice: *"Generative AI and agentic AI models are novel and rapidly evolving. As such, they are not within the scope of this guidance."* The agencies plan a separate request for information on AI.
 - **Teach instead:** US bank MRM guidance no longer formally covers LLM or agent systems. Banks must govern them through their own risk-management frameworks, and many still apply MRM-style inventory, validation and monitoring voluntarily. That remains good practice, and customers will expect it. Watch for the AI RFI.
 - Sources: [federalreserve.gov SR 26-2](https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm) · [OCC Bulletin 2026-13](https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-13.html)
 
 ### A2. Turn 85, Q419: the copyright answer is one-sided (NEEDS NUANCE)
 - **Correct:** Bartz v. Anthropic (23 Jun 2025) and Kadrey v. Meta (25 Jun 2025) found training to be fair use on their records, and Bartz settled for $1.5B. The Q&A leaves out the other side:
-  - *Thomson Reuters v. Ross* (D. Del., Feb 2025): copying headnotes to train a non-generative tool was **not** fair use. The Third Circuit heard argument on 11 Jun 2026, and no decision had been issued as of Sept 2026.
+  - *Thomson Reuters v. Ross* (D. Del., Feb 2025): copying headnotes to train a non-generative tool was **not** fair use. The Third Circuit heard argument on 11 Jun 2026, and no decision had been issued as of Sep 2026.
   - *GEMA v. OpenAI* (Munich Regional Court I, 11 Nov 2025): lyrics memorised in a model are a reproduction.
   - *Getty v. Stability AI* ([2025] EWHC 2863 (Ch), 4 Nov 2025): model weights are not an infringing copy.
 - **Teach:** outputs can infringe, memorised weights can infringe (at least in Germany), and the key US appellate ruling is pending.
@@ -65,13 +65,13 @@ We ran two independent checks, each against dated sources, primary sources where
 - Source: [Nature](https://www.nature.com/articles/s41586-024-08025-4)
 
 ### A9. Turn 93, Q460: Kubernetes GPU scheduling now includes DRA (NEEDS NUANCE)
-- Dynamic Resource Allocation went GA in Kubernetes **v1.34** (Sept 2025). Workloads request devices by attributes through ResourceClaims, which also enables better sharing and MIG partitioning.
+- Dynamic Resource Allocation went GA in Kubernetes **v1.34** (Sep 2025). Workloads request devices by attributes through ResourceClaims, which also enables better sharing and MIG partitioning.
 - Device plugins still work, but a 2026 answer should name DRA.
 - Source: [kubernetes.io](https://kubernetes.io/blog/2025/09/01/kubernetes-v1-34-dra-updates/)
 
 ### A10. Turn 70, Q344: AP2 mandate types changed in v0.2 (OUTDATED)
 - **Vol 2 says:** an AP2 mandate records "intent, the exact cart, and the payment".
-- **Correct as of Sept 2026:** those were the **v0.1** (Sept 2025) names. **AP2 v0.2, released 28 Apr 2026**, defines two SD-JWT mandate types:
+- **Correct as of Sep 2026:** those were the **v0.1** (Sep 2025) names. **AP2 v0.2, released 28 Apr 2026**, defines two SD-JWT mandate types:
   - a **Checkout Mandate**, which covers what is bought and is shared with the merchant;
   - a **Payment Mandate**, which covers the payment and is shared with the credential provider, network and processor.
 
@@ -135,16 +135,16 @@ The following all hold:
 ### B1. Wrong
 | Ref | Gap doc says | Correct |
 |---|---|---|
-| #2 | "Frontier agents exceed 85% on OSWorld-Verified by July 2026 (arXiv 2607.26041)" | **Mis-cited.** 2607.26041 is *Desktop-Delta Bench* and reports no OSWorld-Verified scores. Scores of 85% or more appear only on third-party aggregators in Sept 2026 and are mostly self-reported. The Q&A also mixes up OSWorld and OSWorld-Verified. |
+| #2 | "Frontier agents exceed 85% on OSWorld-Verified by July 2026 (arXiv 2607.26041)" | **Mis-cited.** 2607.26041 is *Desktop-Delta Bench* and reports no OSWorld-Verified scores. Scores of 85% or more appear only on third-party aggregators in Sep 2026 and are mostly self-reported. The Q&A also mixes up OSWorld and OSWorld-Verified. |
 | #7 | "OpenClaw agent lost its constraint during compaction… (cited in arXiv 2606.29175)" | **Mis-cited; we verified this ourselves.** 2606.29175 is an international-humanitarian-law paper. The incident itself is real (23 Feb 2026: a "suggest, don't act" instruction was lost in compaction and 200+ emails were deleted), but it is documented only in secondary post-mortems ([vectara/awesome-agent-failures](https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/openclaw-email-deletion.md)). Label it "reported". Separately, its THIN note "no compaction" is slightly off: Turn 58 (Q284) mentions compaction, though it does not teach it. |
 | #18 | "Unit 42 counted 647,017 exposed n8n instances" | **Misattributed.** The figure is a FOFA search run by the *attacker's* AI agent during reconnaissance, which Unit 42 quoted (30 Jul 2026). Independent counts measure different things: Shadowserver ~105,753 instances vulnerable to CVE-2026-21858; Censys ~103,476. "Actively targeted" is right: CISA KEV added n8n CVE-2025-68613 (Mar 2026) and Langflow (Jul–Aug 2026). |
-| Dating | "as of 27 September 2026" | The document is dated after the actual check date (26 Sept 2026). Several of its figures were already stale (see B2). |
+| Dating | "as of 27 September 2026" | The document is dated after the actual check date (26 Sep 2026). Several of its figures were already stale (see B2). |
 | Internal counts | "Four need fixing"; "Add as P1" lists 7; "(a), (b), (i), (k) verified" | The document contradicts itself: it lists **9** problems, its table has **8** P1s (agentic-browser security is missing from the P1 list), and item (i) is never shown. Its (a)–(m) letters refer to a claim list the reader never sees. |
 
 ### B2. Outdated
-| Ref | Correct as of Sept 2026 |
+| Ref | Correct as of Sep 2026 |
 |---|---|
-| #2 OSWorld 2.0 "tops out at 20.6%" | This was the paper's best result at publication (arXiv 2606.29537, 28 Jun 2026). The hosted leaderboard showed a top entry of about 44% on 26 Sept 2026. Timestamp every leaderboard figure. The mis-scoring paper the doc alludes to is arXiv 2607.28367: 15.3% of FAIL verdicts were wrong. |
+| #2 OSWorld 2.0 "tops out at 20.6%" | This was the paper's best result at publication (arXiv 2606.29537, 28 Jun 2026). The hosted leaderboard showed a top entry of about 44% on 26 Sep 2026. Timestamp every leaderboard figure. The mis-scoring paper the doc alludes to is arXiv 2607.28367: 15.3% of FAIL verdicts were wrong. |
 | #15 Cloudflare pay-per-crawl | Pay-per-crawl was in private beta from 1 Jul 2025. On 1 Jul 2026 Cloudflare began piloting **pay-per-use**: publishers are paid when their content is cited in AI answers. RSL 1.0 became an official spec in Dec 2025. The IETF aipref vocabulary was still a draft when last checked. |
 
 ### B3. Needs nuance (the facts are mostly right, but the framing misleads)
@@ -164,14 +164,14 @@ The following all hold:
 - **Secondary (m):** The ~4-month open-weight lag is confirmed (see A-list). Epoch's caveat is milder than "probably understated": its Limitations section says the estimate "may tend to understate the true gap", because open models do worse on private benchmarks and closed labs do not always release their best models ([Epoch AI, 29 May 2026](https://epoch.ai/data-insights/open-closed-eci-gap), checked 27 Sep 2026).
 
 ### B4. Unverifiable
-- The headline **"coverage is roughly 85–90%"** has no taxonomy, denominator or scoring rule behind it. Treat it as an impression. [01-curriculum-review.md](01-curriculum-review.md) replaces it with specific, checkable gaps.
+- The headline **"coverage is roughly 85–90%"** has no taxonomy, denominator or scoring rule behind it. Treat it as an impression. [01 · Curriculum review](01-curriculum-review.md) replaces it with specific, checkable gaps.
 - Item (i) in "verified as stated" is never shown.
 - **#14:** The MISSING label for text-to-SQL is right, but "most common enterprise FDE request" has no supporting evidence. Either support it or drop the superlative. Note also that the gap doc ranks it only P2 while calling it the most common request, which is inconsistent.
 
 ### Verified as stated (30 items), for the record
 - **Cyber:** GTG-1002 (Nov 2025); Claude Mythos Preview withheld and released via Project Glasswing (7 Apr 2026) with $100M in credits; the 22 May 2026 Glasswing update (1,752 findings reviewed, 90.6% valid, 62.4% high or critical); Glasswing expanded in June 2026; Unit 42 and GTIG orchestration-layer targeting.
 - **US law:** EO 14365 and the DOJ AI Litigation Task Force; the White House National Policy Framework (non-binding); xAI v. Colorado and Colorado SB 26-189; California SB 53; SB 243 and New York's companion law.
-- **Other jurisdictions:** Korea's AI Basic Act (22 Jan 2026); China's labelling measures (Sept 2025); India's G.S.R. 120(E) (in force 20 Feb 2026).
+- **Other jurisdictions:** Korea's AI Basic Act (22 Jan 2026); China's labelling measures (Sep 2025); India's G.S.R. 120(E) (in force 20 Feb 2026).
 - **Research and incidents:** CaMeL (77% vs 84% in AgentDojo); the lethal trifecta (16 Jun 2025); the GPT-4o sycophancy rollback (25–28 Apr 2025); CoT monitorability (arXiv 2507.11473); DeepSeek-OCR; multi-token prediction in DeepSeek-V3.
 - **Products and specs:** KV-cache offloading support; MAF 1.0 memory primitives and harness compaction; both MCP SDKs passing 1B downloads; the MCP 2026-07-28 details; the LiteLLM PyPI compromise (24 Mar 2026); the WebMCP origin trial (Chrome 149); the Assistants API sunset (26 Aug 2026); ANS as "intent to launch" (23 Jun 2026).
 
@@ -180,6 +180,6 @@ The following all hold:
 ## Part C · Keeping the curriculum true: a process, not a one-off
 
 1. **Tag every volatile fact** with an as-of date, a source URL, an owner and a review-by date.
-2. **Quarterly re-verification sprint** covering the dated annex, the regulation map and the calendar in [04-future-topics-2026-2028.md](04-future-topics-2026-2028.md).
+2. **Quarterly re-verification sprint** covering the dated annex, the regulation map and the calendar in [04 · Future topics and horizon scan](04-future-topics-2026-2028.md).
 3. **Citation hygiene.** Open every arXiv ID before citing it, and never cite a benchmark leaderboard without a date. For law, cite the statute or regulator page, or a law firm; avoid blogs.
 4. **Keep interview answers durable.** Teach the principle (for example, "pin the semconv version you emit") and put the volatile fact in a footnote.

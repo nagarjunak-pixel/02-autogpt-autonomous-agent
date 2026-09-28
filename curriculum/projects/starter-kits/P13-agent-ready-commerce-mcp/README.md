@@ -113,4 +113,4 @@ This swaps only the synthetic shopper (AC-5). The model gets the `TOOLS` descrip
 - **No real payments, PSP, ACP, UCP or AP2.** `checkout()` returns a hand-off link to the brand's checkout.
 - **No k6 swarm or edge.** AC-10 is not measured; `traffic.jsonl` only tests classification.
 - **No vector search or embeddings.** The baseline is keyword overlap.
-- **No legal conclusions.** Protocol and policy status is the brief's, as of Sept 2026; verify before teaching.
+- **No legal conclusions.** Protocol and policy status is the brief's, as of 27 Sep 2026; verify before teaching.

@@ -43,7 +43,7 @@ The conversation that decides the project is with the General Counsel. A single 
   - **UK GDPR / DPA 2018**, as amended by the Data (Use and Access) Act 2025. Most DUAA data-protection changes commenced on 5 Feb 2026, including the automated decision-making reform (s.80, new Arts 22A–22D), which this tool does not engage: it decides nothing about individuals. The complaints duty (s.103: a written procedure, acknowledgement within 30 days) applies to complaints received from 19 Jun 2026 ([SI 2026/82](https://www.legislation.gov.uk/uksi/2026/82/made)).
   - **Erasure exemptions.** Erasure does not apply where processing is needed "for the establishment, exercise or defence of legal claims" ([Art. 17(3)(e)](https://www.legislation.gov.uk/eur/2016/679/article/17)), and the DPA 2018 has a privilege exemption ([Sch. 2 para 19](https://www.legislation.gov.uk/ukpga/2018/12/schedule/2/paragraph/19)). These cover the matter file, not automatically the derived copies in caches, logs or eval sets.
   - **UK → India transfers** need an IDTA or the Addendum, plus a transfer risk assessment ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/)).
-  - **EU GDPR** applies only where Art. 3 is triggered (the DPO confirms). EU→UK flows rely on the UK adequacy decisions renewed in Dec 2025 ([European Commission](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)).
+  - **EU GDPR** applies only where Art. 3 is triggered (the DPO confirms). EU → UK flows rely on the UK adequacy decisions renewed in Dec 2025 ([European Commission](https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/adequacy-decisions_en)).
   - **India's DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The Board provisions applied immediately; consent managers from 13 Nov 2026; most obligations from **13 May 2027** (12 and 18 months from notification). Until then, IT Act s.43A and the SPDI Rules apply ([DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)).
   - **DPDP exemptions.** Section 17(1)(a) (legal claims) and s.17(1)(d) (Indian processing, under contract, of data about people outside India) remove most duties, but the s.8(5) security duty still applies ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)).
   - **CERT-In Directions (28 Apr 2022)** for the Indian entity: report incidents within 6 hours; keep logs for 180 days in India ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
@@ -150,7 +150,7 @@ flowchart LR
   subgraph UNTR["UNTRUSTED: third-party and opposing-counsel content"]
     OPP["Received documents"]
   end
-  subgraph FIRM["Firm cloud tenant - trust boundary"]
+  subgraph FIRM["Firm cloud tenant: trust boundary"]
     UI["Chat UI: no remote images or links"] --> API["API: Entra SSO, on-behalf-of token"]
     API --> WF["Answer workflow: retrieve, trim, rerank, generate, verify"]
     WF --> ENT["Entitlement service: groups, walls, version"]
@@ -163,7 +163,7 @@ flowchart LR
     SYNC --> IDX
     DEL["Retention and erasure jobs"] --> IDX & CACHE & LIN
   end
-  subgraph PROV["Model provider - external boundary, ZDR, region-pinned"]
+  subgraph PROV["Model provider: external boundary, ZDR, region-pinned"]
     LLM["LLM and embedding endpoints"]
   end
   OPP -.-> DMS

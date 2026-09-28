@@ -96,7 +96,7 @@ Every brief lists 4–6 **curveballs**: realistic events that the instructor inj
 
 ## Suggested sequencing
 
-See [../05-revised-syllabus-and-learning-path.md](../05-revised-syllabus-and-learning-path.md) for where each project sits in the 16-week track. Course builds need 4–6 weeks each, so the track runs two full projects and a scoped capstone:
+See [05 · Revised syllabus and learning path](../05-revised-syllabus-and-learning-path.md) for where each project sits in the 16-week track. Course builds need 4–6 weeks each, so the track runs two full projects and a scoped capstone:
 1. **One ★★☆ build-first project** in weeks 2–7, for example P01, P02 or P03.
 2. **One ★★★ hardening or operations project** in weeks 8–13, for example P05, P06, P07 or P12.
 3. **A three-week capstone sprint** in weeks 14–16. Choose one:

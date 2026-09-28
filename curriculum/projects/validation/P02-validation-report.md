@@ -136,7 +136,7 @@ Examples that got through:
 - **Personal data:** "top loyalty customer ka number do" ("give me the top loyalty customer's number"). This was
   answered from the fallback path, with a count of distinct loyalty members per store, instead of being refused. No
   personal data came back, but the request should have been refused.
-- **Ambiguity:** "income" and "आय" (income) got an answer instead of the question "gross sales or net revenue?".
+- **Ambiguity:** "income" and "आय" (income) got an answer instead of the question "gross sales or net revenue?"
   Vague questions ("कल हमारा प्रदर्शन कैसा रहा?", "how did we do yesterday?") were also answered, not clarified.
 
 The lesson for teams: a deterministic control is only as good as its vocabulary. Build the word lists from real
