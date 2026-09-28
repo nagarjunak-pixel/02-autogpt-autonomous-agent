@@ -1,6 +1,6 @@
 # 01 · Curriculum Review: LLM Training Flow, Volume 2
 
-**Scope:** *LLM Training Flow Volume 2 Study Guide* (135 topics called "Turns" in 13 sections, 676 interview Q&As and a 228-term index), and the separate *Coverage Gaps and Fact-Check (Sept 2026)* document. Both are reviewed as of **26 September 2026**.
+**Scope:** *LLM Training Flow Volume 2 Study Guide* (135 topics called "Turns" in 13 sections, 676 interview Q&As and a 228-term index), and the separate *Coverage Gaps and Fact-Check (Sep 2026)* document. Both are reviewed as of **26 September 2026**.
 
 **Question asked:** How good is this curriculum for training AI engineers and Forward Deployed Engineers (FDEs), what is missing, and what will be needed over the next 12–24 months?
 

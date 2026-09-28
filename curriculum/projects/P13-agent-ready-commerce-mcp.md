@@ -37,9 +37,9 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 
 **Data.** Attribute completeness is about 55%. Saree length is 5.5 m or 6.3 m depending on the blouse piece; fabric names vary by transliteration (Kanjivaram / Kanchipuram / Kanjeevaram); size charts mix inches and centimetres. USD/GBP prices come from FX rules; stock syncs every 15 minutes (overselling at peaks). Seller descriptions arrive as raw HTML, and a security sample found text aimed at AI shopping assistants.
 
-**Protocol and platform landscape (as of Sept 2026; verify each before teaching, because these move monthly).**
+**Protocol and platform landscape (as of Sep 2026; verify each before teaching, because these move monthly).**
 
-| Item | Status (as of Sept 2026) | Source |
+| Item | Status (as of Sep 2026) | Source |
 |---|---|---|
 | MCP 2026-07-28 | Stateless core (no `initialize`, no `Mcp-Session-Id`), `server/discover`, Multi Round-Trip Requests (`input_required`), required `Mcp-Method`/`Mcp-Name` headers, cacheable lists (`ttlMs`, `cacheScope`); Roots, Sampling and Logging deprecated with a minimum 12-month window | [changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog) |
 | MCP authorization | Server is an OAuth 2.1 resource server; Protected Resource Metadata (RFC 9728) MUST; `resource` parameter (RFC 8707) and audience validation MUST; PKCE; clients validate `iss` (RFC 9207); servers "MUST NOT accept or transit any other tokens"; Client ID Metadata Documents (CIMD) preferred; Dynamic Client Registration (DCR) deprecated | [authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization) |
@@ -54,7 +54,7 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 | Agent identity | IETF Web Bot Auth working group (HTTP message signatures for bots); CDN "verified bots / signed agents" programmes | [IETF](https://datatracker.ietf.org/wg/webbotauth/about/), [Cloudflare](https://developers.cloudflare.com/bots/concepts/bot/signed-agents/) |
 | Crawl control and licensing | Cloudflare moved from pay per crawl (HTTP 402; private beta, Jul 2025) to piloting **pay per use**, which pays when content is used in an AI answer (1 Jul 2026); Content Signals (`search`, `ai-input`, `ai-train`; 24 Sep 2025); IETF aipref drafts; RSL 1.0 | [pay per use](https://blog.cloudflare.com/making-ai-search-smarter/), [signals](https://blog.cloudflare.com/content-signals-policy/), [aipref](https://datatracker.ietf.org/wg/aipref/about/), [RSL](https://rslstandard.org/) |
 
-**Legal and policy (as of Sept 2026; counsel owns the conclusions).**
+**Legal and policy (as of Sep 2026; counsel owns the conclusions).**
 - *Privacy:* India's DPDP Act and Rules for Indian shoppers: consent managers 12 months and most obligations 18 months from notification (Nov 2026, May 2027); a Jan 2026 MeitY proposal would cut 18 to 12 months for Significant Data Fiduciaries ([S.S. Rana](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/)), but as of 27 Sep 2026 no amending notification had been published, so Rule 1 of the Rules (G.S.R. 846(E)) still sets 12 and 18 months ([MeitY](https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa); [tracker, checked 6 Sep 2026](https://dpdprules.org/timeline)). UK GDPR ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/)); US state privacy law ([CCPA](https://oag.ca.gov/privacy/ccpa) thresholds, to confirm with counsel).
 - *Consumer protection:* the FTC's fake-reviews rule, announced 14 Aug 2024 ([FTC](https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials)); the UK Digital Markets, Competition and Consumers Act 2024, whose Part 4 unfair-trading and fake-review rules apply from 6 Apr 2025 ([legislation.gov.uk](https://www.legislation.gov.uk/ukpga/2024/13/contents); [CMS](https://cms.law/en/gbr/legal-updates/the-dmcc-act-consumer-elements-come-into-force-from-6-april-2025)); India's Consumer Protection (E-Commerce) Rules 2020 and the CCPA dark-patterns guidelines of 30 Nov 2023 ([PIB](https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1983994)).
 - *Payments:* [PCI DSS](https://www.pcisecuritystandards.org/) through the PSPs (keep card numbers out of scope, Turn 82). RBI's authentication directions (two factors, one dynamic, from 1 Apr 2026; [Khaitan](https://www.khaitanco.com/thought-leadership/RBI-Authentication-Mechanisms-for-Digital-Payments-Transactions-Directions)) and UK strong customer authentication mean agent-initiated payments must fit the PSP's authentication flows. *Confirm with each PSP.*
@@ -290,7 +290,7 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 3. *Mandate bypass* via split carts or currency switching. Limits enforced per cart and again at checkout, in one transaction.
 4. *Duplicate charges from retries.* Idempotency keys end to end, plus PSP idempotency.
 5. *Spoofed agents, scraping swarms.* Signature-verified identity classes, per-class quotas, challenges for unverified automation.
-6. *Supply chain.* Pinned, audited npm dependencies for MCP packages (see the malicious postmark-mcp package, Sept 2025).
+6. *Supply chain.* Pinned, audited npm dependencies for MCP packages (see the malicious postmark-mcp package, Sep 2025).
 7. *Price manipulation.* Price is never accepted as input.
 
 **Obligations → controls** ([template](templates/07-compliance-obligations-to-controls.md)):

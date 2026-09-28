@@ -17,7 +17,7 @@ Kerrowan (about 900 staff) has one approved product and a Phase 3 pipeline. Its 
 - **draft-only** at first, with auto-send later only to an **internal allow-list**;
 - an **architecture that resists prompt injection**, because executive inboxes are the most attacked surface in the company (business email compromise, whaling).
 
-This is not theoretical: **EchoLeak** (CVE-2025-32711) achieved "remote, unauthenticated data exfiltration via a single crafted email" against Microsoft 365 Copilot ([arXiv 2509.10540](https://arxiv.org/abs/2509.10540), Sept 2025).
+This is not theoretical: **EchoLeak** (CVE-2025-32711) achieved "remote, unauthenticated data exfiltration via a single crafted email" against Microsoft 365 Copilot ([arXiv 2509.10540](https://arxiv.org/abs/2509.10540), Sep 2025).
 
 The FDE's first honest move is to put **buying** on the table (ADR-1): extend Kerrowan's M365 Copilot licences with Copilot Studio agents. Build only if Kerrowan needs what a packaged assistant does not give it: data-flow policies it controls, guaranteed adverse-event routing, and a send policy it enforces itself.
 
@@ -36,7 +36,7 @@ The FDE's first honest move is to put **buying** on the table (ADR-1): extend Ke
 
 **Data.** Executive mail holds privileged legal advice, material non-public information (MNPI: trial readouts, earnings, business development), board packs, HR matters and occasional patient-level safety information from clinical sites. Board members often use personal addresses. External calendar invites arrive automatically.
 
-**Legal and regulatory (US, as of Sept 2026; confirm with counsel):**
+**Legal and regulatory (US, as of Sep 2026; confirm with counsel):**
 - **SEC Regulation FD** ([17 CFR 243](https://www.ecfr.gov/current/title-17/chapter-II/part-243)) and the insider-trading policy forbid selective MNPI disclosure, so external sending stays human.
 - **SEC Form 8-K Item 1.05** (adopted 26 Jul 2023; compliance from 18 Dec 2023): material cyber incidents are disclosed within **four business days of the materiality determination** ([SEC](https://www.sec.gov/newsroom/press-releases/2023-139)). An agent-driven MNPI leak could qualify.
 - **FDA IND safety reporting, 21 CFR 312.32** ([text](https://www.law.cornell.edu/cfr/text/21/312.32)):
@@ -184,7 +184,7 @@ flowchart TB
 | Memory store | Preferences with provenance and TTL | Postgres | Azure Cosmos DB | Kerrowan platform |
 | Observability and evals | Traces, red-team suite | OTel GenAI + Langfuse/Phoenix; Inspect AI, promptfoo, AgentDojo | Azure Monitor, Datadog; LangSmith, Braintrust | SRE / security |
 
-**Least-privilege Graph scopes** (delegated; checked on Microsoft Learn, Sept 2026):
+**Least-privilege Graph scopes** (delegated; checked on Microsoft Learn, Sep 2026):
 
 | Capability | Scope | Phase | Note |
 |---|---|---|---|

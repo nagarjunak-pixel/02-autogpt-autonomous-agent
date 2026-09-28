@@ -33,7 +33,7 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 
 **Data.** About 2,300 circulars; 30% have Telugu versions, fewer Hindi. Pre-2015 documents are image-only, and some Telugu PDFs use legacy non-Unicode fonts. Many internal circulars still cite RBI circulars repealed in RBI's late-2025 consolidation. Loan files mix English, Telugu, handwriting, statements, Aadhaar and PAN.
 
-**Legal and regulatory (as of Sept 2026; re-check before teaching).**
+**Legal and regulatory (as of Sep 2026; re-check before teaching).**
 
 | Instrument | Relevance |
 |---|---|
@@ -45,7 +45,7 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 | [DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf) and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf) | Digitised scans are in scope (s.3(a)(ii)); safeguards (s.8(5)); Rule 6 **one-year log retention**; Rule 7 detailed Board report **within 72 hours**. Rules 3, 5–16 and 22–23 commence 18 months from notification (13 Nov 2025), i.e. May 2027, inside Year 1; Rule 4 at 12 months. Staff logs: s.7(i) (employment). |
 | [CERT-In Directions, 28 Apr 2022](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf) | 6-hour reporting; 180 days of logs in India; NIC/NPL NTP. |
 | [CERT-In SBOM/…/AIBOM Guidelines v2.0](https://www.cert-in.org.in/PDF/TechnicalGuidelines-on-SBOM,QBOM&CBOM,AIBOM_and_HBOM_ver2.0.pdf), 9 Jul 2025 | Guidance. Its AIBOM minimum elements (version, developer, licence, dependencies, data sources, metrics, intended use, vulnerabilities) become the provenance format. |
-| Model licences (read on the repos, Sept 2026) | Apache-2.0: Gemma 4, Qwen3.8-27B, Sarvam-30B/105B, gpt-oss. Custom: Llama 4 Community Licence plus its [AUP](https://www.llama.com/llama4/use-policy/); Mistral Medium 3.5 ["Modified MIT"](https://huggingface.co/mistralai/Mistral-Medium-3.5-128B/blob/main/LICENSE) (excludes companies above USD 20M monthly revenue); Qwen Community Licence 1.0 (Qwen3.8-Flash-Next). |
+| Model licences (read on the repos, Sep 2026) | Apache-2.0: Gemma 4, Qwen3.8-27B, Sarvam-30B/105B, gpt-oss. Custom: Llama 4 Community Licence plus its [AUP](https://www.llama.com/llama4/use-policy/); Mistral Medium 3.5 ["Modified MIT"](https://huggingface.co/mistralai/Mistral-Medium-3.5-128B/blob/main/LICENSE) (excludes companies above USD 20M monthly revenue); Qwen Community Licence 1.0 (Qwen3.8-Flash-Next). |
 
 **Infrastructure and security.** DCs are in Hyderabad (primary) and Vijayawada (DR), with about 12 kW per rack, VMware and no Kubernetes skills. Capex covers **one GPU server per site**: 4× L40S or 2× H100 NVL. The production enclave has no internet route (time from an internal NIC/NPL-traceable NTP source). Staging may reach the internet but never holds customer data. Keys sit in an HSM, promotion needs two people, USB is blocked.
 

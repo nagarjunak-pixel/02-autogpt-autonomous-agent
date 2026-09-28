@@ -49,7 +49,7 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
   - "No claim shall be repudiated without the approval of PMC or ... the Claims Review Committee (CRC)."
   - Partial disallowances must cite specific policy terms.
   - Insurers and TPAs collect documents from hospitals; the policyholder is not required to submit them.
-- **IRDAI Master Circular on Protection of Policyholders' Interests, 5 Sept 2024** ([IRDAI](https://irdai.gov.in/document-detail?documentId=5625747)):
+- **IRDAI Master Circular on Protection of Policyholders' Interests, 5 Sep 2024** ([IRDAI](https://irdai.gov.in/document-detail?documentId=5625747)):
   - Non-cashless health claims are settled within 15 days of submission.
   - "No claim shall be rejected or closed for want of documents."
   - Motor losses of ₹50,000 or more need a surveyor. The surveyor is allocated within 24 hours and reports within 15 days, and the insurer decides within 7 days of the report.

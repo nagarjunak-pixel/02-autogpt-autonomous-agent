@@ -50,7 +50,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 
 **Data.** Prompts carry loyalty PII (retail), Aadhaar and PAN (NBFC), lab results (diagnostics) and formulations (FMCG, chemicals). Some BUs must keep prompts in-country or on self-hosted models. Sector rules (e.g. RBI for the NBFC) may add conditions: get each BU's regulatory register rather than assuming.
 
-**Legal and regulatory (verified as of Sept 2026):**
+**Legal and regulatory (verified as of Sep 2026):**
 
 | Instrument | Why it applies | What it means for the platform |
 |---|---|---|

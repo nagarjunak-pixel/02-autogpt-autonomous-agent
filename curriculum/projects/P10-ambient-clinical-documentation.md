@@ -58,7 +58,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
   - The law *does* bite if AI-drafted after-visit summaries, Spanish instructions or portal replies go out without that licensed review.
 - **California AB 489** (Ch. 615, 2025; [bill](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB489)): AI must not imply a licensed human is providing the care or advice.
 - **Texas [Penal Code 16.02(c)(4)](https://texas.public.law/statutes/tex._penal_code_section_16.02)** allows one-party consent. Almarosa uses all-party consent in both states anyway: one workflow, cross-state telehealth, trust.
-- **Texas SB 1188** (effective 1 Sept 2025; [text](https://capitol.texas.gov/tlodocs/89R/billtext/html/SB01188F.htm)).
+- **Texas SB 1188** (effective 1 Sep 2025; [text](https://capitol.texas.gov/tlodocs/89R/billtext/html/SB01188F.htm)).
   - Sec. 183.005: AI used "for diagnostic purposes" requires the practitioner to review all AI-created records and disclose the use to patients.
   - Sec. 183.002: EHRs must be "physically maintained in the United States" from 1 Jan 2026.
   - Whether a scribe that suggests diagnoses is "diagnostic" is **uncertain; verify with counsel**. Disclose and review regardless.
@@ -198,7 +198,7 @@ flowchart LR
 |---|---|---|---|
 | Capture app | Consent gate, recording, encrypted buffer, stop button | PWA or native app · vendor SDK | FDE |
 | Consent service | Per-participant consent and withdrawal, FHIR `Consent` | FastAPI + HAPI FHIR · EHR consent module | FDE → Almarosa |
-| ASR + diarisation | Speaker-labelled, timestamped transcript | faster-whisper/WhisperX + pyannote.audio · AWS HealthScribe/Transcribe (on AWS's HIPAA-eligible list, Sept 2026), Azure AI Speech, Google Speech-to-Text (check BAA scope, Spanish vocabulary) | FDE |
+| ASR + diarisation | Speaker-labelled, timestamped transcript | faster-whisper/WhisperX + pyannote.audio · AWS HealthScribe/Transcribe (on AWS's HIPAA-eligible list, Sep 2026), Azure AI Speech, Google Speech-to-Text (check BAA scope, Spanish vocabulary) | FDE |
 | Note drafter | SOAP JSON with statement IDs | Llama/Qwen-class via vLLM · Azure OpenAI, Bedrock or Vertex AI under the cloud BAA (confirm the exact service, model and region are in scope) | FDE |
 | Verifier | Align statements to transcript spans; flag meds and doses | Code sketch below + NLI model · LLM judge (second pass) | FDE |
 | Code suggester | Ranked ICD-10-CM candidates with evidence | Embedding retrieval over the public code set · vendor CAC tools | FDE + coding lead |

@@ -18,7 +18,7 @@ Carrowby & Varadan has about 1,200 staff, around 550 of them fee earners. Its iM
 4. Treats documents from opposing parties as hostile input.
 5. Can prove deletion when a matter's retention period ends or an erasure request is upheld.
 
-The conversation that decides the project is with the General Counsel. A single leak across a wall can get the firm removed from a matter, and it breaches the SRA Code's requirement for "effective measures … which result in there being no real risk of disclosure" ([SRA Code 6.5](https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/), as of Sept 2026).
+The conversation that decides the project is with the General Counsel. A single leak across a wall can get the firm removed from a matter, and it breaches the SRA Code's requirement for "effective measures … which result in there being no real risk of disclosure" ([SRA Code 6.5](https://www.sra.org.uk/solicitors/standards-regulations/code-conduct-solicitors/), as of Sep 2026).
 
 | Stakeholder | Cares about | Can block |
 |---|---|---|
@@ -39,7 +39,7 @@ The conversation that decides the project is with the General Counsel. A single 
   - Emails are filed with their attachments; documents exist in up to 12 versions.
   - A few Indian court orders are in Hindi or Marathi.
   - Walls live in a wall-management system (Intapp Walls or similar; Intapp says it pushes walls to AI tools such as Harvey and Copilot, [Intapp](https://www.intapp.com/walls/)). The time for a wall to take effect in the DMS is **unknown until measured**.
-- **Legal and regulatory** (as of Sept 2026; the firm's counsel owns every conclusion):
+- **Legal and regulatory** (as of Sep 2026; the firm's counsel owns every conclusion):
   - **UK GDPR / DPA 2018**, as amended by the Data (Use and Access) Act 2025. Most DUAA data-protection changes commenced on 5 Feb 2026, including the automated decision-making reform (s.80, new Arts 22A–22D), which this tool does not engage: it decides nothing about individuals. The complaints duty (s.103: a written procedure, acknowledgement within 30 days) applies to complaints received from 19 Jun 2026 ([SI 2026/82](https://www.legislation.gov.uk/uksi/2026/82/made)).
   - **Erasure exemptions.** Erasure does not apply where processing is needed "for the establishment, exercise or defence of legal claims" ([Art. 17(3)(e)](https://www.legislation.gov.uk/eur/2016/679/article/17)), and the DPA 2018 has a privilege exemption ([Sch. 2 para 19](https://www.legislation.gov.uk/ukpga/2018/12/schedule/2/paragraph/19)). These cover the matter file, not automatically the derived copies in caches, logs or eval sets.
   - **UK → India transfers** need an IDTA or the Addendum, plus a transfer risk assessment ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/international-transfers/international-transfers-a-guide/)).
@@ -287,7 +287,7 @@ Wall events update `screened_matters` and bump `version` within seconds, before 
 
 **Metrics per layer:** parsing, character error rate on 50 hand-transcribed scanned pages; retrieval, recall@20 and nDCG@10 (overall and scanned); generation, faithfulness, citation precision ([Ragas-style](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/)) and abstention; system, leakage, wall latency, pass^3, cost and latency.
 
-Run an ablation: breadcrumbs only vs. LLM-written context vs. late chunking. Anthropic reported that contextual embeddings plus contextual BM25 cut failed retrievals by 49%, and by 67% with reranking, on its own datasets ([Sept 2024](https://www.anthropic.com/news/contextual-retrieval)). Treat that as a hypothesis to test, not a promise.
+Run an ablation: breadcrumbs only vs. LLM-written context vs. late chunking. Anthropic reported that contextual embeddings plus contextual BM25 cut failed retrievals by 49%, and by 67% with reranking, on its own datasets ([Sep 2024](https://www.anthropic.com/news/contextual-retrieval)). Treat that as a hypothesis to test, not a promise.
 
 **Judge calibration.** Pin the judge model. Two lawyers label 150 answers, and the judge ships only if Cohen's κ ≥ 0.7. Re-calibrate whenever the judge changes.
 

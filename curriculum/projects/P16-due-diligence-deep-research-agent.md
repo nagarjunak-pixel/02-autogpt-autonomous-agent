@@ -31,7 +31,7 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 ## 2. Constraints
 
-**Legal and regulatory** (as of Sept 2026). Assume, as fictional facts, that Corriemuir is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
+**Legal and regulatory** (as of Sep 2026). Assume, as fictional facts, that Corriemuir is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
 - **UK MAR.** Inside information may be disclosed only "in the normal exercise of an employment, a profession or duties" ([Art. 10](https://www.legislation.gov.uk/eur/2014/596/article/10)). This matters when a target or its debt is listed.
 - **FCA SYSC 10.2 (Chinese walls).** 10.2.2R permits withholding information held in one part of the business from another; under 10.2.4R a firm does not "act with knowledge" that a wall keeps out ([FCA Handbook](https://www.handbook.fca.org.uk/handbook/SYSC/10/2.html)). An agent that pools memory across deals breaks the wall.
 - **SEBI (Prohibition of Insider Trading) Regulations, 2015** (last amended 12 Mar 2025, per [SEBI](https://www.sebi.gov.in/legal/regulations/mar-2025/securities-and-exchange-board-of-india-prohibition-of-insider-trading-regulations-2015-last-amended-on-march-12-2025-_92672.html)). These cover unpublished price-sensitive information (UPSI) for listed Indian companies. UPSI may be shared for due diligence only under conditions, and a structured digital database of recipients is required. *Verify clause numbers.*

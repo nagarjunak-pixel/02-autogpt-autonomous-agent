@@ -36,7 +36,7 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 
 **Data.** Declarations carry HS/CN codes, values, masses, Incoterms, EORI/IEC identifiers and consignor/consignee names and addresses. Sole-trader parties make this personal data. The free-text **shipment remarks** field comes from customers and shipper EDI; it is untrusted and the main injection vector.
 
-**Legal and regulatory (as of Sept 2026, verify with counsel):**
+**Legal and regulatory (as of Sep 2026, verify with counsel):**
 - **EU Union Customs Code, [Reg. (EU) 952/2013](https://eur-lex.europa.eu/eli/reg/2013/952/oj):** Art. 15(2) makes whoever lodges a declaration responsible for "the accuracy and completeness of the information"; Art. 18 covers representation; Art. 51 requires keeping documents **at least three years** (the floor for screenshot retention); Arts. 173–174 cover amendment and invalidation.
 - **India, Customs Act 1962:** [s.114AA](https://indiankanoon.org/doc/117480706/) penalises knowingly using a false or incorrect declaration with up to **five times the value of goods**. Bills of entry are presented under [s.46](https://indiankanoon.org/doc/1982368/) and shipping bills under [s.50](https://indiankanoon.org/doc/681964/) (statute text checked 27 Sep 2026).
 - **GDPR:** Art. 5(1)(c) minimisation of screenshots, Art. 28 processor terms (model and browser vendors), Art. 32 security, and Chapter V transfers (Rotterdam→Chennai, non-EU providers).
@@ -96,7 +96,7 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 9. What is the cut-off profile and the acceptable latency per filing?
 10. What must a reviewer see to approve confidently in under 60 s, and what evidence would an AEO assessor expect?
 
-**State of the art the FDE shows the COO (Sept 2026):**
+**State of the art the FDE shows the COO (Sep 2026):**
 - **OSWorld** has 369 tasks and a 72.36% human baseline ([site](http://osworld-v1.xlang.ai/)). OSWorld-Verified launched 28 Jul 2025.
 - The top rows on [Steel.dev's leaderboard](https://leaderboard.steel.dev/leaderboards/osworld/) (4 Sep 2026) show 83–86%, but **all are self-reported**, with differing step limits and harnesses.
 - **OSWorld 2.0** ([arXiv 2606.29537](https://arxiv.org/abs/2606.29537), v1 28 Jun 2026) has 108 workflows at a median of about 1.6 human-hours each. At publication (June 2026) the best agent scored **20.6% binary / 54.8% partial** with a 500-step budget, and agents "lose track of constraints … and skip verification".
@@ -417,7 +417,7 @@ Timings are real-engagement weeks. In the course build, inject them in weeks 3�
 ## 15. What reviewers look for / common failure modes
 
 - **Skipping the ladder:** choosing computer use before asking about EDI, TMS import or a vendor API.
-- **Trusting leaderboards:** quoting a self-reported 85% OSWorld score (Sept 2026) as a reliability promise, when OSWorld 2.0's best was about 21% at publication (June 2026).
+- **Trusting leaderboards:** quoting a self-reported 85% OSWorld score (Sep 2026) as a reliability promise, when OSWorld 2.0's best was about 21% at publication (June 2026).
 - **Fragile idempotency** (in memory, written after the click, retried on submit) and **decorative approval** (3-second approvals, no seeded-error checks).
 - **Bad MFA:** seeds in environment variables, or a person's phone as the bot's MFA.
 - **Prompt-only defences:** instructions instead of plan-bound values and egress control.
