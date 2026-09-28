@@ -23,9 +23,9 @@ Both model-vendor SDKs are still 0.x: openai-agents is at 0.22.3 ([PyPI, 17 Sep 
 **What Vol 2 has today.** Turn 95 stays at the level of framework brands: Q469 lists "State and checkpoints, orchestration, human-in-the-loop…", and Q472 says to "treat the framework as an adapter". Budgets and approvals appear only as concepts in Turns 57 (Q280), 58, 59 and 91 (Q453). Searches for the following found nothing:
 - "harness" (other than in the evaluation-harness sense);
 - Claude Agent SDK;
-- canUseTool;
+- `canUseTool`;
 - max turns;
-- RunState;
+- `RunState`;
 - ADK.
 
 **What to teach.**
@@ -65,7 +65,7 @@ Both model-vendor SDKs are still 0.x: openai-agents is at 0.22.3 ([PyPI, 17 Sep 
 
 It includes the evidence that multi-agent systems cost many more tokens and fail in ways specific to coordination.
 
-**Why now.** MAF's sequential, concurrent, group-chat, handoff and magentic patterns reached 1.0 in Python and .NET, with the magentic example guarded by max_round_count=10, max_stall_count=3 and max_reset_count=2 ([Microsoft, 8 Jul 2026](https://devblogs.microsoft.com/agent-framework/agent-frameworks-orchestration-patterns-reach-1-0/)). The OpenAI Agents SDK separates agents-as-tools, where the manager keeps the answer, from handoffs, where the specialist takes over the turn ([OpenAI Agents SDK docs, accessed 26 Sep 2026](https://openai.github.io/openai-agents-python/multi_agent/)).
+**Why now.** MAF's sequential, concurrent, group-chat, handoff and magentic patterns reached 1.0 in Python and .NET, with the magentic example guarded by `max_round_count=10`, `max_stall_count=3` and `max_reset_count=2` ([Microsoft, 8 Jul 2026](https://devblogs.microsoft.com/agent-framework/agent-frameworks-orchestration-patterns-reach-1-0/)). The OpenAI Agents SDK separates agents-as-tools, where the manager keeps the answer, from handoffs, where the specialist takes over the turn ([OpenAI Agents SDK docs, accessed 26 Sep 2026](https://openai.github.io/openai-agents-python/multi_agent/)).
 
 Anthropic's research system used a Claude Opus 4 lead with Sonnet 4 subagents ([Anthropic, 13 Jun 2025](https://www.anthropic.com/engineering/multi-agent-research-system)):
 - It beat single-agent Opus 4 by 90.2% on an internal research eval.
@@ -425,28 +425,28 @@ n8n CVE-2026-21858 (CVSS 10, unauthenticated file access) was published on 7 Jan
 #### Disagreements with Vol 2 / gap doc (agents)
 
 - **Gap doc #2 (computer use).** The citation for ">85% on OSWorld-Verified" is wrong. arXiv 2607.26041 is "Desktop-Delta Bench" ([arXiv, 28 Jul 2026](https://arxiv.org/abs/2607.26041)). The ~86% figure comes from leaderboard rows that are mostly self-reported ([BenchLM, 22 Sep 2026](https://benchlm.ai/benchmarks/osworld-verified)). The #2 Q&A also mixes up OSWorld and OSWorld-Verified.
-  - **Recommended change:** use AGT-4 as the #2 turn at P2, not P1. Cite arXiv 2606.29537 for OSWorld 2.0 (20.6%, "at publication, June 2026") and arXiv 2607.28367 for mis-scoring. Label leaderboard figures as self-reported and timestamp them. Teach a short version of the decision ladder, including the code-execution rung, in Turn 61.
+  - ***Change:*** use AGT-4 as the #2 turn at P2, not P1. Cite arXiv 2606.29537 for OSWorld 2.0 (20.6%, "at publication, June 2026") and arXiv 2607.28367 for mis-scoring. Label leaderboard figures as self-reported and timestamp them. Teach a short version of the decision ladder, including the code-execution rung, in Turn 61.
   - **Do not** argue that GUI driving is fading because of OpenAI's 23 Jul 2026 retirement. Only the computer-use-preview snapshot was retired, and the computer tool continues on GPT-5.6 models ([OpenAI, accessed 26 Sep 2026](https://developers.openai.com/api/docs/guides/tools-computer-use)).
-- **Vol 2 Turn 95 (agent frameworks).** The turn is framed around framework brands. It misses the 2025–26 shift to vendor harness SDKs, whose permission hooks, stop conditions and resumable state are the safety-critical parts. Both model-vendor SDKs are still 0.x: openai-agents 0.22.3 and claude-agent-sdk 0.2.160 (npm 0.3.283). By contrast, google-adk is at 2.10.0 and agent-framework at 1.19.0 ([PyPI](https://pypi.org/pypi/openai-agents/json), [PyPI](https://pypi.org/pypi/claude-agent-sdk/json), [PyPI](https://pypi.org/pypi/google-adk/json), [PyPI](https://pypi.org/pypi/agent-framework/json), Sep 2026).
-  - **Recommended change:** rewrite Turn 95 around harness primitives (AGT-1), with a comparison table of the Claude Agent SDK, OpenAI Agents SDK, ADK, MAF and LangGraph. Add a Q&A on pinning versions and wrapping 0.x SDKs in an adapter.
+- **Vol 2 Turn 95 (agent frameworks).** The turn is framed around framework brands. It misses the 2025–26 shift to vendor harness SDKs, whose permission hooks, stop conditions and resumable state are the safety-critical parts. Both model-vendor SDKs are still 0.x: openai-agents 0.22.3 and claude-agent-sdk 0.2.160 (npm 0.3.283). By contrast, google-adk is at 2.10.0 and agent-framework at 1.19.0 (PyPI, Sep 2026: [openai-agents](https://pypi.org/pypi/openai-agents/json), [claude-agent-sdk](https://pypi.org/pypi/claude-agent-sdk/json), [google-adk](https://pypi.org/pypi/google-adk/json), [agent-framework](https://pypi.org/pypi/agent-framework/json)).
+  - ***Change:*** rewrite Turn 95 around harness primitives (AGT-1), with a comparison table of the Claude Agent SDK, OpenAI Agents SDK, ADK, MAF and LangGraph. Add a Q&A on pinning versions and wrapping 0.x SDKs in an adapter.
 - **Gap doc #13 (distribution).** The item is framed around public directories. It misses the enterprise-tenant channels: Microsoft 365 Copilot and Teams, Gemini Enterprise, and Slack.
-  - **Recommended change:** keep it at P2 (P1 in accounts centred on Microsoft 365), not the finder's P1. Split it into a public-directory part and an enterprise-tenant part (AGT-5).
+  - ***Change:*** keep it at P2 (P1 in accounts centred on Microsoft 365), not the finder's P1. Split it into a public-directory part and an enterprise-tenant part (AGT-5).
   - Use OpenAI's current naming: "plugins", in a Plugins Directory shared by ChatGPT and Codex.
   - Scope Slack's terms correctly: internal customer-built apps are exempt from the third-party clauses and the throttles.
   - Date MCP Apps correctly: it became an official extension on 26 Jan 2026, not "in 2026-07-28" ([MCP blog](https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/)).
 - **Gap doc #18 (low-code builders).** The item covers only n8n exposure. It misses vendor-native builders and vendor churn (OpenAI Agent Builder: notice 3 Jun 2026, shutdown 30 Nov 2026), and it gives no KEV dates.
-  - **Recommended change:** broaden it as in AGT-9, and cite the KEV entries ([CISA KEV](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)): Langflow CVE-2025-3248, added 5 May 2025; n8n CVE-2025-68613, added 11 Mar 2026; and Langflow's six entries through CVE-2026-9198 on 4 Aug 2026.
+  - ***Change:*** broaden it as in AGT-9, and cite the KEV entries ([CISA KEV](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json)): Langflow CVE-2025-3248, added 5 May 2025; n8n CVE-2025-68613, added 11 Mar 2026; and Langflow's six entries through CVE-2026-9198 on 4 Aug 2026.
   - Drop the 647,017 figure, or re-attribute it: it is the attacker's FOFA result, quoted by [Unit 42, 30 Jul 2026](https://unit42.paloaltonetworks.com/autonomous-ai-cyber-attack-campaign/).
 - **Gap doc "Looks missing but already covered" (Subagents: Turn 55; MCP Apps and generative UI: Turn 59).** This is only partly true. Turn 55 covers context isolation, costs and when not to use subagents, but not orchestration patterns: handoff, agents-as-tools and magentic have zero hits.
-  - **Recommended change:** extend Turn 55 with the pattern taxonomy (AGT-2); do not add a new turn. Add only one A2UI sentence and one Q&A to Turn 59 (AGT-10, Watch), because Q291 already teaches the catalogue idea.
+  - ***Change:*** extend Turn 55 with the pattern taxonomy (AGT-2); do not add a new turn. Add only one A2UI sentence and one Q&A to Turn 59 (AGT-10, Watch), because Q291 already teaches the catalogue idea.
 - **Gap doc #17 (TypeScript stack).** A new turn would duplicate Turn 103 in another language. The npm evidence of scale is verified for 26 Aug to 24 Sep 2026:
   - 93.5M downloads for `ai`, the Vercel AI SDK ([npm](https://api.npmjs.org/downloads/point/2026-08-26:2026-09-24/ai));
   - 47.7M for `@anthropic-ai/claude-agent-sdk` ([npm](https://api.npmjs.org/downloads/point/2026-08-26:2026-09-24/@anthropic-ai/claude-agent-sdk));
   - 206M for `@modelcontextprotocol/sdk` ([npm](https://api.npmjs.org/downloads/point/2026-08-26:2026-09-24/@modelcontextprotocol/sdk)).
 
   The AI SDK's current major version is 7, not 6.
-  - **Recommended change:** extend Turn 103 into "Python and TypeScript Engineering for AI Apps", with side-by-side patterns for validation, streaming and approvals, and keep it P2. Do not claim a TypeScript majority, since the Python MCP SDK also passed 1B downloads.
+  - ***Change:*** extend Turn 103 into "Python and TypeScript Engineering for AI Apps", with side-by-side patterns for validation, streaming and approvals, and keep it P2. Do not claim a TypeScript majority, since the Python MCP SDK also passed 1B downloads.
 - **Gap doc #7 (context engineering).** The OpenClaw compaction incident is cited to arXiv 2606.29175. That paper is about international humanitarian law and is not a primary source for the incident.
-  - **Recommended change:** cite a primary source, or a clearly labelled secondary post-mortem, for the 23 Feb 2026 incident. One example is [vectara/awesome-agent-failures](https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/openclaw-email-deletion.md).
+  - ***Change:*** cite a primary source, or a clearly labelled secondary post-mortem, for the 23 Feb 2026 incident. One example is [vectara/awesome-agent-failures](https://github.com/vectara/awesome-agent-failures/blob/main/docs/case-studies/openclaw-email-deletion.md).
 - **Vol 2 Turns 57/58/59/91 (loop, cost and approval controls).** This is not a gap. Runaway spend, per-run budgets, stuck-agent detection, approval queues and durable waits are all covered as concepts. Only the harness-level APIs are missing: max-turn and budget stops, and interrupts that can be serialised.
-  - **Recommended change:** add no standalone turns for cost-runaway controls, human-in-the-loop or event-driven agents. Fold the API-level mechanics into the rewritten Turn 95 (AGT-1).
+  - ***Change:*** add no standalone turns for cost-runaway controls, human-in-the-loop or event-driven agents. Fold the API-level mechanics into the rewritten Turn 95 (AGT-1).
