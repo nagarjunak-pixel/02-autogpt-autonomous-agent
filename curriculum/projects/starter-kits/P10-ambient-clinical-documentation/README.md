@@ -1,4 +1,4 @@
-# P10 starter kit · Ambient clinical documentation
+# P10 Starter Kit · Ambient Clinical Documentation
 
 Offline starter kit for the brief [P10 · Ambient Clinical Documentation](../../P10-ambient-clinical-documentation.md). Almarosa Community Health is fictional, and so is every clinician, patient, clinic and visit in the data. There is no real PHI anywhere in the kit.
 

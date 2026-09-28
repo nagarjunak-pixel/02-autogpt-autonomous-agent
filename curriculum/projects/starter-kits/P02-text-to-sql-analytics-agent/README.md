@@ -1,4 +1,4 @@
-# P02 starter kit · Governed text-to-SQL for Annavara Retail
+# P02 Starter Kit · Governed Text-to-SQL for Annavara Retail
 
 Offline starter kit for the brief [P02 · Governed Text-to-SQL Analytics Assistant](../../P02-text-to-sql-analytics-agent.md).
 Annavara Retail is fictional, and so is every store, product and person in the data.
@@ -78,32 +78,32 @@ The eval sets:
 
 ## Metrics, acceptance criteria and baseline results
 
-The last column is the baseline's score today.
+Baseline figures come from `python3 eval_harness.py` on the default data.
 
-| AC-ID | Harness metric | Threshold (brief §5) | Baseline |
-|---|---|---|---|
-| AC-1 | Execution accuracy, semantic set, with a bootstrap 95% CI | ≥ 0.90 | 0.673: FAIL |
-| AC-1 | Execution accuracy, English / Hindi / Hinglish | each ≥ 0.85 | 0.949 / 0.000 / 0.967 |
-| AC-1 | Gap from English to the worst language | ≤ 0.05 (within 5 points) | 0.949: FAIL |
-| AC-2 | Fallback accuracy, long-tail set | ≥ 0.70 | 0.200: FAIL |
-| AC-2 | Fallback answers labelled "unverified definition" | always | PASS |
-| AC-2 | Finance questions sent down the fallback path | never | PASS |
-| AC-3 | Clarifies on ambiguous items | ≥ 85% | 1.000: PASS, by accident: it "clarifies" anything it cannot parse |
-| AC-3 | Unnecessary clarifications | ≤ 10% | 0.363: FAIL |
-| AC-4 | Correct refusals (DML, out of scope, cross-scope, injection) | ≥ 95% | 0.347: FAIL |
-| AC-5 | Rows outside the user's entitlement | 0 | 0: PASS |
-| AC-5 | Cross-scope attempts made | ≥ 1,000 | 1,112 |
-| AC-5 | DDL/DML executed (audit of the query history) | 0 | 0: PASS |
-| AC-5 | Forbidden probes that got past the guard | 0 | 0: PASS |
-| AC-6 | Answers stating scope and data freshness | 100% | 0.000: FAIL |
-| AC-7 | pass^3 on 50 core questions | ≥ 0.90 | 0.660: FAIL |
-| AC-8 | p95 latency, semantic and fallback paths (local, one user) | ≤ 8 s / ≤ 15 s | PASS |
-| AC-8 | p95 latency with 30 concurrent users | ≤ 8 s / ≤ 15 s | not computable offline |
-| AC-9 | Cost per successful answer, warehouse included | ≤ ₹4 | not computable offline |
-| AC-10 | Executed queries above the cost cap | 0 | 0: PASS |
-| AC-10 | Cost-cap probes that got past the guard | 0 | 0: PASS |
-| AC-10 | Maximum attempts per question | ≤ 2 | 1: PASS |
-| AC-11 | Analyst requests down; weekly active managers | ≥ 40%; ≥ 50% | not computable offline |
+| AC-ID | Harness metric | Threshold (brief §5) | Baseline | Notes |
+|---|---|---|---|---|
+| AC-1 | Execution accuracy, semantic set, with a bootstrap 95% CI | ≥ 0.90 | 0.673: FAIL | |
+| AC-1 | Execution accuracy, English / Hindi / Hinglish | each ≥ 0.85 | 0.949: PASS / 0.000: FAIL / 0.967: PASS | |
+| AC-1 | Gap from English to the worst language | ≤ 0.05 (within 5 points) | 0.949: FAIL | |
+| AC-2 | Fallback accuracy, long-tail set | ≥ 0.70 | 0.200: FAIL | |
+| AC-2 | Fallback answers labelled "unverified definition" | always | PASS | |
+| AC-2 | Finance questions sent down the fallback path | never | PASS | |
+| AC-3 | Clarifies on ambiguous items | ≥ 85% | 1.000: PASS | By accident: it "clarifies" anything it cannot parse. |
+| AC-3 | Unnecessary clarifications | ≤ 10% | 0.363: FAIL | |
+| AC-4 | Correct refusals (DML, out of scope, cross-scope, injection) | ≥ 95% | 0.347: FAIL | |
+| AC-5 | Rows outside the user's entitlement | 0 | 0: PASS | |
+| AC-5 | Cross-scope attempts made | ≥ 1,000 | 1,112: PASS | |
+| AC-5 | DDL/DML executed (audit of the query history) | 0 | 0: PASS | |
+| AC-5 | Forbidden probes that got past the guard | 0 | 0: PASS | |
+| AC-6 | Answers stating scope and data freshness | 100% | 0.000: FAIL | |
+| AC-7 | pass^3 on 50 core questions | ≥ 0.90 | 0.660: FAIL | |
+| AC-8 | p95 latency, semantic and fallback paths (local, one user) | ≤ 8 s / ≤ 15 s | PASS | |
+| AC-8 | p95 latency with 30 concurrent users | ≤ 8 s / ≤ 15 s | not computable offline | |
+| AC-9 | Cost per successful answer, warehouse included | ≤ ₹4 | not computable offline | |
+| AC-10 | Executed queries above the cost cap | 0 | 0: PASS | |
+| AC-10 | Cost-cap probes that got past the guard | 0 | 0: PASS | |
+| AC-10 | Maximum attempts per question | ≤ 2 | 1: PASS | |
+| AC-11 | Analyst requests down; weekly active managers | ≥ 40%; ≥ 50% | not computable offline | |
 
 How the harness scores:
 
@@ -113,15 +113,15 @@ How the harness scores:
 
 ## What you build next
 
-The brief's course plan (§7) runs 5 weeks. The middle column shows the real engagement phase each week rehearses.
+The brief's course plan (§7) runs 5 weeks. The brackets give the real engagement phase each week rehearses.
 
-| Course week | Real phase (weeks) | Build on this kit |
+| Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| 1 | Discovery (1–2) | Role-play discovery and check the generator against your answers. Name metric owners and grow the semantic layer towards the 20 core definitions. |
-| 2 | POC (3–5) | Replace `baseline.py` with a planner that fills `MetricQuery` JSON through `adapter.py`, validated against the catalogue. Keep `tests/test_sql_guard.py` green and add native row-level security (Postgres 16 policies) under a read-only role. POC exit: AC-1 ≥ 0.85 and AC-5 met. |
-| 3 | Pilot (6–9) | Add the clarifier (curveball 1), the labelled fallback path with at most 2 repairs, and the ADR-006 effort sweep on the long-tail set. Grow the golden set towards 300 items. |
-| 4 | Pilot (6–9) | Add the Hindi and Hinglish normaliser ("kal", lakh and crore, fiscal periods) and track AC-1 per language. Replace the rows-scanned proxy with Snowflake- and BigQuery-style metering for AC-9. Run curveballs 3 and 4. |
-| 5 | Pilot exit, Production (10–11) | Add the result verifier, the scope and freshness footer (AC-6), explicit scope refusals and an HQ-approved `national_avg_sales_per_store` benchmark (curveball 5). Demo a clarification, a refusal and cost per answer. |
+| 1 (Discovery, weeks 1–2) | Role-play discovery and check the generator against your answers. Name metric owners and grow the semantic layer towards the 20 core definitions. | none yet |
+| 2 (POC, weeks 3–5) | Replace `baseline.py` with a planner that fills `MetricQuery` JSON through `adapter.py`, validated against the catalogue. Keep `tests/test_sql_guard.py` green and add native row-level security (Postgres 16 policies) under a read-only role. POC exit: AC-1 ≥ 0.85 and AC-5 met. | AC-1, AC-5 stays PASS |
+| 3 (Pilot, weeks 6–9) | Add the clarifier (curveball 1), the labelled fallback path with at most 2 repairs, and the ADR-006 effort sweep on the long-tail set. Grow the golden set towards 300 items. | AC-3, AC-2 |
+| 4 (Pilot) | Add the Hindi and Hinglish normaliser ("kal", lakh and crore, fiscal periods). Replace the rows-scanned proxy with Snowflake- and BigQuery-style metering. Run curveballs 3 and 4. | AC-1 per language, AC-9 (metered), AC-10 |
+| 5 (Pilot exit; Production, weeks 10–11) | Add the result verifier, the scope and freshness footer, explicit scope refusals and an HQ-approved `national_avg_sales_per_store` benchmark (curveball 5). Demo a clarification, a refusal and cost per answer. | AC-6, AC-4, AC-5 stays PASS |
 
 ## What the kit deliberately does not do
 

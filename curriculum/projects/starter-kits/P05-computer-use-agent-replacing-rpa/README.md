@@ -1,4 +1,4 @@
-# P05 starter kit · Computer-use agent replacing brittle RPA
+# P05 Starter Kit · Computer-Use Agent Replacing Brittle RPA
 
 Offline starter kit for the brief [P05 · Computer-Use Agent Replacing Brittle RPA for Customs Filing](../../P05-computer-use-agent-replacing-rpa.md). Duinhaven Freight Forwarders, the Tollvane portal and every party, vessel, container and identifier in the data are fictional.
 

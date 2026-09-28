@@ -1,4 +1,4 @@
-# P08 starter kit · Sovereign, air-gapped LLM platform
+# P08 Starter Kit · Sovereign, Air-Gapped LLM Platform
 
 Offline starter kit for the brief [P08 · Sovereign, Air-Gapped LLM Platform for a Cooperative Bank](../../P08-sovereign-air-gapped-llm-platform.md). Nallamala Cooperative Bank is fictional, and so is every staff member, borrower, circular and loan file in the data. There is no real personal data anywhere in the kit: Aadhaar-format numbers start with 0 or 1 and PAN-format strings use holder type Z, so neither can be a real ID.
 

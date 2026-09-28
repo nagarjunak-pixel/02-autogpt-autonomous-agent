@@ -1,4 +1,4 @@
-# P13 starter kit · Agent-ready commerce: MCP tools and mandate-bound checkout
+# P13 Starter Kit · Agent-Ready Commerce: MCP Tools and Mandate-Bound Checkout
 
 Offline starter kit for the brief [P13 · Agent-Ready Commerce: MCP Server, Assistant Distribution and Mandate-Bound Checkout](../../P13-agent-ready-commerce-mcp.md). Neyyarasi is fictional, and so is every seller, shopper, order and token in the data.
 

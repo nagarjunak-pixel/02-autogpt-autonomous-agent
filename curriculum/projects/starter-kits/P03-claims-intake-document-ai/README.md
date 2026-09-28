@@ -1,4 +1,4 @@
-# P03 starter kit · Claims intake document AI with human review
+# P03 Starter Kit · Claims Intake Document AI with Human Review
 
 Offline starter kit for the brief [P03 · Claims Intake Document AI with Human Review](../../P03-claims-intake-document-ai.md). Kalsubai General Insurance is fictional, and so is every policyholder, hospital, claim and number in the data.
 

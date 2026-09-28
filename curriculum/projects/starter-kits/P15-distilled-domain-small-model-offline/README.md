@@ -1,4 +1,4 @@
-# P15 starter kit · Distilled domain small model, offline
+# P15 Starter Kit · Distilled Domain Small Model, Offline
 
 Offline starter kit for the brief [P15 · Distilled Domain Small Model for Offline Field Technicians](../../P15-distilled-domain-small-model-offline.md). Kilnridge Energy Services is fictional, and so is every equipment model, technician and value in the data. **The torque values are invented for the exercise. They are not engineering data.**
 
@@ -107,7 +107,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-9 number its rows in order: AC-1
 
 The harness also prints the leak audit (28 of 400 test questions, 7.0%, had a planted leak; 5 survive), clean rows the filter wrongly rejected (0), and the fleet telemetry for curveball 4 (29% with no NPU, although the purchase order claims 100%; 68 devices unsynced for more than 14 days).
 
-## Plugging in a model
+## Plugging in a real model
 
 ```bash
 export LLM_BASE_URL=http://localhost:8080/v1     # llama.cpp server, Ollama or vLLM

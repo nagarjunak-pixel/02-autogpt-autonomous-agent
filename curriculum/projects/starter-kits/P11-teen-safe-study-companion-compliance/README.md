@@ -1,4 +1,4 @@
-# P11 starter kit · Teen-safe study companion: compliance and safety retrofit
+# P11 Starter Kit · Teen-Safe Study Companion: Compliance and Safety Retrofit
 
 Offline starter kit for the brief [P11 · Teen-Safe Study Companion: Compliance and Safety Retrofit](../../P11-teen-safe-study-companion-compliance.md). Taruvana Learning and "Dost" are fictional, and so is every student, parent and conversation in the data. There is no real teen data anywhere in the kit: Indian phone numbers start with 0 after +91 (never a real mobile) and US numbers use the 555-01xx range reserved for fiction. Crisis texts are short, non-graphic and contain no methods. The helplines (Tele MANAS, 988, Crisis Text Line) are the real services the brief names; the kit never contacts them.
 

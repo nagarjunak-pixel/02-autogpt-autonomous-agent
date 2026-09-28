@@ -1,4 +1,4 @@
-# P06 starter kit · Injection-resistant inbox agent
+# P06 Starter Kit · Injection-Resistant Inbox Agent
 
 Offline starter kit for the brief [P06 · Injection-Resistant Executive Inbox and Calendar Agent](../../P06-injection-resistant-inbox-agent.md). Kerrowan Therapeutics is fictional, and so is every executive, address, trial and number in the data. Kerrowan's mail domain is `helixtx.example`, as in the brief's §7 sketch; `helixtx-secure.example` and `he1ixtx.example` are the lookalikes.
 

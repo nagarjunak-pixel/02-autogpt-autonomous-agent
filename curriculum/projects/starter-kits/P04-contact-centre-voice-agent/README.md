@@ -1,4 +1,4 @@
-# P04 starter kit · Multilingual contact-centre voice agent for Kavrona Telecom
+# P04 Starter Kit · Multilingual Contact-Centre Voice Agent for Kavrona Telecom
 
 Offline starter kit for the brief [P04 · Multilingual Contact-Centre Voice Agent](../../P04-contact-centre-voice-agent.md).
 Kavrona Telecom, its subscribers, phone numbers, dockets and card numbers are all fictional.
@@ -76,27 +76,27 @@ The brief sizes the plan catalogue at 320 and the adversarial set at 200, and th
 
 ## Metrics, acceptance criteria and baseline results
 
-Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (contained resolution) and AC-13 the last (cost). The last column is the baseline's score today. Latency rows run in real time, so they vary a little between runs; the tool-turn answer p95 sits near a turn that can take either path, so it reads 1.7 s or about 1.85 s.
+Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (contained resolution) and AC-13 the last (cost). Each AC-ID's first row names the brief's dimension in the Notes column. Baseline figures come from `python3 eval_harness.py` on the default data. Latency rows run in real time, so they vary a little between runs; the tool-turn answer p95 sits near a turn that can take either path, so it reads 1.7 s or about 1.85 s.
 
-| AC-ID | Harness metric | Threshold (brief §5) | Baseline |
-|---|---|---|---|
-| AC-1 (Business) | Contained resolution | ≥ 35% of in-scope pilot calls | not computable offline (upper bound 0.575 shown) |
-| AC-2 (Business) | AHT on transferred calls | ≥ 40 s below control | not computable offline |
-| AC-2 | Handoff packets whose auth level comes from systems (proxy) | all | 200/220: FAIL |
-| AC-3 (Quality) | Intent accuracy, overall / code-mixed | ≥ 92% / ≥ 88% | 0.728: FAIL / 0.833: FAIL |
-| AC-4 (Quality) | Entity accuracy after read-back | ≥ 99% | 0.968: FAIL |
-| AC-5 (Reliability) | pass^4 per language (te, hi, en, mixed) | ≥ 0.85 each | 0.54 / 0.46 / 0.75 / 0.67: FAIL |
-| AC-6 (Latency) | Voice-to-voice p50 / p95, plain turns (simulated) | ≤ 900 ms / ≤ 1.5 s | ≈ 820 ms: PASS / ≈ 1020 ms: PASS |
-| AC-6 | Tool turns: acknowledgement p95 / answer p95 (simulated) | ≤ 700 ms / ≤ 2.2 s | ≈ 960 ms: FAIL / 1.7–1.85 s: PASS |
-| AC-6 | CI gate: successor model's answer p95 (curveball 1) | regression < 10% | ≈ 1.6 s → 2.5 s: FAIL |
-| AC-7 (Turn-taking) | Barge-in stop time p95 (simulated) / false barge-ins | ≤ 250 ms / ≤ 3% | ≈ 175 ms: PASS / not computable offline |
-| AC-8 (Safety) | AI disclosure and recording notice in the first 10 s | 100% | 225/260: FAIL |
-| AC-8 | Outage and ETA announced in the caller's language before intent capture (curveball 3) | 100% | 0/20: FAIL |
-| AC-9 (Safety) | Transfer on first explicit request, at most one retention offer | ≥ 99% | 0.500: FAIL |
-| AC-10 (Security) | Account-state changes without step-up | 0 of 200 | 80: FAIL |
-| AC-11 (PCI) | Calls with card digits in transcripts, logs, tool calls or model context | 0 | 340: FAIL |
-| AC-12 (Availability) | Availability, entry point / bot path | 99.95% / 99.5% | not computable offline |
-| AC-13 (Cost) | Cost per bot-minute / per contained call | ≤ ₹2.5 / ≤ ₹18 | ₹2.27: PASS (assumed prices) / not computable offline |
+| AC-ID | Harness metric | Threshold (brief §5) | Baseline | Notes |
+|---|---|---|---|---|
+| AC-1 | Contained resolution | ≥ 35% of in-scope pilot calls | not computable offline | Business. The harness shows an upper bound (0.575). |
+| AC-2 | AHT on transferred calls | ≥ 40 s below control | not computable offline | Business. |
+| AC-2 | Handoff packets whose auth level comes from systems (proxy) | all | 200/220: FAIL | |
+| AC-3 | Intent accuracy, overall / code-mixed | ≥ 92% / ≥ 88% | 0.728: FAIL / 0.833: FAIL | Quality. |
+| AC-4 | Entity accuracy after read-back | ≥ 99% | 0.968: FAIL | Quality. |
+| AC-5 | pass^4 per language (te, hi, en, mixed) | ≥ 0.85 each | 0.54 / 0.46 / 0.75 / 0.67: FAIL | Reliability. |
+| AC-6 | Voice-to-voice p50 / p95, plain turns (simulated) | ≤ 900 ms / ≤ 1.5 s | ≈ 820 ms: PASS / ≈ 1020 ms: PASS | Latency. |
+| AC-6 | Tool turns: acknowledgement p95 / answer p95 (simulated) | ≤ 700 ms / ≤ 2.2 s | ≈ 960 ms: FAIL / 1.7–1.85 s: PASS | |
+| AC-6 | CI gate: successor model's answer p95 (curveball 1) | regression < 10% | ≈ 1.6 s → 2.5 s: FAIL | |
+| AC-7 | Barge-in stop time p95 (simulated) / false barge-ins | ≤ 250 ms / ≤ 3% | ≈ 175 ms: PASS / not computable offline | Turn-taking. |
+| AC-8 | AI disclosure and recording notice in the first 10 s | 100% | 225/260: FAIL | Safety. |
+| AC-8 | Outage and ETA announced in the caller's language before intent capture (curveball 3) | 100% | 0/20: FAIL | |
+| AC-9 | Transfer on first explicit request, at most one retention offer | ≥ 99% | 0.500: FAIL | Safety. |
+| AC-10 | Account-state changes without step-up | 0 of 200 | 80: FAIL | Security. |
+| AC-11 | Calls with card digits in transcripts, logs, tool calls or model context | 0 | 340: FAIL | PCI. |
+| AC-12 | Availability, entry point / bot path | 99.95% / 99.5% | not computable offline | Availability. |
+| AC-13 | Cost per bot-minute / per contained call | ≤ ₹2.5 / ≤ ₹18 | ₹2.27: PASS / not computable offline | Cost. The per-minute figure uses assumed prices. |
 
 How the harness scores:
 
@@ -112,16 +112,16 @@ How the harness scores:
 
 ## What you build next
 
-The brief's course plan (§7) runs 6 weeks. The middle column shows the real engagement phase each week rehearses.
+The brief's course plan (§7) runs 6 weeks. The brackets give the real engagement phase each week rehearses.
 
-| Course week | Real phase (weeks) | Build on this kit |
+| Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| 1 | Discovery (1–2) | Discovery memo. Read `cases.jsonl` and `bills.jsonl` like a data-readiness review: duplicates, reopened cases, CRM ≠ billing plans. |
-| 2 | POC (3–6) | The streaming pipeline and latency budget: wire `TurnManager` to real ASR, LLM and TTS, and replace `latency_turns.jsonl` with your measurements. Add an immediate acknowledgement for tool turns (AC-6). |
-| 3 | POC (3–6) | Per-intent workflow states, a real NLU (plug it in through `adapter.py`), number normalisation and read-back (AC-3, AC-4). Inject curveball 1: the CI gate row must block the successor. POC exit: p50 ≤ 1.0 s, intent ≥ 88%. |
-| 4 | Pilot (7–12) | The handoff packet built from systems, the payment-IVR transfer before any digits, and a policy guard in code that allow-lists tools by verified auth level (AC-2, AC-10, AC-11). Inject curveball 2. |
-| 5 | Pilot (7–12) | Synthetic-caller evals with pass^4 per language, a red-team pass over `adversarial.jsonl`, and the disclosure and outage flow (AC-5, AC-8). Inject curveballs 3 and 4 and report before/after with CIs. |
-| 6 | Pilot, Production (7–17) | Multilingual transfer detection (AC-9), the cost model tied to containment (AC-13) and the demo with a visible failure. Inject curveball 5. |
+| 1 (Discovery, weeks 1–2) | Discovery memo. Read `cases.jsonl` and `bills.jsonl` like a data-readiness review: duplicates, reopened cases, CRM ≠ billing plans. | none yet |
+| 2 (POC, weeks 3–6) | The streaming pipeline and latency budget: wire `TurnManager` to real ASR, LLM and TTS, and replace `latency_turns.jsonl` with your measurements. Add an immediate acknowledgement for tool turns. | AC-6 |
+| 3 (POC) | Per-intent workflow states, a real NLU (plug it in through `adapter.py`), number normalisation and read-back. Inject curveball 1: the CI gate row must block the successor. POC exit: p50 ≤ 1.0 s, intent ≥ 88%. | AC-3, AC-4 |
+| 4 (Pilot, weeks 7–12) | The handoff packet built from systems, the payment-IVR transfer before any digits, and a policy guard in code that allow-lists tools by verified auth level. Inject curveball 2. | AC-2, AC-10, AC-11 |
+| 5 (Pilot) | Synthetic-caller evals with pass^4 per language, a red-team pass over `adversarial.jsonl`, and the disclosure and outage flow. Inject curveballs 3 and 4 and report before/after with CIs. | AC-5, AC-8, AC-3 code-mixed |
+| 6 (Pilot and Production, weeks 7–17) | Multilingual transfer detection, the cost model tied to containment and the demo with a visible failure. Inject curveball 5. | AC-9, AC-13 |
 
 ## What the kit deliberately does not do
 

@@ -1,4 +1,4 @@
-# P02 validation: a reference solution scored against the acceptance criteria
+# P02 Validation: A Reference Solution Scored Against the Acceptance Criteria
 
 Status as of 28 September 2026. This is an instructor note, not student material: it reports what a first real attempt at
 [P02](../P02-text-to-sql-analytics-agent.md) achieved on the budget path, what failed and why, and one bug it found in the

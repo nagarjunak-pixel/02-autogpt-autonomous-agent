@@ -1,4 +1,4 @@
-# P01 starter kit · Permission-aware knowledge assistant
+# P01 Starter Kit · Permission-Aware Knowledge Assistant
 
 Offline starter kit for the brief [P01 · Permission-Aware Knowledge Assistant for a Law Firm](../../P01-permission-aware-knowledge-assistant.md) (Carrowby & Varadan LLP, fictional).
 
