@@ -1,0 +1,11 @@
+{
+  "name": "p13-agent-ready-commerce-starter-kit",
+  "private": true,
+  "type": "module",
+  "description": "Offline starter kit for brief P13. No dependencies: Node 22 with --experimental-strip-types.",
+  "scripts": {
+    "generate": "node --experimental-strip-types generate_data.ts",
+    "eval": "node --experimental-strip-types eval_harness.ts",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
+  }
+}

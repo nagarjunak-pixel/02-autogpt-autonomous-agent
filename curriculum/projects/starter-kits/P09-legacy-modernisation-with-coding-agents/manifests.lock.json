@@ -1,0 +1,11 @@
+{
+  "_comment": "CODEOWNED by the Appointed Actuary's delegate. Hashes of the default fixtures (n=2000, seeds 1-3) and of the golden answer key (seed 9).",
+  "n": 2000,
+  "seed": 9,
+  "fixtures": {
+    "1": "37cb0e1a839a20b4ab49c47e3dbe7131c2ef884f22f3093c8aff00a140dea68e",
+    "2": "6261c3cfc6c47334c7c6ca23d0291159becd177a84c48e194346b48b553b711d",
+    "3": "7d55f8ea49bd56e6b3086d89f7676d758f57de64eaaf68bfd962897360523888"
+  },
+  "golden": "4d8686343e6687bf4468c61187b3474d14039d5e2058abc7d0fc2c46165cd191"
+}
