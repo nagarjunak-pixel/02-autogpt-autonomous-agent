@@ -40,6 +40,8 @@ Every brief has an offline starter kit in [starter-kits/](starter-kits/README.md
 
 Every baseline fails several criteria by design, and metrics that need people or production traffic are marked "not computable offline". Teams start week 1 by running their kit, then replace the baseline and track the numbers. A kit is a scaffold, not a solution: the §8 evaluation plan, the calibrated judges and the engagement artefacts are still the team's work.
 
+**For instructors: what a real attempt scores.** P02 has been built end to end with a small local model and scored with its kit and a paraphrased test set. The [P02 validation report](validation/P02-validation-report.md) gives the results, what failed and why, a bug it found in the kit's answer key (fixed), and grading recommendations.
+
 ## How every project runs
 
 ```mermaid
