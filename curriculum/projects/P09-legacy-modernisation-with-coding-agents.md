@@ -1,7 +1,7 @@
 # P09 · Legacy Modernisation with Coding Agents
 
 > Turn "modernise in half the time" into a measured coding-agent programme: one COBOL premium module migrated by sandboxed agents against a legacy oracle, with productivity figures you can defend to a board.
-
+>
 > **Customer:** Bhuvika Mutual Life (fictional) · **Industry:** Life insurance · **Geography:** India (Mumbai HQ, Pune engineering centre) · **Real engagement:** 16 weeks; FDE lead + 1 FDE, working with BML's 2 COBOL subject-matter experts (SMEs), 6 Java developers, a part-time actuary and a security architect · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 **Starter kit:** [`starter-kits/P09-legacy-modernisation-with-coding-agents/`](starter-kits/P09-legacy-modernisation-with-coding-agents/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `diff_harness.py` (with a Python stand-in for `PRMCALC`) with tests, a deliberately weak baseline, and an eval harness that scores it against §5.

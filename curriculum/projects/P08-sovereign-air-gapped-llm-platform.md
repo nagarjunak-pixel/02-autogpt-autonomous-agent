@@ -1,7 +1,7 @@
 # P08 · Sovereign, Air-Gapped LLM Platform for a Cooperative Bank
 
 > A no-egress LLM platform in a bank's own data centre: open-weight models chosen by evaluation, GPUs sized with real KV-cache maths, and every model change shipped through a signed, one-way, auditable pipeline.
-
+>
 > **Customer:** Nallamala Cooperative Bank (fictional) · **Industry:** Banking (multi-state urban co-operative bank, RBI-regulated) · **Geography:** Andhra Pradesh and Telangana, India · **Real engagement:** 16 weeks; FDE lead, platform/SRE engineer, ML engineer, part-time security architect and a Telugu/Hindi language lead · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
 **Starter kit:** [`starter-kits/P08-sovereign-air-gapped-llm-platform/`](starter-kits/P08-sovereign-air-gapped-llm-platform/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `bundle_verifier.py` and `kv_capacity.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
@@ -338,7 +338,7 @@ Speculative decoding at the design batch; multi-LoRA adapters; CycloneDX AIBOM d
 
 ## 14. Curriculum map
 
-| Turns (from topics135) | How exercised |
+| Turn(s) · title | How it is exercised |
 |---|---|
 | 1 Tokenization Algorithms · 41 Multilingual Prompting · 42 Document Parsing and Ingestion | Telugu fertility and Romanised queries; scans and legacy fonts |
 | 3 Transformer Block Anatomy · 4 Attention Variants | KV per token from layers × KV heads × head_dim (GQA, sliding-window and hybrid linear attention) |

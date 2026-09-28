@@ -1,6 +1,7 @@
 # P05 · Computer-Use Agent Replacing Brittle RPA for Customs Filing
 
 > Replace weekly-breaking RPA bots with a gated, durable, auditable computer-use layer that bridges to a real API.
+>
 > **Customer:** Duinhaven Freight Forwarders (fictional) · **Industry:** Freight forwarding and customs brokerage · **Geography:** Rotterdam (NL/EU) and Chennai (IN) · **Real engagement:** 14 weeks; 1 FDE lead, 2 FDEs, a part-time security engineer, plus the customer's RPA CoE engineer and a customs SME · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 **Starter kit:** [`starter-kits/P05-computer-use-agent-replacing-rpa/`](starter-kits/P05-computer-use-agent-replacing-rpa/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `action_gate.py` (with a mock Tollvane portal) with tests, a deliberately weak baseline, and an eval harness that scores it against §5.

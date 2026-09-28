@@ -1,6 +1,7 @@
 # P06 · Injection-Resistant Executive Inbox and Calendar Agent
 
 > Build an AI chief-of-staff for 40 executives in which no single model context ever holds private data, untrusted content and an exfiltration channel at once, and where "draft only" survives a long session.
+>
 > **Customer:** Kerrowan Therapeutics (fictional) · **Industry:** Biotech (commercial-stage, Nasdaq-listed, fictional) · **Geography:** Cambridge, MA and South San Francisco, CA (US) · **Real engagement:** 12 weeks; 1 FDE lead, 1 FDE, a part-time security engineer, plus Kerrowan's M365/Entra admin and the Chief of Staff as product owner · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
 
 **Starter kit:** [`starter-kits/P06-injection-resistant-inbox-agent/`](starter-kits/P06-injection-resistant-inbox-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `dataflow_policy.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.

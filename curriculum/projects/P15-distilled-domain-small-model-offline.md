@@ -1,7 +1,7 @@
 # P15 · Distilled Domain Small Model for Offline Field Technicians
 
 > A 1–8B model on rugged laptops in substations with no signal. It is fine-tuned and distilled for manual Q&A and fault diagnosis, grounded in on-device manuals, and for any lockout/tagout or high-voltage step it quotes the exact manual step or refuses and escalates.
-
+>
 > **Customer:** Kilnridge Energy Services (fictional) · **Industry:** Utility maintenance contracting (substations, switchgear, distribution) · **Geography:** US Gulf Coast field operations (Texas, Louisiana); engineering centre in Hyderabad · **Real engagement:** 18 weeks; FDE lead, ML engineer (SFT, distillation, evals), edge engineer (runtimes, packaging), part-time HSE safety SME and security engineer · **Course build:** 4 weeks, team of 3–4 · **Difficulty:** ★★★
 
 **Starter kit:** [`starter-kits/P15-distilled-domain-small-model-offline/`](starter-kits/P15-distilled-domain-small-model-offline/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `synth_filter.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
@@ -341,7 +341,7 @@ VLM reading of nameplates to confirm the model number; glove-friendly speech inp
 
 ## 14. Curriculum map
 
-| Turns (from topics135) | How exercised |
+| Turn(s) · title | How it is exercised |
 |---|---|
 | 16 Instruction Tuning / SFT · 22 Fine-Tuning in Practice · 25 Model Merging and Adapters at Scale | Behaviour tuning with LoRA/QLoRA; adapter vs merged |
 | 23 Distillation and Synthetic Data · 24 Embedding and Reranker Fine-Tuning · 121 Reasoning Distillation and On-Device Agents | Teacher choice, filtering, decontamination, hard negatives; on-device distillation (no reasoning traces) |

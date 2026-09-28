@@ -1,7 +1,7 @@
 # P16 · Due-Diligence Deep-Research Agent
 
 > A deep-research agent that drafts first-pass due-diligence memos in which every sentence traces to a passage the system actually retrieved, behind information barriers between deals, with licence-clean sourcing and a hard cost cap per run.
-
+>
 > **Customer:** Corriemuir Capital (fictional) · **Industry:** Private equity (mid-market buyout and growth) · **Geography:** UK (London) and India (Mumbai) · **Real engagement:** 14 weeks. The FDE lead and one FDE work with Corriemuir's data engineer, a part-time compliance officer and 2 analyst champions · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 **Starter kit:** [`starter-kits/P16-due-diligence-deep-research-agent/`](starter-kits/P16-due-diligence-deep-research-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `citation_verifier.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
