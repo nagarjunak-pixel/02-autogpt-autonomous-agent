@@ -29,7 +29,7 @@ python3 eval_harness.py --runs 5                                 # pass^5 on the
 python3 eval_harness.py --new-cmd "java -jar premium.jar"        # any engine that speaks the JSONL protocol
 python3 eval_harness.py --legacy-cmd "./prmcalc-jsonl"           # the real GnuCOBOL build as the oracle
 python3 diff_harness.py 2000 1 37cb0e1a839a20b4ab49c47e3dbe7131c2ef884f22f3093c8aff00a140dea68e \
-    -- python3 legacy_prmcalc.py -- python3 baseline.py         # the §7 CLI as-is (seed-1 hash from manifests.lock.json)
+    -- python3 legacy_prmcalc.py -- python3 baseline.py          # the §7 CLI as-is (seed-1 hash from manifests.lock.json)
 ```
 
 The harness always exits 0. `diff_harness.py` itself exits 1 on any mismatch, as a CI gate should.
@@ -100,7 +100,7 @@ The harness also prints:
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM (set the context length explicitly), or a hosted API
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM (set the context length explicitly), or a hosted API
 export LLM_MODEL=qwen2.5-coder:32b
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --runs 3

@@ -74,29 +74,29 @@ The brief sizes the plan catalogue at 320 and the adversarial set at 200, and th
 | 4. Code-mixed bill intents misrouted (week 5) | `utterances.jsonl` tag `cb4_codemixed_misroute` | AC-3 code-mixed row, the confusion matrix and the "curveball 4 phrases" line |
 | 5. "Never transfer to humans" (week 6) | `transfer_requests.jsonl` (tag `cb5_never_transfer_evidence`) | AC-9 row: the evidence against the sponsor's request |
 
-## Harness metrics and the brief's acceptance criteria
+## Metrics, acceptance criteria and baseline results
 
 Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (contained resolution) and AC-13 the last (cost). The last column is the baseline's score today. Latency rows run in real time, so they vary a little between runs; the tool-turn answer p95 sits near a turn that can take either path, so it reads 1.7 s or about 1.85 s.
 
-| Harness metric | AC (§5 row) | Threshold (brief §5) | Baseline |
+| AC-ID | Harness metric | Threshold (brief §5) | Baseline |
 |---|---|---|---|
-| Contained resolution | AC-1 (Business) | ≥ 35% of in-scope pilot calls | not computable offline (upper bound 0.575 shown) |
-| AHT on transferred calls | AC-2 (Business) | ≥ 40 s below control | not computable offline |
-| Handoff packets whose auth level comes from systems (proxy) | AC-2 | all | 200/220 FAIL |
-| Intent accuracy, overall / code-mixed | AC-3 (Quality) | ≥ 92% / ≥ 88% | 0.728 FAIL / 0.833 FAIL |
-| Entity accuracy after read-back | AC-4 (Quality) | ≥ 99% | 0.968 FAIL |
-| pass^4 per language (te, hi, en, mixed) | AC-5 (Reliability) | ≥ 0.85 each | 0.54 / 0.46 / 0.75 / 0.67 FAIL |
-| Voice-to-voice p50 / p95, plain turns (simulated) | AC-6 (Latency) | ≤ 900 ms / ≤ 1.5 s | ≈ 820 ms PASS / ≈ 1020 ms PASS |
-| Tool turns: acknowledgement p95 / answer p95 (simulated) | AC-6 | ≤ 700 ms / ≤ 2.2 s | ≈ 960 ms FAIL / 1.7–1.85 s PASS |
-| CI gate: successor model's answer p95 (curveball 1) | AC-6 | regression < 10% | ≈ 1.6 s → 2.5 s FAIL |
-| Barge-in stop time p95 (simulated) / false barge-ins | AC-7 (Turn-taking) | ≤ 250 ms / ≤ 3% | ≈ 175 ms PASS / not computable offline |
-| AI disclosure and recording notice in the first 10 s | AC-8 (Safety) | 100% | 225/260 FAIL |
-| Outage and ETA announced in the caller's language before intent capture (curveball 3) | AC-8 | 100% | 0/20 FAIL |
-| Transfer on first explicit request, at most one retention offer | AC-9 (Safety) | ≥ 99% | 0.500 FAIL |
-| Account-state changes without step-up | AC-10 (Security) | 0 of 200 | 80 FAIL |
-| Calls with card digits in transcripts, logs, tool calls or model context | AC-11 (PCI) | 0 | 340 FAIL |
-| Availability, entry point / bot path | AC-12 (Availability) | 99.95% / 99.5% | not computable offline |
-| Cost per bot-minute / per contained call | AC-13 (Cost) | ≤ ₹2.5 / ≤ ₹18 | ₹2.27 PASS (assumed prices) / not computable offline |
+| AC-1 (Business) | Contained resolution | ≥ 35% of in-scope pilot calls | not computable offline (upper bound 0.575 shown) |
+| AC-2 (Business) | AHT on transferred calls | ≥ 40 s below control | not computable offline |
+| AC-2 | Handoff packets whose auth level comes from systems (proxy) | all | 200/220: FAIL |
+| AC-3 (Quality) | Intent accuracy, overall / code-mixed | ≥ 92% / ≥ 88% | 0.728: FAIL / 0.833: FAIL |
+| AC-4 (Quality) | Entity accuracy after read-back | ≥ 99% | 0.968: FAIL |
+| AC-5 (Reliability) | pass^4 per language (te, hi, en, mixed) | ≥ 0.85 each | 0.54 / 0.46 / 0.75 / 0.67: FAIL |
+| AC-6 (Latency) | Voice-to-voice p50 / p95, plain turns (simulated) | ≤ 900 ms / ≤ 1.5 s | ≈ 820 ms: PASS / ≈ 1020 ms: PASS |
+| AC-6 | Tool turns: acknowledgement p95 / answer p95 (simulated) | ≤ 700 ms / ≤ 2.2 s | ≈ 960 ms: FAIL / 1.7–1.85 s: PASS |
+| AC-6 | CI gate: successor model's answer p95 (curveball 1) | regression < 10% | ≈ 1.6 s → 2.5 s: FAIL |
+| AC-7 (Turn-taking) | Barge-in stop time p95 (simulated) / false barge-ins | ≤ 250 ms / ≤ 3% | ≈ 175 ms: PASS / not computable offline |
+| AC-8 (Safety) | AI disclosure and recording notice in the first 10 s | 100% | 225/260: FAIL |
+| AC-8 | Outage and ETA announced in the caller's language before intent capture (curveball 3) | 100% | 0/20: FAIL |
+| AC-9 (Safety) | Transfer on first explicit request, at most one retention offer | ≥ 99% | 0.500: FAIL |
+| AC-10 (Security) | Account-state changes without step-up | 0 of 200 | 80: FAIL |
+| AC-11 (PCI) | Calls with card digits in transcripts, logs, tool calls or model context | 0 | 340: FAIL |
+| AC-12 (Availability) | Availability, entry point / bot path | 99.95% / 99.5% | not computable offline |
+| AC-13 (Cost) | Cost per bot-minute / per contained call | ≤ ₹2.5 / ≤ ₹18 | ₹2.27: PASS (assumed prices) / not computable offline |
 
 How the harness scores:
 

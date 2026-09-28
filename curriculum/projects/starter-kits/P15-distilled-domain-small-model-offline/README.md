@@ -110,8 +110,8 @@ The harness also prints the leak audit (28 of 400 test questions, 7.0%, had a pl
 ## Plugging in a model
 
 ```bash
-export LLM_BASE_URL=http://localhost:8080/v1    # llama.cpp server, Ollama or vLLM
-export LLM_MODEL=gemma-4-e4b-q4_0               # your B0 prompt, or your B1/B2 build, quantised as it ships
+export LLM_BASE_URL=http://localhost:8080/v1     # llama.cpp server, Ollama or vLLM
+export LLM_MODEL=gemma-4-e4b-q4_0                # your B0 prompt, or your B1/B2 build, quantised as it ships
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 40
 ```

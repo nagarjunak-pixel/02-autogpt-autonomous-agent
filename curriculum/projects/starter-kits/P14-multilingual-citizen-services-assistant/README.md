@@ -108,7 +108,7 @@ Totals on the default data: 0 PASS, 15 FAIL, 6 not computable offline.
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM in the SDC; or a hosted API on PII-free paths only
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM in the SDC; or a hosted API on PII-free paths only
 export LLM_MODEL=sarvam-30b                      # or Qwen, Gemma, ...
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 40
@@ -120,12 +120,12 @@ python3 eval_harness.py --system adapter --limit 40
 
 | Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| W1 (Discovery, weeks 1–3) | Discovery memo and data scorecard. Measure the OCR and legacy-font rates in `corpus_labels.jsonl`, and run the fertility study with your candidate tokenizers. | §8 fertility |
-| W2 (POC, weeks 4–8) | Ingestion: legacy-font detection and repair, OCR clean-up, and the provenance gate (verify `registry.json`, drop district uploads and vendor FAQs, two-person approval). Effective dating from `valid_from` and `supersedes`. Curveball 1: freeze, roll back, trace affected answers. | AC-7, CB-1, AC-3, AC-6 wrong answers |
-| W3 (POC) | Retrieval per language: NFC and Urdu code-point normalisation, transliteration for Tenglish and Roman Urdu, hybrid BM25 + dense (bge-m3 or e5) with a reranker, pivot translation for Urdu. Curveball 3: diagnose before tuning. | AC-2, AC-5, CB-3 |
-| W4 (Pilot, weeks 9–16) | Rules engine from `rules.json` (effective dates, exclusions, every criterion) with indicative wording. Status tool: cache keyed by application **and** mobile, one retry, a stale warning, guardian-only delivery for minors. Curveball 2: approve the new GO once and re-run S01's golden set. | AC-4, AC-8, AC-9, CB-2 |
-| W5 (Pilot) | Voice (ASR and TTS with the "automated voice" prefix), accessibility sessions, abstention, a neutral election-period route, and the red team. Curveball 4. | AC-6, AC-7, CB-4 |
-| W6 (Production 17–22, Handover 23–24) | Curveball 5: the SMS/IVR fallback. The eval report with per-language CIs, and a Telugu/Urdu demo that shows the Urdu gap honestly. | AC-10 to AC-13 with pilot data |
+| 1 (Discovery, weeks 1–3) | Discovery memo and data scorecard. Measure the OCR and legacy-font rates in `corpus_labels.jsonl`, and run the fertility study with your candidate tokenizers. | §8 fertility |
+| 2 (POC, weeks 4–8) | Ingestion: legacy-font detection and repair, OCR clean-up, and the provenance gate (verify `registry.json`, drop district uploads and vendor FAQs, two-person approval). Effective dating from `valid_from` and `supersedes`. Curveball 1: freeze, roll back, trace affected answers. | AC-7, CB-1, AC-3, AC-6 wrong answers |
+| 3 (POC) | Retrieval per language: NFC and Urdu code-point normalisation, transliteration for Tenglish and Roman Urdu, hybrid BM25 + dense (bge-m3 or e5) with a reranker, pivot translation for Urdu. Curveball 3: diagnose before tuning. | AC-2, AC-5, CB-3 |
+| 4 (Pilot, weeks 9–16) | Rules engine from `rules.json` (effective dates, exclusions, every criterion) with indicative wording. Status tool: cache keyed by application **and** mobile, one retry, a stale warning, guardian-only delivery for minors. Curveball 2: approve the new GO once and re-run S01's golden set. | AC-4, AC-8, AC-9, CB-2 |
+| 5 (Pilot) | Voice (ASR and TTS with the "automated voice" prefix), accessibility sessions, abstention, a neutral election-period route, and the red team. Curveball 4. | AC-6, AC-7, CB-4 |
+| 6 (Production 17–22, Handover 23–24) | Curveball 5: the SMS/IVR fallback. The eval report with per-language CIs, and a Telugu/Urdu demo that shows the Urdu gap honestly. | AC-10 to AC-13 with pilot data |
 
 ## What the kit deliberately does not do
 

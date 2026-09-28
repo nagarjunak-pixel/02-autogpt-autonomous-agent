@@ -90,7 +90,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-15 number its rows in order. Bas
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted, India-region, no-retention endpoint
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted, India-region, no-retention endpoint
 export LLM_MODEL=qwen2.5vl:7b
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 20

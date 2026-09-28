@@ -87,7 +87,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-12 number its rows in order. Bas
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted API
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted API
 export LLM_MODEL=qwen3:8b                        # any tool-calling model
 export LLM_API_KEY=...                           # only if your endpoint needs it
 node --experimental-strip-types eval_harness.ts --system adapter

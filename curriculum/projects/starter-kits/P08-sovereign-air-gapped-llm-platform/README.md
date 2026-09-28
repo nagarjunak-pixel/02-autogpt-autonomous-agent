@@ -25,9 +25,9 @@ Harness options: `--runs 3` (k in pass^k), `--boot 1000` (bootstrap resamples fo
 The verifier also runs on its own, exactly as the enclave's import quarantine would run it:
 
 ```bash
-python3 bundle_verifier.py data/bundles/good_v8 data/enclave/pubkey.raw 7         # PROMOTE, exit 0
+python3 bundle_verifier.py data/bundles/good_v8 data/enclave/pubkey.raw 7           # PROMOTE, exit 0
 python3 bundle_verifier.py data/bundles/tampered_weights data/enclave/pubkey.raw 7  # hash or size mismatch, exit 1
-python3 kv_capacity.py                                                             # the §6 table and curveball 1
+python3 kv_capacity.py                                                              # the §6 table and curveball 1
 ```
 
 ## What is in the kit

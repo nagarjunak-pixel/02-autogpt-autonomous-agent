@@ -106,7 +106,7 @@ The safety rows pass because the gate stops the baseline, not because the baseli
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted API
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted API
 export LLM_MODEL=qwen2.5:7b-instruct
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --tasks 10 --runs 3 --chaos 40

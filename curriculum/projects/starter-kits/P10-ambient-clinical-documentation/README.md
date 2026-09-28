@@ -117,7 +117,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-16 number its rows in order; CB-
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; a hosted API only under a BAA for real data
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; a hosted API only under a BAA for real data
 export LLM_MODEL=qwen2.5:14b-instruct
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 30

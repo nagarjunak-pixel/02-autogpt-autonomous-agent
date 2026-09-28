@@ -69,25 +69,25 @@ Volumes are cut down from the brief's so everything runs in seconds; `--scale` m
 | 4. Provider regional outage (week 11) | `drill.json`: `india-west` is down during three drills | AC-6 rows, including residency; `test_cb4_*` |
 | 5. Consumer BU refuses chargeback (week 13) | `use_cases.json` `consumer_bu` (retail) | The "Curveball 5" showback line, for the CFO memo |
 
-## Harness metrics and the brief's acceptance criteria
+## Metrics, acceptance criteria and baseline results
 
 Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (spend through the gateway) and AC-13 the last (tool governance). The last column is the baseline's score today.
 
-| Harness metric | AC (§5 row) | Threshold (brief §5) | Baseline |
+| AC-ID | Harness metric | Threshold (brief §5) | Baseline |
 |---|---|---|---|
-| Share of LLM spend through the gateway (synthetic month) | AC-1 (Business) | ≥ 90% | 0.148 FAIL |
-| Cost per successful outcome, per anchor; quality delta vs strong-only with a one-sided 95% bootstrap lower bound | AC-2 (Business) | ≤ −30%, non-inferior (margin 2 pp) | −87%/−86%/−86% cost but −4.5/−7.0/−4.4 pp quality: FAIL ×3 |
-| Ledger total vs invoiced; unallocated share | AC-3 (Business) | within ±2%; ≤ 3% | +6.00% FAIL; 47.9% FAIL |
-| Seeded shadow-AI recall; findings with owner, data class and risk tier | AC-4 (Inventory) | ≥ 90%; all | 0.500 FAIL; 0.000 FAIL |
-| Gateway availability | AC-5 (Reliability) | 99.95% monthly | not computable offline |
-| Failover drill success (worst of 3); p95 vs normal p95; pass^3; requests served outside their residency zone | AC-6 (Reliability) | ≥ 99%; ≤ 2×; 3/3; 0 | 0.797 FAIL; 1.74× PASS; 0/3 FAIL; 867 FAIL |
-| Gateway overhead p95 of the policy path | AC-7 (Latency) | ≤ 30 ms (rules DLP); ≤ 120 ms (ML DLP) | ≈ 0.01 ms PASS |
-| Time to throttle after the hourly cap; overspend past it | AC-8 (Cost control) | ≤ 60 s; ≤ one request | 3,183 s FAIL; USD 2,979 FAIL |
-| DLP recall on checksum-valid IDs; on names + health; precision; false blocks | AC-9 (Safety/DLP) | ≥ 97%; ≥ 90%; ≥ 90%; ≤ 0.5% | 0.505 FAIL; 0.000 FAIL; 0.520 FAIL; 34.9% FAIL |
-| Cross-BU cache hits in 10,000 probe pairs; cross-BU key use | AC-10 (Isolation) | 0; 0 | 9,000 FAIL; 100 FAIL |
-| Route entries that are registry aliases; deployments with a retirement date | AC-11 (Lifecycle) | all; all | 0.500 FAIL; 0.909 FAIL |
-| Artefacts by digest from the internal registry; hash-pinned lockfiles; KEV CVEs patched ≤ 72 h; known-bad versions the mirror served | AC-12 (Supply chain) | all; all; all; 0 | 0.67 FAIL; 0.50 FAIL; 1/3 FAIL; 2 FAIL |
-| Calls allowed to unapproved MCP servers; poisoned descriptions blocked or flagged | AC-13 (Security) | 0; all | 0 PASS; 0/10 FAIL |
+| AC-1 (Business) | Share of LLM spend through the gateway (synthetic month) | ≥ 90% | 0.148: FAIL |
+| AC-2 (Business) | Cost per successful outcome, per anchor; quality delta vs strong-only with a one-sided 95% bootstrap lower bound | ≤ −30%, non-inferior (margin 2 pp) | −87%/−86%/−86% cost but −4.5/−7.0/−4.4 pp quality: FAIL ×3 |
+| AC-3 (Business) | Ledger total vs invoiced; unallocated share | within ±2%; ≤ 3% | +6.00%: FAIL; 47.9%: FAIL |
+| AC-4 (Inventory) | Seeded shadow-AI recall; findings with owner, data class and risk tier | ≥ 90%; all | 0.500: FAIL; 0.000: FAIL |
+| AC-5 (Reliability) | Gateway availability | 99.95% monthly | not computable offline |
+| AC-6 (Reliability) | Failover drill success (worst of 3); p95 vs normal p95; pass^3; requests served outside their residency zone | ≥ 99%; ≤ 2×; 3/3; 0 | 0.797: FAIL; 1.74×: PASS; 0/3: FAIL; 867: FAIL |
+| AC-7 (Latency) | Gateway overhead p95 of the policy path | ≤ 30 ms (rules DLP); ≤ 120 ms (ML DLP) | ≈ 0.01 ms: PASS |
+| AC-8 (Cost control) | Time to throttle after the hourly cap; overspend past it | ≤ 60 s; ≤ one request | 3,183 s: FAIL; USD 2,979: FAIL |
+| AC-9 (Safety/DLP) | DLP recall on checksum-valid IDs; on names + health; precision; false blocks | ≥ 97%; ≥ 90%; ≥ 90%; ≤ 0.5% | 0.505: FAIL; 0.000: FAIL; 0.520: FAIL; 34.9%: FAIL |
+| AC-10 (Isolation) | Cross-BU cache hits in 10,000 probe pairs; cross-BU key use | 0; 0 | 9,000: FAIL; 100: FAIL |
+| AC-11 (Lifecycle) | Route entries that are registry aliases; deployments with a retirement date | all; all | 0.500: FAIL; 0.909: FAIL |
+| AC-12 (Supply chain) | Artefacts by digest from the internal registry; hash-pinned lockfiles; KEV CVEs patched ≤ 72 h; known-bad versions the mirror served | all; all; all; 0 | 0.67: FAIL; 0.50: FAIL; 1/3: FAIL; 2: FAIL |
+| AC-13 (Security) | Calls allowed to unapproved MCP servers; poisoned descriptions blocked or flagged | 0; all | 0: PASS; 0/10: FAIL |
 
 How the harness scores:
 

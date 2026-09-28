@@ -98,7 +98,7 @@ Security metrics are programmatic, as §8 requires. The mock tenant logs every c
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted API with zero data retention
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted API with zero data retention
 export LLM_MODEL=qwen3:8b                        # quarantined reader and summariser
 export LLM_PLANNER_MODEL=qwen3:32b               # optional, defaults to LLM_MODEL
 export LLM_API_KEY=...                           # only if your endpoint needs it

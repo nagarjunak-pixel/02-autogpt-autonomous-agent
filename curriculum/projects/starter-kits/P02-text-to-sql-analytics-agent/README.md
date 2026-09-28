@@ -76,34 +76,34 @@ The eval sets:
 | 4. `net_amount` → `net_sales_inr`, `store_id` → `site_id` | `data/curveballs/cb4_schema_v2_migration.sql`; `COLUMNS` in the semantic layer | `test_cb4_*` |
 | 5. "West region ka sales dikhao" | Adversarial items and probes tagged `cb5` | AC-4 and AC-5 rows; `test_cb5_*` |
 
-## Harness metrics and the brief's acceptance criteria
+## Metrics, acceptance criteria and baseline results
 
 The last column is the baseline's score today.
 
-| Harness metric | AC | Threshold (brief §5) | Baseline |
+| AC-ID | Harness metric | Threshold (brief §5) | Baseline |
 |---|---|---|---|
-| Execution accuracy, semantic set, with a bootstrap 95% CI | AC-1 | ≥ 0.90 | 0.673 FAIL |
-| Execution accuracy, English / Hindi / Hinglish | AC-1 | each ≥ 0.85 | 0.949 / 0.000 / 0.967 |
-| Gap from English to the worst language | AC-1 | ≤ 0.05 (within 5 points) | 0.949 FAIL |
-| Fallback accuracy, long-tail set | AC-2 | ≥ 0.70 | 0.200 FAIL |
-| Fallback answers labelled "unverified definition" | AC-2 | always | PASS |
-| Finance questions sent down the fallback path | AC-2 | never | PASS |
-| Clarifies on ambiguous items | AC-3 | ≥ 85% | 1.000 PASS, by accident: it "clarifies" anything it cannot parse |
-| Unnecessary clarifications | AC-3 | ≤ 10% | 0.363 FAIL |
-| Correct refusals (DML, out of scope, cross-scope, injection) | AC-4 | ≥ 95% | 0.347 FAIL |
-| Rows outside the user's entitlement | AC-5 | 0 | 0 PASS |
-| Cross-scope attempts made | AC-5 | ≥ 1,000 | 1,112 |
-| DDL/DML executed (audit of the query history) | AC-5 | 0 | 0 PASS |
-| Forbidden probes that got past the guard | AC-5 | 0 | 0 PASS |
-| Answers stating scope and data freshness | AC-6 | 100% | 0.000 FAIL |
-| pass^3 on 50 core questions | AC-7 | ≥ 0.90 | 0.660 FAIL |
-| p95 latency, semantic and fallback paths (local, one user) | AC-8 | ≤ 8 s / ≤ 15 s | PASS |
-| p95 latency with 30 concurrent users | AC-8 | ≤ 8 s / ≤ 15 s | not computable offline |
-| Cost per successful answer, warehouse included | AC-9 | ≤ ₹4 | not computable offline |
-| Executed queries above the cost cap | AC-10 | 0 | 0 PASS |
-| Cost-cap probes that got past the guard | AC-10 | 0 | 0 PASS |
-| Maximum attempts per question | AC-10 | ≤ 2 | 1 PASS |
-| Analyst requests down; weekly active managers | AC-11 | ≥ 40%; ≥ 50% | not computable offline |
+| AC-1 | Execution accuracy, semantic set, with a bootstrap 95% CI | ≥ 0.90 | 0.673: FAIL |
+| AC-1 | Execution accuracy, English / Hindi / Hinglish | each ≥ 0.85 | 0.949 / 0.000 / 0.967 |
+| AC-1 | Gap from English to the worst language | ≤ 0.05 (within 5 points) | 0.949: FAIL |
+| AC-2 | Fallback accuracy, long-tail set | ≥ 0.70 | 0.200: FAIL |
+| AC-2 | Fallback answers labelled "unverified definition" | always | PASS |
+| AC-2 | Finance questions sent down the fallback path | never | PASS |
+| AC-3 | Clarifies on ambiguous items | ≥ 85% | 1.000: PASS, by accident: it "clarifies" anything it cannot parse |
+| AC-3 | Unnecessary clarifications | ≤ 10% | 0.363: FAIL |
+| AC-4 | Correct refusals (DML, out of scope, cross-scope, injection) | ≥ 95% | 0.347: FAIL |
+| AC-5 | Rows outside the user's entitlement | 0 | 0: PASS |
+| AC-5 | Cross-scope attempts made | ≥ 1,000 | 1,112 |
+| AC-5 | DDL/DML executed (audit of the query history) | 0 | 0: PASS |
+| AC-5 | Forbidden probes that got past the guard | 0 | 0: PASS |
+| AC-6 | Answers stating scope and data freshness | 100% | 0.000: FAIL |
+| AC-7 | pass^3 on 50 core questions | ≥ 0.90 | 0.660: FAIL |
+| AC-8 | p95 latency, semantic and fallback paths (local, one user) | ≤ 8 s / ≤ 15 s | PASS |
+| AC-8 | p95 latency with 30 concurrent users | ≤ 8 s / ≤ 15 s | not computable offline |
+| AC-9 | Cost per successful answer, warehouse included | ≤ ₹4 | not computable offline |
+| AC-10 | Executed queries above the cost cap | 0 | 0: PASS |
+| AC-10 | Cost-cap probes that got past the guard | 0 | 0: PASS |
+| AC-10 | Maximum attempts per question | ≤ 2 | 1: PASS |
+| AC-11 | Analyst requests down; weekly active managers | ≥ 40%; ≥ 50% | not computable offline |
 
 How the harness scores:
 

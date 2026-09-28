@@ -81,7 +81,7 @@ The harness also prints the **blocked-answer rate** (curveball 4: the share of d
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted, ZDR, region-pinned endpoint
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted, ZDR, region-pinned endpoint
 export LLM_MODEL=qwen3:14b
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 40
