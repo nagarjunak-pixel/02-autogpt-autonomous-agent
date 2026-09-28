@@ -6,7 +6,7 @@
 
 **Starter kit:** [`starter-kits/P10-ambient-clinical-documentation/`](starter-kits/P10-ambient-clinical-documentation/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `note_verifier.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
 
-## 1. Scenario: the customer and the ask
+## 1. Scenario — the customer and the ask
 
 **The customer.** Almarosa runs 14 clinics: 9 in California's Central Valley, 5 in South Texas. About 110 prescribing clinicians (physicians, NPs, PAs) see roughly 2,000 visits a day. Just over half of patients prefer Spanish, many conversations code-switch, and some visits use in-person, phone or video interpreters.
 
@@ -96,7 +96,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 
 **Out of scope:** real PHI, vendor app certification, claims submission, CPT codes (AMA-licensed content), orders or e-prescribing from the note, and behavioural-health notes.
 
-## 4. Discovery: what the FDE does in week 1
+## 4. Discovery — what the FDE does in week 1
 
 **Process to map.** Shadow six clinicians in three clinics (one in Texas, one interpreter-heavy), plus rooming and coding staff. Map check-in → rooming → visit → orders → note → sign → coding, marking where consent fits without slowing rooming.
 
@@ -213,7 +213,7 @@ flowchart LR
 5. **EHR write-back.** FHIR `DocumentReference` vs vendor note APIs vs a copy-paste bridge for the pilot.
 6. **Verification policy.** Which flags block signing and which only highlight; lexical vs NLI vs LLM-judge alignment.
 
-## 7. Implementation plan: week by week
+## 7. Implementation plan — week by week
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|

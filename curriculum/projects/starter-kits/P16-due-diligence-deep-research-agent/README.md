@@ -1,4 +1,4 @@
-# P16 starter kit: due-diligence deep-research agent for Corriemuir Capital
+# P16 starter kit · Due-diligence deep-research agent for Corriemuir Capital
 
 Offline starter kit for the brief [P16 · Due-Diligence Deep-Research Agent](../../P16-due-diligence-deep-research-agent.md).
 Corriemuir Capital, the targets, the people and every document and web page in the data are fictional.

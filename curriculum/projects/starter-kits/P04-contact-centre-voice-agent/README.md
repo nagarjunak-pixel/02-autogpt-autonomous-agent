@@ -1,4 +1,4 @@
-# P04 starter kit: multilingual contact-centre voice agent for Kavrona Telecom
+# P04 starter kit · Multilingual contact-centre voice agent for Kavrona Telecom
 
 Offline starter kit for the brief [P04 · Multilingual Contact-Centre Voice Agent](../../P04-contact-centre-voice-agent.md).
 Kavrona Telecom, its subscribers, phone numbers, dockets and card numbers are all fictional.

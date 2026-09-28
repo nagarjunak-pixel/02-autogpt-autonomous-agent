@@ -1,4 +1,4 @@
-# P02 starter kit: governed text-to-SQL for Annavara Retail
+# P02 starter kit · Governed text-to-SQL for Annavara Retail
 
 Offline starter kit for the brief [P02 · Governed Text-to-SQL Analytics Assistant](../../P02-text-to-sql-analytics-agent.md).
 Annavara Retail is fictional, and so is every store, product and person in the data.

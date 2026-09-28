@@ -6,7 +6,7 @@
 
 **Starter kit:** [`starter-kits/P03-claims-intake-document-ai/`](starter-kits/P03-claims-intake-document-ai/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `review_router.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
 
-## 1. Scenario: the customer and the ask
+## 1. Scenario — the customer and the ask
 
 Kalsubai is an IRDAI-regulated general insurer. It handles about **60,000 claims a month**: roughly 33,000 motor and 27,000 retail health (cashless and reimbursement).
 
@@ -103,7 +103,7 @@ The system may pre-fill, recommend and flag. It never denies a claim. Fraud sign
 
 **Out of scope:** real core-system integration, payments, surveyor scheduling, NHCX onboarding, and trained fraud *models* (students build rule-based fraud *signals*).
 
-## 4. Discovery: what the FDE does in week 1
+## 4. Discovery — what the FDE does in week 1
 
 **Process to map.** Shadow two health adjusters, one motor adjuster, a TPA desk and an FCU analyst. Draw the swimlane: intimation → document collection → registration → keying → policy check → assessment → decision → CRC → payment → grievance. Mark every wait state and its owner, because waits, not keying, often drive TAT.
 
@@ -218,7 +218,7 @@ flowchart LR
 5. **Orchestration.** A durable workflow vs the core system's BPM vs queues + cron. Record why an agent was rejected.
 6. **Build vs buy.** A commercial IDP or claims-automation platform vs custom vs a hybrid.
 
-## 7. Implementation plan: week by week
+## 7. Implementation plan — week by week
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|

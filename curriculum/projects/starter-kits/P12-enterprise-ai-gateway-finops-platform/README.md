@@ -1,4 +1,4 @@
-# P12 starter kit: enterprise AI gateway, FinOps and model lifecycle for Tavrenhill Holdings
+# P12 starter kit · Enterprise AI gateway, FinOps and model lifecycle for Tavrenhill Holdings
 
 Offline starter kit for the brief [P12 · Enterprise AI Gateway, FinOps and Model-Lifecycle Platform](../../P12-enterprise-ai-gateway-finops-platform.md).
 Tavrenhill Holdings, its business units (BUs), people, keys, prompts, bills and providers are all fictional.
