@@ -30,7 +30,7 @@ Options: `eval_harness.ts --runs 5` (pass^5 instead of pass^3), `--data <dir>` a
 | `generate_data.ts` | A deterministic generator (seed 1313). Default: 1,024 SKUs from 12 sellers (the system of record, plus a stale product feed), 40 size charts, 4,000 orders, 300 labelled queries, 200 size cases, 100 shopper tasks (50 held out), 1,000 mandate-abuse attempts, 60 auth cases, 20 legacy calls, 2,000 traffic records, and the curveball fixtures. `sizeRule()` is the rule the size cases come from. |
 | `baseline.ts` | `BaselineServer.call(tool, args, bearer)`: the seven tool handlers (`search_catalog`, `get_product`, `size_guidance`, `create_cart`, `add_to_cart`, `checkout`, `get_order_status`) with `TOOLS` descriptors, `MemoryStore` (the in-memory stand-in for Postgres), `validateToken()`, `classifyRequest()` and `runShopper()`, a rule-based synthetic shopper. No transport: register the handlers with the official MCP TypeScript SDK v2. |
 | `adapter.ts` | `runShopperLLM()`: an LLM-driven shopper (the brief's mock-assistant) through any OpenAI-compatible `/chat/completions` endpoint with tool calling. Built-in `fetch`. |
-| `eval_harness.ts` | Runs the suites, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.ts` | Runs the suites, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `node --test` tests for the control (including curveballs 4 and 5, concurrent retries and the checkout race) and for the generator (determinism, tricky cases present). |
 
 ### Tricky cases in the data, and their labels

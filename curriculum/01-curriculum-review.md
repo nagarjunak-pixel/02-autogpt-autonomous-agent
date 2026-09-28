@@ -1,6 +1,7 @@
 # 01 · Curriculum Review: LLM Training Flow, Volume 2
 
 **Scope:** *LLM Training Flow Volume 2 Study Guide* (135 topics called "Turns" in 13 sections, 676 interview Q&As and a 228-term index), and the separate *Coverage Gaps and Fact-Check (Sept 2026)* document. Both are reviewed as of **26 September 2026**.
+
 **Question asked:** How good is this curriculum for training AI engineers and Forward Deployed Engineers (FDEs), what is missing, and what will be needed over the next 12–24 months?
 
 > **Limitation.** We reviewed the *study guide*, not the 890-page full-depth book, and we do not have Volume 1. Where we say a topic is "missing", we mean the study guide's summaries, Q&As and index do not teach it. The full book may mention it in passing. Legal points are summarised for teaching and are not legal advice.
@@ -41,6 +42,7 @@
 | Watch (Section M) | 18 | n/a |
 
 A learner with 10–12 weeks cannot cover 60 "most important" topics in depth. Adding the existing gap doc's eight P1 candidates would push P1 to about 68.
+
 **Recommendation:** define an explicit **FDE core** (P1), move the rest to P2/P3 electives, and justify each P1 by "an FDE meets this in most engagements, or it is legally required for common deployments". Applied honestly, that rule gives 46 core topics across Vol 2 and the gap register, about 30% of the expanded syllabus. [05-revised-syllabus-and-learning-path.md](05-revised-syllabus-and-learning-path.md) proposes the re-tiering.
 
 ### 1.2 Effort is inverted relative to the target role
@@ -61,16 +63,19 @@ A learner with 10–12 weeks cannot cover 60 "most important" topics in depth. A
 
 Section A gets the most depth per topic and includes FlashAttention tiling, distributed-training parallelism, training dynamics and mechanistic interpretability. An FDE almost never pre-trains a model; they need to *reason* about internals (KV-cache memory maths, MoE memory cost, tokenizer cost per language), not rebuild them.
 Meanwhile Section L, the role the curriculum is named for, gets 5.8 pages per topic. Vision-language models and speech are both labelled P1, yet all of multimodal gets 21 pages.
+
 **Recommendation:** compress A to "what a deployer must be able to calculate and explain" (about 50% fewer pages) and reinvest the pages in L, K and the new practice topics.
 
 ### 1.3 Assessment is recall-only
 
 Each turn ends with 4–8 short-answer interview questions (676 in total). There are **no labs, no design exercises, no graded artefacts and no projects**. FDEs are judged by artefacts: a discovery memo, a frozen eval set, an SOW with measurable acceptance criteria, a threat model, a running system, a handover drill.
+
 **Recommendation:** use the 16 projects in [projects/](projects/README.md) as the backbone. Each exercises roughly 30–45 turns, uses the reusable engagement templates, and is graded on artefacts plus how students handle injected "curveball" incidents.
 
 ### 1.4 Dated facts are woven into the core, with no refresh mechanism
 
 Section G ("Latest Developments") is entirely news: spec versions, launch dates, foundation memberships. Sections H, I and J also embed dated facts (regulatory deadlines, product ownership, default settings). They rot fast. Within weeks of publication, the fact-checks found **14 Vol 2 claims** that are outdated or need nuance (3 of them outdated: SR 11-7, AP2 mandates, OpenAI fine-tuning), plus **24 problems in the gap doc itself**.
+
 **Recommendation:**
 - Split every turn into an **evergreen core** (principles, patterns, maths) and a **dated annex** (versions, dates, vendors, laws).
 - Stamp each annex item with an *as-of* date, a source link, an owner and a *review-by* date.
@@ -79,6 +84,7 @@ Section G ("Latest Developments") is entirely news: spec versions, launch dates,
 ### 1.5 Evaluation, the FDE's most important skill, is scattered
 
 Evaluation appears in at least seven places: Turns 13 (base-model evaluation), 38 (evaluator loops), 49 (RAG evaluation tooling), 63 (simulation and pass^k), 97 (evaluation tools), 104 (testing AI code) and 132 (the science of agent evaluation). No single turn teaches an **evaluation strategy**: what to measure at which layer, how to build and freeze a golden set, how to calibrate judges, and how to gate releases.
+
 **Recommendation:** make evaluation a spine. Add one early "Evaluation Strategy" turn that the others hang off (Template [05-eval-plan.md](projects/templates/05-eval-plan.md) is a starting point), and make every project deliver an eval plan in week 2.
 
 ### 1.6 Overlapping turns that should be merged to make room

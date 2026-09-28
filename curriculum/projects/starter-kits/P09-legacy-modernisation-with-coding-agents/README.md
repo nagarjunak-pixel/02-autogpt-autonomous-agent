@@ -42,7 +42,7 @@ The harness always exits 0. `diff_harness.py` itself exits 1 on any mismatch, as
 | `legacy_prmcalc.py` | A **Python stand-in for the COBOL oracle**. It has all eight seeded quirks from §3, each a named knob in `DEFAULTS`, which is how the 50 mutants are built. Never "fix" it: it defines correct. |
 | `baseline.py` | (1) `NaiveEngine`: the product filing (`spec_stub.md`) read literally. It speaks the same JSONL protocol and has `predict(policy)`. (2) The platform controls: `hook_decision()` (PreToolUse-style), `CODEOWNERS` and `licence_scan`, all nearly empty. |
 | `adapter.py` | A stub: each run asks an OpenAI-compatible `/chat/completions` endpoint for a complete candidate engine. The harness then scores that engine. Pure `urllib`. |
-| `eval_harness.py` | Runs every offline suite, prints `AC-ID | metric | value | threshold | result` plus a per-quirk mismatch table, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs every offline suite, prints `AC-ID \| metric \| value \| threshold \| result` plus a per-quirk mismatch table, and writes JSON to `./results/`. |
 | `spec_stub.md` | The product-filing summary: what the documents say, which is not what the code does. |
 | `manifests.lock.json` | Committed hashes of the default fixtures and of the golden answer key. Treat it as CODEOWNED. |
 | `deviation_register.json` | The deviation register, with one unsigned example entry. A diff is "explained" only by a signed entry. |

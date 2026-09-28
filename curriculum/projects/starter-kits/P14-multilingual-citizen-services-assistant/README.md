@@ -31,7 +31,7 @@ Options: `python3 eval_harness.py --runs 6` (pass^6 status flows instead of pass
 | `baseline.py` | `Baseline`: `answer(query)` (alias `predict`), `eligibility(profile)`, `status(app_id, mobile, api)` and `reset()`. BM25 with a naive tokeniser, extractive answers, a one-version age-and-income rule check, and a status tool with a cache bug. |
 | `mock_status_api.py` | The brief's mock status API: needs `app_id` plus the matching mobile, injects 503s, and serves stale records. |
 | `adapter.py` | A stub that replaces the extractive answer with one grounded call to any OpenAI-compatible `/chat/completions` endpoint (Ollama, vLLM or a hosted API). Pure `urllib`. |
-| `eval_harness.py` | Runs every suite, prints the per-slice gate table and then `AC-ID | metric | value | threshold | PASS/FAIL`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs every suite, prints the per-slice gate table and then `AC-ID \| metric \| value \| threshold \| PASS/FAIL`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the gate (including curveballs 2 and 3) and for the generator (determinism, tricky cases present). |
 
 ## The control: `language_gate.py`

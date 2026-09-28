@@ -30,7 +30,7 @@ Options: `python3 eval_harness.py --runs 5` (pass^5 instead of pass^3), `--limit
 | `generate_data.py` | A deterministic generator (seed 1042). It writes 40 matters, 12 clients, 64 staff, walls, about 540 documents, 200 data subjects, 36 canaries, 15 hostile documents, a 400-item golden set, 10,368 canary probes and 150 injection prompts. |
 | `baseline.py` | `BaselineSystem`: keyword (IDF) retrieval with the permission pre-filter, `authorize()` and the cache, and extractive answers. It also contains `MockDMS`, which applies walls 2–10 minutes late, as the brief's mock DMS does. `predict(item)` wraps `answer()`. |
 | `adapter.py` | A stub that replaces `generate()` with a call to any OpenAI-compatible `/chat/completions` endpoint (Ollama, vLLM or a hosted API). Pure `urllib`. |
-| `eval_harness.py` | Runs the suites, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs the suites, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the control (including curveballs 1, 2 and 5) and for the generator (determinism, tricky cases present). |
 
 ### Tricky cases in the data, and their labels

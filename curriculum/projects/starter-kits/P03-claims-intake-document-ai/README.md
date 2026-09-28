@@ -30,7 +30,7 @@ Options: `python3 eval_harness.py --runs 5` (pass^5 instead of pass^3), `--limit
 | `generate_data.py` | A deterministic generator (seed 3003). Pages are JSON: a PDF text layer (`None` for scans; it includes white-on-white text), OCR lines of the visible render (noisy for scans, photos and handwriting), and metadata (XMP, EXIF, letterhead hash). Default: 115 health and 50 motor claims (about 1,550 pages), 40 adversarial files with clean twins, 15 English/Marathi counterfactual pairs, one policy per claim, 8 hospitals and the curveball 4 case file. |
 | `baseline.py` | `BaselineSystem.predict(packet)`: a keyword page router, English and Marathi regex extractors, and the OCR engine's confidence treated as if it were calibrated. Validation, routing, flags and status come from `review_router`. |
 | `adapter.py` | A stub that replaces `extract_page()` with a call to any OpenAI-compatible `/chat/completions` endpoint (Ollama, vLLM or a hosted API). Pure `urllib`. |
-| `eval_harness.py` | Runs the suites, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs the suites, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the control (including curveballs 1, 2 and 3, and a test that a rubber-stamped seed is never persisted) and for the generator (determinism, tricky cases present). |
 
 ### Tricky cases in the data, and their labels

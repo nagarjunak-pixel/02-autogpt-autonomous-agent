@@ -30,7 +30,7 @@ Options: `--runs 5` sets k for scheduling pass^k (5 is the brief's value), `--li
 | `generate_data.py` | Deterministic generator (seed 6062026): a directory, the pinned block, 600 Graph-shaped messages in threads (7 of them 30–60 messages long), 85 calendar events, a 500-item AE set, 409 red-team cases from 90 templates, 100 golden tasks, 50 scheduling scenarios and 200 long sessions. |
 | `baseline.py` | `BaselineSystem`: keyword triage, a regex AE router, a gullible quarantined reader, an extractive summariser, a template planner that reads the mode from its history, a stub compactor, a UI that reports the plan rather than the result, and an organiser-only scheduler. |
 | `adapter.py` | `AdapterSystem`: replaces the reader, summariser and planner with calls to any OpenAI-compatible `/chat/completions` endpoint. Pure `urllib`. Triage and AE routing stay rule-based. |
-| `eval_harness.py` | A mock tenant that logs every tool call and effect, the undefended comparison run, and the metric table. Prints `AC-ID | metric | value | threshold | PASS/FAIL` and writes JSON to `./results/`. |
+| `eval_harness.py` | A mock tenant that logs every tool call and effect, the undefended comparison run, and the metric table. Prints `AC-ID \| metric \| value \| threshold \| PASS/FAIL` and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the control (reviewer fixes and curveballs 1–5) and for the generator (determinism, every tricky case present). |
 
 ### Behaviour kept from the reviewed sketch, and what the kit adds

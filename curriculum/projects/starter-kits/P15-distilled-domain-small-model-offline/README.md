@@ -30,7 +30,7 @@ Options: `--runs 5` sets k for pass^k on the safety slice (5 is the brief's valu
 | `generate_data.py` | Deterministic generator (seed 15092026): 256 manual passages in 14 documents (8 equipment models, 3 with a superseded revision, 4 Spanish crew guides, 2 bulletins), a frozen 400-question test set, 40 fault trees, 300 seed dialogues, 50 diagnosis scenarios, 503 rows of simulated teacher output, a terms register, 400 hotline notes and 280 devices of fleet telemetry. |
 | `baseline.py` | `BaselineSystem` (B0): IDF keyword retrieval over passage text, the brief's deterministic safety router and verbatim renderer, the first number in the top passage as the numeric answer, and positional fault-tree walking. |
 | `adapter.py` | `AdapterSystem`: sends the general path and diagnosis turns to any OpenAI-compatible endpoint (llama.cpp server, Ollama, vLLM). The router, the renderer and numeric lookup stay deterministic. Pure `urllib`. |
-| `eval_harness.py` | Scores the test set, the diagnosis scenarios and the fleet snapshot. It also runs the filter over the teacher output and reports its gates. Prints `AC-ID | metric | value | threshold | PASS/FAIL` and writes JSON to `./results/`. |
+| `eval_harness.py` | Scores the test set, the diagnosis scenarios and the fleet snapshot. It also runs the filter over the teacher output and reports its gates. Prints `AC-ID \| metric \| value \| threshold \| PASS/FAIL` and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the filter (the sketch's reviewed behaviour, the additions and curveballs 1, 2, 3, 5 and 6) and for the generator (determinism, every trap present). |
 
 ### The filter: reviewed behaviour kept, and five additions

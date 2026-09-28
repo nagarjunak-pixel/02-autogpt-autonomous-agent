@@ -30,7 +30,7 @@ Options: `--runs 3` (k in pass^k), `--boot 1000` (bootstrap resamples for the co
 | `generate_data.py` | A deterministic generator (seed 1010): 150 golden encounters and 15 adversarial ones, a drug lexicon, a closed vocabulary (symptoms, problems with ICD-10-CM codes, medications, frequencies, routes) and the curveball fixtures. |
 | `baseline.py` | `consent_ok()` and `BaselineSystem.predict(encounter) -> note or None`: keyword rules that draft a SOAP note in the kit's JSON schema. |
 | `adapter.py` | `AdapterSystem`: the same interface backed by any OpenAI-compatible `/chat/completions` endpoint. A tool-less drafter, pure `urllib`. |
-| `eval_harness.py` | Scores drafts against the visit cards, runs the verifier on seeded drafts, simulates two signers, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Scores drafts against the visit cards, runs the verifier on seeded drafts, simulates two signers, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the verifier (every reviewed behaviour, curveballs 1, 4 and 5, and three known gaps) and for the generator (determinism, tricky cases present, consent labels). |
 
 ### The control: kept from the sketch, and what the kit adds

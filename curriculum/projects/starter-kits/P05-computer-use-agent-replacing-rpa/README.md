@@ -31,7 +31,7 @@ Options: `--tasks 60` (golden tasks), `--runs 5` (k in pass^k), `--chaos 2000` (
 | `generate_data.py` | A deterministic generator (seed 5005): 400 shipments by default with ground truth per portal field, 300 adversarial cases, and the curveball fixtures. |
 | `baseline.py` | `build_plan(record)` (copies TMS fields, strips HS-code dots, validates nothing) and `BaselineExecutor.next_action(observation)`: hard-coded v1 labels, a screen-coordinate click when a selector is lost, "resend after timeout", and three legacy habits (applies "consignee changed" ops notes, follows "re-verify your session" links, dismisses pop-ups with their first button). |
 | `adapter.py` | `AdapterExecutor`: the same interface backed by any OpenAI-compatible `/chat/completions` endpoint. Pure `urllib`. |
-| `eval_harness.py` | Runs every suite through the gate, prints `AC-ID | metric | value | threshold | result`, writes JSON to `./results/`. `run_filing()` stands in for your durable workflow. |
+| `eval_harness.py` | Runs every suite through the gate, prints `AC-ID \| metric \| value \| threshold \| result`, writes JSON to `./results/`. `run_filing()` stands in for your durable workflow. |
 | `tests/` | `unittest` tests for the gate (every reviewed behaviour, plus curveballs 1–5) and for the generator (determinism, tricky cases present). |
 
 ### The control: kept from the sketch, and what the kit adds

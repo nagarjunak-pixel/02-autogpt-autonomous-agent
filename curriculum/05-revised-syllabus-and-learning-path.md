@@ -25,6 +25,7 @@ Applying that rule to Vol 2's 135 turns plus the verified gap topics gives a **c
 | **Model literacy for deployers** (4) | 1 Tokenisation and cost · 29 + 30 Serving engines and quantisation (merged, deployer depth; includes 31 from the serving merge in §2) · 34 Local and on-device inference · 102 Provider landscape (+ 22 "when to fine-tune" decision, with teacher-terms caveat MOD-13) |
 
 **Prerequisite, not a topic:** 103 Python (and TypeScript) engineering for AI apps. Test it on entry.
+
 **Assessed through the projects, not taught as a turn:** 117 Technical interview and system-design readiness. Each project ends with a design defence.
 
 ### Demoted from P1 to P2 (still taught, as electives or on demand)

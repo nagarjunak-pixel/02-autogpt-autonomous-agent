@@ -6,6 +6,7 @@
 Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened versions of gap-doc items #7 and #14. RAG-2 is folded into the models lens (MOD-1). RAG-11 was added by the verifier. Abbreviations used throughout: RAG = retrieval-augmented generation; LLM = large language model; API = application programming interface; GA = generally available; FDE = forward deployed engineer; SQL = Structured Query Language.
 
 ### RAG-1 · Gap doc #7 (deepened): Context engineering  — **P1** · THIN · Section D · new turn after Turn 40 (cross-link Turns 31, 55, 58)
+
 *Overlaps gap doc:* #7: same topic. This version adds the vendor APIs and their settings, the clearing-versus-cache trade-off, a "constraint survives compaction" test, and a sourcing fix (#7 cites arXiv 2606.29175, which is an unrelated humanitarian-law paper, [arXiv, 28 Jun 2026](https://arxiv.org/abs/2606.29175)). It keeps #7's verified evidence: Microsoft Agent Framework's harness, GA after Build 2026, bundles context compaction and file memory [InfoQ, 3 Aug 2026](https://www.infoq.com/news/2026/08/agent-framework-harness-ga/). The memory-tool half overlaps #12 (agent memory): cross-link it, don't teach it twice.
 
 **What it is.** Context engineering is deciding, turn by turn, what stays in the model's context window. It covers summarising old history (compaction), clearing stale tool results and thinking by rule (context editing), moving durable state to memory files, and pinning constraints that must never be summarised away, all while protecting the prompt-cache prefix.
@@ -30,6 +31,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. How do you stop compaction from removing a safety rule? — Keep hard constraints in the system prompt or a pinned memory file re-injected after each compaction, and enforce risky actions in code, not text. Tell the summariser what to preserve, and add an eval that runs past the compaction threshold; the OpenClaw inbox deletion is the reference case.
 
 ### RAG-3 · Permission-aware retrieval: ACL ingestion, permission-sync lag and in-place retrieval  — **P1** · THIN · Section E · new turn after Turn 50 (cross-link Turns 47, 52, 71; co-teach source sync with RAG-4)
+
 *Overlaps gap doc:* none. (This is the right home for the Copilot CW1226324 label-enforcement bug, which gap-doc #3 cites under agentic-browser security.)
 
 **What it is.** Making retrieval return only what the asking user may see. That means storing source access-control lists (ACLs) on every chunk (SharePoint, OneDrive, Google Drive, Confluence, Slack), expanding group membership at query time and keeping permissions in sync, or calling the source system's own permission-trimmed retrieval API instead of copying data into a separate index.
@@ -54,6 +56,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. How do you test permission trimming before go-live? — Seed canary documents with known ACLs and run the same queries as users inside and outside the groups, covering nested groups, sharing links and guests. Assert zero leakage, measure the time from an ACL change to enforcement, and rerun after every connector change.
 
 ### RAG-5 · Gap doc #14 (deepened): Text-to-SQL and semantic layers  — **P1** · MISSING · Section E · new turn after Turn 51
+
 *Overlaps gap doc:* #14: same topic, and it agrees the topic is MISSING. This version adds the dated evidence #14 lacks (its "most common enterprise FDE request" line has no source), current benchmark numbers and their contamination risk, the Open Semantic Interchange / Apache Ossie spec, MetricFlow under Apache 2.0, first-party natural-language-to-SQL agents and spreadsheet agents. It raises the priority from P2 to P1.
 
 **What it is.** Answering questions over databases and spreadsheets by generating queries or code instead of embedding rows. The model links the question to the schema, grounds it in a governed semantic or metrics layer (dbt MetricFlow, Snowflake semantic views, Databricks metric views, LookML, Cube), runs read-only with limits, asks when the question is ambiguous, and is judged on execution results.
@@ -78,6 +81,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. How do you evaluate a text-to-SQL assistant? — Compare execution results against gold results on real business questions, not SQL strings, and include ambiguous questions where the right move is to ask. Treat public leaderboards with caution: they are self-reported, near saturation (Spider 2.0-Snow is above 96%), and their gold answers are public.
 
 ### RAG-4 · Index freshness: incremental (CDC) ingestion, delete propagation, freshness targets and conflicting versions  — **P2** · THIN · Section E · extend Turn 52 (co-teach the change-feed machinery with RAG-3)
+
 *Overlaps gap doc:* none
 
 **What it is.** Keeping a retrieval index consistent with changing sources. It covers consuming change feeds (change data capture, CDC), re-embedding only changed chunks, propagating deletes and moves, recovering from forced resyncs, setting a target lag per source, and ranking correctly when several versions of a document exist.
@@ -102,6 +106,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. Two versions of the same policy both match a query. What do you do? — Store version, effective date and authority as metadata, and dedupe near-duplicates. At ranking time boost or filter to the latest effective version, show the date in the citation, and have the answer say so when versions disagree.
 
 ### RAG-6 · LLM functions inside the data platform: Snowflake Cortex AISQL, Databricks AI Functions, BigQuery AI  — **P2** · MISSING · Section E · new turn after Turn 52 (cross-link Turns 35, 91; RAG-5, RAG-7)
+
 *Overlaps gap doc:* none
 
 **What it is.** LLM operators you call from SQL: classify, filter, extract, score, summarise-aggregate, parse document, embed and semantic join. They run batch inference where the data and its governance already live, and the query optimiser treats model calls as a cost to minimise.
@@ -125,6 +130,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. How do you validate an LLM-generated classification column before it feeds dashboards? — Label a stratified sample and measure per-class precision and recall. Compare prompt and model variants, pin the model version, and re-run the check on every model upgrade.
 
 ### RAG-7 · Structured extraction at scale (IDP): confidence-routed review, source grounding and field-level evaluation  — **P2** · THIN · Section E · extend Turn 42 (cross-link Turns 36, 64, 105; threshold calibration taught once in models MOD-3)
+
 *Overlaps gap doc:* none
 
 **What it is.** Intelligent document processing (IDP) is a production pipeline that turns documents into data: it classifies and splits document packets, extracts schema fields, checks them against business rules, attaches a confidence score and source location to each field, and sends low-confidence fields to human review. Success is measured by field-level accuracy and the straight-through-processing (STP) rate, the share processed with no human review.
@@ -149,6 +155,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. Why pay for source grounding (bounding boxes or spans)? — Reviewers can verify a field in seconds by jumping to its source, and auditors can trace every value. A field with no locatable source is a strong hallucination signal.
 
 ### RAG-8 · Agentic retrieval: retrieval as tools, planning cost, and index vs grep for code  — **P2** · THIN · Section E · extend Turns 47 and 56 (cross-link Turn 61)
+
 *Overlaps gap doc:* #7 lists just-in-time retrieval as a context tactic, and #19 covers web search as one source type. This adds retrieval-as-tool for everyday RAG, the cost and latency of query planning, and the evidence on index vs grep for code.
 
 **What it is.** Retrieval driven by the model rather than a fixed pipeline. The model splits the question into sub-queries, picks sources, runs searches in parallel or in turn, judges whether it has enough and stops; because retrieval is exposed as tools (search, grep/glob, SQL, MCP), you must choose between a pre-built index and just-in-time search.
@@ -173,6 +180,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. How do you stop an agentic retriever from looping or giving up too early? — Budget tool calls, require a sufficiency check for each sub-question, deduplicate queries, and log the plan and activity. Evaluate recall of the required evidence, not only final-answer accuracy.
 
 ### RAG-9 · Citation and attribution engineering: span-level citations, citation checking and long-form factuality  — **P2** · THIN · Section E · extend Turns 49 and 14
+
 *Overlaps gap doc:* none
 
 **What it is.** Designing answers so each claim links to an exact source span the user can check. It combines API-native citations, automatic claim-to-source verification, long-form factuality metrics (claim-level precision and recall) and a user experience (UX) that makes checking cheap.
@@ -196,6 +204,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. How do you evaluate long-form factuality? — Split the answer into atomic claims and check each against the sources (grounded) or via search (open-world, SAFE-style), then report the share of supported claims plus a completeness term. Calibrate the judge on human labels; FACTS Grounding and LongFact are reference benchmarks.
 
 ### RAG-10 · Cold-start RAG evaluation: synthetic questions, LLM relevance labels and their biases  — **P2** · THIN · Section E · extend Turn 49
+
 *Overlaps gap doc:* none
 
 **What it is.** Building a first evaluation set when the customer has no labelled questions. You generate questions and reference answers from their corpus, label retrieval relevance with LLM judges, and correct the distribution and circularity biases that both methods bring.
@@ -218,6 +227,7 @@ Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened vers
 3. Can you use an LLM to label retrieval relevance? — Yes, for scale (UMBRELA was used in the TREC 2024 RAG track). Calibrate it against human labels, avoid the same model family as your reranker (circularity), and keep a human-judged slice for release decisions.
 
 ### RAG-11 · Managed RAG and hosted file search: build vs buy  — **P2** · THIN · Section E · extend Turn 50 (cross-link Turn 72 and RAG-3)
+
 *Overlaps gap doc:* none
 
 **What it is.** Provider-hosted retrieval that chunks, embeds, indexes and cites for you behind one API tool or knowledge-base object (Gemini File Search, OpenAI file_search, Azure Foundry IQ, Bedrock Knowledge Bases). The engineering decision is whether it is good enough, and what you give up: chunking and ranking control, per-user permission trimming, eval visibility, residency and portability.
