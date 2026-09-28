@@ -381,14 +381,14 @@ Timings are course weeks, with the real-engagement week in brackets.
 - **Hardening (week 5):** threat model and red-team report; obligations → controls sheet, DPIA draft, CISO pack.
 - **Handover (week 6):** runbooks, a 15-minute demo with a visible failure, the curveball log.
 
-| Weight | Area | Excellent | Weak |
+| Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
-| 25% | Working system | Deny-overrides trim, live check, per-user caches; OCR with page-level citations | Post-filtering only; one shared cache |
-| 20% | Evaluation rigour | Frozen sets, calibrated judge (κ reported), CIs, leakage with an upper bound | A single run; uncalibrated judge; canaries missing |
-| 15% | Security and compliance | Trifecta broken by design; deletion proven; laws mapped to controls with dates | "A classifier blocks injection"; legal claims without sources |
-| 20% | FDE artefacts | ADRs with measured evidence; a CISO pack a real CISO could sign | Vendor-marketing ADRs |
-| 10% | Demo and communication | Shows a leak probe and a blocked answer live | Happy path only |
-| 10% | Curveball handling | Timed evidence and stakeholder-specific messages | Ad-hoc patches with no regression tests |
+| Working system | 25% | Deny-overrides trim, live check, per-user caches; OCR with page-level citations | Post-filtering only; one shared cache |
+| Evaluation rigour | 20% | Frozen sets, calibrated judge (κ reported), CIs, leakage with an upper bound | A single run; uncalibrated judge; canaries missing |
+| Security and compliance | 15% | Trifecta broken by design; deletion proven; laws mapped to controls with dates | "A classifier blocks injection"; legal claims without sources |
+| FDE artefacts | 20% | ADRs with measured evidence; a CISO pack a real CISO could sign | Vendor-marketing ADRs |
+| Demo and communication | 10% | Shows a leak probe and a blocked answer live | Happy path only |
+| Curveball handling | 10% | Timed evidence and stakeholder-specific messages | Ad-hoc patches with no regression tests |
 
 ## 13. Stretch goals
 

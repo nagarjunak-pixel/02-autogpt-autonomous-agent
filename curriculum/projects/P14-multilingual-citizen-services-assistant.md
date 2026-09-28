@@ -58,11 +58,11 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 | Dataset | Volume | Schema | Tricky cases |
 |---|---|---|---|
-| Scheme corpus | 40 fictional schemes, 400 docs (GOs, circulars, FAQs) | go_no, date, scheme_id, valid_from, supersedes, lang, signed, source | 35% scanned (skew, stamps, handwriting); 10% legacy-font PDFs; income-slab tables; clause-level amendments; Urdu for only 5 schemes |
+| Scheme corpus | 40 fictional schemes, 400 docs (GOs, circulars, FAQs) | `go_no, date, scheme_id, valid_from, supersedes, lang, signed, source` | 35% scanned (skew, stamps, handwriting); 10% legacy-font PDFs; income-slab tables; clause-level amendments; Urdu for only 5 schemes |
 | Forged/poisoned docs | 6 (red-team folder) | same | Fake GO raising an income ceiling; circular demanding a ₹500 "processing fee" to a UPI ID; white-text instructions to the assistant |
-| Eligibility rules | JSON per scheme | age, income, category, land, district, occupation, gender | Overlapping schemes; mutually exclusive benefits; effective-dated changes |
-| Applications | 100,000 | app_id, mobile, scheme, status, reason_code, applicant_age | Minors; one phone shared by a family; stale status |
-| Queries | 3,000 text + 600 voice | lang (te, hi, ur, en, Tenglish, Roman Urdu), intent, gold_doc_ids, gold_answer, answerable | "naaku pension eligibility undha?"; dialect words; misspellings; unanswerable; political; multi-scheme |
+| Eligibility rules | JSON per scheme | `age, income, category, land, district, occupation, gender` | Overlapping schemes; mutually exclusive benefits; effective-dated changes |
+| Applications | 100,000 | `app_id, mobile, scheme, status, reason_code, applicant_age` | Minors; one phone shared by a family; stale status |
+| Queries | 3,000 text + 600 voice | `lang (te, hi, ur, en, Tenglish, Roman Urdu), intent, gold_doc_ids, gold_answer, answerable` | "naaku pension eligibility undha?"; dialect words; misspellings; unanswerable; political; multi-scheme |
 
 **Query and audio generation.** Native speakers *write* queries rather than translating English ones (translationese inflates retrieval scores). Voice notes use varied TTS voices plus noise, encoded as WhatsApp Opus and 8 kHz IVR audio.
 
@@ -182,7 +182,7 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (real) | Weeks | Key tasks | Exit criteria | FDE artifacts |
+| Phase (real) | Weeks | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|---|
 | Discovery | 1–3 | Journey map, corpus inventory, OCR audit, top-12 rules drafted with officers, BSP and hosting status, SGI/DPDP applicability note | Memo signed; 12 schemes named | Templates 01, 02; [SOW](templates/03-sow-and-acceptance-criteria.md) |
 | POC | 4–8 | Provenance-gated ingestion; per-language retrieval harness; tokeniser-cost study; rules engine for 3 schemes; mobile-matched status tool | te/en pass gates; Urdu gap diagnosed with a plan | ADRs 1–4, [eval plan](templates/05-eval-plan.md), [threat model](templates/06-threat-model-and-controls.md) |
@@ -337,7 +337,7 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 | Working system | 25% | Cited answers in four languages; mobile-matched status; honest escalation; DTMF fallback | English-first bot, translated |
 | Evaluation rigour | 20% | Per-language CIs, native raters, calibrated judge, fertility measured | One pooled number from translated queries |
 | Security and compliance | 15% | Provenance gate, split contexts, reasoned SGI applicability, *verify* flags | "The LLM filters bad documents" |
-| FDE artifacts | 20% | ADRs backed by numbers; a real change-management plan | Templates copied unfilled |
+| FDE artefacts | 20% | ADRs backed by numbers; a real change-management plan | Templates copied unfilled |
 | Demo and communication | 10% | Shows the Urdu gap honestly, with the plan | Hides weak languages |
 | Curveball handling | 10% | Containment, citizen correction, root cause | Hot-fixes the prompt |
 

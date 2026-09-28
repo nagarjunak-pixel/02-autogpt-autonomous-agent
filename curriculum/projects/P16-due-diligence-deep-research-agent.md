@@ -190,7 +190,7 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | **Discovery (1–2)** | Interviews; claim-accuracy audit of past memos; NDA and licence review with GC; wall process with CCO | SOW signed; sources classified allowed / conditional / prohibited; gold claims for 3 closed deals | Discovery notes, scorecard, SOW, source register |
 | **POC (3–6)** | Parsing + per-deal index; quarantined readers; fetch gateway; verifier (§7 sketch); writer drafting from a fact table; run on 3 closed deals | Claim precision ≥ 90%; 0 never-accessed citations; injection suite passes | ADRs 1–4, eval report ([05](templates/05-eval-plan.md)), threat model ([06](templates/06-threat-model-and-controls.md)) |

@@ -242,7 +242,8 @@ def filter_items(items: list[dict], passages: dict[str, str], dec: Decontaminato
     kept, rejected = [], []
     for it in items:
         passage = passages[it["passage_id"]]
-        safety = it["passage_id"] in safety_ids or bool(SAFETY.search(it["question"] + " " + passage))  # pack labels first
+        # pack labels first
+        safety = it["passage_id"] in safety_ids or bool(SAFETY.search(it["question"] + " " + passage))
         why = dec.reason(it) or verify_against_source(it, passage, safety)
         (rejected if why else kept).append({**it, "safety_critical": safety, "reject_reason": why})
     return kept, rejected
@@ -326,7 +327,7 @@ The marginal cost per answer is about zero. People and HSE review dominate, so t
 
 **Checklist.** Discovery memo; inventory analysis; SOW with gated fine-tune; frozen test set with leakage audit; B0/B1/B2 comparison with CIs; filter code and tests; safety-erosion report per quantised build; router and renderer tests; signed packages and a recall drill; ADRs; threat model; obligations map; runbook; demo showing a refusal and a failure.
 
-| Dimension | Weight | Excellent | Weak |
+| Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
 | Working system | 25% | Offline on both device classes; deterministic router, renderer and lookup | Demo with Wi-Fi on |
 | Evaluation rigour | 25% | Strong B0, leakage audit, CIs, safety re-tested after quantisation | Fine-tune vs a weak prompt |

@@ -185,14 +185,14 @@ flowchart LR
 **ADRs** ([Template 04](templates/04-solution-design-and-adr.md)):
 1. **Cascade vs speech-to-speech vs hybrid.** ASR→LLM→TTS; S2S (e.g. OpenAI Realtime, Gemini Live, Amazon Nova Sonic); or a duplex speech front end delegating tools to a text model. Decide on measured Telugu quality, redaction points and cost per minute.
 2. **Platform-native agent (Agentforce/ServiceNow) vs custom vs hybrid.** Native gives CRM data, handoff and governance out of the box, but [Agentforce Voice](https://www.salesforce.com/agentforce/voice/) lists only English (US/UK/AU) as of Sept 2026, other languages "on a phased rollout"; ServiceNow Indic voice: *verify*. Likely answer: a custom Hindi/Telugu voice front end, with the platform as system of record and agent desktop, re-checked quarterly.
-3. **ASR/TTS vendor per language:** managed Indic vs hyperscaler vs self-hosted, on WER, entity accuracy, latency, residency and price.
+3. **ASR/TTS vendor per language.** Managed Indic vs hyperscaler vs self-hosted, on WER, entity accuracy, latency, residency and price.
 4. **Authentication tiers and step-up.** Options: CLI plus knowledge questions, OTP, app push, or store/e-KYC. Voice biometrics is rejected as a factor (at most a risk signal).
 5. **Payment path.** DTMF-masked payment IVR vs a pay link by SMS/app vs human pause/resume (the weakest).
 6. **Failover.** An SBC health check routes to the IVR, plus multi-provider routing in the gateway.
 
 ## 7. Implementation plan — week by week
 
-| Phase (real) | Weeks | Key tasks | Exit criteria | FDE artifacts |
+| Phase (real) | Weeks | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|---|
 | Discovery | 1–2 | Process map, 400-call relabel, API latency survey, auth-policy workshop | Discovery memo: Go with conditions | Templates 01, 02; draft [SOW](templates/03-sow-and-acceptance-criteria.md) |
 | POC | 3–6 | Telugu cascade vs S2S latency spike; ASR bake-off; recharge and complaint-status flows; synthetic-caller harness | p50 ≤ 1.0 s; intent ≥ 88%; ADRs 1–3 accepted | ADRs, [eval plan](templates/05-eval-plan.md), [threat model](templates/06-threat-model-and-controls.md) |
@@ -397,7 +397,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 | Working system | 25% | Meets the budget on the harness; clean barge-in; read-back; handoff in CRM | English-only; half-duplex; no read-back |
 | Evaluation rigour | 20% | Per-language pass^4, calibrated judge, held-out accent, CIs | One aggregate score from the team's own voices |
 | Security and compliance | 15% | Guard in code, PCI out of path, voice never authenticates, verified obligations | "The prompt says no SIM swaps" |
-| FDE artifacts | 20% | ADRs with measured evidence; cost tied to containment | Generic templates, no numbers |
+| FDE artefacts | 20% | ADRs with measured evidence; cost tied to containment | Generic templates, no numbers |
 | Demo and communication | 10% | Honest failure shown; clear asks | Cherry-picked calls |
 | Curveball handling | 10% | Evidence-led; decisions recorded | Panic changes; no re-test |
 
@@ -424,7 +424,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 | 90, 94 | SLOs and Incident Response; Provider Failover and DR | IVR failover drills |
 | 91, 96, 97, 100 | LLM FinOps; Observability; Evaluation Tools; AI Gateways | Cost per contained call, voice spans, CI gates |
 | 102 | Model Provider Landscape | Indic ASR/TTS/LLM choice |
-| 109–116 | FDE practice turns | All FDE artifacts; BPO contract change (114) |
+| 109–116 | FDE practice turns | All FDE artefacts; BPO contract change (114) |
 
 **New/gap topics exercised:** #6 India SGI rules (applicability analysis); #8 injection-resistant architecture (tools gated in code by verified auth level); RAG-1 context engineering (history = what the caller heard; handoff facts from systems); AGT-6 platform-native vs custom agent; FDE-2 CRM handoff integration; FDE-1 security review; SEC (voice-clone fraud vs KYC); SEC (incident clocks: CERT-In 6 h); plus PCI-scoped voice payments (not in the register).
 

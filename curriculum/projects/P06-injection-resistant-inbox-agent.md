@@ -2,7 +2,7 @@
 
 > Build an AI chief-of-staff for 40 executives in which no single model context ever holds private data, untrusted content and an exfiltration channel at once, and where "draft only" survives a long session.
 >
-> **Customer:** Kerrowan Therapeutics (fictional) · **Industry:** Biotech (commercial-stage, Nasdaq-listed, fictional) · **Geography:** Cambridge, MA and South San Francisco, CA (US) · **Real engagement:** 12 weeks; 1 FDE lead, 1 FDE, a part-time security engineer, plus Kerrowan's M365/Entra admin and the Chief of Staff as product owner · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
+> **Customer:** Kerrowan Therapeutics (fictional) · **Industry:** Biotech (commercial-stage, Nasdaq-listed, fictional) · **Geography:** Cambridge, MA and South San Francisco, CA (US) · **Real engagement:** 12 weeks; 1 FDE lead, 1 FDE, a part-time security engineer, plus Kerrowan's M365/Entra admin and the Chief of Staff as product owner · **Course build:** 6 weeks, team of 2–4 · **Difficulty:** ★★★
 
 **Starter kit:** [`starter-kits/P06-injection-resistant-inbox-agent/`](starter-kits/P06-injection-resistant-inbox-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `dataflow_policy.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
 
@@ -218,7 +218,7 @@ The lesson: **a constraint that lives only in conversation history is a suggesti
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | Discovery (1–2) | EA shadowing; baselines; IT scope negotiation; trifecta analysis; buy-vs-build memo | Signed SOW; scopes approved or escalated | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md) |
 | POC (3–5) | Q-LLM, planner, interpreter, policies; read-only triage and summaries; AE router; red-team v1; compaction tests | 0 high-severity successes; AE recall ≥ 0.99 | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
@@ -396,7 +396,7 @@ Timings are real-engagement weeks. In the course build, inject them in weeks 3�
 | Working system | 25% | Planner never sees bodies; policies in code and the MCP server; OBO, minimal scopes | One agent, every tool, a "be careful" prompt |
 | Evaluation rigour | 20% | Utility under defence; held-out attacks; programmatic security metrics | LLM-judged attack success on known attacks only |
 | Security and compliance | 15% | Trifecta per context; memory policy; drilled kill switch; obligations mapped | A generic OWASP list |
-| FDE artifacts | 20% | Honest buy-vs-build; scope ADR with compensating controls | Copilot ignored; scopes unexplained |
+| FDE artefacts | 20% | Honest buy-vs-build; scope ADR with compensating controls | Copilot ignored; scopes unexplained |
 | Demo and communication | 10% | Shows an attack failing and why; presents the utility cost | Happy path only |
 | Curveball handling | 10% | Evidence-based autonomy staging; root-cause fixes | Complies with the CEO, or refuses with no path |
 

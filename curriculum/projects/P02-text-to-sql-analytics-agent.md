@@ -116,10 +116,10 @@ Decision: **Go, with conditions:** the CFO and COO name metric owners and sign t
 
 ```mermaid
 flowchart LR
-  subgraph DEV["Manager devices - untrusted input"]
+  subgraph DEV["Manager devices: untrusted input"]
     U["PWA chat: English, Hindi, Hinglish"]
   end
-  subgraph APP["Annavara Retail app VPC - trust boundary"]
+  subgraph APP["Annavara Retail app VPC: trust boundary"]
     API["API: SSO, role, region and store claims"]
     NORM["Language and date normaliser"]
     PLAN["Metric-query planner: structured output"]
@@ -131,11 +131,11 @@ flowchart LR
     VER["Result verifier: reconcile, freshness, scope"]
     NAR["Chart and narrative: numbers copied from result"]
   end
-  subgraph WH["Cloud warehouse - data platform boundary"]
+  subgraph WH["Cloud warehouse: data platform boundary"]
     RO["Read-only role with row access policies"]
     DATA[("Star schema and pre-aggregates")]
   end
-  subgraph PROV["Model provider or self-hosted model - external boundary"]
+  subgraph PROV["Model provider or self-hosted model: external boundary"]
     LLM["LLM endpoint: schema, definitions, aggregates only"]
   end
   U --> API --> NORM --> PLAN
@@ -349,14 +349,14 @@ Timings are course weeks, with the real-engagement week in brackets.
 
 **Deliverables:** discovery memo, request taxonomy, scorecard and SOW; semantic layer, guard, golden set and ADR-001 to ADR-006; eval report, threat model, obligations sheet and FinOps dashboard; runbooks, a 15-minute demo with a visible failure, and the curveball log.
 
-| Weight | Area | Excellent | Weak |
+| Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
-| 25% | Working system | Metric-query first; guard plus native RLS; verifier; scope footer | Raw text-to-SQL over every table |
-| 20% | Evaluation rigour | Execution accuracy with CIs, per language; empty-result traps handled; held-out set | SQL string match; English only |
-| 15% | Security and compliance | Trifecta table, zero-leak audit, DPDP dates right | "The LLM is told not to write DELETE" |
-| 20% | FDE artefacts | Metric glossary with owners; ADRs with cost numbers | Definitions invented by the team |
-| 10% | Demo and communication | Shows a clarification, a refusal and cost per answer | Cherry-picked English queries |
-| 10% | Curveball handling | Governance, not unilateral fixes; post-mortems | Silent patches |
+| Working system | 25% | Metric-query first; guard plus native RLS; verifier; scope footer | Raw text-to-SQL over every table |
+| Evaluation rigour | 20% | Execution accuracy with CIs, per language; empty-result traps handled; held-out set | SQL string match; English only |
+| Security and compliance | 15% | Trifecta table, zero-leak audit, DPDP dates right | "The LLM is told not to write DELETE" |
+| FDE artefacts | 20% | Metric glossary with owners; ADRs with cost numbers | Definitions invented by the team |
+| Demo and communication | 10% | Shows a clarification, a refusal and cost per answer | Cherry-picked English queries |
+| Curveball handling | 10% | Governance, not unilateral fixes; post-mortems | Silent patches |
 
 ## 13. Stretch goals
 

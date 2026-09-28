@@ -38,8 +38,8 @@ Taruvana Learning runs an AI tutor for 2 million Indian students aged 13–18 in
 **Data.** 40M unlabelled conversations over 18 months, containing sensitive disclosures (self-harm, family conflict, sexuality). Age is a self-declared date of birth; 70% of paid accounts have a parent phone number, only 12% verified. Memory mixes academic facts with personal disclosures.
 
 **Legal and regulatory (as of Sept 2026). Engineers map obligations; counsel owns the conclusions.**
-- **California SB 243** ([bill text](https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB243); Ch. 677; in force 1 Jan 2026). *Definition* (Bus. & Prof. Code §22601(b)): an AI system with "adaptive, human-like responses" that "is capable of meeting a user's social needs, including by exhibiting anthropomorphic features and being able to sustain a relationship across multiple interactions"; bots used **only** for customer service, operations, research or technical assistance (and some game bots and voice assistants) are excluded. *Obligations:* AI disclosure; a published suicide/self-harm protocol with crisis referral; for **known minors**, a break-and-AI reminder at least every three hours and measures against sexually explicit content (§22602); a suitability notice (§22604); annual reports to the Office of Suicide Prevention from **1 July 2027** (§22603). *Enforcement:* private right of action, greater of actual damages or **$1,000 per violation** (§22605).
-- **New York GBL Art. 47 §§1700–1704** ([statute](https://www.nysenate.gov/legislation/laws/GBS/A47); budget bill [S3008C Part U](https://www.nysenate.gov/legislation/bills/2025/S3008/amendment/C), signed 9 May 2025; effective 5 Nov 2025). An "AI companion" simulates a sustained relationship by (i) retaining prior-session information to personalise, (ii) asking "unprompted or unsolicited emotion-based questions" and (iii) sustaining dialogue on personal matters ([§1700](https://www.nysenate.gov/legislation/laws/GBS/1700)); systems "primarily designed and marketed" for efficiency, research or technical assistance are excluded. It requires a crisis protocol with referral, e.g. to 988 (§1701), and an AI notice at the start of an interaction (at most once a day) and at least every three hours (§1702). Enforcement by the AG only, up to **$15,000 per day** (§1703).
+- **California SB 243** ([bill text](https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB243); Ch. 677; in force 1 Jan 2026). *Definition* (Bus. & Prof. Code §22601(b)): an AI system with "adaptive, human-like responses" that "is capable of meeting a user's social needs, including by exhibiting anthropomorphic features and being able to sustain a relationship across multiple interactions"; bots used **only** for customer service, operations, research or technical assistance (and some game bots and voice assistants) are excluded. *Obligations:* AI disclosure; a published suicide/self-harm protocol with crisis referral; for **known minors**, a break-and-AI reminder at least every three hours and measures against sexually explicit content (§22602); a suitability notice (§22604); annual reports to the Office of Suicide Prevention from **1 July 2027** (§22603). *Enforcement:* private right of action, greater of actual damages or **USD 1,000 per violation** (§22605).
+- **New York GBL Art. 47 §§1700–1704** ([statute](https://www.nysenate.gov/legislation/laws/GBS/A47); budget bill [S3008C Part U](https://www.nysenate.gov/legislation/bills/2025/S3008/amendment/C), signed 9 May 2025; effective 5 Nov 2025). An "AI companion" simulates a sustained relationship by (i) retaining prior-session information to personalise, (ii) asking "unprompted or unsolicited emotion-based questions" and (iii) sustaining dialogue on personal matters ([§1700](https://www.nysenate.gov/legislation/laws/GBS/1700)); systems "primarily designed and marketed" for efficiency, research or technical assistance are excluded. It requires a crisis protocol with referral, e.g. to 988 (§1701), and an AI notice at the start of an interaction (at most once a day) and at least every three hours (§1702). Enforcement by the AG only, up to **USD 15,000 per day** (§1703).
 - **India DPDP Act 2023 s.9 and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (13 Nov 2025). Most obligations, including Rule 10, apply **18 months from notification (May 2027)**; MeitY floated 12 months in Jan 2026 ([Business Standard](https://www.business-standard.com/technology/tech-news/meity-may-cut-compliance-timeline-for-key-dpdp-rules-to-12-months-126012201293_1.html)), but as of 27 Sep 2026 no amending notification has been published, so Rule 1 as notified (18 months) still governs ([DPDP Rules tracker](https://dpdprules.org/timeline), updated 23 Sep 2026). A child is anyone under 18. s.9(1) requires the **"verifiable consent of the parent"** (or lawful guardian) before processing a child's data; s.9(2)–(3) bar processing likely to harm a child's well-being and any tracking, behavioural monitoring or targeted advertising directed at children; penalties up to ₹200 crore ([PRS](https://prsindia.org/billtrack/digital-personal-data-protection-bill-2023)). Rule 10 requires due diligence that the consenting parent is an **identifiable adult** (details already held, or a virtual token, e.g. via DigiLocker); it does not prescribe checking the parent–child link. Educational institutions are exempt only for tracking needed for education or safety; **assume** a commercial edtech is not one (counsel decides).
 - **COPPA** covers under-13s, whom Taruvana *will* get (siblings, age-liars); the amended rule was finalised 16 Jan 2025 ([FTC](https://www.ftc.gov/news-events/news/press-releases/2025/01/ftc-finalizes-changes-childrens-privacy-rule-limiting-companies-ability-monetize-kids-data)). Detect and block under-13s; do not serve them.
 - **California AB 1043 (Digital Age Assurance Act)** ([bill](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260AB1043); Ch. 675; operative **1 Jan 2027**). OS providers send apps an age-bracket signal (<13, 13–15, 16–17, 18+); receiving it gives the developer actual knowledge of the age range. It takes effect days before launch.
@@ -166,7 +166,7 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | **Discovery (1–2)** | Feature inventory against statutes; baselines; crisis tabletop at "2 a.m."; data map | Counsel has the evidence pack; baselines signed off | Discovery memo ([01](templates/01-discovery-questionnaire.md)), data readiness ([02](templates/02-data-readiness-scorecard.md)), draft obligations map ([07](templates/07-compliance-obligations-to-controls.md)), SOW ([03](templates/03-sow-and-acceptance-criteria.md)) |
 | **POC (3–5)** | Safety layer in shadow on consented Indian traffic; harness and prompt fixes; disclosure and timer; academic-only memory | Shadow recall ≥ 0.90; flip rate halved; no latency regression | Eval plan ([05](templates/05-eval-plan.md)), threat model ([06](templates/06-threat-model-and-controls.md)), ADRs 1–4 |
@@ -294,13 +294,13 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 
 | Item | Assumptions | Range (USD/month) |
 |---|---|---|
-| Tutor tokens | 700k monthly actives × 12 sessions × 10 turns = 84M turns; 1,500 input + 250 output tokens per turn → 126B in / 21B out; small-model band $0.05–0.50 per M in, $0.20–2.00 per M out | ~10k–105k |
+| Tutor tokens | 700k monthly actives × 12 sessions × 10 turns = 84M turns; 1,500 input + 250 output tokens per turn → 126B in / 21B out; small-model band USD 0.05–0.50 per M in, USD 0.20–2.00 per M out | ~10k–105k |
 | Safety classifier | Self-hosted small model; 84M checks; 2–4 mid-range GPUs | ~2k–8k |
-| LLM adjudication | ~2% of turns flagged → 1.7M calls × ~2k tokens, $0.50–3 per M | ~2k–10k |
+| LLM adjudication | ~2% of turns flagged → 1.7M calls × ~2k tokens, USD 0.50–3 per M | ~2k–10k |
 | Eval CI | ~5k items × 3 runs per candidate, a few candidates per month | < 500 |
 | Clinical on-call partner | Contract; often the largest fixed cost | Quote-dependent |
 
-That is about **$0.02–0.18 per active student per month** before the clinical contract. Safety costs ($4k–18k) are 4–17% of a high tutor bill but can be 40% or more of a very cheap one, so the 15% cap is met by engineering: quantise and batch the classifier, run it once per turn, and send only genuinely ambiguous cases (target ≤ 1%) to adjudication.
+That is about **USD 0.02–0.18 per active student per month** before the clinical contract. Safety costs (USD 4k–18k) are 4–17% of a high tutor bill but can be 40% or more of a very cheap one, so the 15% cap is met by engineering: quantise and batch the classifier, run it once per turn, and send only genuinely ambiguous cases (target ≤ 1%) to adjudication.
 
 **Runbook entries** ([template](templates/09-runbook-slos-and-handover.md)): *crisis pipeline down* → fail safe (static helpline card, pause open-ended chat, page on-call); *flip-rate alert* → roll back prompt or model alias; *crisis-flag spike* (exam-results day) → add clinical staffing, check for a classifier fault; *helpline change* → monthly verification job, alert when `last_verified` > 35 days; *vendor outage* → fallback model that has *already passed* the same gates.
 
@@ -316,16 +316,16 @@ That is about **$0.02–0.18 per active student per month** before the clinical 
 
 ## 12. Deliverables and grading rubric
 
-**Artifacts by phase:** as in §7, plus a feature-to-statute matrix, questions for counsel, the A/B readout, drill logs, the published protocol page and a 15-minute demo.
+**Artefacts by phase:** as in §7, plus a feature-to-statute matrix, questions for counsel, the A/B readout, drill logs, the published protocol page and a 15-minute demo.
 
-| Criterion (weight) | Excellent | Weak |
-|---|---|---|
-| Working system (25%) | Crisis path, timers, consent and deletion work end to end; gates block seeded regressions | Classifier demo only; timers client-side |
-| Evaluation rigour (20%) | Held-out clinician-style set, confidence intervals, flip *and* fix rates, judge κ reported | Single accuracy number; judge labels crisis data |
-| Security/compliance (15%) | Obligation → control → evidence per statute; trifecta broken by design; counsel questions explicit | Claims "compliant"; legal conclusions without counsel |
-| FDE artifacts (20%) | ADRs with real options and trade-offs; honest status reports | Boilerplate |
-| Demo and communication (10%) | Shows a failure case and how it is caught | Happy path only |
-| Curveballs (10%) | Calm, evidence-based, protects the student first | Engagement-first answers |
+| Criterion | Weight | Excellent | Weak |
+|---|---|---|---|
+| Working system | 25% | Crisis path, timers, consent and deletion work end to end; gates block seeded regressions | Classifier demo only; timers client-side |
+| Evaluation rigour | 20% | Held-out clinician-style set, confidence intervals, flip *and* fix rates, judge κ reported | Single accuracy number; judge labels crisis data |
+| Security/compliance | 15% | Obligation → control → evidence per statute; trifecta broken by design; counsel questions explicit | Claims "compliant"; legal conclusions without counsel |
+| FDE artefacts | 20% | ADRs with real options and trade-offs; honest status reports | Boilerplate |
+| Demo and communication | 10% | Shows a failure case and how it is caught | Happy path only |
+| Curveballs | 10% | Calm, evidence-based, protects the student first | Engagement-first answers |
 
 ## 13. Stretch goals
 

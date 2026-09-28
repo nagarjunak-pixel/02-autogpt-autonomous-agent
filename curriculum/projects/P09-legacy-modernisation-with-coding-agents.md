@@ -209,7 +209,7 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | **Discovery (1–2)** | Interviews; baselines; agent-readiness audit (build/test time, flaky tests, secrets in repo); security design | SOW signed; measurement plan pre-registered; CISO hosting decision | Discovery notes, scorecard, SOW, threat model draft ([06](templates/06-threat-model-and-controls.md)) |
 | **POC (3–6)** | Root + nested AGENTS.md; 5 skills; explorer/test-writer/implementer briefs; sandbox + hooks; oracle runner; recover and migrate 3 rules via spec → plan → tasks | ≥ 95% mutant kill; 20-case sandbox red team passed; 0 mismatches on the 3 rules | ADRs 1–4, harness, eval report ([05](templates/05-eval-plan.md)), status report ([10](templates/10-demo-script-and-status-report.md)) |

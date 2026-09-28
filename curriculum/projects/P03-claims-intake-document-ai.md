@@ -2,7 +2,7 @@
 
 > Turn scanned bills, FIRs, damage photos and handwritten forms into schema-valid, evidence-linked claim files that adjusters verify quickly, with no automated denials and measured reviewer vigilance.
 >
-> **Customer:** Kalsubai General Insurance (fictional) · **Industry:** General insurance (motor + retail health) · **Geography:** India (Pune HQ; Maharashtra, Goa, Madhya Pradesh) · **Real engagement:** 22 weeks, FDE lead + 2 FDEs + part-time UX researcher and security engineer · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★☆
+> **Customer:** Kalsubai General Insurance (fictional) · **Industry:** General insurance (motor + retail health) · **Geography:** India (Pune HQ; Maharashtra, Goa, Madhya Pradesh) · **Real engagement:** 22 weeks, FDE lead + 2 FDEs + part-time UX researcher and security engineer · **Course build:** 6 weeks, team of 2–4 · **Difficulty:** ★★☆
 
 **Starter kit:** [`starter-kits/P03-claims-intake-document-ai/`](starter-kits/P03-claims-intake-document-ai/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `review_router.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
 
@@ -13,7 +13,7 @@ Kalsubai is an IRDAI-regulated general insurer. It handles about **60,000 claims
 Evidence arrives from many channels: a hospital portal, TPAs, e-mail, a claimant app, WhatsApp relays from agents, and surveyors.
 - About 40% of health pages are scans or phone photos.
 - Discharge summaries are in English, Marathi or Hindi, often mixed on one page.
-- Motor files hold 6-15 damage photos, an FIR copy (usually in Marathi), the RC, a licence and a handwritten claim form.
+- Motor files hold 6–15 damage photos, an FIR copy (usually in Marathi), the RC, a licence and a handwritten claim form.
 
 The Chief Claims Officer asked to **"Automate claim intake."** Adjusters spend most of each file re-keying PDFs into the core claims system. Reimbursement claims miss IRDAI turnaround times, and ombudsman complaints are rising.
 
@@ -222,11 +222,11 @@ flowchart LR
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1-2) | Shadowing, baselines, page sample, CRC walkthrough | Signed SOW; "no automated denial" in writing | Scorecard, SOW |
-| POC (3-6) | Router + 4 extractors (bill, discharge summary, FIR, motor form); 300-claim golden set; offline eval | Targets met on printed English; plan for Marathi and handwriting | Eval plan ([05](templates/05-eval-plan.md)), ADRs 1-4, demo ([10](templates/10-demo-script-and-status-report.md)) |
-| Pilot (7-14) | Pune (health) and Nagpur (motor) branches; reviewer UI; seeded items; 2 weeks in shadow mode, then assisted | Acceptance table met; vigilance in band; no Sev-1 | Threat model ([06](templates/06-threat-model-and-controls.md)), compliance map ([07](templates/07-compliance-obligations-to-controls.md)), weekly status |
-| Production (15-20) | Branch waves, drift monitors, FinOps, DR drill | Security review; CRC and compliance sign-off | Security pack ([08](templates/08-security-review-pack.md)), SLOs |
-| Handover (21-22) | Train ML-ops and claims IT; hand over flywheel ownership | Customer ships a release unaided | Handover pack ([09](templates/09-runbook-slos-and-handover.md)) |
+| Discovery (1–2) | Shadowing, baselines, page sample, CRC walkthrough | Signed SOW; "no automated denial" in writing | Scorecard, SOW |
+| POC (3–6) | Router + 4 extractors (bill, discharge summary, FIR, motor form); 300-claim golden set; offline eval | Targets met on printed English; plan for Marathi and handwriting | Eval plan ([05](templates/05-eval-plan.md)), ADRs 1–4, demo ([10](templates/10-demo-script-and-status-report.md)) |
+| Pilot (7–14) | Pune (health) and Nagpur (motor) branches; reviewer UI; seeded items; 2 weeks in shadow mode, then assisted | Acceptance table met; vigilance in band; no Sev-1 | Threat model ([06](templates/06-threat-model-and-controls.md)), compliance map ([07](templates/07-compliance-obligations-to-controls.md)), weekly status |
+| Production (15–20) | Branch waves, drift monitors, FinOps, DR drill | Security review; CRC and compliance sign-off | Security pack ([08](templates/08-security-review-pack.md)), SLOs |
+| Handover (21–22) | Train ML-ops and claims IT; hand over flywheel ownership | Customer ships a release unaided | Handover pack ([09](templates/09-runbook-slos-and-handover.md)) |
 
 **Code sketch: validation, confidence routing and seeded-error injection.** Seeds come only from fields with independently verified values, and a seeded value never reaches the claim record.
 
@@ -368,8 +368,8 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 **Cost** (assumptions stated; prices change, so re-quote):
 - Volume: 60,000 claims × about 11 page-images ≈ 660,000 images/month.
 - Tokens: about 1,500 input + 400 output per image, so about 1.0B input and 0.26B output tokens/month. Marathi and Hindi output uses more tokens per word than English, so measure output tokens per language in week 3.
-- Managed small or mid-tier VLM, at USD 0.10-3 per M input and USD 0.40-15 per M output: about USD 200-7,000/month, or USD 0.003-0.12 per claim. Batch non-urgent packets.
-- Self-hosted 7B-class VLM: 2-4 reserved GPUs. Benchmark throughput in week 3 before trusting any estimate.
+- Managed small or mid-tier VLM, at USD 0.10–3 per M input and USD 0.40–15 per M output: about USD 200–7,000/month, or USD 0.003–0.12 per claim. Batch non-urgent packets.
+- Self-hosted 7B-class VLM: 2–4 reserved GPUs. Benchmark throughput in week 3 before trusting any estimate.
 - **The real cost is people.** Saving 6 keying minutes on 60,000 claims frees about 6,000 adjuster-hours a month, but only if the review is genuine.
 
 **Runbook.**
@@ -440,7 +440,7 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 | 96, 97 | Observability; Evaluation Tools | OTel GenAI, CI gates |
 | 99 | Durable Workflow Platforms | Multi-day claims, timers, human signals |
 | 105 | Vision-Language Models | Scans, photos, grounding boxes |
-| 109-116 | FDE practice turns | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
+| 109–116 | FDE practice turns | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
 
 **New/gap topics exercised:** RAG-7 structured extraction at scale (IDP); MOD-3 calibrated abstain/escalate thresholds; #8 injection-resistant architecture (tool-less, quarantined extractor); #4 regulation as obligations→controls; MOD-9 inference nondeterminism (pass^3); FDE-1 security review; FDE-3 deploying in the customer's cloud (India region, empanelled); FDE-5 measuring real impact (time-motion, control branches); SEC (India sector AI governance: IRDAI, CERT-In); SEC (incident clocks & record retention).
 

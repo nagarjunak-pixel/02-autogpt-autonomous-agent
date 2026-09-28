@@ -185,7 +185,7 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | **Discovery (1–2)** | Log analysis by bot class; structured-data and attribute audit; PSP and protocol eligibility matrix; threat-model workshop | Signed baselines; PSP answers in writing | Discovery memo ([01](templates/01-discovery-questionnaire.md)), data readiness ([02](templates/02-data-readiness-scorecard.md)), SOW ([03](templates/03-sow-and-acceptance-criteria.md)) |
 | **POC (3–4)** | Read-only tools (search, product, size) on the sanitised catalogue; authorization server integrated; JSON-LD fixes shipped *before* the freeze | nDCG ≥ 0.70; auth conformance passes | ADRs 1, 2, 5; threat model ([06](templates/06-threat-model-and-controls.md)) |
@@ -224,14 +224,16 @@ const fail = (code: string, msg: string): ToolResult =>
 export async function addToCart(raw: unknown, ctx: Ctx): Promise<ToolResult> {
   const parsed = Input.safeParse(raw);
   if (!parsed.success)
-    return fail("INVALID_INPUT", parsed.error.issues.map((i) => `${i.path.join(".") || "input"}: ${i.message}`).join("; "));
+    return fail("INVALID_INPUT",
+      parsed.error.issues.map((i) => `${i.path.join(".") || "input"}: ${i.message}`).join("; "));
   const inp = parsed.data;
   if (!ctx.scopes.includes("cart:write")) return fail("INSUFFICIENT_SCOPE", "cart:write required");
 
   const key = `${ctx.userId}:${inp.idempotencyKey}`;
   const hash = createHash("sha256").update(JSON.stringify([inp.cartId, inp.sku, inp.quantity])).digest("hex");
   const prior = await ctx.idem.get(key);
-  if (prior) return prior.hash === hash ? prior.result : fail("IDEMPOTENCY_CONFLICT", "key reused for a different request");
+  if (prior)
+    return prior.hash === hash ? prior.result : fail("IDEMPOTENCY_CONFLICT", "key reused for a different request");
 
   const m = ctx.mandate;
   if (!m || m.expiresAt <= Date.now()) return fail("NO_VALID_MANDATE", "ask the user to approve a spending limit");
@@ -241,14 +243,17 @@ export async function addToCart(raw: unknown, ctx: Ctx): Promise<ToolResult> {
   if (current === null) return fail("CART_NOT_FOUND", "unknown cart for this user");
   const projected = current + unit * inp.quantity;
   if (projected > m.maxCartMinor)          // soft check here; checkout re-validates in the same DB transaction
-    return fail("MANDATE_LIMIT_EXCEEDED", `cart would be ${projected} > ${m.maxCartMinor} ${m.currency}; user must approve`);
+    return fail("MANDATE_LIMIT_EXCEEDED",
+      `cart would be ${projected} > ${m.maxCartMinor} ${m.currency}; user must approve`);
 
   const total = await ctx.addLine(inp.cartId, inp.sku, inp.quantity, unit);
   const body = { receiptId: `rcpt_${randomUUID()}`, cartId: inp.cartId, sku: inp.sku, quantity: inp.quantity,
-    unitPriceMinor: unit, cartTotalMinor: total, currency: m.currency, mandateId: m.id, issuedAt: new Date().toISOString() };
+    unitPriceMinor: unit, cartTotalMinor: total, currency: m.currency, mandateId: m.id,
+    issuedAt: new Date().toISOString() };
   const signature = createHmac("sha256", ctx.receiptKey).update(JSON.stringify(body)).digest("base64url");
   const result: ToolResult = {
-    content: [{ type: "text", text: `Added ${inp.quantity} x ${inp.sku}. Cart total ${total} ${m.currency} (minor units).` }],
+    content: [{ type: "text",
+      text: `Added ${inp.quantity} x ${inp.sku}. Cart total ${total} ${m.currency} (minor units).` }],
     structuredContent: { ...body, signature },
   };
   await ctx.idem.put(key, { hash, result });  // production: atomic insert-if-absent, same transaction as addLine
@@ -336,16 +341,16 @@ That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; 
 
 ## 12. Deliverables and grading rubric
 
-**Artifacts by phase:** as in §7, plus a bot-traffic baseline, PSP/protocol matrix, directory submission packs, a WebMCP report, a pen-test report and a 15-minute demo.
+**Artefacts by phase:** as in §7, plus a bot-traffic baseline, PSP/protocol matrix, directory submission packs, a WebMCP report, a pen-test report and a 15-minute demo.
 
-| Criterion (weight) | Excellent | Weak |
-|---|---|---|
-| Working system (25%) | Stateless 2026-07-28 server, real OAuth flow, idempotent cart, mandate enforcement proven by tests | Local stdio demo; API key in a header |
-| Evaluation rigour (20%) | Multi-model pass^3, Hinglish parity, poisoning corpus, deterministic fact diff | Anecdotal chats with one assistant |
-| Security/compliance (15%) | Trifecta per context, no passthrough, quarantine proven, obligations with evidence | "We sanitise HTML" |
-| FDE artifacts (20%) | ADRs with real, dated protocol options | Protocol name-dropping |
-| Demo and communication (10%) | Shows a refused over-mandate purchase and a blocked injection | Happy path only |
-| Curveballs (10%) | Says no to hidden text with evidence; handles the freeze | Bans all bots, or complies with marketing |
+| Criterion | Weight | Excellent | Weak |
+|---|---|---|---|
+| Working system | 25% | Stateless 2026-07-28 server, real OAuth flow, idempotent cart, mandate enforcement proven by tests | Local stdio demo; API key in a header |
+| Evaluation rigour | 20% | Multi-model pass^3, Hinglish parity, poisoning corpus, deterministic fact diff | Anecdotal chats with one assistant |
+| Security/compliance | 15% | Trifecta per context, no passthrough, quarantine proven, obligations with evidence | "We sanitise HTML" |
+| FDE artefacts | 20% | ADRs with real, dated protocol options | Protocol name-dropping |
+| Demo and communication | 10% | Shows a refused over-mandate purchase and a blocked injection | Happy path only |
+| Curveballs | 10% | Says no to hidden text with evidence; handles the freeze | Bans all bots, or complies with marketing |
 
 ## 13. Stretch goals
 

@@ -2,7 +2,7 @@
 
 > Replace weekly-breaking RPA bots with a gated, durable, auditable computer-use layer that bridges to a real API.
 >
-> **Customer:** Duinhaven Freight Forwarders (fictional) · **Industry:** Freight forwarding and customs brokerage · **Geography:** Rotterdam (NL/EU) and Chennai (IN) · **Real engagement:** 14 weeks; 1 FDE lead, 2 FDEs, a part-time security engineer, plus the customer's RPA CoE engineer and a customs SME · **Course build:** 6 weeks, team of 2-4 · **Difficulty:** ★★★
+> **Customer:** Duinhaven Freight Forwarders (fictional) · **Industry:** Freight forwarding and customs brokerage · **Geography:** Rotterdam (NL/EU) and Chennai (IN) · **Real engagement:** 14 weeks; 1 FDE lead, 2 FDEs, a part-time security engineer, plus the customer's RPA CoE engineer and a customs SME · **Course build:** 6 weeks, team of 2–4 · **Difficulty:** ★★★
 
 **Starter kit:** [`starter-kits/P05-computer-use-agent-replacing-rpa/`](starter-kits/P05-computer-use-agent-replacing-rpa/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `action_gate.py` (with a mock Tollvane portal) with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
 
@@ -196,7 +196,7 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | Discovery (1–2) | Process and screen map; breakage taxonomy; ladder assessment; vendor API letter; MFA review | Signed qualification memo and SOW with the §5 thresholds | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md) |
 | POC (3–5) | Scripted executor (Rotterdam export lane, staging portal); gate; idempotency; computer-use fallback on 3 variants; pass^k and chaos harnesses | pass^5 ≥ 0.9 on baseline; 0 duplicates; ADRs drafted | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
@@ -381,7 +381,7 @@ Timings are real-engagement weeks. In the course build, inject them in weeks 3�
 | Working system | 25% | Hybrid executor; gate enforced on every path; safe escalation on v5 | Computer use everywhere; gate bypassable |
 | Evaluation rigour | 20% | pass^5 by variant; chaos and adversarial suites; FAIL audit; CI gates | A single success-rate number |
 | Security and compliance | 15% | Trifecta table; MFA option 1 or 2; obligations mapped to evidence | "We'll use a secure VM" |
-| FDE artifacts | 20% | Ladder memo with a vendor ask; ADRs with real options; honest cost model including approver time | Templates filled with generic text |
+| FDE artefacts | 20% | Ladder memo with a vendor ask; ADRs with real options; honest cost model including approver time | Templates filled with generic text |
 | Demo and communication | 10% | Shows a failure handled safely; states limits | Happy path only |
 | Curveball handling | 10% | Root cause, containment, regression test, stakeholder note | Prompt patches |
 

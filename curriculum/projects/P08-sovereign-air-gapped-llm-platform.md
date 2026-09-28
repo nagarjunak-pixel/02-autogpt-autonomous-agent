@@ -323,7 +323,7 @@ At about 4M answers a year that is **₹20–47 per answer**, against USD 0.0006
 
 **Checklist.** Memo, SOW, scorecard, 6 ADRs with capacity maths, frozen eval sets, threat model, obligations map, running enclave, signed-transfer demo, fallback drill log, runbook, AIBOM, weekly status reports, a demo showing one failure.
 
-| Dimension | Weight | Excellent | Weak |
+| Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
 | Working system | 25% | Zero-egress test passes; tampered bundles blocked; thresholds met | Notebook calling a model |
 | Evaluation rigour | 20% | Language slices, quantisation deltas, κ-calibrated judges, held-out used once | One averaged score |
