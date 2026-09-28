@@ -34,7 +34,7 @@ The conversation that decides the project is with the General Counsel. A single 
 
 ## 2. Constraints
 
-- **Data.**
+- **Data:**
   - About 30% of disclosure bundles are scanned, with handwriting, stamps and rotated pages.
   - Emails are filed with their attachments; documents exist in up to 12 versions.
   - A few Indian court orders are in Hindi or Marathi.
@@ -47,7 +47,7 @@ The conversation that decides the project is with the General Counsel. A single 
   - **India's DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The Board provisions applied immediately; consent managers from 13 Nov 2026; most obligations from **13 May 2027** (12 and 18 months from notification). Until then, IT Act s.43A and the SPDI Rules apply ([DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)).
   - **DPDP exemptions.** Section 17(1)(a) (legal claims) and s.17(1)(d) (Indian processing, under contract, of data about people outside India) remove most duties, but the s.8(5) security duty still applies ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)).
   - **CERT-In Directions (28 Apr 2022)** for the Indian entity: report incidents within 6 hours; keep logs for 180 days in India ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
-  - **Professional duties.**
+  - **Professional duties:**
     - SRA Code 6.3 (confidentiality) and 6.5 (walls).
     - *Ayinde v Haringey* [2025] EWHC 1383 (Admin) (6 June 2025): lawyers using AI for research have "a professional duty … to check the accuracy of such research by reference to authoritative sources" ([judgment](https://www.judiciary.uk/judgments/ayinde-v-london-borough-of-haringey-and-al-haroun-v-qatar-national-bank/)).
     - India: professional-communication privilege under s.132 of the Bharatiya Sakshya Adhiniyam 2023 (formerly Evidence Act s.126), in force since 1 July 2024 ([text](https://indiankanoon.org/doc/142112571/)).
@@ -93,7 +93,7 @@ The conversation that decides the project is with the General Counsel. A single 
 - Time to the first relevant precedent (a stopwatch study on 30 tasks).
 - DMS search reformulation rate (from search logs).
 - KM backlog and turnaround (ticket export).
-- Wall-change volume and DMS propagation lag, from the walls audit log vs. DMS ACL timestamps. **Measure the lag; do not ask for it.**
+- Wall-change volume and DMS propagation lag, from the walls audit log vs DMS ACL timestamps. **Measure the lag; do not ask for it.**
 - Share of scanned documents (a text-layer probe on 2,000 sampled documents).
 - Share of clients whose guidelines restrict AI (contracts database).
 - Oversharing: share of documents open to firm-wide groups, from an ACL export. Fix these before indexing, not after.
@@ -111,14 +111,14 @@ The conversation that decides the project is with the General Counsel. A single 
 9. What does the DMS API offer for bulk export, ACL reads and a change feed?
 10. Who signs go-live, and what would make the litigation head veto the pilot?
 
-**Qualification and the lowest rung that works.**
+**Qualification: the lowest rung that works.**
 
 - **Search alone** (the baseline) fails on synthesis and conceptual queries.
 - **A single LLM call** cannot hold 9M documents or enforce permissions.
 - **A fixed workflow** (retrieve → trim → rerank → generate → verify) is sufficient and keeps every permission decision in deterministic code.
 - **An agent** is **not** justified for version 1: every extra tool call widens the leakage and injection surface.
 
-Decision: **Go, with conditions.** Written General Counsel approval of the wall design, a CISO-approved provider route, and an AI opt-out flag on matters for restricted clients. Use templates [01](templates/01-discovery-questionnaire.md) and [02](templates/02-data-readiness-scorecard.md).
+Decision: **Go, with conditions.** Written General Counsel approval of the wall design, a CISO-approved provider route, and an AI opt-out flag on matters for restricted clients. Use [template 01](templates/01-discovery-questionnaire.md) and [template 02](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
@@ -185,28 +185,28 @@ flowchart LR
 | Citation verifier | Verbatim span match on the cited document version; entailment check | Custom code plus an NLI model | — | FDE |
 | Gateway and observability | Keys, region routing, budgets, OTel traces carrying IDs only | LiteLLM (pin hashes: 1.82.7/1.82.8 were compromised on PyPI on 24 Mar 2026), Langfuse, Phoenix | Azure API Management, Datadog | Platform team |
 
-**ADRs to write** (use [template 04](templates/04-solution-design-and-adr.md)):
+**ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 
-- **ADR-001 · Build vs. buy.** Options:
+- **ADR-001 · Build vs buy.** Options:
   - Microsoft Copilot (formerly Microsoft 365 Copilot), which "only surfaces organizational data to which individual users have at least view permissions"; DMS content needs a connector ([Microsoft Learn](https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-privacy)).
   - A legal AI platform (Harvey, Legora, CoCounsel, Lexis+ AI).
   - DMS-native AI, e.g. NetDocuments ndMAX, whose page quotes a customer saying it respects walls ([NetDocuments](https://www.netdocuments.com/ndmax); *vendor claim, verify*).
   - A custom build.
 - **ADR-002 · Where permissions are enforced.** Index-time pre-filter, query-time live check, or **both** (deny-overrides, per-user cache keys).
-- **ADR-003 · Retrieval stack.** Search engine; contextual retrieval vs. late chunking vs. breadcrumbs; reranker.
-- **ADR-004 · Model, provider and residency.** Region-pinned API with ZDR vs. open-weight models on vLLM in the firm's tenant.
+- **ADR-003 · Retrieval stack.** Search engine; contextual retrieval vs late chunking vs breadcrumbs; reranker.
+- **ADR-004 · Model, provider and residency.** Region-pinned API with ZDR vs open-weight models on vLLM in the firm's tenant.
 - **ADR-005 · OCR and parsing.** Self-hosted, managed, or VLM page reading.
 - **ADR-006 · Deletion model.** Hard delete plus a verification sweep; tombstones; per-matter keys for crypto-shredding backups.
 
 ## 7. Implementation plan — week by week
 
-| Phase (real) | Weeks | Tasks | Exit criteria | FDE artefacts |
-|---|---|---|---|---|
-| Discovery | 1–2 | Interviews, stopwatch baseline, wall-lag measurement, 2,000-document sample | Memo signed; General Counsel accepts the wall design in principle | Discovery memo, data-readiness scorecard, draft pack ([08](templates/08-security-review-pack.md)) |
-| POC | 3–6 | Ingest 1 practice group (≈ 150k documents); ACL sync; canary harness; golden set v0 (n = 150) | AC-1 and AC-3 pass on the POC corpus; recall@20 ≥ 0.75 | Eval plan ([05](templates/05-eval-plan.md)), threat model ([06](templates/06-threat-model-and-controls.md)), ADR-002 and ADR-003 |
-| Pilot | 7–11 | 60 users across 3 groups; production canary probes; deletion drill; red team; Copilot bake-off | AC-1 to AC-12 met on frozen set v1 (n = 400); no open Sev-1/Sev-2 | SOW phase-2 acceptance ([03](templates/03-sow-and-acceptance-criteria.md)), weekly status reports ([10](templates/10-demo-script-and-status-report.md)), DPIA draft ([07](templates/07-compliance-obligations-to-controls.md)) |
-| Production | 12–15 | All practice groups; HA; pen test; burn alerts; cost guards | SLOs met for 2 weeks; no open pen-test Highs | Runbooks ([09](templates/09-runbook-slos-and-handover.md)), final ADR-001 |
-| Handover | 16 | Firm team runs wall, deletion and rollback drills unaided | All drills passed | Handover checklist, field-to-product notes |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
+|---|---|---|---|
+| Discovery (1–2) | Interviews, stopwatch baseline, wall-lag measurement, 2,000-document sample | Memo signed; General Counsel accepts the wall design in principle | Discovery memo, data-readiness scorecard, draft pack ([template 08](templates/08-security-review-pack.md)) |
+| POC (3–6) | Ingest 1 practice group (≈ 150k documents); ACL sync; canary harness; golden set v0 (n = 150) | AC-1 and AC-3 pass on the POC corpus; recall@20 ≥ 0.75 | Eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)), ADR-002 and ADR-003 |
+| Pilot (7–11) | 60 users across 3 groups; production canary probes; deletion drill; red team; Copilot bake-off | AC-1 to AC-12 met on frozen set v1 (n = 400); no open Sev-1/Sev-2 | SOW phase-2 acceptance ([template 03](templates/03-sow-and-acceptance-criteria.md)), weekly status reports ([template 10](templates/10-demo-script-and-status-report.md)), DPIA draft ([template 07](templates/07-compliance-obligations-to-controls.md)) |
+| Production (12–15) | All practice groups; HA; pen test; burn alerts; cost guards | SLOs met for 2 weeks; no open pen-test Highs | Runbooks ([template 09](templates/09-runbook-slos-and-handover.md)), final ADR-001 |
+| Handover (16) | Firm team runs wall, deletion and rollback drills unaided | All drills passed | Handover checklist, field-to-product notes |
 
 **Course build (6 weeks):** (1) discovery role-play and the generator; (2) ingestion and OCR; (3) ACL sync, canaries and the trim; (4) generation, citations and evals; (5) injection, deletion and curveballs; (6) hardening and the demo.
 
@@ -287,7 +287,7 @@ Wall events update `screened_matters` and bump `version` within seconds, before 
 
 **Metrics per layer:** parsing, character error rate on 50 hand-transcribed scanned pages; retrieval, recall@20 and nDCG@10 (overall and scanned); generation, faithfulness, citation precision ([Ragas-style](https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/)) and abstention; system, leakage, wall latency, pass^3, cost and latency.
 
-Run an ablation: breadcrumbs only vs. LLM-written context vs. late chunking. Anthropic reported that contextual embeddings plus contextual BM25 cut failed retrievals by 49%, and by 67% with reranking, on its own datasets ([Sep 2024](https://www.anthropic.com/news/contextual-retrieval)). Treat that as a hypothesis to test, not a promise.
+Run an ablation: breadcrumbs only vs LLM-written context vs late chunking. Anthropic reported that contextual embeddings plus contextual BM25 cut failed retrievals by 49%, and by 67% with reranking, on its own datasets ([Sep 2024](https://www.anthropic.com/news/contextual-retrieval)). Treat that as a hypothesis to test, not a promise.
 
 **Judge calibration.** Pin the judge model. Two lawyers label 150 answers, and the judge ships only if Cohen's κ ≥ 0.7. Re-calibrate whenever the judge changes.
 
@@ -397,27 +397,27 @@ Timings are course weeks, with the real-engagement week in brackets.
 
 ## 14. Curriculum map
 
-| Turn(s) · title | How it is exercised |
-|---|---|
-| 6 Encoder, Decoder and Encoder-Decoder Models | Bi-encoder embeddings for recall vs. a cross-encoder reranker (`bge-reranker-v2-m3`) for precision |
-| 14 Hallucination in Depth | Citation verifier, abstention, "zero hallucinations" curveball |
-| 42 Document Parsing and Ingestion · 43 Multimodal RAG · 105 Vision-Language Models | OCR routing, scanned bundles, page-region citations |
-| 45 Late Chunking and Contextual Retrieval | Context-strategy ablation |
-| 47 Long Context vs RAG vs Cache-Augmented Generation | Per-user permissions rule out shared context |
-| 48 Embedding-Model Selection · 50 Named Vector Databases and Search Engines | Filter-aware ANN with ACL fields |
-| 49 RAG Evaluation Tooling · 97 Evaluation Tools | Faithfulness, citation precision, CI gates |
-| 52 Data Lineage and Deletion in RAG | Subject index, deletion certificate |
-| 64 Trust Calibration and Automation Bias | "Verify" UI, *Ayinde* duty |
-| 71 Agent Identity Platforms | On-behalf-of tokens, entitlements |
-| 74 OWASP Top 10 for LLM Applications · 75 Jailbreaks and Red-Teaming Practice · 76 Data and Memory Poisoning | Canary and injection suites, hostile documents |
-| 78 PII Detection and Data-Loss Prevention | Subject index, trace redaction |
-| 79 The EU AI Act · 81 Privacy Law for AI: GDPR and India's DPDP · 82 Sector Compliance | Applicability screen, obligations, SRA duties |
-| 87 Model Upgrades and Deprecation Management · 89 Feedback Loops and the Data Flywheel · 90 SLOs, Incident Response and On-Call for AI · 94 Provider Failover and Disaster Recovery | Upgrade gates, thumbs-down regression set, wall SLO, regional failover |
-| 91 LLM FinOps · 92 On-Prem, Air-Gapped and Sovereign Deployment · 100 AI Gateways · 102 Model Provider Landscape | Cost model, region pinning, ZDR routing |
-| 96 Observability Tools | ID-only OTel traces |
-| 109–116 FDE practice (discovery, ROI, POC → production, ADRs, demos, adoption, data readiness, SOWs) | The full engagement arc |
+| Turn | Title | How it is exercised |
+|---|---|---|
+| 6 | Encoder, Decoder and Encoder-Decoder Models | Bi-encoder embeddings for recall vs a cross-encoder reranker (`bge-reranker-v2-m3`) for precision |
+| 14 | Hallucination in Depth | Citation verifier, abstention, "zero hallucinations" curveball |
+| 42, 43, 105 | Document Parsing and Ingestion; Multimodal RAG; Vision-Language Models | OCR routing, scanned bundles, page-region citations |
+| 45 | Late Chunking and Contextual Retrieval | Context-strategy ablation |
+| 47 | Long Context vs RAG vs Cache-Augmented Generation | Per-user permissions rule out shared context |
+| 48, 50 | Embedding-Model Selection; Named Vector Databases and Search Engines | Filter-aware ANN with ACL fields |
+| 49, 97 | RAG Evaluation Tooling; Evaluation Tools | Faithfulness, citation precision, CI gates |
+| 52 | Data Lineage and Deletion in RAG | Subject index, deletion certificate |
+| 64 | Trust Calibration and Automation Bias | "Verify" UI, *Ayinde* duty |
+| 71 | Agent Identity Platforms | On-behalf-of tokens, entitlements |
+| 74–76 | OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice; Data and Memory Poisoning | Canary and injection suites, hostile documents |
+| 78 | PII Detection and Data-Loss Prevention | Subject index, trace redaction |
+| 79, 81, 82 | The EU AI Act; Privacy Law for AI: GDPR and India's DPDP; Sector Compliance | Applicability screen, obligations, SRA duties |
+| 87, 89, 90, 94 | Model Upgrades and Deprecation Management; Feedback Loops and the Data Flywheel; SLOs, Incident Response and On-Call for AI; Provider Failover and Disaster Recovery | Upgrade gates, thumbs-down regression set, wall SLO, regional failover |
+| 91, 92, 100, 102 | LLM FinOps; On-Prem, Air-Gapped and Sovereign Deployment; AI Gateways; Model Provider Landscape | Cost model, region pinning, ZDR routing |
+| 96 | Observability Tools | ID-only OTel traces |
+| 109–116 | FDE practice (discovery, ROI, POC → production, ADRs, demos, adoption, data readiness, SOWs) | The full engagement arc |
 
-**New/gap topics exercised:** RAG-3 permission-aware retrieval; #8 injection-resistant architecture; RAG-1/#7 context engineering; RAG-9 citation checking; RAG-4 change feed and delete propagation; FDE-9 oversharing remediation; FDE-1 security review; FDE-5 controlled productivity measurement; RAG-11 build vs. buy (Copilot bake-off); #4 obligations → controls; SEC (incident clocks & record retention).
+**New/gap topics exercised:** RAG-3 permission-aware retrieval; #8 injection-resistant architecture; RAG-1/#7 context engineering; RAG-9 citation checking; RAG-4 change feed and delete propagation; FDE-9 oversharing remediation; FDE-1 security review; FDE-5 controlled productivity measurement; RAG-11 build vs buy (Copilot bake-off); #4 obligations → controls; SEC (incident clocks & record retention).
 
 ## 15. What reviewers look for / common failure modes
 

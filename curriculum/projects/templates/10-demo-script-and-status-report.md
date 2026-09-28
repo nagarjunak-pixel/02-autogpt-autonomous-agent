@@ -1,6 +1,6 @@
 # Template 10 · Honest Demo Script and Weekly Status Report
 
-Curriculum links: Turn 113 (stakeholder communication and demos), 110 (ROI), 114 (adoption).
+Curriculum links: Turns 113 (stakeholder communication and demos), 110 (ROI), 114 (adoption).
 
 ## Part A: Demo script (15 minutes)
 

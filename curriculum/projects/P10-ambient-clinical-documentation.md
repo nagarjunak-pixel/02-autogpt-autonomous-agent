@@ -39,7 +39,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 
 ## 2. Constraints
 
-**Data.**
+**Data:**
 - Audio is PHI and the most sensitive artefact in the system.
 - Speech is Spanish-English code-switched, with varied clinician accents, noisy rooms and crying children.
 - Behavioural-health and substance-use (SUD) visits are excluded from the pilot.
@@ -78,7 +78,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 
 ## 3. What students are given (course build)
 
-**Synthetic data.**
+**Synthetic data:**
 
 | Artefact | Volume | How to generate | Tricky cases |
 |---|---|---|---|
@@ -90,7 +90,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 
 **Mock systems.** A HAPI FHIR R4 server (Docker) seeded with Synthea patients; an auth stub issuing clinician-scoped tokens; a consent service writing FHIR `Consent`; a browser capture app (MediaRecorder, chunked encrypted upload); a review UI. Write-back is a `DocumentReference` (LOINC 11506-3 Progress note; `docStatus` preliminary → final) plus a `Provenance` recording AI assistance.
 
-**Budget paths.**
+**Budget paths:**
 - *API path (≤ USD 50):* hosted Whisper-class ASR plus a mid-tier LLM, for about 150 encounters × 5 eval runs. Transcribe each audio file once and cache the transcripts. Synthetic data needs no BAA, but students list which vendors *would*.
 - *Local path:* faster-whisper/WhisperX + pyannote.audio, an 8–14B instruct model via Ollama or vLLM, and a small NLI model, on one 16–24 GB GPU (CPU works, slowly).
 
@@ -100,7 +100,7 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 
 **Process to map.** Shadow six clinicians in three clinics (one in Texas, one interpreter-heavy), plus rooming and coding staff. Map check-in → rooming → visit → orders → note → sign → coding, marking where consent fits without slowing rooming.
 
-**Baselines.**
+**Baselines:**
 
 | Metric | How |
 |---|---|
@@ -151,7 +151,7 @@ Output: SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) and dat
 | Trust | Flagged statements acknowledged before signing | 100% | UI telemetry |
 | Cost | AI compute per signed note | ≤ USD 0.50 | FinOps dashboard |
 
-**Why these numbers.**
+**Why these numbers:**
 - *Latency:* notes arriving more than about 10 minutes after the visit get batched to evening, defeating the purpose.
 - *ASR:* WER gates are relative to the week-1 baseline; tighten them if the baseline is better.
 - *Critical errors:* drafts may contain some, signed notes may not, so verification and review design matter more than raw model quality.
@@ -205,7 +205,7 @@ flowchart LR
 | Workflow | Retries, timers, idempotent write-back | Temporal, Restate · Step Functions, Azure Durable Functions | FDE → Almarosa IT |
 | Observability | Traces, latency, cost, quality | OTel GenAI + Langfuse/Phoenix self-hosted · a vendor under BAA | Almarosa IT |
 
-**ADRs** ([template 04](templates/04-solution-design-and-adr.md)):
+**ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 1. **Build vs buy.** Commercial ambient scribes (for example Microsoft Dragon Copilot, [announced 3 Mar 2025](https://news.microsoft.com/2025/03/03/microsoft-dragon-copilot-provides-the-healthcare-industrys-first-unified-voice-ai-assistant-that-enables-clinicians-to-streamline-clinical-documentation-surface-information-and-automate-task/), Abridge, Suki, Nabla, Ambience) vs EHR-native offerings (Epic AI Charting, [released 4 Feb 2026](https://www.epic.com/epic/post/epic-ai-charting-rolls-out-alongside-an-expanding-set-of-built-in-ai-capabilities/); athenahealth's athenaAmbient, [announced 4 Nov 2025](https://www.businesswire.com/news/home/20251104083540/en/athenahealths-AI-native-Clinical-Encounter-Transforms-the-EHR-into-a-Real-Time-Clinical-Intelligence-Partner); check current roadmaps and availability for Almarosa's EHRs) vs custom. Decide by a bake-off on Almarosa's golden set: Spanish and interpreter slices, both EHRs, BAA and data-use terms, exit terms, cost per visit.
 2. **ASR and diarisation.** Managed vs self-hosted; a separate audio channel for video interpreters; voiceprint enrolment or not.
 3. **LLM route.** A BAA-covered API vs self-hosted open weights; the pinning and deprecation policy.
@@ -218,10 +218,10 @@ flowchart LR
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
 | Discovery (1–3) | Shadowing, baselines, QI consent protocol, vendor longlist, BAA inventory | Signed SOW; consent scripts approved by compliance and the board | Scorecard, SOW, stakeholder map |
-| POC (4–8) | Pipeline on golden plus 50 consented recordings; clinician rating rubric; vendor bake-off | Offline targets met or buy decision taken | Eval plan ([05](templates/05-eval-plan.md)), ADRs 1–3, demo ([10](templates/10-demo-script-and-status-report.md)) |
-| Pilot (9–16) | 20 clinicians, 4 clinics (2 per state), 1 week shadow, then assisted; write-back to one EHR | Acceptance table met; no critical error in signed-note audit | Threat model ([06](templates/06-threat-model-and-controls.md)), compliance map ([07](templates/07-compliance-obligations-to-controls.md)), weekly status |
-| Production (17–22) | Second EHR, all clinics in waves, canary for model changes, DR drill | Security review; CMIO and compliance sign-off | Security pack ([08](templates/08-security-review-pack.md)), SLOs, runbooks |
-| Handover (23–24) | Train Almarosa IT and clinical informatics; hand over the rater programme | Customer runs a model-upgrade canary unaided | Handover ([09](templates/09-runbook-slos-and-handover.md)) |
+| POC (4–8) | Pipeline on golden plus 50 consented recordings; clinician rating rubric; vendor bake-off | Offline targets met or buy decision taken | Eval plan ([template 05](templates/05-eval-plan.md)), ADR-001 to ADR-003, demo ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Pilot (9–16) | 20 clinicians, 4 clinics (2 per state), 1 week shadow, then assisted; write-back to one EHR | Acceptance table met; no critical error in signed-note audit | Threat model ([template 06](templates/06-threat-model-and-controls.md)), compliance map ([template 07](templates/07-compliance-obligations-to-controls.md)), weekly status |
+| Production (17–22) | Second EHR, all clinics in waves, canary for model changes, DR drill | Security review; CMIO and compliance sign-off | Security pack ([template 08](templates/08-security-review-pack.md)), SLOs, runbooks |
+| Handover (23–24) | Train Almarosa IT and clinical informatics; hand over the rater programme | Customer runs a model-upgrade canary unaided | Handover ([template 09](templates/09-runbook-slos-and-handover.md)) |
 
 **Code sketch: note verification.** It aligns medication statements to transcript spans and flags unsupported medications, unsupported doses and negation conflicts. The review UI highlights the evidence spans, and `UNSUPPORTED_MEDICATION` blocks signing until acknowledged.
 
@@ -291,13 +291,13 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 
 ## 8. Evaluation plan
 
-**Datasets.**
+**Datasets:**
 - *Golden:* 150 synthetic encounters (course), plus 300 consented pilot encounters with clinician-built fact lists (real engagement).
 - *Adversarial:* spoken injection, off-record requests, look-alike/sound-alike drugs, interpreter visits, consent withdrawal.
 - *Regression:* every clinician-reported error, frozen weekly.
 - *Held-out:* clinicians and clinics not used in prompt tuning.
 
-**Metrics per layer.**
+**Metrics per layer:**
 
 | Layer | Metrics |
 |---|---|
@@ -318,7 +318,7 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 
 ## 9. Security, privacy and compliance
 
-**Lethal-trifecta check.**
+**Lethal-trifecta check:**
 
 | Context | Private data | Untrusted input | Exfiltration/action | Verdict |
 |---|---|---|---|---|
@@ -327,7 +327,7 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 | After-visit summary to patient (stretch) | Yes | Transcript | Sends to patient | Clinician review required (also AB 3030) |
 | Telemetry pipeline | Risk of PHI | n/a | Vendor egress | Redact; BAA or self-host |
 
-**Top threats → controls.**
+**Top threats and controls:**
 1. *Hallucinated medication or dose:* blocking verifier flags; the note never creates orders.
 2. *Recording without consent:* capture disabled without an active `Consent`; withdrawal purges partial audio.
 3. *Audio leakage:* encryption, evidenced TTL deletion, no local copies after upload.
@@ -360,31 +360,29 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 - *LLM:* about 11k input and 1k output tokens per visit (draft + verification). At USD 0.5–5 per M input and USD 2–25 per M output, that is USD 0.01–0.08 per visit, or USD 0.3k–3.5k/month.
 - *AI compute per visit:* about USD 0.02–0.65, depending on the ASR route.
 - *People and budget:* at the low ASR band, engineering support (about 1.5 FTE) dominates total cost of ownership. At the high band, managed ASR alone (about USD 290k/yr at full volume) breaks the USD 250k ceiling and the USD 0.50 per-note target, which is why the ASR ADR matters.
-- *Comparison:* the enterprise vendors named in ADR 1 (§6) publish no per-clinician list prices, so get quotes. Microsoft does publish a pay-as-you-go rate for Dragon Copilot (Physician Flex) ambient and AI use: 25 consumption units at USD 0.01, i.e. USD 0.25 per AI-Assisted Session from 4 May 2026, on top of a per-user Flex licence whose price it does not publish ([licensing guidance](https://www.microsoft.com/licensing/guidance/Dragon-Copilot), checked 27 Sep 2026). Self-serve Freed lists individual-clinician plans at USD 39–119 a month and prices its Groups tier as "Custom" ([pricing](https://www.getfreed.ai/pricing), checked 27 Sep 2026). Decide the ADR on quality, Spanish, integration and data rights more than compute price.
+- *Comparison:* the enterprise vendors named in ADR-001 (§6) publish no per-clinician list prices, so get quotes. Microsoft does publish a pay-as-you-go rate for Dragon Copilot (Physician Flex) ambient and AI use: 25 consumption units at USD 0.01, i.e. USD 0.25 per AI-Assisted Session from 4 May 2026, on top of a per-user Flex licence whose price it does not publish ([licensing guidance](https://www.microsoft.com/licensing/guidance/Dragon-Copilot), checked 27 Sep 2026). Self-serve Freed lists individual-clinician plans at USD 39–119 a month and prices its Groups tier as "Custom" ([pricing](https://www.getfreed.ai/pricing), checked 27 Sep 2026). Decide the ADR on quality, Spanish, integration and data rights more than compute price.
 
-**Runbook.** ASR endpoint down: queue audio (encrypted), notify clinicians, fail over to the secondary ASR. Time-to-sign below 10 s on long notes: CMIO conversation (Prod wk 4 curveball). Purge job failed: Sev-2 with a privacy-officer notice.
+**Runbook.** ASR endpoint down: queue audio (encrypted), notify clinicians, fail over to the secondary ASR. Time-to-sign below 10 s on long notes: CMIO conversation (production week 4 curveball). Purge job failed: Sev-2 with a privacy-officer notice.
 
 **DR.** If the pipeline is down, clinicians document as before. The device buffer holds audio up to 8 hours, then deletes it. Signed notes live in the EHR, so their RPO is 0.
 
 ## 11. Curveballs (instructor-injected events)
 
-| When | Event | Strong FDE response |
-|---|---|---|
-| Pilot wk 3 | **A signed note contains a medication never discussed**; a pharmacist catches it at refill. | File a patient-safety report; amend the note (`docStatus` amended + Provenance). Root-cause it (ASR, drafter, or a verifier miss on a brand name); add it to regression, make new-medication flags blocking, tell pilot clinicians what changed. |
-| Pilot wk 4 | **A patient withdraws consent mid-visit.** | Stop capture; purge partial audio and transcript; set `Consent` inactive with a timestamp, keeping only metadata in the audit log. Prove no copy survives in buffers or at vendors. In California, recording on would be unlawful. |
-| Pilot wk 6 | **A forced model upgrade changes note style; clinicians revolt.** | Roll back to the pinned version while it exists. Add a style-regression eval (section order, length, phrasing) and per-clinician templates; canary with 10 champions and publish before/after metrics. Track deprecation dates. |
-| Prod wk 2 | **Diarisation fails with an interpreter present**: first-person renditions are attributed as the interpreter's own history. | Add an "interpreter mode" toggle at rooming (3 speakers), put video interpreters on a separate channel, attribute renditions to the patient, and gate on an interpreter slice with the interpreter services lead. |
-| Prod wk 4 | **A clinician signs notes in 4 seconds on average.** | Present data, not blame, with the CMIO. Require per-flag acknowledgement, highlight uncertain statements, add peer audit sampling. Run vigilance drills on *synthetic* notes only; seeding errors into real medical records is off the table (unlike P03). Revisit the attestation wording. |
+1. **Pilot week 3: a signed note contains a medication never discussed**; a pharmacist catches it at refill. *Strong response:* file a patient-safety report; amend the note (`docStatus` amended + Provenance). Root-cause it (ASR, drafter, or a verifier miss on a brand name); add it to regression, make new-medication flags blocking, tell pilot clinicians what changed.
+2. **Pilot week 4: a patient withdraws consent mid-visit.** *Strong response:* stop capture; purge partial audio and transcript; set `Consent` inactive with a timestamp, keeping only metadata in the audit log. Prove no copy survives in buffers or at vendors. In California, recording on would be unlawful.
+3. **Pilot week 6: a forced model upgrade changes note style; clinicians revolt.** *Strong response:* roll back to the pinned version while it exists. Add a style-regression eval (section order, length, phrasing) and per-clinician templates; canary with 10 champions and publish before/after metrics. Track deprecation dates.
+4. **Production week 2: diarisation fails with an interpreter present.** First-person renditions are attributed as the interpreter's own history. *Strong response:* add an "interpreter mode" toggle at rooming (3 speakers), put video interpreters on a separate channel, attribute renditions to the patient, and gate on an interpreter slice with the interpreter services lead.
+5. **Production week 4: a clinician signs notes in 4 seconds on average.** *Strong response:* present data, not blame, with the CMIO. Require per-flag acknowledgement, highlight uncertain statements, add peer audit sampling. Run vigilance drills on *synthetic* notes only; seeding errors into real medical records is off the table (unlike P03). Revisit the attestation wording.
 
 ## 12. Deliverables and grading rubric
 
-**Checklist.** *Discovery:* process map, baselines, English and Spanish consent scripts, SOW. *POC:* pipeline, verifier, golden set, rater rubric, bake-off report, ADRs. *Pilot:* review UI, FHIR write-back to HAPI, threat model, compliance map, fairness report, demo. *Production (simulated):* SLO dashboard, runbook, DR note. *Handover:* handover pack.
+**Checklist:** *Discovery:* process map, baselines, English and Spanish consent scripts, SOW. *POC:* pipeline, verifier, golden set, rater rubric, bake-off report, ADRs. *Pilot:* review UI, FHIR write-back to HAPI, threat model, compliance map, fairness report, demo. *Production (simulated):* SLO dashboard, runbook, DR note. *Handover:* handover pack.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
 | Working system | 25% | Consent-gated capture → FHIR write-back with `Provenance`; verifier blocks unsupported meds | Transcript summariser, no consent gate |
 | Evaluation rigour | 20% | Critical-error taxonomy, rater κ, language and interpreter slices, CIs | ROUGE against a reference note |
-| Security/compliance | 15% | Two-state consent analysis with AB 3030 nuance; BAA register; purge evidence | "HIPAA-compliant" asserted |
+| Security and compliance | 15% | Two-state consent analysis with AB 3030 nuance; BAA register; purge evidence | "HIPAA-compliant" asserted |
 | FDE artefacts | 20% | Honest build-vs-buy ADR with a bake-off; clear SOW | Build chosen by default |
 | Demo and communication | 10% | Shows a flag caught, a consent withdrawal and latency | Happy path only |
 | Curveball handling | 10% | Safety-first, transparent with clinicians | Silent fixes |
@@ -400,7 +398,7 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 
 ## 14. Curriculum map
 
-| Turn | Title | How exercised |
+| Turn | Title | How it is exercised |
 |---|---|---|
 | 6 | Encoder, Decoder and Encoder-Decoder Models | Bi-encoder retrieval of ICD-10-CM candidates; NLI cross-encoder in the verifier |
 | 14 | Hallucination in Depth | Critical-error taxonomy; omissions vs fabrications |
@@ -420,9 +418,9 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 | 96, 97, 99 | Observability Tools; Evaluation Tools; Durable Workflow Platforms | OTel GenAI; CI gates; async pipeline with idempotent write-back |
 | 102 | Model Provider Landscape | BAA availability shapes the choice |
 | 106 | Speech AI | WER, DER, entity accuracy; self-hosted ASR option |
-| 109–116 | Use-Case Discovery and Qualification … Scoping, Estimation and SOWs | Qualification, ROI, POC→production, ADRs, demos, change management, data readiness, SOW |
+| 109–116 | Use-Case Discovery and Qualification … Scoping, Estimation and SOWs | Qualification, ROI, POC → production, ADRs, demos, change management, data readiness, SOW |
 
-**New/gap topics exercised:** #4 regulation as obligations→controls (CA AB 3030, AB 489, Penal Code 632; TX SB 1188, TRAIGA); #8 prompt-injection-resistant architecture (tool-less drafter); RAG-9 citation and attribution engineering (statement-to-transcript evidence spans); FDE-1 security review and AI data-handling terms (BAA register); FDE-2 integrating with the system of record (FHIR write-back to two EHRs); FDE-5 measuring impact honestly (EHR audit logs, not self-report); FDE-11 records retention (audio TTL; the signed note is the legal record).
+**New/gap topics exercised:** #4 regulation as obligations → controls (CA AB 3030, AB 489, Penal Code 632; TX SB 1188, TRAIGA); #8 prompt-injection-resistant architecture (tool-less drafter); RAG-9 citation and attribution engineering (statement-to-transcript evidence spans); FDE-1 security review and AI data-handling terms (BAA register); FDE-2 integrating with the system of record (FHIR write-back to two EHRs); FDE-5 measuring impact honestly (EHR audit logs, not self-report); FDE-11 records retention (audio TTL; the signed note is the legal record).
 
 ## 15. What reviewers look for / common failure modes
 

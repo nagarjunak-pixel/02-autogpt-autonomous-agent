@@ -37,7 +37,7 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 
 **Data.** Attribute completeness is about 55%. Saree length is 5.5 m or 6.3 m depending on the blouse piece; fabric names vary by transliteration (Kanjivaram / Kanchipuram / Kanjeevaram); size charts mix inches and centimetres. USD/GBP prices come from FX rules; stock syncs every 15 minutes (overselling at peaks). Seller descriptions arrive as raw HTML, and a security sample found text aimed at AI shopping assistants.
 
-**Protocol and platform landscape (as of Sep 2026; verify each before teaching, because these move monthly).**
+**Protocol and platform landscape (as of Sep 2026; verify each before teaching, because these move monthly):**
 
 | Item | Status (as of Sep 2026) | Source |
 |---|---|---|
@@ -54,7 +54,7 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 | Agent identity | IETF Web Bot Auth working group (HTTP message signatures for bots); CDN "verified bots / signed agents" programmes | [IETF](https://datatracker.ietf.org/wg/webbotauth/about/), [Cloudflare](https://developers.cloudflare.com/bots/concepts/bot/signed-agents/) |
 | Crawl control and licensing | Cloudflare moved from pay per crawl (HTTP 402; private beta, Jul 2025) to piloting **pay per use**, which pays when content is used in an AI answer (1 Jul 2026); Content Signals (`search`, `ai-input`, `ai-train`; 24 Sep 2025); IETF aipref drafts; RSL 1.0 | [pay per use](https://blog.cloudflare.com/making-ai-search-smarter/), [signals](https://blog.cloudflare.com/content-signals-policy/), [aipref](https://datatracker.ietf.org/wg/aipref/about/), [RSL](https://rslstandard.org/) |
 
-**Legal and policy (as of Sep 2026; counsel owns the conclusions).**
+**Legal and policy (as of Sep 2026; counsel owns the conclusions):**
 - *Privacy:* India's DPDP Act and Rules for Indian shoppers: consent managers 12 months and most obligations 18 months from notification (Nov 2026, May 2027); a Jan 2026 MeitY proposal would cut 18 to 12 months for Significant Data Fiduciaries ([S.S. Rana](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/)), but as of 27 Sep 2026 no amending notification had been published, so Rule 1 of the Rules (G.S.R. 846(E)) still sets 12 and 18 months ([MeitY](https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa); [tracker, checked 6 Sep 2026](https://dpdprules.org/timeline)). UK GDPR ([ICO](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/)); US state privacy law ([CCPA](https://oag.ca.gov/privacy/ccpa) thresholds, to confirm with counsel).
 - *Consumer protection:* the FTC's fake-reviews rule, announced 14 Aug 2024 ([FTC](https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials)); the UK Digital Markets, Competition and Consumers Act 2024, whose Part 4 unfair-trading and fake-review rules apply from 6 Apr 2025 ([legislation.gov.uk](https://www.legislation.gov.uk/ukpga/2024/13/contents); [CMS](https://cms.law/en/gbr/legal-updates/the-dmcc-act-consumer-elements-come-into-force-from-6-april-2025)); India's Consumer Protection (E-Commerce) Rules 2020 and the CCPA dark-patterns guidelines of 30 Nov 2023 ([PIB](https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1983994)).
 - *Payments:* [PCI DSS](https://www.pcisecuritystandards.org/) through the PSPs (keep card numbers out of scope, Turn 82). RBI's authentication directions (two factors, one dynamic, from 1 Apr 2026; [Khaitan](https://www.khaitanco.com/thought-leadership/RBI-Authentication-Mechanisms-for-Digital-Payments-Transactions-Directions)) and UK strong customer authentication mean agent-initiated payments must fit the PSP's authentication flows. *Confirm with each PSP.*
@@ -75,7 +75,7 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 
 **Mock systems:** `mock-authz` (OAuth 2.1 with PKCE, CIMD, `aud` claims); `mock-mandate` (signed JSON mandates: `maxCartMinor`, `currency`, `expiresAt`); `mock-psp` (sandbox honouring idempotency keys); `bot-swarm` (k6, 50 → 2,000 requests/s, spoofed user agents); `mock-assistant` (LLM-driven MCP client harness).
 
-**Budget, two paths.**
+**Budget, two paths:**
 - *API path:* at most USD 50 of credit to drive synthetic shoppers with a small tool-calling model.
 - *Local path:* Ollama with an open-weight tool-calling model; MCP Inspector for manual testing.
 - *Stack for both:* the official MCP TypeScript SDK v2 (split packages such as `@modelcontextprotocol/server`, "released alongside the 2026-07-28 spec", per the [repo](https://github.com/modelcontextprotocol/typescript-sdk)), Zod 4, Hono or Express, Postgres or SQLite.
@@ -100,7 +100,7 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 9. Has the SEO agency deployed anything aimed at AI crawlers (hidden text, cloaked pages, `llms.txt`)?
 10. What does success mean in six months: agent-channel GMV, assistant share of voice, or lower bot costs?
 
-**Qualification and the lowest rung that works.** Most of this is API, identity and data-quality work, not LLM work:
+**Qualification: the lowest rung that works.** Most of this is API, identity and data-quality work, not LLM work:
 - *Rules and code:* auth, mandates, idempotency and rate limits.
 - *Classic retrieval:* BM25 plus embeddings and a cross-encoder reranker; no generation in the request path.
 - *One offline, schema-constrained LLM call:* normalises seller descriptions into attributes.
@@ -137,22 +137,22 @@ flowchart LR
     CRW["Crawlers and scrapers"]
   end
   subgraph EDGE["Edge"]
-    WAF["CDN / WAF: bot scoring, Web Bot Auth check,<br/>rate limits, robots and content signals"]
+    WAF["CDN / WAF: bot scoring,<br/>Web Bot Auth check,<br/>rate limits, robots<br/>and content signals"]
   end
   subgraph CORE["Neyyarasi trust zone"]
-    MCP["Remote MCP server (TypeScript, stateless)<br/>search, product, size, cart, order status"]
+    MCP["Remote MCP server<br/>(TypeScript, stateless)<br/>search, product, size,<br/>cart, order status"]
     AZ["Authorization server<br/>OAuth 2.1, PKCE, audience-bound tokens"]
     MAN["Mandate and limits service"]
-    CAT[("Catalogue and search index<br/>sanitised fields only")]
+    CAT[("Catalogue and<br/>search index<br/>sanitised fields only")]
     CRT["Cart and order services<br/>idempotency store, signed receipts"]
-    SF["Storefront (Next.js)<br/>JSON-LD, WebMCP tools behind a flag"]
+    SF["Storefront (Next.js)<br/>JSON-LD, WebMCP tools<br/>behind a flag"]
   end
   subgraph SEL["Untrusted: seller content"]
     SP["Seller portal uploads"]
     QZ["Quarantine: sanitiser +<br/>schema-constrained extraction"]
   end
   subgraph PAY["Payment partners"]
-    PSP["PSPs and ACP / UCP checkout adapters"]
+    PSP["PSPs and ACP / UCP<br/>checkout adapters"]
   end
   AST --> WAF --> MCP
   CRW --> WAF --> SF
@@ -175,7 +175,7 @@ flowchart LR
 | Seller-content quarantine | Sanitise, strip hidden text, extract attributes, flag instructions | sanitize-html/DOMPurify + local model via Ollama | Hosted LLM structured output (e.g. via the Vercel AI SDK); hosted guardrail classifier | Catalogue |
 | Observability | Traces per tool call, abuse analytics | OpenTelemetry JS + Grafana/Jaeger | Datadog, Honeycomb | Platform |
 
-**ADRs to write** ([template](templates/04-solution-design-and-adr.md)):
+**ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 1. **MCP runtime:** official SDK v2 on containers or serverless (Vercel, Cloudflare Workers), or a Mastra-authored server; judge on 2026-07-28 support, cold starts and auth helpers. WebMCP addendum: ship behind a flag, or wait.
 2. **Authorization:** extend the customer IdP or run a dedicated authorization server; anonymous tools (search, product) vs authenticated (cart, orders); CIMD, pre-registration, or DCR as a fallback.
 3. **Checkout path per channel:** external hand-off (cart handle → checkout link) / ACP delegated payment / UCP checkout / AP2 mandate verification, phased by market and PSP.
@@ -187,12 +187,12 @@ flowchart LR
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| **Discovery (1–2)** | Log analysis by bot class; structured-data and attribute audit; PSP and protocol eligibility matrix; threat-model workshop | Signed baselines; PSP answers in writing | Discovery memo ([01](templates/01-discovery-questionnaire.md)), data readiness ([02](templates/02-data-readiness-scorecard.md)), SOW ([03](templates/03-sow-and-acceptance-criteria.md)) |
-| **POC (3–4)** | Read-only tools (search, product, size) on the sanitised catalogue; authorization server integrated; JSON-LD fixes shipped *before* the freeze | nDCG ≥ 0.70; auth conformance passes | ADRs 1, 2, 5; threat model ([06](templates/06-threat-model-and-controls.md)) |
-| **Freeze (5–8)** | Edge-only production changes. Staff private beta of the MCP server; cart, mandate and idempotency built in staging; crawler policy report-only | Chaos test shows 0 duplicates; bot baseline captured | Eval plan ([05](templates/05-eval-plan.md)), weekly status ([10](templates/10-demo-script-and-status-report.md)) |
-| **Pilot (9–11)** | Authenticated cart and order status live; checkout hand-off; directory submissions (OpenAI plugin with MCP Apps UI, Claude connector, MCP Registry); WebMCP origin trial on 5% of traffic; rate limits enforced | Acceptance criteria met on held-out tasks | ADRs 3, 4, 6; obligations map ([07](templates/07-compliance-obligations-to-controls.md)) |
-| **Production (12–13)** | Delegated payment only where PSP and platform confirm it (US first); crawl-policy enforcement; pen test; runbooks | Pen test has no criticals; drills pass | Security pack ([08](templates/08-security-review-pack.md)) |
-| **Handover (14)** | Customer team runs the swarm, poisoning and spec-change drills | Drills pass without the FDE | Runbook and SLOs ([09](templates/09-runbook-slos-and-handover.md)), demo |
+| Discovery (1–2) | Log analysis by bot class; structured-data and attribute audit; PSP and protocol eligibility matrix; threat-model workshop | Signed baselines; PSP answers in writing | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) |
+| POC (3–4) | Read-only tools (search, product, size) on the sanitised catalogue; authorization server integrated; JSON-LD fixes shipped *before* the freeze | nDCG ≥ 0.70; auth conformance passes | ADR-001, ADR-002, ADR-005; threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Freeze (5–8) | Edge-only production changes. Staff private beta of the MCP server; cart, mandate and idempotency built in staging; crawler policy report-only | Chaos test shows 0 duplicates; bot baseline captured | Eval plan ([template 05](templates/05-eval-plan.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Pilot (9–11) | Authenticated cart and order status live; checkout hand-off; directory submissions (OpenAI plugin with MCP Apps UI, Claude connector, MCP Registry); WebMCP origin trial on 5% of traffic; rate limits enforced | Acceptance criteria met on held-out tasks | ADR-003, ADR-004, ADR-006; obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)) |
+| Production (12–13) | Delegated payment only where PSP and platform confirm it (US first); crawl-policy enforcement; pen test; runbooks | Pen test has no criticals; drills pass | Security pack ([template 08](templates/08-security-review-pack.md)) |
+| Handover (14) | Customer team runs the swarm, poisoning and spec-change drills | Drills pass without the FDE | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)), demo |
 
 **Code sketch (TypeScript): the `add_to_cart` tool handler.** Library-agnostic apart from Zod and `node:crypto`; it returns a `CallToolResult`-shaped object (`content`, `structuredContent`, `isError`) to register with your SDK. Price always comes from the server catalogue, never the agent.
 
@@ -284,7 +284,7 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 | WebMCP tools on storefront | Yes (logged-in session) | Page may contain seller text | The agent itself | Narrow tools, server-side authorization, confirmation for cart and checkout, no seller HTML in tool descriptions |
 | MCP server | Yes (orders, addresses) | Tool arguments | Responses | No LLM inside; minimal disclosure (`get_order_status` returns city, not full address) |
 
-**Top threats and controls** ([template](templates/06-threat-model-and-controls.md); Turns 73–77):
+**Top threats and controls** ([template 06](templates/06-threat-model-and-controls.md); Turns 73–77):
 1. *Tool poisoning via seller descriptions.* [Invariant Labs](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) (1 Apr 2025) showed poisoned tool *descriptions*; our tool *results* carry the same risk. Controls: quarantine pipeline, hidden-text stripping, instruction classifier, no seller text in tool descriptions.
 2. *Token passthrough or confused deputy.* Audience validation; separate credentials for PSP calls.
 3. *Mandate bypass* via split carts or currency switching. Limits enforced per cart and again at checkout, in one transaction.
@@ -293,7 +293,7 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 6. *Supply chain.* Pinned, audited npm dependencies for MCP packages (see the malicious postmark-mcp package, Sep 2025).
 7. *Price manipulation.* Price is never accepted as input.
 
-**Obligations → controls** ([template](templates/07-compliance-obligations-to-controls.md)):
+**Obligations → controls** ([template 07](templates/07-compliance-obligations-to-controls.md)):
 
 | Obligation / policy | Control | Evidence |
 |---|---|---|
@@ -310,26 +310,26 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 
 **Observability:** one OpenTelemetry trace per tool call, with `traceparent` propagated in `_meta` (the 2026-07-28 convention) and spans labelled by bot class, client ID and mandate ID.
 
-**Monthly cost at pilot scale (prices change; bands only):**
+**Monthly cost at pilot scale** (prices change; bands only):
 
 | Item | Assumptions | Range (USD/month) |
 |---|---|---|
 | MCP compute | 2M tool calls; 20–80 ms CPU each; serverless or two small containers | 50–400 |
 | Search | Hosted or self-run hybrid index, 5k–18k SKUs | 100–600 |
 | Logs and traces | ~2 KB per call, 30-day retention | 50–300 |
-| Offline extraction LLM | ~5k changed SKUs × 2k tokens = 10M tokens; $0.10–3 per M | 1–30 |
+| Offline extraction LLM | ~5k changed SKUs × 2k tokens = 10M tokens; USD 0.10–3 per M | 1–30 |
 | Synthetic-shopper evals | 100 tasks × 3 runs × ~30k tokens ≈ 9M tokens per run, weekly | 5–150 |
 | Bot management | Plan-dependent | 200–2,000 |
 
 That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; meeting ≤ 0.50 relies on `ttlMs` caching of list and resource reads and on edge caching of public product data. At the top of every band, bot management included, the total is about USD 3.5k, above the USD 3k cap, so price bot management and search first. Tokens are negligible; the cost is engineering time.
 
-**Runbook entries** ([template](templates/09-runbook-slos-and-handover.md)):
+**Runbook entries** ([template 09](templates/09-runbook-slos-and-handover.md)):
 - *Scraping swarm:* tighten per-class quotas, challenge unverified traffic; never throttle checkout or verified assistants first.
 - *Poisoned listing:* delist, purge caches, re-scan the seller, add the sample to regression.
 - *Authorization server outage:* anonymous tools keep working; cart tools fail closed.
 - *PSP outage:* hand off to web checkout. *Spec deprecation notice:* see curveball 4.
 
-**DR:** stateless MCP server in two regions; replicated cart, idempotency and receipt stores; receipt-signing keys rotated with overlap.
+**DR.** Stateless MCP server in two regions; replicated cart, idempotency and receipt stores; receipt-signing keys rotated with overlap.
 
 ## 11. Curveballs (instructor-injected events)
 
@@ -347,10 +347,10 @@ That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; 
 |---|---|---|---|
 | Working system | 25% | Stateless 2026-07-28 server, real OAuth flow, idempotent cart, mandate enforcement proven by tests | Local stdio demo; API key in a header |
 | Evaluation rigour | 20% | Multi-model pass^3, Hinglish parity, poisoning corpus, deterministic fact diff | Anecdotal chats with one assistant |
-| Security/compliance | 15% | Trifecta per context, no passthrough, quarantine proven, obligations with evidence | "We sanitise HTML" |
+| Security and compliance | 15% | Trifecta per context, no passthrough, quarantine proven, obligations with evidence | "We sanitise HTML" |
 | FDE artefacts | 20% | ADRs with real, dated protocol options | Protocol name-dropping |
 | Demo and communication | 10% | Shows a refused over-mandate purchase and a blocked injection | Happy path only |
-| Curveballs | 10% | Says no to hidden text with evidence; handles the freeze | Bans all bots, or complies with marketing |
+| Curveball handling | 10% | Says no to hidden text with evidence; handles the freeze | Bans all bots, or complies with marketing |
 
 ## 13. Stretch goals
 
@@ -375,7 +375,7 @@ That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; 
 | 78, 81, 82 | DLP; Privacy Law; Sector Compliance | PCI scope, minimal disclosure, DPDP/UK GDPR |
 | 85 | Copyright and IP for AI | Crawl licensing, RSL, content signals |
 | 87, 90, 91, 96 | Deprecations; SLOs and Incidents; FinOps; Observability | Spec-change drill, swarm runbook, cost per 1k calls, OTel |
-| 95 | Agent Frameworks, Hands-On | ADR 1: official MCP SDK v2 vs Mastra; framework-independent tools |
+| 95 | Agent Frameworks, Hands-On | ADR-001: official MCP SDK v2 vs Mastra; framework-independent tools |
 | 100 | AI Gateways | Edge policy on `Mcp-Method`/`Mcp-Name` headers |
 | 104 | Testing AI Code | Contract, chaos and tool-description snapshot tests |
 | 109–116 | FDE professional skills | Discovery, ROI, ADRs, stakeholder "no", freeze planning, SOW |

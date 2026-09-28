@@ -87,7 +87,7 @@ Every brief lists 4–6 **curveballs**: realistic events that the instructor inj
 | Curveball handling | 10% | Fast, calm, evidence-based response; decision recorded in an ADR | Panic patching; no record |
 
 **Two required elements in every project** (graded under "FDE artefacts" and "Demo and communication"):
-- **Field-to-product memo** (gap register [FDE-7](../gap-register/E-fde-practice-and-operations.md)). Submit it with the handover pack (Template 09, Part C). One page:
+- **Field-to-product memo** (gap register [FDE-7](../gap-register/E-fde-practice-and-operations.md)). Submit it with the handover pack (template 09, Part C). One page:
   - what the product or platform should change so the next deployment of this kind is faster;
   - supported with evidence from the engagement.
 - **Design defence** (Vol 2 Turn 117). A 20-minute oral review:
@@ -109,7 +109,7 @@ See [05 · Revised syllabus and learning path](../05-revised-syllabus-and-learni
 
 How to read this. Each brief's section 14 lists the Vol 2 turns it genuinely exercises. Review agents audited those lists: turns a brief did not really use were removed, and turns it used but did not list were added. The table below is generated from those lists.
 
-**Summary**
+**Summary:**
 - **Vol 2 P1 turns:** 59 of 60 are exercised by at least one project. The 60th, Turn 117, is covered by the design defence in every project.
 - **Vol 2 P2 turns:** 38 of 49 are exercised. The rest (for example positional encoding, scaling laws, DPO) are elective reading.
 
@@ -117,7 +117,7 @@ How to read this. Each brief's section 14 lists the Vol 2 turns it genuinely exe
 
 | New P1 topic | Exercised by |
 |---|---|
-| FDE-1 Security review and data-handling terms | Every project except P14. Each includes a security review pack (Template 08). |
+| FDE-1 Security review and data-handling terms | Every project except P14. Each includes a security review pack (template 08). |
 | FDE-2 Systems-of-record integration | P04, P06, P10 |
 | FDE-3 Deploying inside the customer's network | P03, P05, P08, P09 |
 | FDE-7 FDE operating model and field-to-product loop | Every project, through the required field-to-product memo |
@@ -128,10 +128,10 @@ How to read this. Each brief's section 14 lists the Vol 2 turns it genuinely exe
 | AGT-1 Agent harness engineering | P13, P16 |
 | SEC-3 Regulatory incident clocks | P01, P02, P03, P04, P07, P08, P09, P12, P14 (breach and incident clocks such as GDPR Art. 33, CRA, CERT-In and RBI) |
 | #1 AI-era security of the orchestration layer | P06, P07, P08, P12 |
-| #4 Regulation as obligations → controls | P01, P03, P05, P06, P07, P09, P10, P11, P14 (and Template 07 in every project) |
+| #4 Regulation as obligations → controls | P01, P03, P05, P06, P07, P09, P10, P11, P14 (and template 07 in every project) |
 | #8 Prompt-injection-resistant architectures | Every project except P11 |
 
-**Vol 2 turns (P1 and P2) by project**
+**Vol 2 turns (P1 and P2) by project:**
 
 | Turn | Topic | Vol 2 priority | Exercised by |
 |---|---|---|---|
