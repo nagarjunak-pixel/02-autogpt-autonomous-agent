@@ -37,7 +37,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 | Stakeholder | Cares about | Can block |
 |---|---|---|
 | Group CIO (sponsor) | Visibility, fewer incidents, a platform story | Budget, mandate |
-| Group CFO | Predictable spend; chargeback for FY 2027-28 budgets | Chargeback policy |
+| Group CFO | Predictable spend; chargeback for FY 2027–28 budgets | Chargeback policy |
 | Group CISO | Keys, DLP, logging, supply chain | Go-live; egress blocking |
 | Group DPO/Legal | DPDP, GDPR, cross-border prompts | Logging scope, providers |
 | 12 BU CTOs (esp. the Consumer BU's own AI team) | Autonomy, latency, no "platform tax" | Onboarding waves |
@@ -65,7 +65,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 
 **Security.** Provider master keys live only in the vault; the admin plane never faces the internet.
 
-**Budget and timeline.** USD 1.2M in year 1; target a 20–30% saving on addressable spend with no quality loss. The CFO needs showback by January 2027 for FY 2027-28 budgets (the Indian financial year starts 1 April).
+**Budget and timeline.** USD 1.2M in year 1; target a 20–30% saving on addressable spend with no quality loss. The CFO needs showback by January 2027 for FY 2027–28 budgets (the Indian financial year starts 1 April).
 
 **Politics.** The Consumer BU runs its own stack and refuses chargeback. Developers fear latency. Security wants full prompt logs; the works council and DPO do not. Committed-spend minimums mean the cheapest list price is not always the cheapest route.
 
