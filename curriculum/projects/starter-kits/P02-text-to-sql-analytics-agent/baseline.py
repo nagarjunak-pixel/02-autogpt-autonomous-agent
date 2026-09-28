@@ -22,8 +22,9 @@ TIME_WORDS = [("yesterday", "yesterday"), ("kal", "yesterday"), ("last week", "l
               ("pichhle hafte", "last_week"), ("last month", "last_month"), ("pichhle mahine", "last_month"),
               ("financial year", "fytd")]
 CANNED_SQL = {  # rung 1 of the brief's ladder: verified query templates, English trigger phrases only
-    "return reason": "SELECT reason, COUNT(*) AS n FROM fct_returns WHERE return_date BETWEEN DATE '{start}' "
-                     "AND DATE '{end}' GROUP BY reason ORDER BY n DESC, reason LIMIT 1",
+    "return reason": "SELECT r.reason, COUNT(*) AS n FROM fct_returns AS r JOIN dim_store AS s ON r.store_sk = s.store_sk "
+                     "WHERE r.return_date BETWEEN DATE '{start}' AND DATE '{end}' AND s.store_id NOT LIKE 'TEST-%' "
+                     "GROUP BY r.reason ORDER BY n DESC, r.reason LIMIT 1",
     "distinct products": "SELECT COUNT(DISTINCT f.product_id) AS n FROM fct_sales_line AS f JOIN dim_store AS s "
                          "ON f.store_sk = s.store_sk WHERE f.date_key BETWEEN DATE '{start}' AND DATE '{end}' "
                          "AND s.store_id NOT LIKE 'TEST-%'",
