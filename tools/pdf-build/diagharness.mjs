@@ -17,7 +17,7 @@ for (const f of files) {
 const html = fs.readFileSync('out/book-pass2.html', 'utf8');
 const head = html.slice(0, html.indexOf('<body>') + 6).replace(/<style>[\s\S]*<\/style>/, `<style>${fs.readFileSync('style.css', 'utf8')}</style>`);
 fs.writeFileSync('out/diag-harness.html', `${head}${body}<script src="file://${HERE}/node_modules/mermaid/dist/mermaid.min.js"></script><script type="module">import elk from "file://${HERE}/vendor/elk/mermaid-layout-elk.esm.min.mjs"; mermaid.registerLayoutLoaders(elk); window.__elk = true;</script></body></html>`);
-const br = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}), args: ['--allow-file-access-from-files'] });
+const br = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : { channel: 'chromium' }), args: ['--allow-file-access-from-files'] });
 const pg = await br.newPage({ viewport: { width: 665, height: 1100 }, deviceScaleFactor: 2 });
 await pg.emulateMedia({ media: 'print' });
 await pg.goto('file://' + path.join(HERE, 'out/diag-harness.html'), { waitUntil: 'load' });

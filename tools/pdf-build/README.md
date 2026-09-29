@@ -27,7 +27,9 @@ Environment variables:
 |---|---|---|
 | `OUT_PDF` | `dist/LLM-Training-Flow-Vol2-Curriculum-and-FDE-Projects.pdf` | Where the finished PDF goes |
 | `COMMIT` | the current `HEAD` | The commit printed on the cover and used in links to the repository |
-| `CHROMIUM_PATH` | Playwright's own Chromium | An existing Chromium or Chrome binary to use instead |
+| `CHROMIUM_PATH` | Playwright's full Chromium | An existing Chromium or Chrome binary to use instead |
+
+The build launches the full Chromium (`channel: 'chromium'`), not Playwright's default headless shell. The two measure text slightly differently, so using the same browser keeps the page layout reproducible.
 
 `out/`, `dist/`, `vendor/` and `node_modules/` are build products and are not committed.
 

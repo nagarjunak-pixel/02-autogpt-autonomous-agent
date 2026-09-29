@@ -6,7 +6,7 @@ const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'l
 const html = fs.readFileSync(path.join(HERE, 'cover.html'), 'utf8')
   .replaceAll('{{HERE}}', `file://${HERE}`).replaceAll('{{COMMIT}}', process.env.COMMIT || 'main').replaceAll('{{COMPILED}}', today);
 fs.writeFileSync(path.join(HERE, 'out', 'cover.html'), html);
-const b = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
+const b = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : { channel: 'chromium' });
 const p = await b.newPage(); await p.goto(`file://${HERE}/out/cover.html`); await p.evaluate(() => document.fonts.ready);
 await p.pdf({ path: `${HERE}/out/cover.pdf`, format: 'A4', printBackground: true, margin: { top: 0, bottom: 0, left: 0, right: 0 } });
 await b.close(); console.log('cover ok');

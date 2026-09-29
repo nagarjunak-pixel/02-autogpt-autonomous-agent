@@ -308,7 +308,7 @@ ${body}
 fs.writeFileSync(path.join(OUT, `book-pass${pass}.html`), html);
 
 // ---- render ------------------------------------------------------------------
-const browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}), args: ['--allow-file-access-from-files'] }).catch(() => chromium.launch());
+const browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : { channel: 'chromium' }), args: ['--allow-file-access-from-files'] }).catch(() => chromium.launch());
 const page = await browser.newPage({ viewport: { width: 665, height: 1100 } });
 await page.emulateMedia({ media: 'print' });
 await page.goto(`file://${path.join(OUT, `book-pass${pass}.html`)}`, { waitUntil: 'load' });
