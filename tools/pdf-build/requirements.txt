@@ -1,0 +1,7 @@
+# Python packages for build_loop.py, pages.py, finalize.py, verify.py, zoom.py and fonts/prepare_fonts.py
+pypdf>=6
+pypdfium2>=5
+reportlab>=4
+pikepdf>=9
+Pillow>=10
+fonttools>=4.50
