@@ -1,0 +1,34 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: block; src: url('{{HERE}}/fonts/Inter-400.ttf') format('truetype'); }@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: block; src: url('{{HERE}}/fonts/Inter-600.ttf') format('truetype'); }@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: block; src: url('{{HERE}}/fonts/Inter-700.ttf') format('truetype'); }</style>
+<link rel="stylesheet" href="{{HERE}}/node_modules/@fontsource/source-serif-4/400.css"><link rel="stylesheet" href="{{HERE}}/node_modules/@fontsource/source-serif-4/400-italic.css">
+<style>
+@page { size: A4; margin: 0; }
+body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: #fff; font-family: 'Inter', sans-serif; }
+.band { position: absolute; inset: 0 0 auto 0; height: 128mm; background: #123f6b; }
+.band::after { content: ""; position: absolute; left: 22mm; bottom: -1.6mm; width: 40mm; height: 3.2mm; background: #6fa8dc; }
+.kicker { position: absolute; left: 22mm; top: 30mm; color: #bcd3ea; font-size: 10pt; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+.title { position: absolute; left: 22mm; right: 20mm; top: 43mm; color: #fff; font-size: 31pt; font-weight: 700; line-height: 1.12; letter-spacing: -.02em; }
+.sub { position: absolute; left: 22mm; right: 28mm; top: 142mm; color: #1b2129; font-family: 'Source Serif 4', serif; font-size: 13.5pt; line-height: 1.5; }
+.parts { position: absolute; left: 22mm; right: 26mm; top: 184mm; font-size: 10pt; color: #2b3440; }
+.parts div { display: flex; gap: 5mm; padding: 2.1mm 0; border-bottom: .5pt solid #d9dee4; }
+.parts div:first-child { border-top: .5pt solid #d9dee4; }
+.parts b { color: #2f6ea8; font-weight: 600; min-width: 13mm; letter-spacing: .04em; }
+.foot { position: absolute; left: 22mm; right: 22mm; bottom: 18mm; color: #5b6673; font-size: 8.5pt; line-height: 1.6; }
+.foot strong { color: #123f6b; font-weight: 600; }
+</style></head><body><div class="page">
+<div class="band"></div>
+<div class="kicker">LLM Training Flow · Volume 2</div>
+<div class="title">Curriculum Review, Gap&nbsp;Register, Future Topics and Real-World FDE Projects</div>
+<div class="sub">A verified review of the Vol 2 study guide and its gap analysis, what is missing for AI engineers and Forward Deployed Engineers now and through 2028, and 16 projects that show how an FDE actually delivers.</div>
+<div class="parts">
+<div><b>Part 1</b>Overview and curriculum review</div>
+<div><b>Part 2</b>Gap register: 61 verified missing topics</div>
+<div><b>Part 3</b>Errata and fact-check</div>
+<div><b>Part 4</b>Future topics 2026–2028 and the revised 16-week syllabus</div>
+<div><b>Part 5</b>16 real-world FDE project briefs</div>
+<div><b>Part 6</b>Engagement templates</div>
+<div><b>Part 7</b>Offline starter kits</div>
+</div>
+<div class="foot"><strong>Facts verified as of 26 September 2026</strong> · Compiled {{COMPILED}}<br>Source: github.com/nagarjunak-pixel/02-autogpt-autonomous-agent · curriculum/ at commit {{COMMIT}}</div>
+</div></body></html>

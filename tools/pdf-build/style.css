@@ -1,0 +1,216 @@
+/* Book edition: serif body, sans headings and tables, mono code. Running headers and footers are stamped afterwards. */
+@page { size: A4; margin: 21mm 17mm 20mm 17mm; }
+@page wide { size: A4 landscape; margin: 18mm 17mm 18mm 17mm; }
+/* a portrait page given to one large diagram: narrow margins, no running header (finalize.py skips it) */
+@page figure { size: A4; margin: 12mm 11mm 16mm 11mm; }
+
+:root {
+  --ink: #1b2129; --muted: #5b6673; --faint: #8a95a2; --rule: #d9dee4; --rule-strong: #b9c2cc;
+  --accent: #123f6b; --accent-2: #2f6ea8; --tint: #eef3f8; --code-bg: #f5f7fa; --zebra: #f8fafc;
+  --serif: 'Marks', 'Source Serif 4', 'Serif Sym', 'Noto Sans Devanagari', 'DejaVu Serif', serif;
+  --sans: 'Marks', 'Inter', 'Noto Sans Devanagari', 'DejaVu Sans', sans-serif;
+  --mono: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+}
+* { box-sizing: border-box; }
+html { font-size: 9.9pt; }
+body { font-family: var(--serif); color: var(--ink); line-height: 1.5; margin: 0; background: #fff;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; orphans: 3; widows: 3;
+  font-variant-numeric: lining-nums; text-rendering: optimizeLegibility; font-kerning: normal; }
+a { color: var(--accent-2); text-decoration: none; }
+a code { color: inherit; }
+a.repo::after { content: "\2009\2197"; font-family: var(--sans); font-size: .78em; }
+p { margin: .5em 0; }
+strong { font-weight: 600; }
+sup { font-size: .7em; line-height: 0; vertical-align: baseline; position: relative; top: -.45em; }
+em { font-style: italic; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.2em auto; width: 30%; }
+ul, ol { margin: .35em 0 .6em; padding-left: 1.45em; }
+ol:not(.part-list):has(> li:nth-child(10)) { padding-left: 2.05em; }
+/* blank columns in fill-in tables (scorecards) keep room to write */
+th.blank-col { min-width: 24mm; }
+th.blank-col:last-child { width: 30%; }   /* the last fill-in column is the one people write in */
+li { margin: .16em 0; }
+li > p { margin: .18em 0; }
+li > ul, li > ol { margin: .16em 0 0; }
+ul > li::marker { color: var(--accent-2); }
+ol > li::marker { color: var(--accent); font-family: var(--sans); font-weight: 600; font-size: .92em; }
+
+/* headings keep their source level via class (.h1-.h6); the tag is demoted one level for the PDF outline */
+h1, h2, h3, h4, h5, h6 { font-family: var(--sans); line-height: 1.25; break-after: avoid; page-break-after: avoid;
+  break-inside: avoid; margin: 1.25em 0 .45em; color: var(--ink); letter-spacing: -.005em; text-wrap: balance; }
+.h-meta { display: block; font-size: 7.6pt; font-weight: 500; color: var(--muted); letter-spacing: .01em; margin-top: .25em; text-wrap: pretty; }
+.h1 { font-size: 21pt; font-weight: 700; color: var(--accent); margin: 0 0 .35em; letter-spacing: -.015em; line-height: 1.15; }
+.h2 { font-size: 13pt; font-weight: 700; color: var(--accent); margin-top: 1.55em; padding-top: .5em; border-top: 1.2pt solid var(--accent); }
+.h3 { font-size: 11pt; font-weight: 650; }
+.h4 { font-size: 10pt; font-weight: 650; color: #2b3440; }
+.h5, .h6 { font-size: 9.6pt; font-weight: 600; color: var(--muted); }
+
+/* chapter openers */
+.chapter { break-before: page; page-break-before: always; }
+.chap-head { margin: 0 0 1.1em; padding-bottom: .7em; border-bottom: .8pt solid var(--rule-strong); }
+.chap-kicker { font-family: var(--sans); font-size: 8pt; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-2); margin-bottom: .55em; }
+.chap-head .h1 { margin-bottom: .25em; }
+.chap-kicker .kf { font-family: var(--mono); text-transform: none; letter-spacing: 0; font-weight: 400; }
+.chap-src { font-family: var(--mono); font-size: 6.8pt; color: var(--faint); margin-top: .35em; }
+.chapter > .src { display: none; }
+
+/* blockquotes as callouts */
+blockquote { margin: .8em 0; padding: .55em .95em; border-left: 3pt solid var(--accent-2); background: var(--tint);
+  border-radius: 0 3pt 3pt 0; color: #212a33; break-inside: avoid; }
+blockquote p { margin: .3em 0; }
+blockquote strong { color: var(--accent); }
+
+/* inline and block code */
+code, pre { font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+code { font-family: var(--mono); font-size: .82em; background: var(--code-bg); padding: .04em .14em; border-radius: 2.5pt;
+  border: .5pt solid #e3e8ee; overflow-wrap: anywhere; color: #22303f; }
+pre { font-family: var(--mono); font-size: 7.3pt; line-height: 1.42; background: var(--code-bg); border: .6pt solid #e1e6ec;
+  border-left: 2.5pt solid var(--accent-2); border-radius: 3pt; padding: .65em .85em; white-space: pre-wrap;
+  overflow-wrap: anywhere; margin: .75em 0; }
+pre code { background: none; border: 0; padding: 0; font-size: 1em; color: inherit; }
+pre.code .ln { display: block; white-space: pre-wrap; padding-left: calc((var(--i, 0) + 4) * 1ch); text-indent: calc((var(--i, 0) + 4) * -1ch); }
+/* a code block keeps at least three lines on each side of a page break */
+/* the first and last three non-blank lines stay with their neighbours; a blank line never opens a page */
+pre.code .ln.kh { break-after: avoid; }
+pre.code .ln.kt, pre.code .ln.bl { break-before: avoid; }
+pre.code .ln.op { break-after: avoid; }
+pre.code { position: relative; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+pre.code[data-lang] { padding-top: 10.6pt; }   /* absolute, so a shrunk block keeps its gap under the language label */
+pre.code[data-lang]::before { content: attr(data-lang); position: absolute; top: .45em; right: .8em; font-family: var(--sans); font-size: 6.2pt;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--faint); }
+code.nwc, pre .nb, strong.nwl { white-space: nowrap; }
+code.nwc wbr { display: none; }
+li.task { list-style: none; }
+.tbox { display: inline-block; width: .78em; height: .78em; border: .8pt solid var(--accent-2); border-radius: 1.5pt; margin: 0 .5em 0 -1.25em; vertical-align: -.06em; }
+.tbox.done { background: var(--accent-2); }
+/* highlight.js, GitHub-like palette tuned for print */
+.hljs-comment, .hljs-quote { color: #6a737d; font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-type, .hljs-built_in { color: #b3261e; }
+.hljs-string, .hljs-regexp, .hljs-addition { color: #0b5d3b; }
+.hljs-number, .hljs-literal, .hljs-symbol, .hljs-bullet { color: #0550ae; }
+.hljs-title, .hljs-title.function_, .hljs-section { color: #6f42c1; }
+.hljs-attr, .hljs-attribute, .hljs-variable, .hljs-template-variable, .hljs-property { color: #0550ae; }
+.hljs-meta { color: #8a5a00; }
+.hljs-deletion { color: #b3261e; }
+
+/* tables: horizontal rules only, sans, repeating header */
+table { width: 100%; border-collapse: collapse; margin: .75em 0 .95em; font-family: var(--sans); font-size: 7.9pt;
+  line-height: 1.38; }
+td.num { font-variant-numeric: tabular-nums; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; page-break-inside: avoid; }
+th, td { padding: .36em .5em; vertical-align: top; text-align: left; border-bottom: .5pt solid var(--rule);
+  overflow-wrap: break-word; word-break: normal; }
+th { font-weight: 600; color: var(--accent); background: var(--tint); border-top: 1.1pt solid var(--accent);
+  border-bottom: .9pt solid var(--accent); font-size: .96em; }
+tbody tr:nth-child(even) td { background: var(--zebra); }
+tbody tr:last-child td { border-bottom: 1.1pt solid var(--accent); }
+td strong, th strong { font-weight: 650; }
+td code, th code { font-size: .9em; }
+td.nowrap, th.nowrap { white-space: nowrap; }
+.squeeze td code, .squeeze td a, .squeeze th code { overflow-wrap: anywhere; }
+
+/* diagrams */
+.diagram { break-inside: avoid; margin: .9em 0; text-align: center; }
+.mmd { text-align: center; }
+.mmd svg { max-width: 100%; height: auto; max-height: 220mm; }
+.mmd .cluster-label foreignObject { overflow: visible; }
+.mmd .cluster-label foreignObject div, .mmd .cluster-label foreignObject span { white-space: nowrap !important; overflow: visible !important; }
+pre.mermaid-src { background: none; border: 0; padding: 0; white-space: pre; font-family: var(--sans); font-size: 9pt; }
+.diagram.wide { page: wide; margin: 0; }
+.diagram.fullpage { page: figure; break-before: page; page-break-before: always; break-after: page; page-break-after: always; margin: 0; }
+.diagram.wide .mmd svg { max-height: 148mm; }
+.diagram.fullpage .mmd svg { max-height: 252mm; }
+.figcap { font-family: var(--sans); font-size: 8pt; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--accent-2); text-align: left; margin: 0 0 2mm; }
+.diagram .with-diagram { text-align: left; margin-top: 0; }
+/* edge labels sit on a white patch so lines never run into the letters (no padding: the label box has a fixed size) */
+.mmd .edgeLabel .labelBkg, .mmd span.edgeLabel { background-color: #fff !important; }
+/* a thin white halo, so a line passing a label stops short of its letters */
+.mmd g.edgeLabel foreignObject { overflow: visible; }
+/* padding is measured by Mermaid (the rule is not scoped to .mmd), so the layout leaves room for each chip */
+g.edgeLabel .labelBkg { padding: 2px 5px; }
+.mmd g.edgeLabel .labelBkg { box-shadow: inset 0 0 0 .8px #d3d9e0; border-radius: 2px; }
+/* a node label that wraps is balanced across its lines */
+.mmd g.node foreignObject div, .mmd .nodeLabel, .mmd g.edgeLabel p { text-wrap: balance; }
+.mmd g.node foreignObject div { white-space: normal !important; }   /* Mermaid's break-spaces blocks balancing */
+
+.nw { white-space: nowrap; }
+p.lead { break-after: avoid; page-break-after: avoid; }
+.pbb { break-before: page; page-break-before: always; }
+.keep { break-inside: avoid; page-break-inside: avoid; }
+p, li { text-wrap: pretty; }
+/* a heading's second part (after its colon, separator or before a closing parenthetical) is balanced on its own */
+.hseg { display: block; text-wrap: balance; }
+.fig-h { font-family: var(--sans); line-height: 1.25; }
+tbody tr:first-child:not(:last-child) { break-after: avoid; page-break-after: avoid; }
+tbody tr:last-child { break-before: avoid; page-break-before: avoid; }
+
+/* part dividers */
+.part { break-before: page; page-break-before: always; break-after: page; page-break-after: always; position: relative; }
+/* the accent bar is in normal flow: an absolutely positioned bar also painted a clipped copy on the previous page */
+/* the bar itself is drawn by finalize.py on divider pages only: painted here, Chromium also leaks a clipped copy onto the page before */
+.part::before { content: ""; display: block; width: 34mm; height: 3pt; margin-bottom: 35mm; }
+/* a long chapter list (Part 7 has 19) must still fit on the divider page */
+.part-list:has(> li:nth-child(12)) { margin-top: 7mm; font-size: 8.8pt; }
+.part-list:has(> li:nth-child(12)) li { padding: .3em 0; }
+.part-num { font-family: var(--sans); font-size: 10pt; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-2); }
+.part-big { font-family: var(--sans); font-size: 64pt; font-weight: 700; line-height: 1; color: #dbe5ef; margin: 4mm 0 2mm; }
+.part-title { font-family: var(--sans); font-size: 27pt; font-weight: 700; color: var(--accent); margin: 0 0 .5em; line-height: 1.15;
+  border: 0; letter-spacing: -.015em; }
+.part-blurb { font-size: 11.5pt; color: #2b3440; max-width: 150mm; line-height: 1.5; }
+.part-list { list-style: none; padding: 0; margin: 12mm 0 0; max-width: 165mm; font-family: var(--sans); font-size: 9.4pt; }
+.part-list li { display: flex; align-items: baseline; gap: .5em; padding: .42em 0; border-bottom: .5pt solid var(--rule); margin: 0; }
+.part-list .pl-t { color: var(--ink); }
+.part-list .pl-dots { flex: 1; }
+.part-list .pl-n { color: var(--accent); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* front matter and contents */
+.about { break-after: page; page-break-after: always; }
+.about h1, .toc-title { font-family: var(--sans); font-size: 21pt; font-weight: 700; color: var(--accent); margin: 0 0 .7em;
+  padding-bottom: .35em; border-bottom: 1.2pt solid var(--accent); letter-spacing: -.015em; }
+.about h2 { font-size: 11.5pt; color: var(--accent); margin-top: 1.3em; }
+.about table td:first-child { white-space: nowrap; font-weight: 600; color: var(--accent); }
+.toc { break-after: page; page-break-after: always; font-family: var(--sans); }
+.toc a { color: var(--ink); display: flex; align-items: baseline; gap: .45em; }
+.toc .dots { flex: 1; border-bottom: 1.1px dotted #8f9aa6; transform: translateY(-.28em); }
+.toc .n { font-variant-numeric: tabular-nums; min-width: 7mm; text-align: right; color: var(--muted); }
+.toc-group { break-inside: avoid; page-break-inside: avoid; margin-bottom: .55em; }
+.toc-part { font-weight: 700; font-size: 10.2pt; margin: .95em 0 .3em; }
+.toc-part a { color: var(--accent); }
+.toc-part .n { color: var(--accent); font-weight: 700; }
+.toc-ch { font-size: 9pt; margin: .16em 0 .16em 1.3em; }
+
+/* a bold list label stays with the nested list it introduces */
+li > ul, li > ol { break-before: avoid; page-break-before: avoid; }
+/* lists keep at least two items on each side of a page break */
+ul:has(> li:nth-child(4)) > li.short:first-child, ol:has(> li:nth-child(4)) > li.short:first-child { break-after: avoid; }
+ul:has(> li:nth-child(4)) > li.short:last-child, ol:has(> li:nth-child(4)) > li.short:last-child { break-before: avoid; }
+.li-lead { display: block; }
+table + table { margin-top: 1.8em; }
+
+/* a chapter whose last page would hold only a line or two (set by build_loop.py) */
+.chapter.tight { line-height: 19px; }
+.chapter.tight p { margin: .4em 0; }
+.chapter.tight ul, .chapter.tight ol { margin: .3em 0 .5em; }
+.chapter.tight th, .chapter.tight td { padding-top: .3em; padding-bottom: .3em; }
+.chapter.tight table { margin: .6em 0 .8em; }
+.chapter.tight pre { line-height: 13px; }
+.chapter.tight table { line-height: 14px; }
+/* second level, when the first did not pull the last lines back */
+.chapter.tight2 { line-height: 18px; }
+.chapter.tight2 th, .chapter.tight2 td { padding-top: .24em; padding-bottom: .24em; }
+.chapter.tight2 pre { line-height: 13px; }
+.chapter.tight2 .h2, .chapter.tight2 .h3 { margin-top: 1em; }   /* by class: the chapter title is an h2 too */
+
+/* whole-pixel line heights: Chromium snaps each line box to a whole pixel, so fractional heights alternate (e.g. 14 and 15 px) */
+body { line-height: 1.51515; }   /* 20 px at 9.9 pt */
+table { line-height: 15px; }
+pre { line-height: 14px; }
+/* shared table shapes get the same column widths in every chapter */
+table.wybn th:nth-child(1) { width: 25%; } table.wybn th:nth-child(3) { width: 23%; }
+table.kit-metrics th:nth-child(1) { width: 8%; } table.kit-metrics th:nth-child(2) { width: 30%; } table.kit-metrics th:nth-child(3) { width: 17%; }
+table.cmap th:nth-child(1) { width: 11%; } table.cmap th:nth-child(2) { width: 38%; }
+/* on a portrait figure page the caption, its rule and the heading line up with the footer (17 mm), not the 11 mm figure margin */
+.diagram.fullpage > .figcap, .diagram.fullpage > .with-diagram, .diagram.fullpage > .fig-h { margin-left: 6mm; margin-right: 6mm; }

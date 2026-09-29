@@ -1,0 +1,22 @@
+{
+  "name": "curriculum-pdf-build",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Builds the PDF edition of curriculum/ (see README.md)",
+  "type": "commonjs",
+  "scripts": {
+    "build": "bash build.sh"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/noto-sans-devanagari": "^5.3.0",
+    "@fontsource/source-serif-4": "^5.3.0",
+    "@mermaid-js/layout-elk": "^0.2.3",
+    "github-slugger": "^2.0.0",
+    "highlight.js": "^11.12.0",
+    "markdown-it": "^14.3.2",
+    "markdown-it-anchor": "^9.2.1",
+    "mermaid": "^11.17.2",
+    "playwright": "1.56.1"
+  }
+}
