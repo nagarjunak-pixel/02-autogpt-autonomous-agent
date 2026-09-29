@@ -140,7 +140,8 @@ flowchart LR
   end
   OEM --> ING
   TCH --> SYN
-  PKG --> SYNC --> AG
+  PKG --> SYNC
+  SYNC -.->|signed packs at depot| AG
   LG -.->|upload at sync, becomes regression cases| EVG
 ```
 

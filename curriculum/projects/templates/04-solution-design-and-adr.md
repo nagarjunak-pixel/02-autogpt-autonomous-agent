@@ -21,7 +21,7 @@ Curriculum links: Turns 112 (architecture documents and ADRs), 117 (system desig
 9. **Security and privacy.** Summarise template 06 and the compliance mapping (template 07).
 10. **Operations.** SLOs, observability, runbooks and DR (template 09).
 11. **Cost model.** Cost per task at expected volume, sensitivity analysis and budget guards.
-12. **Risks and open questions**, each with an owner and a date.
+12. **Risks and open questions.** Give each an owner and a date.
 13. **Rollout plan.** Shadow → canary → staged → general availability, with rollback triggers.
 
 ## Part B: ADR template (one decision per file, numbered, kept in the repo)

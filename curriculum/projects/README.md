@@ -77,7 +77,7 @@ Every brief lists 4–6 **curveballs**: realistic events that the instructor inj
 
 ## Default grading rubric (briefs may adjust the weights)
 
-| Dimension | Weight | Excellent | Weak |
+| Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
 | Working system | 25% | Runs end to end on the frozen test set; degrades honestly | Demo-only happy path |
 | Evaluation rigour | 20% | Golden, adversarial and held-out sets; calibrated judges; CI gates; confidence intervals | A single score from one run |

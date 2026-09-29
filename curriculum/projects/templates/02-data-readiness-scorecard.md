@@ -1,6 +1,7 @@
 # Template 02 · Data-Readiness Scorecard
 
 Rate every data source RED, AMBER or GREEN on each dimension, and support each rating with a real sample, an access test and an owner interview.
+
 Curriculum links: Turns 115 (data readiness), 52 (lineage and deletion), 81 (privacy law), 42 (parsing).
 
 | Source | Exists | Access | Quality | Owner | Legal use | Sensitivity | Evaluability | Overall |

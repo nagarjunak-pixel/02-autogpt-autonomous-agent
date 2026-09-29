@@ -1,6 +1,7 @@
 # Template 03 · Statement of Work (SOW) and Acceptance Criteria
 
 AI work is contracted **in phases**, because uncertainty shrinks only as you learn. Each phase has its own acceptance criteria measured on an agreed, frozen test set.
+
 Curriculum links: Turns 116 (scoping and SOWs), 111 (playbook), 110 (ROI), 91 (FinOps).
 
 ## 1. Parties, background and objective

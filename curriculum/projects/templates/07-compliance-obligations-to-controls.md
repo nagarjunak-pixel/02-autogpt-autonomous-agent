@@ -2,6 +2,7 @@
 
 Engineers do not need to memorise laws. They need to turn each **obligation that applies** into a **control they can build and evidence**.
 Fill this in with the customer's legal/compliance owner; never self-certify legal conclusions.
+
 Curriculum links: Turns 79–85 (EU AI Act, NIST/ISO, privacy, sector, responsible AI, provenance, copyright), 128 (governance-as-code), plus the gap register's regulation entries (global map, EU CRA and PLD, companion/minor laws, India SGI rules, employment-AI laws).
 
 ## 1. Applicability screen
