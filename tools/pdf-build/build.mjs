@@ -3,16 +3,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
 import MarkdownIt from 'markdown-it';
 import GithubSlugger from 'github-slugger';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
-const REPO = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');   // the repository root
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const REPO = path.resolve(HERE, '..', '..');   // the repository root
+const HERE_URL = pathToFileURL(HERE).href;   // file URL of this folder, safe for paths with spaces
 const OUT = path.join(HERE, 'out');
-const GH = 'https://github.com/nagarjunak-pixel/02-autogpt-autonomous-agent';
+const GH = process.env.REPO_URL || 'https://github.com/nagarjunak-pixel/02-autogpt-autonomous-agent';
 const COMMIT = process.env.COMMIT || 'main';
 const pass = process.argv[2] || '1';
 const tocPages = process.argv[3] ? JSON.parse(fs.readFileSync(process.argv[3], 'utf8')) : null;
@@ -43,6 +46,13 @@ const PARTS = [
         ...(fs.existsSync(path.join(REPO, `curriculum/projects/validation/${k.slice(0, 3)}-validation-report.md`)) ? [`curriculum/projects/validation/${k.slice(0, 3)}-validation-report.md`] : [])])] },
 ];
 const ALL = PARTS.flatMap(p => p.files);
+// every tracked Markdown file under curriculum/ must be in the book, and nothing else (skipped outside a git checkout)
+const coverage = [];
+try {
+  const tracked = execFileSync('git', ['-C', REPO, 'ls-files', '--', 'curriculum/*.md', 'curriculum/**/*.md'], { encoding: 'utf8' }).split('\n').filter(Boolean);
+  for (const f of tracked) if (!ALL.includes(f)) coverage.push(`tracked but not in the book: ${f} (add it to PARTS in build.mjs)`);
+  for (const f of ALL) if (!tracked.includes(f)) coverage.push(`in the book but not tracked by git: ${f}`);
+} catch { /* not a git checkout */ }
 // chapters whose last page held only a line or two in an earlier pass are set a little tighter (build_loop.py)
 const TIGHT = fs.existsSync(path.join(OUT, 'tight.json')) ? JSON.parse(fs.readFileSync(path.join(OUT, 'tight.json'), 'utf8')) : {};
 const TITLE_OVERRIDE = { 'curriculum/projects/starter-kits/P09-legacy-modernisation-with-coding-agents/spec_stub.md': 'P09 Kit File · PRMCALC Premium Basis: Product-Filing Summary' };
@@ -172,7 +182,7 @@ md.renderer.rules.text = (tokens, idx) => bind(esc(tokens[idx].content))
   .replace(/\b(\d+|pass|k)\^(\d+|[a-z])\b/g, '$1<sup>$2</sup>')
   .replace(/\)\^(\d+|[a-z])\b/g, ')<sup>$1</sup>');
 
-const ids = new Set(), internalLinks = [], problems = [];
+const ids = new Set(), internalLinks = [], problems = [...coverage];
 let escapedPipes = 0, labelBreaks = 0, metaHeadings = 0, droppedRules = 0;
 const inlineText = tok => (tok.children || []).map(c => (c.type === 'text' || c.type === 'code_inline') ? c.content : '').join('');
 
@@ -277,12 +287,12 @@ for (const l of missingAnchors) problems.push(`unresolved anchor ${l.href} in ${
 body = body.replace(/href="#(f-[a-z0-9-]+?)--([^"]+)"/g, (m, fid, a) => ids.has(`${fid}--${a}`) ? m : `href="#${fid}"`);
 
 const css = fs.readFileSync(path.join(HERE, 'style.css'), 'utf8');
-const FS = `file://${HERE}/node_modules/@fontsource`;
+const FS = `${HERE_URL}/node_modules/@fontsource`;
 const FONT_LINKS = ['source-serif-4/400.css', 'source-serif-4/400-italic.css',
   'source-serif-4/600.css', 'source-serif-4/600-italic.css', 'jetbrains-mono/400.css', 'noto-sans-devanagari/400.css',
   'noto-sans-devanagari/600.css'].map(f => `<link rel="stylesheet" href="${FS}/${f}">`).join('\n');
 // Inter: the full release (arrows, ≤ ≥, ₹, Greek), with the tailed l (cv05) made the default so l and I never look alike
-const FACE = (fam, file, w, style, range) => `@font-face { font-family: '${fam}'; font-style: ${style}; font-weight: ${w}; font-display: block; src: url('file://${HERE}/fonts/${file}') format('truetype');${range ? ` unicode-range: ${range};` : ''} }`;
+const FACE = (fam, file, w, style, range) => `@font-face { font-family: '${fam}'; font-style: ${style}; font-weight: ${w}; font-display: block; src: url('${HERE_URL}/fonts/${file}') format('truetype');${range ? ` unicode-range: ${range};` : ''} }`;
 // symbols the web subsets lack: arrows and maths from the full Source Serif 4 and JetBrains Mono; stars and ↗ in serif text from Inter;
 // ✓ and ✗ from DejaVu Sans everywhere, so the ballot shapes match in text, tables and keys
 const SERIF_SYM = 'U+2190-2193, U+2212, U+2248, U+2264-2265';
@@ -292,7 +302,7 @@ const INTER_FACES = `<style>${[
   FACE('Source Serif 4', 'SourceSerif4-Semibold.ttf', 600, 'normal', SERIF_SYM), FACE('Source Serif 4', 'SourceSerif4-SemiboldIt.ttf', 600, 'italic', SERIF_SYM),
   FACE('JetBrains Mono', 'JetBrainsMono-Regular.ttf', 400, 'normal', 'U+2190-21FF, U+2200-22FF'),
   FACE('Serif Sym', 'Inter-400.ttf', 400, 'normal', 'U+2197, U+2605-2606'), FACE('Serif Sym', 'Inter-600.ttf', 600, 'normal', 'U+2197, U+2605-2606'),
-  "@font-face { font-family: 'Marks'; src: local('DejaVu Sans'); unicode-range: U+2713-2718; }",
+  FACE('Marks', 'DejaVuSans.ttf', 400, 'normal', 'U+2713-2718'),
 ].join('\n')}</style>`;
 const front = fs.readFileSync(path.join(HERE, 'front.html'), 'utf8');
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>LLM Training Flow Vol. 2 — Curriculum Review, Gap Register and FDE Projects</title>
@@ -302,22 +312,24 @@ ${INTER_FACES}
 ${front}
 <section class="toc" id="contents"><h1 class="toc-title">Contents</h1>${toc}</section>
 ${body}
-<script src="file://${HERE}/node_modules/mermaid/dist/mermaid.min.js"></script>
-<script type="module">import elk from "file://${HERE}/vendor/elk/mermaid-layout-elk.esm.min.mjs"; mermaid.registerLayoutLoaders(elk); window.__elk = true;</script>
+<script src="${HERE_URL}/node_modules/mermaid/dist/mermaid.min.js"></script>
+<script type="module">import elk from "${HERE_URL}/vendor/elk/mermaid-layout-elk.esm.min.mjs"; mermaid.registerLayoutLoaders(elk); window.__elk = true;</script>
 </body></html>`;
 fs.writeFileSync(path.join(OUT, `book-pass${pass}.html`), html);
 
 // ---- render ------------------------------------------------------------------
-const browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : { channel: 'chromium' }), args: ['--allow-file-access-from-files'] }).catch(() => chromium.launch());
+const browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : { channel: 'chromium' }), args: ['--allow-file-access-from-files'] });   // no fallback: the headless shell lays text out differently
+const browserVersion = browser.version();
 const page = await browser.newPage({ viewport: { width: 665, height: 1100 } });
 await page.emulateMedia({ media: 'print' });
-await page.goto(`file://${path.join(OUT, `book-pass${pass}.html`)}`, { waitUntil: 'load' });
+await page.goto(pathToFileURL(path.join(OUT, `book-pass${pass}.html`)).href, { waitUntil: 'load' });
 const BREAKS = fs.existsSync(path.join(OUT, 'breaks.json')) ? JSON.parse(fs.readFileSync(path.join(OUT, 'breaks.json'), 'utf8')) : [];
 await page.evaluate(b => { window.__breaks = b; }, BREAKS);
 const diag = await page.evaluate(async () => {
   const errors = [], diagrams = [];
   await document.fonts.ready;
   for (let i = 0; i < 50 && !window.__elk; i++) await new Promise(r => setTimeout(r, 100));
+  if (!window.__elk) errors.push('the ELK layout engine did not load (run prepare_elk.mjs)');
   mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'strict',
     themeVariables: { fontFamily: 'Inter, DejaVu Sans, sans-serif', fontSize: '15px' },
     flowchart: { htmlLabels: true, useMaxWidth: true, nodeSpacing: 28, rankSpacing: 36, padding: 9, diagramPadding: 6, wrappingWidth: 170 },
@@ -639,6 +651,6 @@ fs.writeFileSync(path.join(OUT, `blocklines-pass${pass}.json`), JSON.stringify(d
 fs.writeFileSync(path.join(OUT, 'build-report.json'), JSON.stringify({
   pass, files: ALL.length, chapters, parts: PARTS.map(p => ({ id: p.id, title: p.title, files: p.files.length })),
   mermaidInSource: mermaidCount, highlightedBlocks: highlighted, mermaidRendered: diag.rendered, mermaidErrors: diag.errors,
-  internalLinks: internalLinks.length, escapedPipes, labelBreaks, metaHeadings, droppedRules, layout: diag.layout, problems,
+  internalLinks: internalLinks.length, escapedPipes, labelBreaks, metaHeadings, droppedRules, layout: diag.layout, problems, browser: browserVersion,
 }, null, 2));
 console.log(`pass ${pass}: ${ALL.length} files, mermaid ${diag.rendered}/${mermaidCount} (errors ${diag.errors.length}), internal links ${internalLinks.length}, problems ${problems.length}, label breaks ${labelBreaks}, leads ${diag.layout.leads}, overflowing tables ${diag.layout.tableOverflow.length}, broken ordinary words ${diag.layout.brokenOrdinary.length}, broken long tokens ${diag.layout.brokenLong}`);

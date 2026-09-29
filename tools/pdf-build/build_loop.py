@@ -5,6 +5,7 @@ forced page breaks before any heading chain that the previous pass left stranded
 to the *-pass2 names that finalize.py and verify.py read.
 Usage: COMMIT=<sha> python3 build_loop.py
 """
+import os as _os; _os.chdir(_os.path.dirname(_os.path.abspath(__file__)))   # paths below are relative to this folder
 import json, os, re, shutil, subprocess, sys, unicodedata
 import pypdfium2 as pdfium
 
@@ -75,7 +76,7 @@ for k in range(2, 9):
     if short:
         for c in short: tight[c] = tight.get(c, 0) + 1
         json.dump(tight, open(f'{OUT}/tight.json', 'w'))
-        print(f'pass {k}: chapters with a 1-3 line last page set tighter: {[(c, tight[c]) for c in short]}')
+        print(f'pass {k}: chapters whose last page holds six or fewer lines set tighter: {[(c, tight[c]) for c in short]}')
     elif stable and not new:
         final = k
         break

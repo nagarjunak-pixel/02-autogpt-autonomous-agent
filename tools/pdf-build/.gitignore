@@ -4,3 +4,4 @@ out/
 dist/
 png/
 __pycache__/
+.venv/

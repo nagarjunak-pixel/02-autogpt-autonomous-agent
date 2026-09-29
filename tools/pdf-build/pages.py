@@ -1,4 +1,5 @@
 # Read part/chapter start pages from a pass's PDF outline -> tocPages.json
+import os as _os; _os.chdir(_os.path.dirname(_os.path.abspath(__file__)))   # paths below are relative to this folder
 import json, sys
 from pypdf import PdfReader
 pdf, out = sys.argv[1], sys.argv[2]

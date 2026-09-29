@@ -1,7 +1,8 @@
+import os as _os; _CWD = _os.getcwd(); _os.chdir(_os.path.dirname(_os.path.abspath(__file__)))   # paths below are relative to this folder
 import json, re, sys
 from pypdf import PdfReader, PdfWriter
 from pypdf.generic import NameObject, TextStringObject
-main, cover, out = 'out/main-pass2.pdf', 'out/cover.pdf', sys.argv[1]
+main, cover, out = 'out/main-pass2.pdf', 'out/cover.pdf', _os.path.join(_CWD, sys.argv[1])
 heads = json.load(open('out/headings-pass2.json')); marks = json.load(open('out/bookmarks-pass2.json'))
 assert len(heads) == len(marks)
 w = PdfWriter()
@@ -33,8 +34,8 @@ from reportlab.pdfbase.ttfonts import TTFont as RLFont
 from reportlab.lib.units import mm
 pdfmetrics.registerFont(RLFont('Inter', 'fonts/Inter-400.ttf'))
 pdfmetrics.registerFont(RLFont('Inter-SemiBold', 'fonts/Inter-600.ttf'))
-pdfmetrics.registerFont(RLFont('DejaVu', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'))
-# the Inter files are the Latin subset: characters outside it (such as an arrow) are drawn in DejaVu Sans
+pdfmetrics.registerFont(RLFont('DejaVu', 'fonts/DejaVuSans.ttf'))
+# characters Inter lacks are drawn in DejaVu Sans
 from fontTools.ttLib import TTFont as _FT
 _INTER = set(_FT('fonts/Inter-400.ttf').getBestCmap())
 def runs(text, font):

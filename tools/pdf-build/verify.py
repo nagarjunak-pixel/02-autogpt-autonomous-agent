@@ -1,7 +1,9 @@
 import json, re, sys, pypdfium2 as pdfium
 from pypdf import PdfReader
 import os as _os
-F = sys.argv[1] if len(sys.argv) > 1 else 'dist/LLM-Training-Flow-Vol2-Curriculum-and-FDE-Projects.pdf'
+_os.chdir(_os.path.dirname(_os.path.abspath(__file__)))   # paths below are relative to this folder
+F = _os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else None
+F = F or 'dist/LLM-Training-Flow-Vol2-Curriculum-and-FDE-Projects.pdf'
 r = PdfReader(F); named = r.named_destinations
 internal = external = broken = 0
 for p in r.pages:
@@ -94,3 +96,16 @@ spill = sorted(pp for pp in parts if pp + 1 not in chap_starts)
 print(f'part dividers that spill onto a second page: {len(spill)}', spill)
 
 print('build loop:', json.load(open('out/loop-report.json')) if __import__('os').path.exists('out/loop-report.json') else 'n/a')
+
+# every check above must be clean; 'broken long tokens' (long hyphenated or code tokens wrapping in a cell) is informational
+failures = {
+    'broken internal links': broken, 'chapters with missing words': len(miss_all),
+    'diagrams not rendered': rep['mermaidInSource'] - rep['mermaidRendered'], 'diagram errors': len(rep['mermaidErrors']),
+    'build problems': len(rep['problems']), 'overflowing tables': len(lay.get('tableOverflow') or []),
+    'broken ordinary words in cells': len(lay.get('brokenOrdinary', [])), 'stranded headings': len(stranded),
+    'widows': len(widows), 'orphans': len(orphans), 'chapter-end runover pages': len(runover), 'part dividers that spill': len(spill),
+}
+bad = {k: v for k, v in failures.items() if v}
+print(f"browser: {rep.get('browser', 'unknown')}")
+print('CHECKS PASSED' if not bad else 'CHECKS FAILED: ' + ', '.join(f'{k} {v}' for k, v in bad.items()))
+sys.exit(1 if bad else 0)

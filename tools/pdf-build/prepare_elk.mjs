@@ -1,7 +1,7 @@
 // Copy the ELK layout engine for Mermaid into vendor/elk and tighten its base spacing (40 -> 24),
 // so that diagrams with many nested boxes fit a page at a readable label size. Run by build.sh.
-import fs from 'node:fs'; import path from 'node:path';
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
+const HERE = path.dirname(fileURLToPath(import.meta.url));
 const src = path.join(HERE, 'node_modules', '@mermaid-js', 'layout-elk', 'dist'), dst = path.join(HERE, 'vendor', 'elk');
 if (!fs.existsSync(src)) { console.error('node_modules/@mermaid-js/layout-elk is missing: run npm ci first'); process.exit(1); }
 fs.rmSync(dst, { recursive: true, force: true });

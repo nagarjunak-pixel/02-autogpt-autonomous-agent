@@ -1,6 +1,6 @@
 """Render part of a page of the final PDF at high resolution, for close inspection.
 Usage: python3 zoom.py PAGE [x0 y0 x1 y1] [SCALE]   (fractions of the page, default the whole page; scale default 3)
-Writes png/zoom/pPAGE_x0-y0-x1-y1.png and prints the path. Page index as in png/v6 (0 = cover)."""
+Writes png/zoom/pPAGE_x0-y0-x1-y1.png and prints the path. PAGE is the 0-based page index of the finished PDF: 0 is the cover, so it equals the printed page number."""
 import sys, os, pypdfium2 as pdfium
 HERE = os.path.dirname(os.path.abspath(__file__))
 a = sys.argv[1:]; page = int(a[0])
