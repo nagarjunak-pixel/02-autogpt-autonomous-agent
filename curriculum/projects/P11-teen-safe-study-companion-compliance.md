@@ -37,7 +37,7 @@ Taruvana Learning runs an AI tutor for 2 million Indian students aged 13–18 in
 
 **Data.** 40M unlabelled conversations over 18 months, containing sensitive disclosures (self-harm, family conflict, sexuality). Age is a self-declared date of birth; 70% of paid accounts have a parent phone number, only 12% verified. Memory mixes academic facts with personal disclosures.
 
-**Legal and regulatory (as of Sep 2026; engineers map obligations, counsel owns the conclusions):**
+**Legal and regulatory** (as of Sep 2026; engineers map obligations, counsel owns the conclusions):
 - **California SB 243** ([bill text](https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB243); Ch. 677; in force 1 Jan 2026). *Definition* (Bus. & Prof. Code §22601(b)): an AI system with "adaptive, human-like responses" that "is capable of meeting a user's social needs, including by exhibiting anthropomorphic features and being able to sustain a relationship across multiple interactions"; bots used **only** for customer service, operations, research or technical assistance (and some game bots and voice assistants) are excluded. *Obligations:* AI disclosure; a published suicide/self-harm protocol with crisis referral; for **known minors**, a break-and-AI reminder at least every three hours and measures against sexually explicit content (§22602); a suitability notice (§22604); annual reports to the Office of Suicide Prevention from **1 July 2027** (§22603). *Enforcement:* private right of action, greater of actual damages or **USD 1,000 per violation** (§22605).
 - **New York GBL Art. 47 §§1700–1704** ([statute](https://www.nysenate.gov/legislation/laws/GBS/A47); budget bill [S3008C Part U](https://www.nysenate.gov/legislation/bills/2025/S3008/amendment/C), signed 9 May 2025; effective 5 Nov 2025). An "AI companion" simulates a sustained relationship by (i) retaining prior-session information to personalise, (ii) asking "unprompted or unsolicited emotion-based questions" and (iii) sustaining dialogue on personal matters ([§1700](https://www.nysenate.gov/legislation/laws/GBS/1700)); systems "primarily designed and marketed" for efficiency, research or technical assistance are excluded. It requires a crisis protocol with referral, e.g. to 988 (§1701), and an AI notice at the start of an interaction (at most once a day) and at least every three hours (§1702). Enforcement by the AG only, up to **USD 15,000 per day** (§1703).
 - **India DPDP Act 2023 s.9 and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (13 Nov 2025). Most obligations, including Rule 10, apply **18 months from notification (May 2027)**; MeitY floated 12 months in Jan 2026 ([Business Standard](https://www.business-standard.com/technology/tech-news/meity-may-cut-compliance-timeline-for-key-dpdp-rules-to-12-months-126012201293_1.html)), but as of 27 Sep 2026 no amending notification has been published, so Rule 1 as notified (18 months) still governs ([DPDP Rules tracker](https://dpdprules.org/timeline), updated 23 Sep 2026). A child is anyone under 18. Section 9(1) requires the **"verifiable consent of the parent"** (or lawful guardian) before processing a child's data; s.9(2)–(3) bar processing likely to harm a child's well-being and any tracking, behavioural monitoring or targeted advertising directed at children; penalties up to ₹200 crore ([PRS](https://prsindia.org/billtrack/digital-personal-data-protection-bill-2023)). Rule 10 requires due diligence that the consenting parent is an **identifiable adult** (details already held, or a virtual token, e.g. via DigiLocker); it does not prescribe checking the parent–child link. Educational institutions are exempt only for tracking needed for education or safety; **assume** a commercial edtech is not one (counsel decides).
@@ -67,8 +67,8 @@ Generate with templates plus an LLM and hand-check 10%; label crisis items with 
 **Mock systems:** `mock_llm_gateway` (`chat(messages)`), `crisis_router` (`POST /escalations`, simulated on-call acknowledgement latency), `parent_portal` (OTP and token consent), `helpline_directory.json` (`region, service, contact, channels, languages, hours, last_verified`) and `deletion_bus` (fan-out to stores).
 
 **Budget, two paths:**
-- *API path:* at most USD 50 of credit. Use a small, cheap model for the tutor and judge only the sampled items.
-- *Local path:* Ollama or vLLM with a 7–9B instruct tutor, plus an open safety classifier (Llama Guard, ShieldGemma, or gpt-oss-safeguard with your own crisis policy).
+- **API path:** at most USD 50 of credit. Use a small, cheap model for the tutor and judge only the sampled items.
+- **Local path:** Ollama or vLLM with a 7–9B instruct tutor, plus an open safety classifier (Llama Guard, ShieldGemma, or gpt-oss-safeguard with your own crisis policy).
 
 **Out of scope:** real minors or transcripts, real helpline or clinical integrations, age-verification vendors, voice, and legal advice (students write *questions for counsel*).
 
@@ -242,15 +242,19 @@ Report `flip_when_correct` and `fix_when_wrong` **together**: a model that chang
 
 Follow the [eval plan template](templates/05-eval-plan.md).
 
-- **Datasets:**
-  - *Golden:* 1,000 crisis items labelled by clinicians (400 positives across 4 severities and 3 languages), 1,200 sycophancy items, 400 persona probes.
-  - *Adversarial:* 500 synthetic-teen red-team conversations: jailbreaks, grooming-style escalation, persona manipulation, injected homework.
-  - *Regression:* every production false negative, every incident and every blocked model upgrade.
-  - *Held-out:* a sealed 20% used only at release gates and refreshed each quarter, plus a sealed crisis release set of ≥ 400 active/imminent positives (≥ 100 imminent) so the §5 bounds are measurable. The course build's 300 seed items cannot reach these counts, so students report the same metrics with their intervals.
-- **Metrics by layer.** Classifier: recall and precision per severity and language. Router: correct helpline and paging. Tutor: accuracy, flip rates, false-premise acceptance, persona compliance. End to end: pass^k on scripted sessions, reminder compliance, latency.
-- **Judge calibration.** An LLM judge scores persona boundaries and "did it correct the misconception". Calibrate against two human raters on 200 items (Cohen's κ ≥ 0.7) and re-check when the judge model changes. **Crisis labels are never judge-generated.**
-- **CI gates.** Block on `gate()`, on crisis recall below threshold, on *any* imminent-risk false negative and on any sexual-content failure. Warn on latency or cost increases above 10%.
-- **Online metrics.** Crisis flags per 10k sessions (a spike is a real event or a classifier bug), helpline taps, on-call acknowledgement time, reminder display rate, and "answer changed after challenge" on a judge-scored 1% sample; plus D7 retention, mastery gain and complaints. Canary every model or prompt change.
+**Datasets:**
+- **Golden:** 1,000 crisis items labelled by clinicians (400 positives across 4 severities and 3 languages), 1,200 sycophancy items, 400 persona probes.
+- **Adversarial:** 500 synthetic-teen red-team conversations: jailbreaks, grooming-style escalation, persona manipulation, injected homework.
+- **Regression:** every production false negative, every incident and every blocked model upgrade.
+- **Held-out:** a sealed 20% used only at release gates and refreshed each quarter, plus a sealed crisis release set of ≥ 400 active/imminent positives (≥ 100 imminent) so the §5 bounds are measurable. The course build's 300 seed items cannot reach these counts, so students report the same metrics with their intervals.
+
+**Metrics per layer.** Classifier: recall and precision per severity and language. Router: correct helpline and paging. Tutor: accuracy, flip rates, false-premise acceptance, persona compliance. End to end: pass^k on scripted sessions, reminder compliance, latency.
+
+**Judge calibration.** An LLM judge scores persona boundaries and "did it correct the misconception". Calibrate against two human raters on 200 items (Cohen's κ ≥ 0.7) and re-check when the judge model changes. **Crisis labels are never judge-generated.**
+
+**CI gates.** Block on `gate()`, on crisis recall below threshold, on *any* imminent-risk false negative and on any sexual-content failure. Warn on latency or cost increases above 10%.
+
+**Online metrics.** Crisis flags per 10k sessions (a spike is a real event or a classifier bug), helpline taps, on-call acknowledgement time, reminder display rate, and "answer changed after challenge" on a judge-scored 1% sample; plus D7 retention, mastery gain and complaints. Canary every model or prompt change.
 
 ## 9. Security, privacy and compliance
 
@@ -350,7 +354,7 @@ That is about **USD 0.02–0.18 per active student per month** before the clinic
 | 91, 96, 97 | LLM FinOps; Observability Tools; Evaluation Tools | Cost model, OTel, harness |
 | 109–116 | FDE practice | Discovery, ROI of safety, ADRs, stakeholders, change management, SOW |
 
-**New/gap topics exercised:** #5 companion and minor law; #10 sycophancy; #4 regulation as obligations → controls; #12 agent memory (memory drives classification); SEC (age assurance); MOD-9 inference nondeterminism (pass^5); MOD-3 escalate thresholds (ambiguous flags to adjudication); FDE-8 saying no (the "AI best friend" copy, the session-length KPI); FDE-11 retention of crisis records.
+**New/gap topics exercised:** #5 companion and minor law; #10 sycophancy; #4 regulation as obligations → controls; #12 agent memory (memory drives classification); SEC-6 age assurance; MOD-9 inference nondeterminism (pass^5); MOD-3 escalate thresholds (ambiguous flags to adjudication); FDE-8 saying no (the "AI best friend" copy, the session-length KPI); FDE-11 retention of crisis records.
 
 ## 15. What reviewers look for / common failure modes
 

@@ -50,7 +50,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 
 **Data.** Prompts carry loyalty PII (retail), Aadhaar and PAN (NBFC), lab results (diagnostics) and formulations (FMCG, chemicals). Some BUs must keep prompts in-country or on self-hosted models. Sector rules (e.g. RBI for the NBFC) may add conditions: get each BU's regulatory register rather than assuming.
 
-**Legal and regulatory (verified as of Sep 2026):**
+**Legal and regulatory** (verified as of Sep 2026):
 
 | Instrument | Why it applies | What it means for the platform |
 |---|---|---|
@@ -225,10 +225,10 @@ flowchart LR
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–3) | Spend and key census; inventory v0; anchor success signals; works-council consultation opened; gateway bake-off | Signed memo; baselines; SOW | [template 01](templates/01-discovery-questionnaire.md), [template 02](templates/02-data-readiness-scorecard.md), [template 03](templates/03-sow-and-acceptance-criteria.md) |
-| POC (4–6) | Non-prod gateway for 2 BUs; virtual keys; budgets; OTel; cascade on 1 anchor; DLP monitor mode; mirror + digest pinning; drill #1 in staging | Overhead ≤ 30 ms p95; cascade non-inferior on anchor 1; drill passes | [template 04](templates/04-solution-design-and-adr.md), [template 05](templates/05-eval-plan.md), [template 06](templates/06-threat-model-and-controls.md) |
-| Pilot (7–11) | 3 BUs in production (~60 use cases); showback; DLP enforce for ID classes; MCP allow-list; registry and calendar; shadow-eval harness; game day #2 | §5 met for pilot BUs; showback reconciles ±2% | [template 07](templates/07-compliance-obligations-to-controls.md), [template 08](templates/08-security-review-pack.md), weekly [template 10](templates/10-demo-script-and-status-report.md) |
-| Production (12–15) | Onboarding waves for the remaining 9 BUs; direct-egress blocks; chargeback live; two-region HA; gateway pen test; runbooks | SLOs met 2 weeks; ≥ 90% of spend through the gateway | [template 09](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–3) | Spend and key census; inventory v0; anchor success signals; works-council consultation opened; gateway bake-off | Signed memo; baselines; SOW | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) |
+| POC (4–6) | Non-prod gateway for 2 BUs; virtual keys; budgets; OTel; cascade on 1 anchor; DLP monitor mode; mirror + digest pinning; drill #1 in staging | Overhead ≤ 30 ms p95; cascade non-inferior on anchor 1; drill passes | ADRs ([template 04](templates/04-solution-design-and-adr.md)), eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (7–11) | 3 BUs in production (~60 use cases); showback; DLP enforce for ID classes; MCP allow-list; registry and calendar; shadow-eval harness; game day #2 | §5 met for pilot BUs; showback reconciles ±2% | Obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)), security pack ([template 08](templates/08-security-review-pack.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (12–15) | Onboarding waves for the remaining 9 BUs; direct-egress blocks; chargeback live; two-region HA; gateway pen test; runbooks | SLOs met 2 weeks; ≥ 90% of spend through the gateway | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (16) | Platform team runs a failover drill and a model migration alone | Customer-run drill passes | Handover pack |
 
 **Course build (5 weeks):** W1 gateway, virtual keys, mock providers, OTel · W2 budgets, cascade, breaker; curveball 2 · W3 DLP, cache isolation, MCP allow-list; curveball 3 · W4 FOCUS ledger, showback, discovery; curveball 5 · W5 shadow/canary migration, failover drill; curveballs 1 and 4; demo.
@@ -309,7 +309,7 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 - **Adversarial:** DLP evasions, the poisoned MCP description, cache probes, the loop script, the 40 seeded shadow-AI cases.
 - **Regression:** every escaped PII case, bad cascade acceptance and failed drill.
 
-**Metrics by layer:**
+**Metrics per layer:**
 
 | Layer | Metrics |
 |---|---|
@@ -465,10 +465,10 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 | 79–81 | EU AI Act; NIST AI RMF and ISO/IEC 42001; GDPR and DPDP | Inventory screening and risk tiers; logging scope |
 | 92, 93 | On-Prem and Sovereign Deployment; IaC | Residency tiers; GitOps policy |
 | 102 | Model Provider Landscape | Multi-provider fallback pairs |
-| 109–116 | FDE practice turns | Census, ROI, ADRs, change management, SOW |
+| 109–116 | FDE practice | Census, ROI, ADRs, change management, SOW |
 | 128 | Governance-as-Code | Policy repo with tests |
 
-**New/gap topics exercised:** #1 orchestration-layer security (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture; MOD-7 cache isolation; FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; AGT-7 agent sprawl and inventory; AGT-9 low-code builders (exposed n8n); SEC (shadow-AI inventory); SEC (multi-tenant side channels); SEC (incident clocks and record retention).
+**New/gap topics exercised:** #1 orchestration-layer security (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture; MOD-7 cache isolation; FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; AGT-7 agent sprawl and inventory; AGT-9 low-code builders (exposed n8n); SEC-10 shadow-AI inventory; SEC-8 multi-tenant side channels; SEC-3 incident clocks and record retention.
 
 ## 15. What reviewers look for / common failure modes
 

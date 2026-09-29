@@ -76,8 +76,8 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 **Mock systems:** `mock-authz` (OAuth 2.1 with PKCE, CIMD, `aud` claims); `mock-mandate` (signed JSON mandates: `maxCartMinor`, `currency`, `expiresAt`); `mock-psp` (sandbox honouring idempotency keys); `bot-swarm` (k6, 50 → 2,000 requests/s, spoofed user agents); `mock-assistant` (LLM-driven MCP client harness).
 
 **Budget, two paths:**
-- *API path:* at most USD 50 of credit to drive synthetic shoppers with a small tool-calling model.
-- *Local path:* Ollama with an open-weight tool-calling model; MCP Inspector for manual testing.
+- **API path:** at most USD 50 of credit to drive synthetic shoppers with a small tool-calling model.
+- **Local path:** Ollama with an open-weight tool-calling model; MCP Inspector for manual testing.
 - *Stack for both:* the official MCP TypeScript SDK v2 (split packages such as `@modelcontextprotocol/server`, "released alongside the 2026-07-28 spec", per the [repo](https://github.com/modelcontextprotocol/typescript-sdk)), Zod 4, Hono or Express, Postgres or SQLite.
 
 **Out of scope:** real payments, real directory submissions, card-network enrolment, and WebMCP beyond an optional local origin-trial experiment.
@@ -267,11 +267,19 @@ export async function addToCart(raw: unknown, ctx: Ctx): Promise<ToolResult> {
 
 Follow the [eval plan template](templates/05-eval-plan.md).
 
-- **Datasets.** *Golden:* 300 labelled queries, 200 size cases, a fact diff over all SKUs. *Adversarial:* 400 injected descriptions; 1,000 mandate-abuse attempts (split carts, currency switching, replayed keys, over-quantity); auth attacks (wrong audience, token passthrough, mixed-up issuer); the bot swarm. *Regression:* every incident and poisoning sample from production. *Held-out:* 50 shopper tasks unseen by prompt or tool-description tuning.
-- **Metrics by layer.** *Tools:* contract tests against 2026-07-28 (`server/discover`, `resultType`, headers, cacheable results). *Retrieval:* nDCG@10 and zero-result rate by language. *End to end:* pass^3 on shopper tasks across two or three assistant models (tool descriptions must work for more than one), tool-selection accuracy, fact fidelity of the final answer. *Security:* injection reach-through, mandate overruns.
-- **Judge calibration.** An LLM judge checks that the assistant's answer states price, stock and blouse details correctly, calibrated against human labels on 150 transcripts (agreement ≥ 90%). The fact diff stays deterministic.
-- **CI gates.** Block on failed conformance or auth tests, any poisoning reach-through, any mandate overrun, or an nDCG drop above 0.02. Tool descriptions are snapshot-diffed and human-reviewed, which guards against rug-pulls of our own descriptions.
-- **Online metrics.** Tool error rate, `add_to_cart` → order conversion, mandate refusals, refunds and disputes on agent vs web orders, assistant referral sessions, bot share by class, crawl revenue if enabled.
+**Datasets:**
+- **Golden:** 300 labelled queries, 200 size cases, a fact diff over all SKUs.
+- **Adversarial:** 400 injected descriptions; 1,000 mandate-abuse attempts (split carts, currency switching, replayed keys, over-quantity); auth attacks (wrong audience, token passthrough, mixed-up issuer); the bot swarm.
+- **Regression:** every incident and poisoning sample from production.
+- **Held-out:** 50 shopper tasks unseen by prompt or tool-description tuning.
+
+**Metrics per layer.** *Tools:* contract tests against 2026-07-28 (`server/discover`, `resultType`, headers, cacheable results). *Retrieval:* nDCG@10 and zero-result rate by language. *End to end:* pass^3 on shopper tasks across two or three assistant models (tool descriptions must work for more than one), tool-selection accuracy, fact fidelity of the final answer. *Security:* injection reach-through, mandate overruns.
+
+**Judge calibration.** An LLM judge checks that the assistant's answer states price, stock and blouse details correctly, calibrated against human labels on 150 transcripts (agreement ≥ 90%). The fact diff stays deterministic.
+
+**CI gates.** Block on failed conformance or auth tests, any poisoning reach-through, any mandate overrun, or an nDCG drop above 0.02. Tool descriptions are snapshot-diffed and human-reviewed, which guards against rug-pulls of our own descriptions.
+
+**Online metrics.** Tool error rate, `add_to_cart` → order conversion, mandate refusals, refunds and disputes on agent vs web orders, assistant referral sessions, bot share by class, crawl revenue if enabled.
 
 ## 9. Security, privacy and compliance
 
@@ -324,10 +332,11 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; meeting ≤ 0.50 relies on `ttlMs` caching of list and resource reads and on edge caching of public product data. At the top of every band, bot management included, the total is about USD 3.5k, above the USD 3k cap, so price bot management and search first. Tokens are negligible; the cost is engineering time.
 
 **Runbook entries** ([template 09](templates/09-runbook-slos-and-handover.md)):
-- *Scraping swarm:* tighten per-class quotas, challenge unverified traffic; never throttle checkout or verified assistants first.
-- *Poisoned listing:* delist, purge caches, re-scan the seller, add the sample to regression.
-- *Authorization server outage:* anonymous tools keep working; cart tools fail closed.
-- *PSP outage:* hand off to web checkout. *Spec deprecation notice:* see curveball 4.
+- **Scraping swarm:** tighten per-class quotas, challenge unverified traffic; never throttle checkout or verified assistants first.
+- **Poisoned listing:** delist, purge caches, re-scan the seller, add the sample to regression.
+- **Authorization server outage:** anonymous tools keep working; cart tools fail closed.
+- **PSP outage:** hand off to web checkout.
+- **Spec deprecation notice:** see curveball 4.
 
 **DR.** Stateless MCP server in two regions; replicated cart, idempotency and receipt stores; receipt-signing keys rotated with overlap.
 
@@ -378,7 +387,7 @@ That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; 
 | 95 | Agent Frameworks, Hands-On | ADR-001: official MCP SDK v2 vs Mastra; framework-independent tools |
 | 100 | AI Gateways | Edge policy on `Mcp-Method`/`Mcp-Name` headers |
 | 104 | Testing AI Code | Contract, chaos and tool-description snapshot tests |
-| 109–116 | FDE professional skills | Discovery, ROI, ADRs, stakeholder "no", freeze planning, SOW |
+| 109–116 | FDE practice | Discovery, ROI, ADRs, stakeholder "no", freeze planning, SOW |
 | 122–124 | Agentic Web; Agent Economies; Agent Identity and Trust Fabric | Agent-ready site, mandates, signed identity |
 
 **New/gap topics exercised:** AGT-5 distribution inside AI assistants (#13); #15 crawler control and content licensing; #17 TypeScript stack; #3 agentic-browser security via WebMCP (AGT-4); #8 injection-resistant design (quarantined seller content); AGT-10 generative-UI protocol choice (MCP Apps); FDE-1 security review; FDE-8 saying no (the hidden-text request); #21 ads in assistants (GEO without manipulation).

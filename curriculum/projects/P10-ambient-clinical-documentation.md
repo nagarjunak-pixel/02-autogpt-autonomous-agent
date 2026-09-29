@@ -91,8 +91,8 @@ It also needs an honest build-vs-buy decision, clinician-rated evaluation and tr
 **Mock systems.** A HAPI FHIR R4 server (Docker) seeded with Synthea patients; an auth stub issuing clinician-scoped tokens; a consent service writing FHIR `Consent`; a browser capture app (MediaRecorder, chunked encrypted upload); a review UI. Write-back is a `DocumentReference` (LOINC 11506-3 Progress note; `docStatus` preliminary → final) plus a `Provenance` recording AI assistance.
 
 **Budget paths:**
-- *API path (≤ USD 50):* hosted Whisper-class ASR plus a mid-tier LLM, for about 150 encounters × 5 eval runs. Transcribe each audio file once and cache the transcripts. Synthetic data needs no BAA, but students list which vendors *would*.
-- *Local path:* faster-whisper/WhisperX + pyannote.audio, an 8–14B instruct model via Ollama or vLLM, and a small NLI model, on one 16–24 GB GPU (CPU works, slowly).
+- **API path (≤ USD 50):** hosted Whisper-class ASR plus a mid-tier LLM, for about 150 encounters × 5 eval runs. Transcribe each audio file once and cache the transcripts. Synthetic data needs no BAA, but students list which vendors *would*.
+- **Local path:** faster-whisper/WhisperX + pyannote.audio, an 8–14B instruct model via Ollama or vLLM, and a small NLI model, on one 16–24 GB GPU (CPU works, slowly).
 
 **Out of scope:** real PHI, vendor app certification, claims submission, CPT codes (AMA-licensed content), orders or e-prescribing from the note, and behavioural-health notes.
 
@@ -292,10 +292,10 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 ## 8. Evaluation plan
 
 **Datasets:**
-- *Golden:* 150 synthetic encounters (course), plus 300 consented pilot encounters with clinician-built fact lists (real engagement).
-- *Adversarial:* spoken injection, off-record requests, look-alike/sound-alike drugs, interpreter visits, consent withdrawal.
-- *Regression:* every clinician-reported error, frozen weekly.
-- *Held-out:* clinicians and clinics not used in prompt tuning.
+- **Golden:** 150 synthetic encounters (course), plus 300 consented pilot encounters with clinician-built fact lists (real engagement).
+- **Adversarial:** spoken injection, off-record requests, look-alike/sound-alike drugs, interpreter visits, consent withdrawal.
+- **Regression:** every clinician-reported error, frozen weekly.
+- **Held-out:** clinicians and clinics not used in prompt tuning.
 
 **Metrics per layer:**
 

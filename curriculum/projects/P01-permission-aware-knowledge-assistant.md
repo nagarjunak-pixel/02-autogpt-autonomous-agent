@@ -79,8 +79,8 @@ The conversation that decides the project is with the General Counsel. A single 
 
 **Budget, two paths:**
 
-- **API path (≤ USD 50).** A small model for contextualisation and judging, a mid-tier model for answers, a frontier model only for final acceptance runs.
-- **Local path.** An 8–14B open-weight model (e.g. Qwen3 or Gemma 3; check licences) on Ollama or vLLM; `bge-m3` embeddings and `bge-reranker-v2-m3`; Docling plus Tesseract or PaddleOCR.
+- **API path (≤ USD 50):** a small model for contextualisation and judging, a mid-tier model for answers, a frontier model only for final acceptance runs.
+- **Local path:** an 8–14B open-weight model (e.g. Qwen3 or Gemma 3; check licences) on Ollama or vLLM; `bge-m3` embeddings and `bge-reranker-v2-m3`; Docling plus Tesseract or PaddleOCR.
 
 **Out of scope:** real iManage, NetDocuments or Intapp APIs; Teams chat; public case-law research; production HA; a legally complete DPIA (students write a marked draft).
 
@@ -210,7 +210,7 @@ flowchart LR
 
 **Course build (6 weeks):** (1) discovery role-play and the generator; (2) ingestion and OCR; (3) ACL sync, canaries and the trim; (4) generation, citations and evals; (5) injection, deletion and curveballs; (6) hardening and the demo.
 
-**Code sketch — the query-time permission trim and per-user cache** (runnable; the storage and DMS calls are injected):
+**Code sketch: the query-time permission trim and per-user cache** (runnable; the storage and DMS calls are injected):
 
 ```python
 import hashlib, time
@@ -417,7 +417,7 @@ Timings are course weeks, with the real-engagement week in brackets.
 | 96 | Observability Tools | ID-only OTel traces |
 | 109–116 | FDE practice (discovery, ROI, POC → production, ADRs, demos, adoption, data readiness, SOWs) | The full engagement arc |
 
-**New/gap topics exercised:** RAG-3 permission-aware retrieval; #8 injection-resistant architecture; RAG-1/#7 context engineering; RAG-9 citation checking; RAG-4 change feed and delete propagation; FDE-9 oversharing remediation; FDE-1 security review; FDE-5 controlled productivity measurement; RAG-11 build vs buy (Copilot bake-off); #4 obligations → controls; SEC (incident clocks & record retention).
+**New/gap topics exercised:** RAG-3 permission-aware retrieval; #8 injection-resistant architecture; RAG-1/#7 context engineering; RAG-9 citation checking; RAG-4 change feed and delete propagation; FDE-9 oversharing remediation; FDE-1 security review; FDE-5 controlled productivity measurement; RAG-11 build vs buy (Copilot bake-off); #4 obligations → controls; SEC-3 incident clocks and record retention.
 
 ## 15. What reviewers look for / common failure modes
 

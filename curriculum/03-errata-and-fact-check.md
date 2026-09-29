@@ -26,7 +26,7 @@ We ran two independent checks, each against dated sources, primary sources where
 - Sources: [federalreserve.gov SR 26-2](https://www.federalreserve.gov/supervisionreg/srletters/SR2602.htm) · [OCC Bulletin 2026-13](https://www.occ.gov/news-issuances/bulletins/2026/bulletin-2026-13.html)
 
 ### A2. Turn 85, Q419: the copyright answer is one-sided (NEEDS NUANCE)
-- **Correct:** Bartz v. Anthropic (23 Jun 2025) and Kadrey v. Meta (25 Jun 2025) found training to be fair use on their records, and Bartz settled for $1.5B. The Q&A leaves out the other side:
+- **Correct:** Bartz v. Anthropic (23 Jun 2025) and Kadrey v. Meta (25 Jun 2025) found training to be fair use on their records, and Bartz settled for USD 1.5B. The Q&A leaves out the other side:
   - *Thomson Reuters v. Ross* (D. Del., Feb 2025): copying headnotes to train a non-generative tool was **not** fair use. The Third Circuit heard argument on 11 Jun 2026, and no decision had been issued as of Sep 2026.
   - *GEMA v. OpenAI* (Munich Regional Court I, 11 Nov 2025): lyrics memorised in a model are a reproduction.
   - *Getty v. Stability AI* ([2025] EWHC 2863 (Ch), 4 Nov 2025): model weights are not an infringing copy.
@@ -169,7 +169,7 @@ The following all hold:
 - **#14:** The MISSING label for text-to-SQL is right, but "most common enterprise FDE request" has no supporting evidence. Either support it or drop the superlative. Note also that the gap doc ranks it only P2 while calling it the most common request, which is inconsistent.
 
 ### Verified as stated (30 items), for the record
-- **Cyber:** GTG-1002 (Nov 2025); Claude Mythos Preview withheld and released via Project Glasswing (7 Apr 2026) with $100M in credits; the 22 May 2026 Glasswing update (1,752 findings reviewed, 90.6% valid, 62.4% high or critical); Glasswing expanded in June 2026; Unit 42 and GTIG orchestration-layer targeting.
+- **Cyber:** GTG-1002 (Nov 2025); Claude Mythos Preview withheld and released via Project Glasswing (7 Apr 2026) with USD 100M in credits; the 22 May 2026 Glasswing update (1,752 findings reviewed, 90.6% valid, 62.4% high or critical); Glasswing expanded in June 2026; Unit 42 and GTIG orchestration-layer targeting.
 - **US law:** EO 14365 and the DOJ AI Litigation Task Force; the White House National Policy Framework (non-binding); xAI v. Colorado and Colorado SB 26-189; California SB 53; SB 243 and New York's companion law.
 - **Other jurisdictions:** Korea's AI Basic Act (22 Jan 2026); China's labelling measures (Sep 2025); India's G.S.R. 120(E) (in force 20 Feb 2026).
 - **Research and incidents:** CaMeL (77% vs 84% in AgentDojo); the lethal trifecta (16 Jun 2025); the GPT-4o sycophancy rollback (25–28 Apr 2025); CoT monitorability (arXiv 2507.11473); DeepSeek-OCR; multi-token prediction in DeepSeek-V3.

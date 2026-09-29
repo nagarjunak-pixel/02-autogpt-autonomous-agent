@@ -61,7 +61,7 @@ A learner with 10–12 weeks cannot cover 60 "most important" topics in depth. A
 | **K · Multimodal** | 4 | 21 | **5.2** | 2 |
 | M · Future topics | 18 | 88 | 4.9 | 0 |
 
-Section A gets the most depth per topic and includes FlashAttention tiling, distributed-training parallelism, training dynamics and mechanistic interpretability. An FDE almost never pre-trains a model; they need to *reason* about internals (KV-cache memory maths, MoE memory cost, tokenizer cost per language), not rebuild them.
+Section A gets the most depth per topic and includes FlashAttention tiling, distributed-training parallelism, training dynamics and mechanistic interpretability. An FDE almost never pre-trains a model; they need to *reason* about internals (KV-cache memory maths, MoE memory cost, tokeniser cost per language), not rebuild them.
 Meanwhile Section L, the role the curriculum is named for, gets 5.8 pages per topic. Vision-language models and speech are both labelled P1, yet all of multimodal gets 21 pages.
 
 **Recommendation:** compress A to "what a deployer must be able to calculate and explain" (about 50% fewer pages) and reinvest the pages in L, K and the new practice topics.
@@ -107,7 +107,7 @@ Section M holds 18 "future" topics, the largest section by count, with the fewes
 
 ### 1.8 Sequencing is textbook order, not job order
 
-The sections run A→M, bottom-up from tokenizers to future topics. An FDE learner should start where engagements start (discovery, data readiness, RAG, agents, evaluation), then learn to harden and operate, and pull model internals in on demand. [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md) gives a 16-week track, **Engage → Build → Evaluate → Harden → Operate → Deploy**, then electives and a capstone, with the projects placed in it.
+The sections run A→M, bottom-up from tokenisers to future topics. An FDE learner should start where engagements start (discovery, data readiness, RAG, agents, evaluation), then learn to harden and operate, and pull model internals in on demand. [05 · Revised syllabus and learning path](05-revised-syllabus-and-learning-path.md) gives a 16-week track, **Engage → Build → Evaluate → Harden → Operate → Deploy**, then electives and a capstone, with the projects placed in it.
 
 ## 2. What the curriculum does well (and why)
 

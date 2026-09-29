@@ -31,7 +31,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Data.** 35% of GOs are scanned (stamps, skew, handwriting); about 10% of older GOs use **legacy non-Unicode Telugu fonts** that extract as mojibake; income limits sit in tables. Urdu versions exist for only 8 schemes. In a fictional audit, 14% of 100 vendor-FAQ answers contradicted current GOs. The status API has a p95 of 1.8 s and fails about 2% of calls. No helpline recordings are consented for AI use.
 
-**Legal and regulatory (as of Sep 2026; open items re-checked 27 Sep 2026; "unverified" marks items not confirmed from a primary source):**
+**Legal and regulatory** (as of Sep 2026; open items re-checked 27 Sep 2026; "unverified" marks items not confirmed from a primary source):
 - **DPDP Act 2023 ([text](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf)) and DPDP Rules 2025** (G.S.R. 846(E), 13 Nov 2025, [Gazette PDF](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)).
   - Status lookup can rely on the **s.7(b) legitimate use** for State benefits (prior consent, or a notified State database), under Rule 5 and Second Schedule standards. The notice must be available in English or any **Eighth Schedule language** (s.5(3); Rule 3), which covers Telugu, Hindi and Urdu.
   - Scholarship applicants include **children**. Fourth Schedule Part B item 2 lifts s.9(1) and (3) (parental consent; no tracking or behavioural monitoring) for s.7(b) State benefits, "to the extent necessary". Design as if s.9 applied anyway.
@@ -69,8 +69,8 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 **Mock systems:** a status API (needs app_id plus matching mobile; injects 503s and stale records); a WhatsApp simulator (webhook-shaped JSON enforcing the 24-hour window, template-only outbound and interactive-list limits); an IVR simulator (DTMF plus audio); a helpline ticketing API; and a GO registry with an Ed25519-signed manifest standing in for digitally signed PDFs.
 
 **Budget paths:**
-- **(A) API, ≤ USD 50.** Small hosted LLM, embeddings and translation: 3,600 eval queries × 5k tokens ≈ 18M tokens per run.
-- **(B) Local.** Embeddings [bge-m3](https://huggingface.co/BAAI/bge-m3) or [multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large) with [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3); pivot translation with [IndicTrans2](https://huggingface.co/ai4bharat/indictrans2-en-indic-1B) (covers Urdu); an open-weight LLM on Ollama/vLLM, e.g. [Sarvam-30B](https://huggingface.co/sarvamai/sarvam-30b) (GGUF exists), Qwen or Gemma; Tesseract (`tel`, `urd`, `hin`) as the OCR baseline; [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) for ASR and [Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts), which lists Urdu, for TTS. IndicF5 and Sarvam's Bulbul v3 do **not** list Urdu as of Sep 2026; Sarvam's Saaras v3 ASR does ([docs](https://docs.sarvam.ai/)).
+- **API path (≤ USD 50):** small hosted LLM, embeddings and translation: 3,600 eval queries × 5k tokens ≈ 18M tokens per run.
+- **Local path:** embeddings [bge-m3](https://huggingface.co/BAAI/bge-m3) or [multilingual-e5-large](https://huggingface.co/intfloat/multilingual-e5-large) with [bge-reranker-v2-m3](https://huggingface.co/BAAI/bge-reranker-v2-m3); pivot translation with [IndicTrans2](https://huggingface.co/ai4bharat/indictrans2-en-indic-1B) (covers Urdu); an open-weight LLM on Ollama/vLLM, e.g. [Sarvam-30B](https://huggingface.co/sarvamai/sarvam-30b) (GGUF exists), Qwen or Gemma; Tesseract (`tel`, `urd`, `hin`) as the OCR baseline; [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) for ASR and [Indic Parler-TTS](https://huggingface.co/ai4bharat/indic-parler-tts), which lists Urdu, for TTS. IndicF5 and Sarvam's Bulbul v3 do **not** list Urdu as of Sep 2026; Sarvam's Saaras v3 ASR does ([docs](https://docs.sarvam.ai/)).
 
 **Out of scope:** a real WhatsApp number or BSP onboarding, real department data, Aadhaar/e-KYC, payments and consent-manager integration.
 
@@ -184,10 +184,10 @@ flowchart LR
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–3) | Journey map, corpus inventory, OCR audit, top-12 rules drafted with officers, BSP and hosting status, SGI/DPDP applicability note | Memo signed; 12 schemes named | Templates 01, 02; [SOW](templates/03-sow-and-acceptance-criteria.md) |
-| POC (4–8) | Provenance-gated ingestion; per-language retrieval harness; tokeniser-cost study; rules engine for 3 schemes; mobile-matched status tool | te/en pass gates; Urdu gap diagnosed with a plan | ADR-001 to ADR-004, [eval plan](templates/05-eval-plan.md), [threat model](templates/06-threat-model-and-controls.md) |
-| Pilot (9–16) | WhatsApp (text + voice notes) and IVR in 3 districts; 12 schemes; escalation desk; accessibility sessions; red team; security audit | Section 5 met in pilot; audit passed | [Obligations map](templates/07-compliance-obligations-to-controls.md), [security pack](templates/08-security-review-pack.md), [status reports](templates/10-demo-script-and-status-report.md) |
-| Production (17–22) | Statewide rollout, SDC hosting, content-ops process for rule changes, election-period mode | SLOs met for 3 weeks; 2 rule-change drills | [Runbook](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–3) | Journey map, corpus inventory, OCR audit, top-12 rules drafted with officers, BSP and hosting status, SGI/DPDP applicability note | Memo signed; 12 schemes named | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) |
+| POC (4–8) | Provenance-gated ingestion; per-language retrieval harness; tokeniser-cost study; rules engine for 3 schemes; mobile-matched status tool | te/en pass gates; Urdu gap diagnosed with a plan | ADR-001 to ADR-004, eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (9–16) | WhatsApp (text + voice notes) and IVR in 3 districts; 12 schemes; escalation desk; accessibility sessions; red team; security audit | Section 5 met in pilot; audit passed | Obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)), security pack ([template 08](templates/08-security-review-pack.md)), status reports ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (17–22) | Statewide rollout, SDC hosting, content-ops process for rule changes, election-period mode | SLOs met for 3 weeks; 2 rule-change drills | Runbook ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (23–24) | Train content ops and state IT; hand over eval ownership | Directorate ships a rule change and re-evaluates it unaided | Handover checklist |
 
 **Course build:** W1 discovery memo and data scorecard · W2 ingestion, OCR, provenance gate · W3 retrieval and per-language harness · W4 rules engine, status tool, WhatsApp simulator · W5 voice, accessibility, red team · W6 curveballs and demo.
@@ -318,7 +318,8 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 - **Status API down:** say so, queue a WhatsApp/SMS callback, keep the IVR DTMF path.
 - **Template rejected or quality rating drops:** SMS fallback, then fix the template.
 - **Corpus incident:** freeze the scheme's answers to "please call the helpline"; roll back the index.
-- **One language regresses:** route it to humans. **MCC begins:** switch to election mode.
+- **One language regresses:** route it to humans.
+- **MCC begins:** switch to election mode.
 
 **DR.** Immutable, restorable index versions; SDC plus a DR site; static IVR menus.
 
@@ -366,9 +367,9 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 | 89, 91, 92 | Feedback Loops; LLM FinOps; Sovereign Deployment | Platform-data limits, fertility cost, SDC hosting |
 | 90, 96, 97 | SLOs and Incident Response; Observability; Evaluation Tools | Freshness SLO, per-language dashboards |
 | 102, 134 | Model Provider Landscape; Sovereign AI and Open Weights | Indic model and speech choices |
-| 109–116 | FDE practice turns | Qualification, ROI vs ₹25–40 calls, playbook, ADRs, demo, escalation desk (114), data readiness, SOW |
+| 109–116 | FDE practice | Qualification, ROI vs ₹25–40 calls, playbook, ADRs, demo, escalation desk (114), data readiness, SOW |
 
-**New/gap topics exercised:** #6 India SGI rules (applicability analysis), #8 injection-resistant architecture (split contexts, quarantined ingestion), #10 sycophancy under citizen pressure, #4 regulation as obligations → controls, RAG-4 index freshness (effective-dated GOs, conflicting versions, 4-hour freshness SLO), RAG-9 citation engineering (GO number and date in every answer), FDE-8 provider usage policies (WhatsApp AI-provider clause), SEC (India sector AI governance: MeitY guidelines, CERT-In), SEC (accessibility law).
+**New/gap topics exercised:** #6 India SGI rules (applicability analysis), #8 injection-resistant architecture (split contexts, quarantined ingestion), #10 sycophancy under citizen pressure, #4 regulation as obligations → controls, RAG-4 index freshness (effective-dated GOs, conflicting versions, 4-hour freshness SLO), RAG-9 citation engineering (GO number and date in every answer), FDE-8 provider usage policies (WhatsApp AI-provider clause), SEC-11 India sector AI governance (MeitY guidelines, CERT-In), SEC-13 accessibility law.
 
 ## 15. What reviewers look for / common failure modes
 

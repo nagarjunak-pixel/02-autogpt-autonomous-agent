@@ -36,7 +36,7 @@ The FDE's first honest move is to put **buying** on the table (ADR-001): extend 
 
 **Data.** Executive mail holds privileged legal advice, material non-public information (MNPI: trial readouts, earnings, business development), board packs, HR matters and occasional patient-level safety information from clinical sites. Board members often use personal addresses. External calendar invites arrive automatically.
 
-**Legal and regulatory (US, as of Sep 2026; confirm with counsel):**
+**Legal and regulatory** (US, as of Sep 2026; confirm with counsel):
 - **SEC Regulation FD** ([17 CFR 243](https://www.ecfr.gov/current/title-17/chapter-II/part-243)) and the insider-trading policy forbid selective MNPI disclosure, so external sending stays human.
 - **SEC Form 8-K Item 1.05** (adopted 26 Jul 2023; compliance from 18 Dec 2023): material cyber incidents are disclosed within **four business days of the materiality determination** ([SEC](https://www.sec.gov/newsroom/press-releases/2023-139)). An agent-driven MNPI leak could qualify.
 - **FDA IND safety reporting, 21 CFR 312.32** ([text](https://www.law.cornell.edu/cfr/text/21/312.32)):
@@ -220,10 +220,10 @@ The lesson: **a constraint that lives only in conversation history is a suggesti
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–2) | EA shadowing; baselines; IT scope negotiation; trifecta analysis; buy-vs-build memo | Signed SOW; scopes approved or escalated | [template 01](templates/01-discovery-questionnaire.md), [template 02](templates/02-data-readiness-scorecard.md), [template 03](templates/03-sow-and-acceptance-criteria.md) |
-| POC (3–5) | Q-LLM, planner, interpreter, policies; read-only triage and summaries; AE router; red-team v1; compaction tests | 0 high-severity successes; AE recall ≥ 0.99 | [template 04](templates/04-solution-design-and-adr.md), [template 05](templates/05-eval-plan.md), [template 06](templates/06-threat-model-and-controls.md) |
-| Pilot (6–10) | 6 executives including the CEO, draft-only; weekly red-team drops; trust metrics; read-only board week | §5 thresholds met for 3 weeks | [template 07](templates/07-compliance-obligations-to-controls.md), [template 08](templates/08-security-review-pack.md), [template 10](templates/10-demo-script-and-status-report.md) |
-| Production (11–12) | Waves to all 40 executives; kill-switch drill by Kerrowan IT; auto-send decision package (ADR-006) | CISO and GC sign-off | [template 09](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–2) | EA shadowing; baselines; IT scope negotiation; trifecta analysis; buy-vs-build memo | Signed SOW; scopes approved or escalated | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) |
+| POC (3–5) | Q-LLM, planner, interpreter, policies; read-only triage and summaries; AE router; red-team v1; compaction tests | 0 high-severity successes; AE recall ≥ 0.99 | ADRs ([template 04](templates/04-solution-design-and-adr.md)), eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (6–10) | 6 executives including the CEO, draft-only; weekly red-team drops; trust metrics; read-only board week | §5 thresholds met for 3 weeks | Obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)), security pack ([template 08](templates/08-security-review-pack.md)), status reports ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (11–12) | Waves to all 40 executives; kill-switch drill by Kerrowan IT; auto-send decision package (ADR-006) | CISO and GC sign-off | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (12) | Security team owns the red-team suite; runbooks | Kerrowan runs a drill unaided | Handover pack |
 
 **Code sketch: a minimal quarantined reader with a data-flow policy.** The planner sees only the request and variable names such as `$req: meeting_request`. Every value carries provenance. `send_email` blocks draft-only mode, external recipients, and recipients derived from untrusted data.
@@ -429,7 +429,7 @@ CaMeL-style restricted Python instead of plan JSON (compare utility); FIDES-styl
 | 109, 110, 116 | Use-Case Discovery and Qualification; Business Case and ROI; Scoping, Estimation and SOWs | Lowest-rung analysis; cost per executive; SOW |
 | 111–114 | POC → Pilot → Production Playbook; Architecture Documents and ADRs; Stakeholder Communication and Demos; Change Management and Adoption | Pilot; ADRs; CEO/CISO; EA adoption |
 
-**New/gap topics exercised:** #8 prompt-injection-resistant architectures (dual LLM, CaMeL, lethal trifecta); RAG-1 context engineering (#7: compaction, pinned constraints, context editing); #12 agent memory; #1 security of the orchestration layer (MCP server, OBO, audience-bound tokens); #4 obligations → controls; FDE-1 security review; FDE-2 integrating with Microsoft 365; FDE-11 retention and litigation holds for agent actions; SEC (incident clocks & record retention).
+**New/gap topics exercised:** #8 prompt-injection-resistant architectures (dual LLM, CaMeL, lethal trifecta); RAG-1 context engineering (#7: compaction, pinned constraints, context editing); #12 agent memory; #1 security of the orchestration layer (MCP server, OBO, audience-bound tokens); #4 obligations → controls; FDE-1 security review; FDE-2 integrating with Microsoft 365; FDE-11 retention and litigation holds for agent actions; SEC-3 incident clocks and record retention.
 
 ## 15. What reviewers look for / common failure modes
 

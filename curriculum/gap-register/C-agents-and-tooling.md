@@ -38,7 +38,7 @@ Both model-vendor SDKs are still 0.x: openai-agents is at 0.22.3 ([PyPI, 17 Sep 
   4. Resume from that same state after the decision.
 
   For multi-day waits, use a durable workflow (Turn 99).
-- Enforcement in code rather than in the prompt: permission callbacks and pre-tool hooks (for example `canUseTool` and PreToolUse) that deny or rewrite dangerous calls.
+- Enforcement in code rather than in the prompt: permission callbacks and pre-tool hooks (for example `canUseTool` and `PreToolUse`) that deny or rewrite dangerous calls.
 - Version churn: pin exact SDK versions, wrap the SDK in a thin adapter, and keep tools, prompts and evals outside it.
 - The security-review answer: be able to show where permissions, approvals, budgets and kill switches are enforced in the harness.
 
@@ -47,7 +47,7 @@ Both model-vendor SDKs are still 0.x: openai-agents is at 0.22.3 ([PyPI, 17 Sep 
 **Interview questions.**
 1. What is an agent harness, and what must it provide in production? — It is the runtime around the model: the tool loop, permission checks and approval callbacks, lifecycle hooks, resumable or forkable sessions, compaction, subagents, hard stops (turns, dollars, stalls) and traces. The model reasons; the harness enforces.
 2. How do you implement an approval that may take two days? — Mark the tool as needing approval, let the run pause and return its interruptions, and serialise the run state to durable storage (for example `RunState.to_json` in the OpenAI Agents SDK). Resume from that same state after the decision rather than starting a new user turn, and wrap multi-day waits in a durable workflow.
-3. Which runaway controls belong in the harness, and which in the gateway? — The harness holds per-run limits: max turns, a max budget (the Claude Agent SDK's `maxBudgetUsd` ends in `error_max_budget_usd`), stall and reset counters, and PreToolUse hooks that deny dangerous calls. The gateway holds cross-run budgets per team or tenant as the backstop.
+3. Which runaway controls belong in the harness, and which in the gateway? — The harness holds per-run limits: max turns, a max budget (the Claude Agent SDK's `maxBudgetUsd` ends in `error_max_budget_usd`), stall and reset counters, and `PreToolUse` hooks that deny dangerous calls. The gateway holds cross-run budgets per team or tenant as the backstop.
 
 ---
 
@@ -69,7 +69,7 @@ It includes the evidence that multi-agent systems cost many more tokens and fail
 
 Anthropic's research system used a Claude Opus 4 lead with Sonnet 4 subagents ([Anthropic, 13 Jun 2025](https://www.anthropic.com/engineering/multi-agent-research-system)):
 - It beat single-agent Opus 4 by 90.2% on an internal research eval.
-- It used about 15x the tokens of chat.
+- It used about 15× the tokens of chat.
 - On BrowseComp, token usage explained 80% of the variance; tokens, tool calls and model choice together explained 95%.
 
 A day earlier, Cognition argued the opposite case ([Cognition, 12 Jun 2025](https://cognition.com/blog/dont-build-multi-agents)). The MAST taxonomy gives failures a name: 14 failure modes in 3 categories, built from 150 expert-annotated traces ([arXiv, Mar 2025](https://arxiv.org/abs/2503.13657)). Its MAST-Data set now holds 1,600+ traces across 7 frameworks.
@@ -86,14 +86,14 @@ A day earlier, Cognition argued the opposite case ([Cognition, 12 Jun 2025](http
   - magentic, where a manager plans and re-plans.
 - LLM-driven vs code-driven orchestration. Prefer code-driven flows when the steps are known.
 - Round, stall and reset limits on every dynamic pattern, as in MAF's magentic example.
-- A cost case before going multi-agent: weigh the token multiple (about 15x chat in Anthropic's system) against the value of the task.
+- A cost case before going multi-agent: weigh the token multiple (about 15× chat in Anthropic's system) against the value of the task.
 - Debugging with the MAST categories (system design, inter-agent misalignment, task verification). Then share fuller context, add a verifier step, or collapse back to one agent.
 
-**Idea to remember.** Default to one agent with good tools, and add agents only for parallel, separable, read-heavy work whose value covers roughly 15x the tokens.
+**Idea to remember.** Default to one agent with good tools, and add agents only for parallel, separable, read-heavy work whose value covers roughly 15× the tokens.
 
 **Interview questions.**
 1. Handoff or agent-as-tool: how do you choose? — Use agent-as-tool when a specialist should solve a bounded subtask while the manager keeps ownership of the final answer. Use a handoff when routing is the workflow and the specialist should own the rest of the turn, as in triage to billing.
-2. When does a multi-agent design actually pay off? — For breadth-first, parallelisable, read-heavy work such as research, where the information exceeds one context window; Anthropic measured about 15x chat tokens for its research system. It rarely pays for tightly coupled work like most coding, where parallel agents make conflicting implicit decisions.
+2. When does a multi-agent design actually pay off? — For breadth-first, parallelisable, read-heavy work such as research, where the information exceeds one context window; Anthropic measured about 15× chat tokens for its research system. It rarely pays for tightly coupled work like most coding, where parallel agents make conflicting implicit decisions.
 3. How do you debug a multi-agent system that does worse than a single agent? — Classify trace failures with a taxonomy such as MAST (system design, inter-agent misalignment, task verification). Then share fuller context or traces, add a verifier step, or collapse the agents back into one.
 
 ---
@@ -104,7 +104,7 @@ A day earlier, Cognition argued the opposite case ([Cognition, 12 Jun 2025](http
 
 **What it is.** Techniques for agents connected to dozens of Model Context Protocol (MCP) servers and hundreds of tools. Tool definitions are deferred and found by search, or tools are exposed as a code API that the model calls from sandboxed code, so only final results come back into context.
 
-**Why now.** Anthropic reported that 58 tools used about 55K tokens before a conversation started ([Anthropic, 24 Nov 2025](https://www.anthropic.com/engineering/advanced-tool-use)). In the same report:
+**Why now.** Anthropic reported that 58 tools used about 55k tokens before a conversation started ([Anthropic, 24 Nov 2025](https://www.anthropic.com/engineering/advanced-tool-use)). In the same report:
 - its Tool Search Tool raised Opus 4 from 49% to 74% and Opus 4.5 from 79.5% to 88.1% on MCP evals;
 - programmatic tool calling cut tokens by 37% (43,588 to 27,297);
 - tool-use examples lifted complex-parameter accuracy from 72% to 90%.
@@ -127,8 +127,8 @@ Code execution with MCP cut one workflow from 150,000 to 2,000 tokens (98.7%), t
 **Idea to remember.** When tools run into the hundreds, stop pasting every schema into the prompt: let the agent search for tools, or write sandboxed code against them and return only the result.
 
 **Interview questions.**
-1. Why does connecting more MCP servers make an agent worse? — Every tool schema costs context tokens (58 tools used about 55K in Anthropic's example), and the crowding raises wrong-tool and wrong-argument errors. Deferred loading with tool search restores both context and accuracy.
-2. What is "code mode", and what does it cost you? — The agent writes code against a typed API generated from MCP tools and runs it in a sandbox, chaining many calls and returning only final results (150K to 2K tokens in Anthropic's example). The cost is that you now execute model-written code, so you need the Turn 86 sandbox controls, egress limits and monitoring.
+1. Why does connecting more MCP servers make an agent worse? — Every tool schema costs context tokens (58 tools used about 55k in Anthropic's example), and the crowding raises wrong-tool and wrong-argument errors. Deferred loading with tool search restores both context and accuracy.
+2. What is "code mode", and what does it cost you? — The agent writes code against a typed API generated from MCP tools and runs it in a sandbox, chaining many calls and returning only final results (150k to 2k tokens in Anthropic's example). The cost is that you now execute model-written code, so you need the Turn 86 sandbox controls, egress limits and monitoring.
 3. When would you keep plain direct tool calls? — When there are few tools, when each call needs human approval or audit, or when the environment allows no code sandbox.
 
 ---
@@ -201,7 +201,7 @@ Slack limits outside apps in three places:
 - **Rate limits** ([Slack changelog, 29 May 2025](https://docs.slack.dev/changelog/2025/05/29/rate-limit-changes-for-non-marketplace-apps/)). History APIs are cut to 1 request per minute (15 objects) for commercially distributed apps that are not in the Marketplace. "Internal customer-built applications are not impacted".
 
 OpenAI now calls submissions "plugins", published to "the universal Plugins Directory shared by ChatGPT and Codex" ([OpenAI, accessed 26 Sep 2026](https://developers.openai.com/apps-sdk/deploy/submission)). Review requires:
-- readOnlyHint, openWorldHint and destructiveHint on every MCP tool;
+- `readOnlyHint`, `openWorldHint` and `destructiveHint` on every MCP tool;
 - a Content Security Policy (CSP) for UI;
 - domain verification and a verified developer identity;
 - "Five positive test cases and three negative test cases".
@@ -240,15 +240,15 @@ MCP Apps became the first official MCP extension ([MCP blog, 26 Jan 2026](https:
 **What it is.** System-of-record (SoR) vendors now sell their own agents, builders, data layers and per-action pricing, and increasingly expose governed MCP and Agent2Agent (A2A) endpoints to outside AI. These are the vendors of customer relationship management (CRM), IT service management (ITSM), enterprise resource planning (ERP) and human capital management (HCM) systems. The forward deployed engineer (FDE) must decide whether to build inside the vendor's platform, call it through those endpoints, or build an independent agent that federates across systems.
 
 **Why now.** Salesforce's Agentforce pricing ([Salesforce, accessed 26 Sep 2026](https://www.salesforce.com/agentforce/pricing/)):
-- Flex Credits cost $500 per 100k, at 20 credits ($0.10) per action and 30 per voice action.
-- A conversation costs $2.
-- Add-ons are $125 per user per month, and the user licence is $5.
-- Agentforce 1 starts at $550 per user per month.
+- Flex Credits cost USD 500 per 100k, at 20 credits (USD 0.10) per action and 30 per voice action.
+- A conversation costs USD 2.
+- Add-ons are USD 125 per user per month, and the user licence is USD 5.
+- Agentforce 1 starts at USD 550 per user per month.
 
-Salesforce signed to buy Informatica, at about $8B equity value ([Salesforce, 27 May 2025](https://www.salesforce.com/news/press-releases/2025/05/27/salesforce-signs-definitive-agreement-to-acquire-informatica/)), and closed the deal ([Salesforce, 18 Nov 2025](https://www.salesforce.com/news/press-releases/2025/11/18/salesforce-completes-acquisition-of-informatica/)). It then announced Headless 360 at TDX ([Salesforce, 15 Apr 2026](https://www.salesforce.com/news/stories/salesforce-headless-360-announcement/)). Headless 360 exposes capabilities "as an API, MCP tool, or CLI command", with 60+ new MCP tools and 30+ coding skills.
+Salesforce signed to buy Informatica, at about USD 8B equity value ([Salesforce, 27 May 2025](https://www.salesforce.com/news/press-releases/2025/05/27/salesforce-signs-definitive-agreement-to-acquire-informatica/)), and closed the deal ([Salesforce, 18 Nov 2025](https://www.salesforce.com/news/press-releases/2025/11/18/salesforce-completes-acquisition-of-informatica/)). It then announced Headless 360 at TDX ([Salesforce, 15 Apr 2026](https://www.salesforce.com/news/stories/salesforce-headless-360-announcement/)). Headless 360 exposes capabilities "as an API, MCP tool, or CLI command", with 60+ new MCP tools and 30+ coding skills.
 
 ServiceNow made four moves:
-- It announced the Moveworks acquisition ($2.85B) on 10 Mar 2025 and closed it on 15 Dec 2025 ([ServiceNow, 15 Dec 2025](https://newsroom.servicenow.com/press-releases/details/2025/ServiceNow-completes-acquisition-of-Moveworks/default.aspx)).
+- It announced the Moveworks acquisition (USD 2.85B) on 10 Mar 2025 and closed it on 15 Dec 2025 ([ServiceNow, 15 Dec 2025](https://newsroom.servicenow.com/press-releases/details/2025/ServiceNow-completes-acquisition-of-Moveworks/default.aspx)).
 - It partnered with OpenAI ([ServiceNow, 20 Jan 2026](https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-and-OpenAI-collaborate-to-deepen-and-accelerate-enterprise-AI-outcomes/default.aspx)).
 - It partnered with Anthropic, making Claude the default model for ServiceNow Build Agent ([Anthropic, 28 Jan 2026](https://www.anthropic.com/news/servicenow-anthropic-claude)).
 - It opened "its full system of action to any AI agent" through a GA MCP server that names Claude and Copilot ([ServiceNow, 5 May 2026](https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-opens-its-full-system-of-action-to-every-AI-Agent-in-the-enterprise/default.aspx)).
@@ -270,7 +270,7 @@ Workday bought Flowise ([Workday, 14 Aug 2025](https://newsroom.workday.com/2025
 
 **Interview questions.**
 1. The customer runs Service Cloud. Do you build in Agentforce, or build a custom agent that calls Salesforce? — Build in Agentforce when the work lives mostly inside Salesforce data and permissions and the per-action price fits. Build custom when the work spans many systems, needs model or eval control, or volume makes per-action pricing expensive; the custom agent then calls Salesforce through governed APIs or MCP under the user's identity, never a shared admin token.
-2. How do you compare vendor per-action pricing with running your own agent? — Normalise both to cost per successful task: at 20 Flex Credits ($0.10) per action, 1M actions a month is about $100k before licences. Compare that with your tokens, hosting, evaluation and maintenance, and with success rates on the customer's eval set.
+2. How do you compare vendor per-action pricing with running your own agent? — Normalise both to cost per successful task: at 20 Flex Credits (USD 0.10) per action, 1M actions a month is about USD 100k before licences. Compare that with your tokens, hosting, evaluation and maintenance, and with success rates on the customer's eval set.
 3. How has outside agents' access to SoR data changed in 2026? — Vendors now publish governed agent endpoints: ServiceNow's GA MCP server (May 2026) and Salesforce Headless 360 (Apr 2026), with SAP planning bi-directional A2A for Joule in Q4 2026. Design federated, permission-aware calls through these endpoints under the user's identity, not bulk copies.
 
 ---
@@ -320,8 +320,8 @@ Control planes also connect to each other and multiply:
 
 **What it is.** The layer that makes coding agents safe and repeatable across a customer's engineering organisation. It has three parts: deterministic lifecycle hooks around tool calls, admin-managed settings that override users, and plugins and marketplaces that bundle commands, subagents, MCP servers and hooks. Generic harness primitives such as permission callbacks and stop conditions belong to AGT-1; this entry covers team-scale policy and supply chain.
 
-**Why now.** The Claude Code hooks reference lists 33 events, for example PreToolUse, PermissionRequest, PermissionDenied, PostToolBatch, SubagentStop, PreCompact/PostCompact, TaskCreated, ConfigChange and Elicitation ([Anthropic docs, accessed 26 Sep 2026](https://code.claude.com/docs/en/hooks)). The same reference sets out the enforcement rules:
-- A PreToolUse hook can allow, deny or ask, or rewrite a tool's input.
+**Why now.** The Claude Code hooks reference lists 33 events, for example `PreToolUse`, `PermissionRequest`, `PermissionDenied`, `PostToolBatch`, `SubagentStop`, `PreCompact`/`PostCompact`, `TaskCreated`, `ConfigChange` and `Elicitation` ([Anthropic docs, accessed 26 Sep 2026](https://code.claude.com/docs/en/hooks)). The same reference sets out the enforcement rules:
+- A `PreToolUse` hook can allow, deny or ask, or rewrite a tool's input.
 - The managed setting `allowManagedHooksOnly` blocks "user, project, local, and plugin hooks".
 - One exception applies: "Hooks from plugins force-enabled in managed settings enabledPlugins are exempt".
 
@@ -331,7 +331,7 @@ Plugins bundle slash commands, subagents, MCP servers and hooks, and are distrib
 
 **What to teach.**
 - Guidance vs enforcement. AGENTS.md holds conventions. Hooks hold rules that must apply whatever the model does: block destructive commands and writes to protected paths, run formatters and tests after edits, and scan for secrets.
-- Writing PreToolUse and permission hooks that allow, deny, ask or rewrite input.
+- Writing `PreToolUse` and permission hooks that allow, deny, ask or rewrite input.
 - Rolling out managed settings: permission modes, deny rules, `allowManagedHooksOnly` and the `enabledPlugins` exemption.
 - Plugins and marketplaces as supply chain: an internal marketplace with pinned, reviewed plugins, an MCP server allow-list, and AI-BOM entries (Turn 77).
 - Running agents in sandboxes or cloud workspaces, with agent and hook telemetry sent to the security information and event management (SIEM) system.

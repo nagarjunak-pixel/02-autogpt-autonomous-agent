@@ -290,7 +290,7 @@ Students extend it with per-stratum mismatch counts, a deviation register (an ap
 
 **Datasets:** golden (200 actuary-verified policies, frozen); differential (1M fixtures × 3 seeds); masked production-derived (200k records, on-prem only); mutation (50 seeded bugs); adversarial (20 tasks that tempt the agent to edit tests, delete files, obey injected comments, add unvetted dependencies or paste external code); held-out (40 hidden-test tasks, never used to tune AGENTS.md or skills); regression (every shadow mismatch).
 
-**Metrics by layer:** equivalence (mismatches by field and stratum); oracle (mutation kill rate, legacy paragraph coverage); agent (pass@1, pass^3, tampering blocked, hook denials, cost per task); human review (seeded-defect catch rate on 10% of review assignments, per Turn 64; review minutes; rework); delivery (the five DORA metrics).
+**Metrics per layer:** equivalence (mismatches by field and stratum); oracle (mutation kill rate, legacy paragraph coverage); agent (pass@1, pass^3, tampering blocked, hook denials, cost per task); human review (seeded-defect catch rate on 10% of review assignments, per Turn 64; review minutes; rework); delivery (the five DORA metrics).
 
 **Productivity: the honest version (pre-registered before the pilot).**
 
@@ -412,11 +412,11 @@ Timings are real-engagement weeks, with the course week in brackets.
 | 101 | Coding Agents as Daily Tools | Working loop; diff-review order (tests first) |
 | 34, 92, 102 | Local Inference; On-Prem; Provider Landscape | Hosting ADR |
 | 103, 104 | Python Engineering; Testing AI Code | Harness, property and mutation tests |
-| 109–116 | FDE professional skills | Qualification, ROI honesty, POC → production, ADRs, demos, adoption, SOW |
+| 109–116 | FDE practice | Qualification, ROI honesty, POC → production, ADRs, demos, adoption, SOW |
 | 127, 128 | Autonomous SE at Scale; Governance-as-Code | Verification as bottleneck; policy as hooks and CI |
 | 132 | The Science of Agent Evaluation | pass^k; randomised productivity measurement |
 
-**New/gap topics exercised:** AGT-8 coding-agent governance (hooks, protected paths, skill supply chain); FDE-5 controlled productivity measurement; #8 injection-resistant design (the repo as untrusted input); FDE-1 security review and tool due diligence; FDE-3 deploying inside the customer's network (on-prem model, deny-by-default egress); #4 obligations → controls; SEC (incident clocks & record retention); SEC (India sector AI governance: CERT-In). Not yet in the register: spec-driven development, characterisation testing and strangler-fig migration.
+**New/gap topics exercised:** AGT-8 coding-agent governance (hooks, protected paths, skill supply chain); FDE-5 controlled productivity measurement; #8 injection-resistant design (the repo as untrusted input); FDE-1 security review and tool due diligence; FDE-3 deploying inside the customer's network (on-prem model, deny-by-default egress); #4 obligations → controls; SEC-3 incident clocks and record retention; SEC-11 India sector AI governance (CERT-In). Not yet in the register: spec-driven development, characterisation testing and strangler-fig migration.
 
 ## 15. What reviewers look for / common failure modes
 

@@ -274,7 +274,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 - **Regression:** every analyst-reported bad citation.
 - **Held-out:** one target that is never used in development.
 
-**Metrics by layer:**
+**Metrics per layer:**
 
 | Layer | Metrics |
 |---|---|
@@ -347,7 +347,13 @@ At 25–40 runs a month that is about USD 25–600 of model and search spend. Li
 
 **Reasoning effort per step.** Set effort explicitly on every call, as defaults change between model versions: high for planning, counter-search and the LLM-judge step on contested or numeric claims; low or none for reading and extraction, where typed schemas do the work. Give each run a reasoning-token budget (e.g. 150k, about USD 0.75–11 at the table's strong-model output prices) inside the USD 40 cap; once it is spent, remaining steps drop to low effort and the run is flagged. Keep the split only if an effort sweep on the 3 fixture deals shows precision and red-flag coverage gains worth the cost.
 
-**Runbook:** *Injection detected*: quarantine the document, notify the deal team, add it to the regression set. *Budget breaker*: stop, keep partial state, let the analyst decide whether to resume. *Suspected wall breach*: freeze both namespaces, notify the CCO, preserve logs. *Licence complaint*: block the source and purge its passages. *Destroy request*: run the deletion workflow and issue a certificate. *Provider outage*: fail over to a model that has passed the eval gate.
+**Runbook:**
+- **Injection detected:** quarantine the document, notify the deal team, add it to the regression set.
+- **Budget breaker:** stop, keep partial state, let the analyst decide whether to resume.
+- **Suspected wall breach:** freeze both namespaces, notify the CCO, preserve logs.
+- **Licence complaint:** block the source and purge its passages.
+- **Destroy request:** run the deletion workflow and issue a certificate.
+- **Provider outage:** fail over to a model that has passed the eval gate.
 
 **DR.** Per-deal backups under that deal's key, so shredding the key also makes backups unreadable (document this for the CCO). RPO 24 h, RTO 8 h; indexes rebuild from VDR exports.
 
@@ -399,7 +405,7 @@ Weeks are real-engagement weeks (see §7 for the course schedule).
 | 87, 96, 97 | Model Upgrades; Observability; Evaluation Tools | Judge re-pinning and recalibration; OTel spans; calibrated judge |
 | 91, 100 | LLM FinOps; AI Gateways | Per-run caps; the 20× curveball |
 | 95, 99 | Agent Frameworks, Hands-On; Durable Workflow Platforms | LangGraph or a vendor agent SDK for the loop (ADR-001); Temporal-style resumable runs |
-| 109–113 | FDE professional skills | Qualification, ROI, POC → pilot, ADRs, demos |
+| 109–113 | FDE practice | Qualification, ROI, POC → pilot, ADRs, demos |
 | 122 | The Agentic Web | Web Bot Auth, paid crawler access, AI preferences |
 
 **New/gap topics exercised:** #15 crawler control and licensing; #19 web search APIs; #8 injection-resistant architecture (quarantined readers); #12 agent memory (per-deal, deletable); RAG-9 citation checking; RAG-8 agentic retrieval; RAG-1 context engineering for long runs; MOD-1 reasoning controls (per-step effort, run budget); MOD-7 cache isolation (per-deal prompt caches); AGT-1 harness choice and AGT-2 when not to go multi-agent (ADR-001); FDE-8 saying no (the portal scrape); FDE-11 record-keeping vs NDA destruction; plus UK MAR, FCA SYSC 10.2 and SEBI PIT.

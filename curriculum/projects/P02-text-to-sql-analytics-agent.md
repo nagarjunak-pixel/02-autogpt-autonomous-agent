@@ -63,8 +63,8 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 
 **Budget, two paths:**
 
-- **API path (≤ USD 50).** A small model for planning, clarifying and narrative; a frontier or reasoning model only for fallback-SQL runs and the ADR-006 effort sweep.
-- **Local path.** A 7–14B open-weight instruct or coder model on Ollama or vLLM. Measure its Hindi and Hinglish quality first; small models vary widely.
+- **API path (≤ USD 50):** a small model for planning, clarifying and narrative; a frontier or reasoning model only for fallback-SQL runs and the ADR-006 effort sweep.
+- **Local path:** a 7–14B open-weight instruct or coder model on Ollama or vLLM. Measure its Hindi and Hinglish quality first; small models vary widely.
 
 **Out of scope:** real Snowflake, BigQuery or Databricks accounts (free trials with synthetic data are optional), WhatsApp, voice, other languages and forecasting.
 
@@ -182,7 +182,7 @@ flowchart LR
 
 **Course build (5 weeks):** week 1, discovery role-play, the generator and the semantic layer; week 2, the planner and the guard; week 3, clarification, the fallback path, evals and the effort sweep; week 4, Hindi/Hinglish, cost and curveballs; week 5, hardening and the demo.
 
-**Code sketch — the SQL guard** (tested with `sqlglot` 30.19 against DuckDB; it runs on every statement before execution, on both paths):
+**Code sketch: the SQL guard** (tested with `sqlglot` 30.19 against DuckDB; it runs on every statement before execution, on both paths):
 
 ```python
 from typing import Callable, Optional

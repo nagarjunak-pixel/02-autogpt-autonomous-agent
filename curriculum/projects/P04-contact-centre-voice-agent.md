@@ -41,7 +41,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 - The plan catalogue has 300+ plans with near-identical names.
 - The billing API's p95 from the target region is **800 ms**: most of a one-second turn on its own.
 
-**Legal and regulatory (as of Sep 2026; items marked *verify* need checking before teaching):**
+**Legal and regulatory** (as of Sep 2026; items marked *verify* need checking before teaching):
 - **[DPDP Act 2023](https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf) and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), 13 Nov 2025). Notice (Rule 3), safeguards with one-year log retention (Rule 6) and breach intimation (Rule 7) apply 18 months from notification (May 2027). A Jan 2026 MeitY [proposal](https://ssrana.in/articles/meity-plans-to-cut-short-dpdp-compliance-timeline-and-notify-cross-border-restrictions-for-sdfs/) to shorten this to 12 months was not notified as of Sep 2026 (*verify*). Notice must be offered in English or any Eighth Schedule language (s.5(3)). Significant Data Fiduciary status: *verify*.
 - **DoT SIM-swap instructions (Nov 2022).** SMS is barred for 24 hours on a replacement SIM; the subscriber is notified and the swap confirmed by an IVRS call to the existing SIM ([report](https://www.communicationstoday.co.in/dot-asks-telcos-to-bar-sms-for-24-hrs-on-new-sim-cards/); the DoT text is not public, so *verify*).
 - **TRAI MNP (Ninth Amendment) Regulations 2024**, in force 1 July 2024. No porting code is issued within 7 days of a SIM swap ([TRAI](https://www.trai.gov.in/sites/default/files/2024-10/Regulation_14032024.pdf), [PIB](https://www.pib.gov.in/PressReleasePage.aspx?PRID=2029389)).
@@ -76,8 +76,8 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 **Mock APIs** (FastAPI, injected latency and faults): `/subscriber`, `/plans`, `/bills`, `/cases`, `/otp`, `/app-push`, `/payment-ivr` (token and status only), `/outage-status` and `/crm/handoff` (a Salesforce/ServiceNow-shaped case). `/sim-swap` exists only so tests can prove the bot can never call it.
 
 **Budget paths:**
-- **(A) API, ≤ USD 50.** Streaming Hindi/Telugu ASR/TTS plus a small cached LLM. At ~USD 0.02–0.04 per call-minute, USD 50 buys ~1,200–2,500 call-minutes: enough for development and a stratified pass^4 subset. Pre-render caller audio locally; run the full suite on path B.
-- **(B) Local.** Use [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) (ASR), a 7–30B open-weight model on vLLM/Ollama, Indic Parler-TTS or [IndicF5](https://huggingface.co/ai4bharat/IndicF5) (TTS) and [Silero VAD](https://github.com/snakers4/silero-vad) (MIT, 8 kHz). Orchestrate with [Pipecat](https://github.com/pipecat-ai/pipecat) (BSD-2) or [LiveKit Agents](https://github.com/livekit/agents) (Apache-2.0). You need a GPU with ≥ 12 GB; CPU Telugu TTS misses the budget (record that finding).
+- **API path (≤ USD 50):** streaming Hindi/Telugu ASR/TTS plus a small cached LLM. At ~USD 0.02–0.04 per call-minute, USD 50 buys ~1,200–2,500 call-minutes: enough for development and a stratified pass^4 subset. Pre-render caller audio locally; run the full suite on the local path.
+- **Local path:** use [IndicConformer](https://huggingface.co/ai4bharat/indic-conformer-600m-multilingual) (ASR), a 7–30B open-weight model on vLLM/Ollama, Indic Parler-TTS or [IndicF5](https://huggingface.co/ai4bharat/IndicF5) (TTS) and [Silero VAD](https://github.com/snakers4/silero-vad) (MIT, 8 kHz). Orchestrate with [Pipecat](https://github.com/pipecat-ai/pipecat) (BSD-2) or [LiveKit Agents](https://github.com/livekit/agents) (Apache-2.0). You need a GPU with ≥ 12 GB; CPU Telugu TTS misses the budget (record that finding).
 
 **Out of scope:** real PSTN/SIP, payments, voice biometrics, outbound calling and production CRM tenants.
 
@@ -194,10 +194,10 @@ flowchart LR
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–2) | Process map, 400-call relabel, API latency survey, auth-policy workshop | Discovery memo: Go with conditions | Templates 01, 02; draft [SOW](templates/03-sow-and-acceptance-criteria.md) |
-| POC (3–6) | Telugu cascade vs S2S latency spike; ASR bake-off; recharge and complaint-status flows; synthetic-caller harness | p50 ≤ 1.0 s; intent ≥ 88%; ADR-001 to ADR-003 accepted | ADRs, [eval plan](templates/05-eval-plan.md), [threat model](templates/06-threat-model-and-controls.md) |
-| Pilot (7–12) | Bill explanation, SIM routing, handoff packet, payment-IVR transfer, red team; 1% → 5% traffic | Section 5 thresholds met; no open Sev-1/2 | [Security pack](templates/08-security-review-pack.md), [obligations map](templates/07-compliance-obligations-to-controls.md), [weekly status](templates/10-demo-script-and-status-report.md) |
-| Production (13–17) | 25% per circle, canary per model change, failover drills, per-resolution BPO contract | 2 clean drills; SLOs met for 3 weeks | [Runbook and SLOs](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–2) | Process map, 400-call relabel, API latency survey, auth-policy workshop | Discovery memo: Go with conditions | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), draft SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) |
+| POC (3–6) | Telugu cascade vs S2S latency spike; ASR bake-off; recharge and complaint-status flows; synthetic-caller harness | p50 ≤ 1.0 s; intent ≥ 88%; ADR-001 to ADR-003 accepted | ADRs ([template 04](templates/04-solution-design-and-adr.md)), eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (7–12) | Bill explanation, SIM routing, handoff packet, payment-IVR transfer, red team; 1% → 5% traffic | Section 5 thresholds met; no open Sev-1/2 | Security pack ([template 08](templates/08-security-review-pack.md)), obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (13–17) | 25% per circle, canary per model change, failover drills, per-resolution BPO contract | 2 clean drills; SLOs met for 3 weeks | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (18–20) | Train CX engineering; eval-set ownership; on-call shadowing | Kavrona ships a prompt change and a model canary unaided | Handover checklist |
 
 **Course build:** W1 discovery memo · W2 pipeline and latency budget · W3 workflows and read-back · W4 handoff, payments, guard · W5 synthetic-caller evals and red team · W6 curveballs and demo.
@@ -426,9 +426,9 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 | 90, 94 | SLOs and Incident Response; Provider Failover and DR | IVR failover drills |
 | 91, 96, 97, 100 | LLM FinOps; Observability; Evaluation Tools; AI Gateways | Cost per contained call, voice spans, CI gates |
 | 102 | Model Provider Landscape | Indic ASR/TTS/LLM choice |
-| 109–116 | FDE practice turns | All FDE artefacts; BPO contract change (114) |
+| 109–116 | FDE practice | All FDE artefacts; BPO contract change (114) |
 
-**New/gap topics exercised:** #6 India SGI rules (applicability analysis); #8 injection-resistant architecture (tools gated in code by verified auth level); RAG-1 context engineering (history = what the caller heard; handoff facts from systems); AGT-6 platform-native vs custom agent; FDE-2 CRM handoff integration; FDE-1 security review; SEC (voice-clone fraud vs KYC); SEC (incident clocks: CERT-In 6 h); plus PCI-scoped voice payments (not in the register).
+**New/gap topics exercised:** #6 India SGI rules (applicability analysis); #8 injection-resistant architecture (tools gated in code by verified auth level); RAG-1 context engineering (history = what the caller heard; handoff facts from systems); AGT-6 platform-native vs custom agent; FDE-2 CRM handoff integration; FDE-1 security review; SEC-7 voice-clone fraud vs KYC; SEC-3 incident clocks (CERT-In 6 h); plus PCI-scoped voice payments (not in the register).
 
 ## 15. What reviewers look for / common failure modes
 

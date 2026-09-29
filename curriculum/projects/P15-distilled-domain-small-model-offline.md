@@ -34,7 +34,7 @@ The key insight is to **fine-tune for behaviour, not knowledge.** Citation forma
 
 **Data.** About 3,800 documents (2,600 OEM manuals, 900 Kilnridge procedures, 300 bulletins), about 180k pages. A quarter are scanned, and torque and clearance tables are often images. Several revisions of each manual are in circulation, and 10% of crew guides are in Spanish. Three years of hotline notes (about 40k calls) contain names, so minimise them.
 
-**Legal and regulatory (US; checked against the linked sources on 27 Sep 2026):**
+**Legal and regulatory** (US; checked against the linked sources on 27 Sep 2026):
 
 | Instrument | What it means here |
 |---|---|
@@ -62,7 +62,9 @@ The key insight is to **fine-tune for behaviour, not knowledge.** Citation forma
 
 **Mock systems.** A FastAPI sync server that serves signed packages and a recall list. A device simulator: a CPU-only container (`--cpus 4 --memory 16g`) plus, if available, an NPU laptop (Intel via OpenVINO, or Qualcomm via ONNX Runtime QNN). An MDM stub.
 
-**Budget paths.** *Local (default):* an open-weight teacher via Ollama or vLLM (gpt-oss-20b, Gemma 4 12B/31B, Qwen3.8-27B); QLoRA on a 2–4B student on free-tier notebook GPUs (quotas change); llama.cpp for inference. *API (≤ USD 50):* only with a provider whose terms permit this use. Document the check; the terms above make an open-weight teacher the default.
+**Budget paths:**
+- **Local path (default):** an open-weight teacher via Ollama or vLLM (gpt-oss-20b, Gemma 4 12B/31B, Qwen3.8-27B); QLoRA on a 2–4B student on free-tier notebook GPUs (quotas change); llama.cpp for inference.
+- **API path (≤ USD 50):** only with a provider whose terms permit this use. Document the check; the terms above make an open-weight teacher the default.
 
 **Out of scope:** vendor-SDK NPU tuning, speech, nameplate images, real MDM and CIP audits.
 
@@ -173,10 +175,10 @@ The **safety router** is deterministic (rules plus a small classifier tuned for 
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–2) | Ride-alongs, hotline labelling, inventory export, legal screen, **freeze test set** | Memo; SOW with gated fine-tune; HSE-approved safety taxonomy | [template 01](templates/01-discovery-questionnaire.md), [template 02](templates/02-data-readiness-scorecard.md), [template 03](templates/03-sow-and-acceptance-criteria.md), [template 07](templates/07-compliance-obligations-to-controls.md) |
-| POC (3–7) | Packs, router, renderer, lookup; B0; synthetic pipeline + filter; embedding FT; B1; quantised builds; device bench | B0-vs-B1 decision with CIs; safety suite 100% on the chosen build | [template 04](templates/04-solution-design-and-adr.md), [template 05](templates/05-eval-plan.md), [template 06](templates/06-threat-model-and-controls.md) |
-| Pilot (8–13) | 6 crews vs 6 control crews; signed sync; recall drill; B2; red team | Hotline delta measured; no safety incident; recall within one sync | [template 08](templates/08-security-review-pack.md), weekly [template 10](templates/10-demo-script-and-status-report.md) |
-| Production (14–17) | Rollout by device class; client CIP evidence packs; fleet dashboard | ≥ 95% on approved version; HSE sign-off | [template 09](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–2) | Ride-alongs, hotline labelling, inventory export, legal screen, **freeze test set** | Memo; SOW with gated fine-tune; HSE-approved safety taxonomy | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)) |
+| POC (3–7) | Packs, router, renderer, lookup; B0; synthetic pipeline + filter; embedding FT; B1; quantised builds; device bench | B0-vs-B1 decision with CIs; safety suite 100% on the chosen build | ADRs ([template 04](templates/04-solution-design-and-adr.md)), eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (8–13) | 6 crews vs 6 control crews; signed sync; recall drill; B2; red team | Hotline delta measured; no safety incident; recall within one sync | Security pack ([template 08](templates/08-security-review-pack.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (14–17) | Rollout by device class; client CIP evidence packs; fleet dashboard | ≥ 95% on approved version; HSE sign-off | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (18) | Kilnridge ships a manual release and a model release alone | Both pass gates | Checklist, AI-BOM |
 
 **Synthetic data and distillation:**
@@ -253,7 +255,13 @@ The strongest guard is the first check: the test set comes from held-out manual 
 
 ## 8. Evaluation plan
 
-Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (the frozen 400 + 50, which the generation pipeline cannot read); adversarial (pressure prompts, injected bulletins, wrong-variant questions, Spanish); regression (every field report); held-out (80 questions from a second set of held-out sections, used only at release).
+Use [template 05](templates/05-eval-plan.md).
+
+**Datasets:**
+- **Golden:** the frozen 400 + 50, which the generation pipeline cannot read.
+- **Adversarial:** pressure prompts, injected bulletins, wrong-variant questions, Spanish.
+- **Regression:** every field report.
+- **Held-out:** 80 questions from a second set of held-out sections, used only at release.
 
 **Metrics per layer.** Router recall on safety intents (100% on the safety slice) and false-trigger rate; retrieval recall@5 and MRR; grounded accuracy and citation correctness; exact-match numbers; an SME rubric per diagnosis turn; and, for each device class, TTFT, tokens/s, peak RAM and thermal-soak loss.
 
@@ -308,11 +316,11 @@ Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (the frozen 4
 The marginal cost per answer is about zero. People and HSE review dominate, so the business case rests on hotline deflection and fewer repeat visits, measured against control crews.
 
 **Runbook:**
-- *Bad version:* publish a recall, and devices revert to the previous A/B slot at sync. HSE sends a radio notice to unsynced crews.
-- *Safety bulletin:* a priority pack sync before any model update.
-- *Reported invented number:* freeze the release, add a regression case, and trace how a number escaped lookup.
-- *NPU driver breaks the runtime:* automatic CPU fallback; pin the driver via MDM.
-- *Device offline for more than 30 days:* safety answers carry a call-in banner.
+- **Bad version:** publish a recall, and devices revert to the previous A/B slot at sync. HSE sends a radio notice to unsynced crews.
+- **Safety bulletin:** a priority pack sync before any model update.
+- **Reported invented number:** freeze the release, add a regression case, and trace how a number escaped lookup.
+- **NPU driver breaks the runtime:** automatic CPU fallback; pin the driver via MDM.
+- **Device offline for more than 30 days:** safety answers carry a call-in banner.
 
 **DR.** The pipeline is reproducible (pinned data snapshots, seeds, container digests), and every released package is retained. The sync server runs in two regions. Devices work offline by design, with search-only fallback if the model fails to load.
 
@@ -351,13 +359,13 @@ VLM reading of nameplates to confirm the model number; glove-friendly speech inp
 | 14, 26, 75 | Hallucination in Depth; Alignment and Safety Training; Jailbreaks and Red-Teaming | Numeric hallucination, safety erosion, pressure suite |
 | 30, 34, 129 | Quantisation Formats in Depth; Local and On-Device Inference; Efficient and Energy-Aware AI | GGUF/QAT/INT4, CPU vs NPU runtimes, thermal soak |
 | 36, 42, 48, 49 | Constrained Decoding Engines; Document Parsing; Embedding-Model Selection; RAG Evaluation Tooling | Citation schema, scanned tables, retrieval evals |
-| 64, 41, 78 | Trust Calibration and Automation Bias; Multilingual Prompting; PII Detection and Data-Loss Prevention | "Verify the tag" UI; Spanish slices; minimising names in hotline notes |
+| 41, 64, 78 | Multilingual Prompting; Trust Calibration and Automation Bias; PII Detection and Data-Loss Prevention | Spanish slices; "Verify the tag" UI; minimising names in hotline notes |
 | 92, 134 | On-Prem, Air-Gapped and Sovereign Deployment; Sovereign AI and Open-Weight Ecosystems | Fully offline devices; open-weight teacher and student licences |
 | 76, 77, 85 | Data and Memory Poisoning; Model Supply Chain; Copyright and IP for AI | Injected bulletins, signed packages, OEM and teacher terms |
 | 87–90, 104 | Model Upgrades; Canary Releases; Feedback Loops; SLOs and Incident Response; Testing AI Code | Fleet versioning, crew canary, recall, filter tests |
 | 109–116 | FDE practice | Discovery, ROI, gated POC, ADRs, demos, adoption, data readiness, SOW |
 
-**New/gap topics exercised:** MOD-13 teacher-model terms and safeguards for distillation; MOD-10 small specialised models (gated against B0); MOD-6 low-precision formats and quantisation-native releases (QAT q4_0, MXFP4); MOD-11 side effects of fine-tuning (safety erosion, re-tested per quantised build); MOD-2 serving fidelity across llama.cpp, OpenVINO and ORT; #10 sycophancy under user pressure; #8 injection-resistant architecture (the quote renderer never takes instructions from content); RAG-1 context engineering for small on-device prompt budgets (#7); FDE-5 controlled impact measurement (matched control crews); FDE-1 security review (device hardening, CIP evidence); SEC (model extraction/distillation abuse).
+**New/gap topics exercised:** MOD-13 teacher-model terms and safeguards for distillation; MOD-10 small specialised models (gated against B0); MOD-6 low-precision formats and quantisation-native releases (QAT q4_0, MXFP4); MOD-11 side effects of fine-tuning (safety erosion, re-tested per quantised build); MOD-2 serving fidelity across llama.cpp, OpenVINO and ORT; #10 sycophancy under user pressure; #8 injection-resistant architecture (the quote renderer never takes instructions from content); RAG-1 context engineering for small on-device prompt budgets (#7); FDE-5 controlled impact measurement (matched control crews); FDE-1 security review (device hardening, CIP evidence); SEC-9 model extraction/distillation abuse.
 
 ## 15. What reviewers look for / common failure modes
 

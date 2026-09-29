@@ -33,7 +33,7 @@ No RBI rule the team found bans cloud LLMs outright. "Nothing leaves" is the Boa
 
 **Data.** About 2,300 circulars; 30% have Telugu versions, fewer Hindi. Pre-2015 documents are image-only, and some Telugu PDFs use legacy non-Unicode fonts. Many internal circulars still cite RBI circulars repealed in RBI's late-2025 consolidation. Loan files mix English, Telugu, handwriting, statements, Aadhaar and PAN.
 
-**Legal and regulatory (as of Sep 2026; re-check before teaching):**
+**Legal and regulatory** (as of Sep 2026; re-check before teaching):
 
 | Instrument | Relevance |
 |---|---|
@@ -63,7 +63,9 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 
 **Mock systems.** An LDAP stub with roles, a mock DMS API, and two Docker networks where `enclave` has no external route. A drop directory simulates the diode; a key in a separate container simulates the HSM.
 
-**Budget paths.** *Local (default):* vLLM or Ollama with small candidates (Gemma 4 E4B/12B, Qwen3.5-9B, a Sarvam-30B GGUF if memory allows). Do the L40S/H100 maths on paper; validate the method by predicting, then measuring, KV capacity on your own GPU. *API (≤ USD 50):* synthetic data and a judge baseline, staging only. The enclave must pass a zero-egress test.
+**Budget paths:**
+- **Local path (default):** vLLM or Ollama with small candidates (Gemma 4 E4B/12B, Qwen3.5-9B, a Sarvam-30B GGUF if memory allows). Do the L40S/H100 maths on paper; validate the method by predicting, then measuring, KV capacity on your own GPU.
+- **API path (≤ USD 50):** synthetic data and a judge baseline, staging only. The enclave must pass a zero-egress test.
 
 **Out of scope:** real diode or HSM, CBS integration, multi-node Kubernetes, real regulator filings.
 
@@ -184,10 +186,10 @@ Dense rows use FP8 KV (0.59 GB per sequence); MoE rows use BF16 KV (88 MB), so F
 
 | Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–2) | Interviews, baselines, supersession audit, DC survey, licence screen | Memo; SOW; hardware deferred to the bake-off | [template 01](templates/01-discovery-questionnaire.md), [template 02](templates/02-data-readiness-scorecard.md), [template 03](templates/03-sow-and-acceptance-criteria.md), [template 07](templates/07-compliance-obligations-to-controls.md) |
-| POC (3–6) | Staging; bake-off (5 candidates × 2 quantisations × languages); load replay; verifier; first diode transfer | Model and GPU ADRs; verified bundle inside; Q&A ≥ 80% | [template 04](templates/04-solution-design-and-adr.md), [template 05](templates/05-eval-plan.md), [template 06](templates/06-threat-model-and-controls.md) |
-| Pilot (7–11) | 3 branches, 20 officers; retrieval-only fallback; SOC logging; red team; IS audit | §5 thresholds; no High findings | [template 08](templates/08-security-review-pack.md), weekly [template 10](templates/10-demo-script-and-status-report.md) |
-| Production (12–15) | Zonal rollout; DR from the same IaC; drill; model-inventory entry with the bank's own validation report | DR ≤ 4 h; CISO and CRO sign-off | [template 09](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–2) | Interviews, baselines, supersession audit, DC survey, licence screen | Memo; SOW; hardware deferred to the bake-off | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)) |
+| POC (3–6) | Staging; bake-off (5 candidates × 2 quantisations × languages); load replay; verifier; first diode transfer | Model and GPU ADRs; verified bundle inside; Q&A ≥ 80% | ADRs ([template 04](templates/04-solution-design-and-adr.md)), eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (7–11) | 3 branches, 20 officers; retrieval-only fallback; SOC logging; red team; IS audit | §5 thresholds; no High findings | Security pack ([template 08](templates/08-security-review-pack.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (12–15) | Zonal rollout; DR from the same IaC; drill; model-inventory entry with the bank's own validation report | DR ≤ 4 h; CISO and CRO sign-off | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (16) | Bank team performs an upgrade and a failover alone | Both drills pass | Checklist, AIBOM |
 
 **Code sketch: the offline bundle verifier.** It runs in import quarantine, and nothing is promoted unless it exits 0.
@@ -351,7 +353,7 @@ Speculative decoding at the design batch; multi-LoRA adapters; CycloneDX AIBOM d
 | 87, 88, 90–94, 96, 97, 100, 102, 134 | Model Upgrades; Canary Releases; SLOs and Incident Response; LLM FinOps; On-Prem, Air-Gapped and Sovereign; IaC for AI Stacks; Failover and DR; Observability Tools; Evaluation Tools; AI Gateways; Model Provider Landscape; Sovereign AI and Open-Weight Ecosystems | The platform core: pipeline, gateway (SSO, quotas, masking, pinned LiteLLM), upgrades, DR, cost, licences |
 | 109–116 | FDE practice (discovery, ROI, POC → production, ADRs, demos, adoption, data readiness, SOW) | Every phase artefact |
 
-**New/gap topics exercised:** FDE-3 deploying inside the customer's network (air gap, HSM keys, one-way transfer); MOD-7 / #16 KV-cache capacity; #1 orchestration-layer supply chain (LiteLLM compromise, signed bundles); #8 injection-resistant architecture (no tools, no egress); RAG-3 permission-aware retrieval; RAG-4 conflicting versions (supersession); RAG-7 structured extraction (loan files); RAG-9 page-level citations; FDE-1 security review (IS audit pack); SEC (India sector AI governance: RBI MRM draft, FREE-AI, CERT-In AIBOM); SEC (incident clocks: RBI and CERT-In 6 hours, DPDP 72 hours).
+**New/gap topics exercised:** FDE-3 deploying inside the customer's network (air gap, HSM keys, one-way transfer); MOD-7 / #16 KV-cache capacity; #1 orchestration-layer supply chain (LiteLLM compromise, signed bundles); #8 injection-resistant architecture (no tools, no egress); RAG-3 permission-aware retrieval; RAG-4 conflicting versions (supersession); RAG-7 structured extraction (loan files); RAG-9 page-level citations; FDE-1 security review (IS audit pack); SEC-11 India sector AI governance (RBI MRM draft, FREE-AI, CERT-In AIBOM); SEC-3 incident clocks (RBI and CERT-In 6 hours, DPDP 72 hours).
 
 ## 15. What reviewers look for / common failure modes
 
