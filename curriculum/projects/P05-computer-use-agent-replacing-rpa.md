@@ -37,7 +37,7 @@ The RPA CoE wants to keep its platform. Compliance fears "an AI hallucinating in
 **Data.** Declarations carry HS/CN codes, values, masses, Incoterms, EORI/IEC identifiers and consignor/consignee names and addresses. Sole-trader parties make this personal data. The free-text **shipment remarks** field comes from customers and shipper EDI; it is untrusted and the main injection vector.
 
 **Legal and regulatory** (as of Sep 2026, verify with counsel):
-- **EU Union Customs Code, [Reg. (EU) 952/2013](https://eur-lex.europa.eu/eli/reg/2013/952/oj):** Art. 15(2) makes whoever lodges a declaration responsible for "the accuracy and completeness of the information"; Art. 18 covers representation; Art. 51 requires keeping documents **at least three years** (the floor for screenshot retention); Arts. 173–174 cover amendment and invalidation.
+- **Union Customs Code (UCC), [Reg. (EU) 952/2013](https://eur-lex.europa.eu/eli/reg/2013/952/oj):** Art. 15(2) makes whoever lodges a declaration responsible for "the accuracy and completeness of the information"; Art. 18 covers representation; Art. 51 requires keeping documents **at least three years** (the floor for screenshot retention); Arts. 173–174 cover amendment and invalidation.
 - **India, Customs Act 1962:** [s.114AA](https://indiankanoon.org/doc/117480706/) penalises knowingly using a false or incorrect declaration with up to **five times the value of goods**. Bills of entry are presented under [s.46](https://indiankanoon.org/doc/1982368/) and shipping bills under [s.50](https://indiankanoon.org/doc/681964/) (statute text checked 27 Sep 2026).
 - **GDPR:** Art. 5(1)(c) minimisation of screenshots, Art. 28 processor terms (model and browser vendors), Art. 32 security, and Chapter V transfers (Rotterdam → Chennai, non-EU providers).
 - **India DPDP Act 2023 and [DPDP Rules 2025](https://www.meity.gov.in/static/uploads/2025/11/53450e6e5dc0bfa85ebd78686cadad39.pdf)** (G.S.R. 846(E), notified 13 Nov 2025): the consent-manager rule applies 12 months and most duties 18 months from notification (May 2027). Design for them now.
@@ -117,7 +117,7 @@ Below the ladder: rules validate the data (net ≤ gross mass), and a single vis
 
 ## 5. Success criteria and acceptance tests
 
-| Dimension | Criterion | Threshold | Test set / evidence |
+| Area | Criterion | Threshold | Test set / evidence |
 |---|---|---|---|
 | Business | Automation outages that stop filing for more than 1 h | ≤ 1/month (baseline ≈ 5/month) | Pilot incident log, 4 weeks |
 | Business | Late filings caused by automation | 0 in pilot | Cut-off report |
@@ -168,7 +168,7 @@ flowchart LR
   GATE --> IDEM
   GATE -->|allowed action| BR
   GATE -->|allowed action| WIN
-  BR --> PORTAL
+  PORTAL <--> BR
   BR -->|screenshot per step| EVID
   VAULT -.->|fills secret fields, model never sees them| BR
   REM -.->|rendered on screen as untrusted input| CUA
@@ -215,7 +215,7 @@ from urllib.parse import urlparse
 class Kind(Enum):
     READ = "read"; WRITE = "reversible_write"; SUBMIT = "irreversible_submit"
 class Blocked(Exception): pass
-PORTAL = "portal.broker.example"; ALLOWED_HOSTS = {PORTAL, "tms.northwind.internal"}
+PORTAL = "portal.broker.example"; ALLOWED_HOSTS = {PORTAL, "tms.duinhaven.internal"}
 COMMIT_SCREEN = re.compile(r"/declarations/[^/#?]+/(review|confirm)\b")  # screen map; path or #route
 SAFE_ON_COMMIT = re.compile(r"^(back|cancel|edit|previous)$", re.I)
 SUBMIT_LIKE = re.compile(r"\b(submit|lodge|transmit|send to customs|confirm)\b", re.I)
@@ -223,7 +223,7 @@ SUBMIT_LIKE = re.compile(r"\b(submit|lodge|transmit|send to customs|confirm)\b",
 @dataclass(frozen=True)
 class Action:
     type: str           # click | type | key | navigate | scroll | screenshot | wait
-    url: str            # page URL (TMS screens are mapped to tms.northwind.internal/<screen>)
+    url: str            # page URL (TMS screens are mapped to tms.duinhaven.internal/<screen>)
     target: str = ""    # accessible name from the DOM/UIA tree, never from OCR of page text
     text: str = ""
 

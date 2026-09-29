@@ -295,7 +295,7 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 **Top threats and controls** ([template 06](templates/06-threat-model-and-controls.md); Turns 73–77):
 1. *Tool poisoning via seller descriptions.* [Invariant Labs](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks) (1 Apr 2025) showed poisoned tool *descriptions*; our tool *results* carry the same risk. Controls: quarantine pipeline, hidden-text stripping, instruction classifier, no seller text in tool descriptions.
 2. *Token passthrough or confused deputy.* Audience validation; separate credentials for PSP calls.
-3. *Mandate bypass* via split carts or currency switching. Limits enforced per cart and again at checkout, in one transaction.
+3. *Mandate bypass via split carts or currency switching.* Limits enforced per cart and again at checkout, in one transaction.
 4. *Duplicate charges from retries.* Idempotency keys end to end, plus PSP idempotency.
 5. *Spoofed agents, scraping swarms.* Signature-verified identity classes, per-class quotas, challenges for unverified automation.
 6. *Supply chain.* Pinned, audited npm dependencies for MCP packages (see the malicious postmark-mcp package, Sep 2025).

@@ -93,7 +93,7 @@ Generate from templates (Faker `en_IN`), translate with an LLM and have a native
 
 ## 5. Success criteria and acceptance tests
 
-| Dimension | Criterion | Threshold | Test set |
+| Area | Criterion | Threshold | Test set |
 |---|---|---|---|
 | Business | Time to a correct policy answer | Median ≤ 2 min and ≥ 50% below baseline | Timed study, 40 staff |
 | Business | Credit-officer minutes per file | −30% at equal or better blind-reviewed quality | 30 files, A/B |
@@ -261,7 +261,14 @@ Passing it starts the **second** gate: the in-enclave eval on the real golden se
 
 ## 8. Evaluation plan
 
-Use [template 05](templates/05-eval-plan.md). **Datasets:** golden (600 questions, 150 files, frozen week 2, stratified by language and script); adversarial (injected annexes, white-text pages, ACL probes, "open the account without KYC?"); regression (every pilot failure); held-out (150 questions sealed for promotion); MILU (AI4Bharat) and IndicGenBench as bake-off sanity sets.
+Use [template 05](templates/05-eval-plan.md).
+
+**Datasets:**
+- **Golden:** 600 questions, 150 files, frozen week 2, stratified by language and script.
+- **Adversarial:** injected annexes, white-text pages, ACL probes, "open the account without KYC?"
+- **Regression:** every pilot failure.
+- **Held-out:** 150 questions sealed for promotion.
+- **Bake-off sanity sets:** MILU (AI4Bharat) and IndicGenBench.
 
 **Metrics.** Recall@10 and MRR per language; supersession precision; correctness, citation precision, abstention; field F1; TTFT, TPOT and KV utilisation under replay; quantisation delta against BF16 **per language**, since a 1-point average can hide a 6-point Telugu loss.
 

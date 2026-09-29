@@ -98,7 +98,7 @@ No agent is needed, because nothing takes actions.
 
 ## 5. Success criteria and acceptance tests
 
-| Dimension | Criterion | Threshold | Test set |
+| Area | Criterion | Threshold | Test set |
 |---|---|---|---|
 | Business | Procedure-lookup hotline calls, pilot vs matched control crews | −30% over the 6-week pilot | Hotline logs |
 | Quality | Grounded accuracy (non-safety) | ≥ 85%; B1/B2 beat B0 by ≥ 5 pts (95% CI > 0) or B0 ships | 240 non-safety questions |

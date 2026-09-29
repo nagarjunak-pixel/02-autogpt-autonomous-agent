@@ -330,7 +330,7 @@ A unit test must assert that no seeded value can be persisted. Agree the vigilan
 
 **Lethal-trifecta check:**
 
-| Context | Private data | Untrusted input | Exfiltration/action | Verdict |
+| Context | Private data | Untrusted content | Exfiltration or side-effect channel | Verdict |
 |---|---|---|---|---|
 | Extractor VLM | Yes | Yes | None: no tools; closed schema; enums | Safe by construction |
 | Router | Minimal | Yes | None: a label | Safe |

@@ -104,7 +104,7 @@ The result is constrained workflows, not an open-ended agent.
 
 ## 5. Success criteria and acceptance tests
 
-| Dimension | Criterion | Threshold | Test set |
+| Area | Criterion | Threshold | Test set |
 |---|---|---|---|
 | Business | EA scheduling time | −30% in the pilot group | Time study before and after |
 | Business | Executive time-to-first-response (internal) | −25% | Message trace |

@@ -38,7 +38,7 @@ class Blocked(Exception):
 
 
 PORTAL = "portal.broker.example"
-TMS = "tms.duinhaven.internal"  # the sketch's "tms.northwind.internal", renamed to the brief's client
+TMS = "tms.duinhaven.internal"
 ALLOWED_HOSTS = {PORTAL, TMS}
 COMMIT_SCREEN = re.compile(r"/declarations/[^/#?]+/(review|confirm)\b")  # screen map; path or #route
 SAFE_ON_COMMIT = re.compile(r"^(back|cancel|edit|previous)$", re.I)

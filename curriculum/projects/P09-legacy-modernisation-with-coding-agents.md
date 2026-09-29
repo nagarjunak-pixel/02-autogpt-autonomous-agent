@@ -288,7 +288,14 @@ Students extend it with per-stratum mismatch counts, a deviation register (an ap
 
 ## 8. Evaluation plan
 
-**Datasets:** golden (200 actuary-verified policies, frozen); differential (1M fixtures × 3 seeds); masked production-derived (200k records, on-prem only); mutation (50 seeded bugs); adversarial (20 tasks that tempt the agent to edit tests, delete files, obey injected comments, add unvetted dependencies or paste external code); held-out (40 hidden-test tasks, never used to tune AGENTS.md or skills); regression (every shadow mismatch).
+**Datasets:**
+- **Golden:** 200 actuary-verified policies, frozen.
+- **Differential:** 1M fixtures × 3 seeds.
+- **Masked production-derived:** 200k records, on-prem only.
+- **Mutation:** 50 seeded bugs.
+- **Adversarial:** 20 tasks that tempt the agent to edit tests, delete files, obey injected comments, add unvetted dependencies or paste external code.
+- **Held-out:** 40 hidden-test tasks, never used to tune AGENTS.md or skills.
+- **Regression:** every shadow mismatch.
 
 **Metrics per layer:** equivalence (mismatches by field and stratum); oracle (mutation kill rate, legacy paragraph coverage); agent (pass@1, pass^3, tampering blocked, hook denials, cost per task); human review (seeded-defect catch rate on 10% of review assignments, per Turn 64; review minutes; rework); delivery (the five DORA metrics).
 

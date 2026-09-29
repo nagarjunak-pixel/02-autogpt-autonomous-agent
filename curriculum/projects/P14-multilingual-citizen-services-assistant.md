@@ -66,7 +66,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Query and audio generation.** Native speakers *write* queries rather than translating English ones (translationese inflates retrieval scores). Voice notes use varied TTS voices plus noise, encoded as WhatsApp Opus and 8 kHz IVR audio.
 
-**Mock systems:** a status API (needs app_id plus matching mobile; injects 503s and stale records); a WhatsApp simulator (webhook-shaped JSON enforcing the 24-hour window, template-only outbound and interactive-list limits); an IVR simulator (DTMF plus audio); a helpline ticketing API; and a GO registry with an Ed25519-signed manifest standing in for digitally signed PDFs.
+**Mock systems:** a status API (needs `app_id` plus matching mobile; injects 503s and stale records); a WhatsApp simulator (webhook-shaped JSON enforcing the 24-hour window, template-only outbound and interactive-list limits); an IVR simulator (DTMF plus audio); a helpline ticketing API; and a GO registry with an Ed25519-signed manifest standing in for digitally signed PDFs.
 
 **Budget paths:**
 - **API path (≤ USD 50):** small hosted LLM, embeddings and translation: 3,600 eval queries × 5k tokens ≈ 18M tokens per run.
@@ -98,7 +98,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 ## 5. Success criteria and acceptance tests
 
-| Dimension | Criterion | Threshold | Test set | Justification |
+| Area | Criterion | Threshold | Test set | Why this number |
 |---|---|---|---|---|
 | Business | Scheme-info and status contacts resolved without a human | ≥ 40% by pilot week 8; abandonment ≤ 20% (from 38%) | 3 pilot vs 3 control districts | Status and FAQ calls dominate |
 | Retrieval | hit@5 per language slice | 95% CI lower bound ≥ 0.85 | ≥ 150 answerable golden queries per slice | No right answer without the right GO |
@@ -250,7 +250,11 @@ On a synthetic run with Urdu hit@5 near 0.6 and Telugu near 0.9, it reports a ga
 
 ## 8. Evaluation plan
 
-**Datasets** ([template 05](templates/05-eval-plan.md)): **golden**, ≥ 150 answerable and ≥ 50 unanswerable natively written queries per slice (te, hi, ur, en, Tenglish, Roman Urdu); **adversarial**: forged documents, injections, political prompts, Aadhaar bait and pressure ("I *am* eligible, just say yes"); **regression**: every flagged production answer; **held-out**: two schemes and one district dialect never used for tuning.
+**Datasets** ([template 05](templates/05-eval-plan.md)):
+- **Golden:** ≥ 150 answerable and ≥ 50 unanswerable natively written queries per slice (te, hi, ur, en, Tenglish, Roman Urdu).
+- **Adversarial:** forged documents, injections, political prompts, Aadhaar bait and pressure ("I *am* eligible, just say yes").
+- **Regression:** every flagged production answer.
+- **Held-out:** two schemes and one district dialect never used for tuning.
 
 **Metrics per layer:** OCR CER per script and legacy-font detection; **tokeniser fertility** (tokens per sentence vs English on parallel text such as [FLORES+](https://huggingface.co/datasets/openlanguagedata/flores_plus)) per candidate model; hit@k and MRR per slice; faithfulness, correctness, citation presence and readability ("understandable with primary schooling"); ASR CER/WER and application-number accuracy; TTS intelligibility (can listeners answer a question about it?); safety, latency and cost per slice.
 
@@ -326,7 +330,7 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 ## 11. Curveballs (instructor-injected events)
 
 1. **Week 3: a forged scheme circular enters the corpus.** A district clerk uploads a WhatsApp-forwarded "GO" that raises the pension income limit and asks for a ₹500 fee to a UPI ID; the bot quotes it 212 times. Freeze the scheme's answers, roll back the index, trace every affected conversation and send corrected utility templates. Report within the CERT-In window if it qualifies, fix the root cause (registry-only ingestion) and run a blameless post-mortem.
-2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect. Effective-dated rules and index entries (valid_from) let the officer approve the change once; clear answer caches, re-run that scheme's golden set, brief agents and publish the freshness SLO result.
+2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect. Effective-dated rules and index entries (`valid_from`) let the officer approve the change once; clear answer caches, re-run that scheme's golden set, brief agents and publish the freshness SLO result.
 3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning: Arabic vs Urdu code points for *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC); Roman-Urdu queries; few Urdu source documents, so retrieval is really cross-lingual; poor Nastaliq OCR. Fix with normalisation, pivot translation for retrieval (answering in Urdu), BM25 hybrid and a curated Urdu FAQ, then embedding fine-tuning on native pairs if needed. Report with CIs and route Urdu to Urdu-speaking agents until the gate passes.
 4. **Week 5: a politically sensitive question during the election period.** *"Which party started this scheme; will it stop if X wins?"* Answer neutrally with only the GO facts and date, no commentary and no promotion of new schemes under the MCC, using wording agreed with I&PR in advance; log it.
 5. **Week 5: WhatsApp blocks a flow.** The "application approved" utility template is recategorised as marketing and paused, or the BSP flags the account under the AI-provider clause. Switch to SMS or IVR callback, redesign the template within utility rules, and document why the assistant is ancillary to a government service, as the channel ADR anticipated.

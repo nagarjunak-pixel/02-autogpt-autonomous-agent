@@ -260,7 +260,7 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 
 **Lethal-trifecta check** ([template 06](templates/06-threat-model-and-controls.md)):
 
-| Context | Private data | Untrusted input | Exfiltration channel | Verdict |
+| Context | Private data | Untrusted content | Exfiltration channel | Verdict |
 |---|---|---|---|---|
 | Tutor LLM call | Yes (academic memory, profile) | Yes (student text, pasted homework, images) | **Removed:** no tools, no browsing; the client renders links only from an allow-list | Safe by construction |
 | LLM adjudicator for ambiguous flags | Yes (conversation excerpt) | Yes | None; output is a schema-constrained label | Safe |

@@ -110,7 +110,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 
 ## 5. Success criteria and acceptance tests
 
-| Dimension | Criterion | Threshold | Test set / method | Justification |
+| Area | Criterion | Threshold | Test set / method | Why this number |
 |---|---|---|---|---|
 | Business | Contained resolution: no transfer, no 72-h repeat on the same intent | ≥ 35% of in-scope pilot calls (baseline ≈14%) | Pilot at 5% of traffic, A/B vs IVR | SIM issues mostly cannot be contained |
 | Business | AHT on transferred calls | ≥ 40 s below control | Pilot A/B | No re-asking of identity and intent |

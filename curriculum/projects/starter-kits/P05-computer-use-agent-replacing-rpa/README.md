@@ -48,7 +48,6 @@ Added for the kit:
 - **Confirmation modals** (portal v3). The run holding the claim may move from review to confirm once, under the same approval. A retried confirm click, or a different run, is blocked.
 - **`reconcile(filing, portal_ref)`**. A reference found by a customer-reference search is recorded; "not found" releases the claim, and the next claim needs a fresh approval. A submitted filing is never released.
 - **`presubmit_diff(shown, plan)`**. The harness's simulated approver declines on any mismatch, for example a lazy dropdown that lost its value.
-- The sketch's TMS host `tms.northwind.internal` is renamed `tms.duinhaven.internal` to match the brief's client.
 
 ### Tricky cases in the data, and their labels
 
