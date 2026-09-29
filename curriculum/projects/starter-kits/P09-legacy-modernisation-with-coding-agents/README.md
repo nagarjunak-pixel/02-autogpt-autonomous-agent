@@ -113,7 +113,7 @@ Each run asks the model for a whole engine, given only `spec_stub.md` and the ra
 | Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
 | 1 (Discovery, weeks 1–2) | Baselines and the pre-registered measurement plan. Decide the tolerance policy with the "actuary", and what counts as a deviation. | none yet |
-| 2 (POC, weeks 3–6) | AGENTS.md, reviewed skills, sandbox and hooks. Replace `hook_decision()`, `CODEOWNERS` and `licence_scan` in `baseline.py` with real rules: protected paths, no network, no force-push, dependency allow-list. Wire `diff_harness.py` into CI. | AC-7, AC-9 |
+| 2 (POC, weeks 3–6) | `AGENTS.md`, reviewed skills, sandbox and hooks. Replace `hook_decision()`, `CODEOWNERS` and `licence_scan` in `baseline.py` with real rules: protected paths, no network, no force-push, dependency allow-list. Wire `diff_harness.py` into CI. | AC-7, AC-9 |
 | 3 (POC) | Spec recovery from the quirks table, characterisation, and mutation testing. Add boundary fixtures until the surviving mutants die, or document why they are equivalent. | AC-3 |
 | 4 (Pilot, weeks 7–11) | Agent implementation of the quote path via `adapter.py` or your agent runtime. Red-team tasks, licence and provenance gates. Signed deviation-register entries only where the actuary agrees. | AC-1, AC-2, AC-6, CB5 |
 | 5 (Pilot) | Facade, shadow comparator and the randomised task comparison. Replace the synthetic trial with your own data and keep the CI reporting. | AC-4, AC-11 (offline proxies first) |

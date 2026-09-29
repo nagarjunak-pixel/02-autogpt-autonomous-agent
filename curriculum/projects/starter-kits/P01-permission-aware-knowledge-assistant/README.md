@@ -93,7 +93,7 @@ python3 eval_harness.py --system adapter --limit 40
 
 | Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| 1 (Discovery, weeks 1–2) | Discovery role-play. Read the generator and decide what your frozen golden set v1 must add. Measure the wall lag from `walls.jsonl` (`dms_applied_at − recorded_at`); do not assume it. | none yet |
+| 1 (Discovery, weeks 1–2) | Discovery role-play. Read the generator and decide what your frozen golden set v1 must add. Measure the wall lag from `walls.jsonl` (`dms_applied_at - recorded_at`); do not assume it. | none yet |
 | 2 (POC, weeks 3–6) | Ingestion: breadcrumbs (matter, parties, document type) on every chunk, OCR routing, and a hidden-text detector that compares the text layer with the visible text. Replace keyword search with hybrid search and a reranker; keep `matches_filter()` as a pre-filter. | AC-6, AC-3, AC-8 |
 | 3 (POC) | ACL and wall sync: push wall events through `apply_wall_event()` instead of polling; a reconciler; canary probes on a schedule. | AC-2, CB1, AC-1 stays 0 |
 | 4 (Pilot, weeks 7–11) | Generation through `adapter.py`: quoted spans, a deterministic citation verifier that blocks failing answers, and abstention. Calibrate a judge against lawyer labels (κ ≥ 0.7) to replace the AC-4 and AC-5 proxies. | AC-3, AC-4, AC-5, AC-7, AC-9 |

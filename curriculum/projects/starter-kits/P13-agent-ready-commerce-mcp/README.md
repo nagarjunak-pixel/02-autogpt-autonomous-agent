@@ -103,7 +103,7 @@ This swaps only the synthetic shopper (AC-5). The model gets the `TOOLS` descrip
 | 2 (POC, weeks 3–4) | Read-only tools on the system of record; seller-content quarantine (strip hidden text, zero-width characters and links; extract attributes offline with one schema-constrained call; return free text only inside `{untrusted: true}`); hybrid search with transliteration synonyms; deterministic `size_guidance`. | AC-1, AC-2, AC-3, AC-4, AC-9, CB1 |
 | 3 (Freeze, weeks 5–8) | Real authorization: audience and issuer checks, Protected Resource Metadata, PKCE, CIMD. Move `MemoryStore` to Postgres with unique constraints and keep AC-6 and AC-8 at 0. Edge policy by verified identity (Web Bot Auth), not user agent. | AC-7, CB3, AC-6, AC-8 |
 | 4 (Pilot, weeks 9–11) | A stateless MCP 2026-07-28 server with SDK v2 around these handlers; checkout hand-off; minimal disclosure in `get_order_status`; synthetic shoppers on two or three models through `adapter.ts`. | AC-5, §9 |
-| 5 (Production, 12–13; Handover, 14) | Load test, swarm test with k6, cost per 1,000 calls, drills (poisoned listing, spec deprecation, swarm), demo of a refused over-mandate purchase and a blocked injection. | AC-10, AC-11, AC-12 |
+| 5 (Production, weeks 12–13; Handover, week 14) | Load test, swarm test with k6, cost per 1,000 calls, drills (poisoned listing, spec deprecation, swarm), demo of a refused over-mandate purchase and a blocked injection. | AC-10, AC-11, AC-12 |
 
 ## What the kit deliberately does not do
 

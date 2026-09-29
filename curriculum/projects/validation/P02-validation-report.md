@@ -153,7 +153,7 @@ and the entitlement layer is what actually protects the data.
 
 ### 3. The long-tail path: where the 14 misses came from
 
-Replaying the kit's 15 long-tail items and logging each step shows five separate causes:
+Replaying the kit's 15 long-tail items and logging each step shows six separate causes:
 
 | Cause | Items | Whose problem |
 |---|---|---|

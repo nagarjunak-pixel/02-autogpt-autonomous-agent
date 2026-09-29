@@ -34,7 +34,7 @@ Options: `python3 eval_harness.py --runs 6` (pass^6 status flows instead of pass
 | `eval_harness.py` | Runs every suite, prints the per-slice gate table and then `AC-ID \| metric \| value \| threshold \| PASS/FAIL`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the gate (including curveballs 2 and 3) and for the generator (determinism, tricky cases present). |
 
-## The control: `language_gate.py`
+### The control: `language_gate.py`
 
 It keeps the brief's sketch and its reviewed behaviour, and a test covers each point:
 
@@ -47,7 +47,7 @@ It keeps the brief's sketch and its reviewed behaviour, and a test covers each p
 
 Curveball 3's synthetic case (Urdu near 0.6, Telugu near 0.9) reproduces the brief's gap of about 0.3 [0.2, 0.39], failing on floor and parity.
 
-## Tricky cases in the data, and their labels
+### Tricky cases in the data, and their labels
 
 A system may read `corpus.jsonl`, `registry.json`, `rules.json` and the text of queries and profiles. Ground truth lives in `gold` fields (stripped before a system sees an item), `corpus_labels.jsonl` and `forged_docs.json`. `applications.jsonl` is reachable only through the mock API.
 
@@ -123,7 +123,7 @@ python3 eval_harness.py --system adapter --limit 40
 | 3 (POC) | Retrieval per language: NFC and Urdu code-point normalisation, transliteration for Tenglish and Roman Urdu, hybrid BM25 + dense (bge-m3 or e5) with a reranker, pivot translation for Urdu. Curveball 3: diagnose before tuning. | AC-2, AC-5, CB-3 |
 | 4 (Pilot, weeks 9–16) | Rules engine from `rules.json` (effective dates, exclusions, every criterion) with indicative wording. Status tool: cache keyed by application **and** mobile, one retry, a stale warning, guardian-only delivery for minors. Curveball 2: approve the new GO once and re-run S01's golden set. | AC-4, AC-8, AC-9, CB-2 |
 | 5 (Pilot) | Voice (ASR and TTS with the "automated voice" prefix), accessibility sessions, abstention, a neutral election-period route, and the red team. Curveball 4. | AC-6, AC-7, CB-4 |
-| 6 (Production 17–22, Handover 23–24) | Curveball 5: the SMS/IVR fallback. The eval report with per-language CIs, and a Telugu/Urdu demo that shows the Urdu gap honestly. | AC-10 to AC-13 with pilot data |
+| 6 (Production, weeks 17–22; Handover, weeks 23–24) | Curveball 5: the SMS/IVR fallback. The eval report with per-language CIs, and a Telugu/Urdu demo that shows the Urdu gap honestly. | AC-10 to AC-13 with pilot data |
 
 ## What the kit deliberately does not do
 

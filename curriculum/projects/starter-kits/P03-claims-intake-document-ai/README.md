@@ -107,7 +107,7 @@ python3 eval_harness.py --system adapter --limit 20
 | 3 (POC) | Extractors through `adapter.py`: Hindi and Marathi labels, Devanagari numerals to ASCII, cross-script names, ISO dates. Constrained JSON output (shape) plus `validate()` (truth). | AC-4, AC-7, AC-12, AC-6 |
 | 4 (Pilot, weeks 7–14) | Calibrate confidence per field type and refit `THRESH`; onboard the curveball 1 layout and add it to the golden and regression sets. Durable workflow with timers, wait-reason codes and a chaos test. | AC-3, AC-5, CB1, AC-8, CB4 |
 | 5 (Pilot) | Reviewer UI with evidence crops, `build_queue()` seeding and active confirmation; agree the vigilance programme with the adjusters' association. | AC-11 (with people), CB3 |
-| 6 (Production, weeks 15–20; Handover, 21–22) | Fairness report with CIs, cost per claim, CI gates (auto-accept error, injections, language gap, cost per page), demo with a caught seed and a delay timeline. | AC-13, AC-15, AC-14 |
+| 6 (Production, weeks 15–20; Handover, weeks 21–22) | Fairness report with CIs, cost per claim, CI gates (auto-accept error, injections, language gap, cost per page), demo with a caught seed and a delay timeline. | AC-13, AC-15, AC-14 |
 
 ## What the kit deliberately does not do
 

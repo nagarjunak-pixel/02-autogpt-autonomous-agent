@@ -116,7 +116,7 @@ python3 eval_harness.py --system adapter --limit 50
 | 3 (POC) | The Q-LLM through `adapter.py` with constrained decoding; a planner that takes reply recipients from `sender_of`, not from the body; a summariser that states facts only, plus an injection detector that flags (never blocks) suspicious mail. Your MCP server with OAuth and Keycloak token exchange, carrying the same policy. | AC-11, AC-10, AC-9 stays 0 |
 | 4 (POC to Pilot) | The long-session harness: inject the pinned block into every planner call (the `pinned` argument the baseline ignores) and make the UI report outcomes. A scheduler that checks every attendee's hours, holds and the deadline. | CB3, AC-7, AC-8 stays 100% |
 | 5 (Pilot, weeks 6–10) | Red team v2: 20 more curveball-2 variants, held-out attacks written by another team, the calendar-invite path (curveball 4), and a kill-switch drill at L1–L4. | AC-9, AC-12 |
-| 6 (Production and handover, weeks 11–12) | The utility-versus-security report; the ADR-6 autonomy-staging package for curveball 5; cost tracking per executive. | AC-11, AC-14 |
+| 6 (Production and Handover, weeks 11–12) | The utility-versus-security report; the ADR-6 autonomy-staging package for curveball 5; cost tracking per executive. | AC-11, AC-14 |
 
 ## What the kit deliberately does not do
 

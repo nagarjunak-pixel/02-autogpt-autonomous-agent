@@ -41,8 +41,8 @@ node --experimental-strip-types eval_harness.ts
 | Kit | Brief | §7 control | Tests |
 |---|---|---|---|
 | [P01](P01-permission-aware-knowledge-assistant/README.md) | [Permission-Aware Knowledge Assistant](../P01-permission-aware-knowledge-assistant.md) | `permission_trim.py` | 17 |
-| [P02](P02-text-to-sql-analytics-agent/README.md) | [Text-to-SQL Analytics Agent](../P02-text-to-sql-analytics-agent.md) | `sql_guard.py`, `semantic_layer.py` | 20 |
-| [P03](P03-claims-intake-document-ai/README.md) | [Claims-Intake Document AI](../P03-claims-intake-document-ai.md) | `review_router.py` | 27 |
+| [P02](P02-text-to-sql-analytics-agent/README.md) | [Text-to-SQL Analytics Assistant](../P02-text-to-sql-analytics-agent.md) | `sql_guard.py`, `semantic_layer.py` | 20 |
+| [P03](P03-claims-intake-document-ai/README.md) | [Claims Intake Document AI](../P03-claims-intake-document-ai.md) | `review_router.py` | 27 |
 | [P04](P04-contact-centre-voice-agent/README.md) | [Contact-Centre Voice Agent](../P04-contact-centre-voice-agent.md) | `turn_manager.py` | 24 |
 | [P05](P05-computer-use-agent-replacing-rpa/README.md) | [Computer-Use Agent Replacing RPA](../P05-computer-use-agent-replacing-rpa.md) | `action_gate.py`, `mock_portal.py` | 27 |
 | [P06](P06-injection-resistant-inbox-agent/README.md) | [Injection-Resistant Inbox Agent](../P06-injection-resistant-inbox-agent.md) | `dataflow_policy.py` | 25 |

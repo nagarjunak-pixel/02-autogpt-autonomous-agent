@@ -82,8 +82,8 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 **Mock systems.** Three mock providers (FastAPI) with configurable latency, 429/5xx errors, a "region down" switch, token accounting and a "retired model" switch (404/410); mock MCP servers; a local "self-hosted" tier on Ollama.
 
 **Budget, two paths:**
-- **API ≤ USD 50:** a small and a mid-tier model; use the strong tier only on eval samples.
-- **Local:** two open-weight sizes on Ollama or vLLM (e.g. 3–4B and 8–14B) as cheap and expensive tiers, with mock providers for failover.
+- **API path (≤ USD 50):** a small and a mid-tier model; use the strong tier only on eval samples.
+- **Local path:** two open-weight sizes on Ollama or vLLM (e.g. 3–4B and 8–14B) as cheap and expensive tiers, with mock providers for failover.
 
 **Gateway choice.** Self-host LiteLLM, Agent Router or agentgateway in Docker or kind, or build a thin FastAPI gateway around the §7 sketch.
 

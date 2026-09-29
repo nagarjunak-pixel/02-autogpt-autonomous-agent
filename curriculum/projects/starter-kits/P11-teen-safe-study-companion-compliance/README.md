@@ -139,7 +139,7 @@ The course build is 5 weeks; the real engagement is 12 (§7).
 | 2 (POC, weeks 3–5) | A multilingual crisis classifier (per turn and per conversation) with LLM adjudication only for ambiguous cases; a region-correct router that pages on-call for imminent risk and never contacts parents automatically. | AC-2, AC-3, AC-4, AC-5, CB-2 |
 | 3 (POC) | Server-side disclosure and a wall-clock break timer (60-minute default) for every user; the minor flag for all; the age gate with the AB 1043 signal; the consent state machine; no late-night nudges. | AC-1, §9 rows, CB-2 |
 | 4 (Pilot, weeks 6–9) | Tutor prompt and model work (re-derive before yielding, a SymPy check for maths, false-premise correction); an output classifier and persona boundaries; the red-team suite with pass^3. | AC-6, AC-7, AC-8, AC-9 |
-| 5 (Production 10–11, Handover 12) | A deletion orchestrator across all stores with relationship checks and counsel routing; annual-report aggregation with small-count suppression; the monthly helpline check; CI gates that block a seeded regression. | AC-11, CB-3, CB-4, CB-5, §10 |
+| 5 (Production, weeks 10–11; Handover, week 12) | A deletion orchestrator across all stores with relationship checks and counsel routing; annual-report aggregation with small-count suppression; the monthly helpline check; CI gates that block a seeded regression. | AC-11, CB-3, CB-4, CB-5, §10 |
 
 ## What the kit deliberately does not do
 

@@ -134,7 +134,7 @@ python3 eval_harness.py --system adapter --limit 30
 | 3 (POC) | A drafter through `adapter.py` with constrained JSON output; interpreter mode (renditions are the patient's), guardian handling, family vs personal history, laterality, dose changes; drop small talk and other patients. | AC-3, AC-5, AC-8, CB-4, AC-13, §8 rows |
 | 4 (POC) | Verifier upgrades: RxNorm-style brand coverage, spoken-number normalisation, multi-word drug names, an NLI or LLM-judge pass for attribution and "the old dose". Keep recall ≥ 95% on the seeded set. | AC-6, AC-4, CB-1 |
 | 5 (Pilot, weeks 9–16) | Review UI with evidence spans and per-flag acknowledgement; a rater rubric with κ; FHIR `DocumentReference` + `Provenance` write-back to HAPI under the clinician's identity; vigilance drills on synthetic notes only. | AC-15, CB-5, AC-9 |
-| 6 (Production 17–22, Handover 23–24) | Real audio (TTS plus role-played) for WER and DER by language; CI gates (critical errors, verifier recall, Spanish WER, p95 latency); a style-regression canary; a cost per signed note. | AC-7, AC-8, AC-14, AC-16, CB-3 |
+| 6 (Production, weeks 17–22; Handover, weeks 23–24) | Real audio (TTS plus role-played) for WER and DER by language; CI gates (critical errors, verifier recall, Spanish WER, p95 latency); a style-regression canary; a cost per signed note. | AC-7, AC-8, AC-14, AC-16, CB-3 |
 
 ## What the kit deliberately does not do
 

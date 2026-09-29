@@ -122,7 +122,7 @@ python3 eval_harness.py --system adapter --tasks 10 --runs 3 --chaos 40
 | 3 (POC) | A scripted executor that reads the approved screen map and handles the banner, tabs, lazy dropdowns and confirmation modal; drop the three legacy habits. Then Playwright role locators against a FastAPI port of the mock. | AC-4 (v2–v4) |
 | 4 (POC) | A durable workflow (Temporal, DBOS or Restate) in place of `run_filing`: intent record in Postgres, non-retryable submit activity, reconciliation by customer reference; the chaos suite on the real engine. Step-up MFA via a vault TOTP engine or a named operator on a durable timer. | AC-6, CB-5, CB-3 |
 | 5 (Pilot, weeks 6–10) | The computer-use fallback through `adapter.py` on a small subset; human sign-off of VLM locator repairs; screen fingerprints for drift; an approval UI with the pre-submit diff and vigilance probes (works council first). | AC-10, CB-1, AC-9 plumbing |
-| 6 (Production 11–13, Handover 14) | CI gates (pass^5 down more than 2 pp, any safety metric above 0, cost up more than 20%), a cost model that includes approver time, a `lodge_declaration` MCP tool for the vendor API, and the v5 demo. | AC-11, CB-4 |
+| 6 (Production, weeks 11–13; Handover, week 14) | CI gates (pass^5 down more than 2 pp, any safety metric above 0, cost up more than 20%), a cost model that includes approver time, a `lodge_declaration` MCP tool for the vendor API, and the v5 demo. | AC-11, CB-4 |
 
 ## What the kit deliberately does not do
 
