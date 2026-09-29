@@ -290,9 +290,9 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 
 ## 10. Operations and cost model
 
-**SLOs:** crisis pipeline availability 99.95%; detection-to-card p95 ≤ 2 s; imminent-risk human acknowledgement p95 ≤ 5 min; tutor availability 99.5%.
+**SLOs.** Crisis pipeline availability 99.95%; detection-to-card p95 ≤ 2 s; imminent-risk human acknowledgement p95 ≤ 5 min; tutor availability 99.5%.
 
-**Observability:** OpenTelemetry GenAI spans into Langfuse or Phoenix, or a managed APM (conventions at Development status, so pin the version); pseudonymous safety-event logs; crisis content kept out of general traces.
+**Observability.** OpenTelemetry GenAI spans into Langfuse or Phoenix, or a managed APM (conventions at Development status, so pin the version); pseudonymous safety-event logs; crisis content kept out of general traces.
 
 **Back-of-envelope monthly cost** (prices change; use bands and recheck them):
 
@@ -320,7 +320,7 @@ That is about **USD 0.02–0.18 per active student per month** before the clinic
 
 ## 12. Deliverables and grading rubric
 
-**Artefacts by phase:** as in §7, plus a feature-to-statute matrix, questions for counsel, the A/B readout, drill logs, the published protocol page and a 15-minute demo.
+**Deliverables:** as in §7, plus a feature-to-statute matrix, questions for counsel, the A/B readout, drill logs, the published protocol page and a 15-minute demo.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

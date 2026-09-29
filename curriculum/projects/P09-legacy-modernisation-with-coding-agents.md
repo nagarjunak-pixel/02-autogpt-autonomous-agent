@@ -354,9 +354,9 @@ BML's design:
 
 ## 10. Operations and cost model
 
-**SLOs:** quote API 99.9% (99.95% in business hours), p95 ≤ 150 ms, renewal batch within its 3-hour window, shadow lag ≤ 5 minutes; agent platform (off the production path) sandbox start ≤ 60 s.
+**SLOs.** Quote API 99.9% (99.95% in business hours), p95 ≤ 150 ms, renewal batch within its 3-hour window, shadow lag ≤ 5 minutes; agent platform (off the production path) sandbox start ≤ 60 s.
 
-**Observability:** OTel traces per agent session (model, tokens, tool calls, hook denials, cost), facade routing counters, and the provenance ledger joined to merge requests. The GenAI semantic conventions are still at *Development* status and have moved repositories, so **pin the version**.
+**Observability.** OTel traces per agent session (model, tokens, tool calls, hook denials, cost), facade routing counters, and the provenance ledger joined to merge requests. The GenAI semantic conventions are still at *Development* status and have moved repositories, so **pin the version**.
 
 **Cost** (price bands change quarterly):
 - **Tokens.** 10 developers (6 Java, 2 SMEs, 2 FDEs) × 20 days × 5 sessions gives 1,000 sessions/month at 0.3–2M tokens each (70–90% cached). At a blended USD 0.5–4 per M tokens that is **USD 150–8,000/month**, with a mid case of about USD 1,200.
@@ -379,7 +379,7 @@ Timings are real-engagement weeks, with the course week in brackets.
 
 ## 12. Deliverables and grading rubric
 
-**Deliverables by phase:**
+**Deliverables:**
 - **Discovery:** questionnaire, baselines, scorecard, SOW, pre-registered measurement plan.
 - **POC:** AGENTS.md set, 3+ reviewed skills, subagent briefs, sandbox + hooks, harness + mutation report, ADRs.
 - **Pilot:** migrated module, shadow report, deviation register, threat model, compliance map, interim readout.

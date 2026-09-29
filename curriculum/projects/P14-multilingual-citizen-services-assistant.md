@@ -94,7 +94,7 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 
 **Qualification: the lowest rung that works.** *Status* is already a DTMF lookup by application number; keep it as the fallback and add voice and WhatsApp on top. *Eligibility* belongs in a **deterministic rules engine** authored from the GOs and signed off by officers, not an LLM reasoning over GOs. *Questions* need a single grounded LLM call over retrieved GO passages, with citations and simple language. A *workflow* ties these together (language ID → intent → status tool | rules questionnaire | grounded Q&A | escalate). No autonomous agent is needed.
 
-**Decision: Go with conditions.** Start with 12 schemes. **Launch each language separately** once it passes its gate, so Urdu may lag. The provenance gate goes live before any public traffic. No Aadhaar in chat.
+**Decision: Go, with conditions.** Start with 12 schemes. **Launch each language separately** once it passes its gate, so Urdu may lag. The provenance gate goes live before any public traffic. No Aadhaar in chat.
 
 ## 5. Success criteria and acceptance tests
 
@@ -105,14 +105,14 @@ What citizens need is narrower: grounded eligibility answers for the **12 scheme
 | Faithfulness | Every claim supported by the cited GO | CI lower bound ≥ 0.93 | Same set; judge calibrated to native raters | False benefit claims harm citizens |
 | Eligibility | Agreement with rules engine and officer panel | ≥ 97%; 0 determinative "you are eligible" | 400 synthetic profiles | The officer decides |
 | Parity | hit@5 and faithfulness gap vs Telugu | Not credibly > 0.07 (bootstrap) | Golden set | Equal service is the point |
-| Safety | Abstain or escalate on unanswerable or out-of-scope queries | ≥ 95%; confident wrong answers ≤ 1% | 300 unanswerable (50 per slice) + 100 political | |
-| Security | Forged or injected content served | 0 | 6 forged docs + 50 injection variants | |
-| Privacy | Status disclosed to a non-matching mobile | 0 of 500 attempts | Enumeration red team | |
-| Reliability | Status-flow pass^4 with API faults injected | ≥ 0.95 | 200 scenarios × 4 runs | |
+| Safety | Abstain or escalate on unanswerable or out-of-scope queries | ≥ 95%; confident wrong answers ≤ 1% | 300 unanswerable (50 per slice) + 100 political | — |
+| Security | Forged or injected content served | 0 | 6 forged docs + 50 injection variants | — |
+| Privacy | Status disclosed to a non-matching mobile | 0 of 500 attempts | Enumeration red team | — |
+| Reliability | Status-flow pass^4 with API faults injected | ≥ 0.95 | 200 scenarios × 4 runs | — |
 | Latency | WhatsApp text / voice-note reply; IVR end-of-speech to first audio | p95 ≤ 6 s / ≤ 12 s; ≤ 2.5 s | Load test at 2× peak | Status API p95 is 1.8 s, so IVR status turns play a "checking…" prompt first |
-| Accessibility | Task success, 24 low-literacy or visually impaired testers | ≥ 80% status check; ≥ 70% correct eligibility guidance | Moderated te/ur sessions | |
-| Freshness | Approved rule change live | ≤ 4 working hours | Change drill | |
-| Cost | Per resolved query | ≤ ₹3 text; ≤ ₹8 IVR | Metered pilot | |
+| Accessibility | Task success, 24 low-literacy or visually impaired testers | ≥ 80% status check; ≥ 70% correct eligibility guidance | Moderated te/ur sessions | — |
+| Freshness | Approved rule change live | ≤ 4 working hours | Change drill | — |
+| Cost | Per resolved query | ≤ ₹3 text; ≤ ₹8 IVR | Metered pilot | — |
 
 ## 6. Reference architecture
 
@@ -158,7 +158,7 @@ flowchart LR
   ANS -.->|"PII-free prompts only"| EXT["THIRD PARTY: managed LLM API (early phases)"]
 ```
 
-| Component | Responsibility | Self-hostable | Managed | Owner |
+| Component | Responsibility | Open-source / self-hosted | Managed | Owner |
 |---|---|---|---|---|
 | Channel gateway | WhatsApp webhooks, IVR, SMS fallback, rate limits | FastAPI + FreeSWITCH/Asterisk | WhatsApp Cloud API via BSP; CPaaS IVR/SMS | FDE → state IT |
 | Normalisation, language ID | NFC, Urdu code-point unification, transliteration | [IndicXlit](https://huggingface.co/ai4bharat/IndicXlit), rules | BHASHINI APIs: ASR, NMT, TTS; the public API docs limit use to "the purposes of PoC only" and send integrators who charge end users to a paid version ([docs](https://bhashini.gitbook.io/bhashini-apis), 27 Sep 2026). The docs' model table lists Telugu, Hindi, Urdu and English for ASR, translation (`bhashini/iiith/nmt-all`) and TTS (`Bhashini/IITM/TTS`, the only listed Urdu TTS model); IndicTrans2 omits Urdu ([models](https://dibd-bhashini.gitbook.io/bhashini-apis/available-models-for-usage), checked 27 Sep 2026) | Applied scientist |
@@ -190,7 +190,7 @@ flowchart LR
 | Production (17–22) | Statewide rollout, SDC hosting, content-ops process for rule changes, election-period mode | SLOs met for 3 weeks; 2 rule-change drills | Runbook ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (23–24) | Train content ops and state IT; hand over eval ownership | Directorate ships a rule change and re-evaluates it unaided | Handover checklist |
 
-**Course build:** W1 discovery memo and data scorecard · W2 ingestion, OCR, provenance gate · W3 retrieval and per-language harness · W4 rules engine, status tool, WhatsApp simulator · W5 voice, accessibility, red team · W6 curveballs and demo.
+**Course build (6 weeks):** (1) discovery memo and data scorecard; (2) ingestion, OCR and provenance gate; (3) retrieval and per-language harness; (4) rules engine, status tool and WhatsApp simulator; (5) voice, accessibility and red team; (6) curveballs and demo.
 
 **Change management with helpline staff.** Agents are not replaced in the pilot: they become the **escalation desk**, get tickets with context, and flag wrong bot answers in one click (feeding the regression set). The best agents write golden queries and review phrasing. The vendor contract moves to per-resolution-and-quality pricing before scale-up, bot metrics never discipline individual agents, and a weekly note says "what the bot got wrong and what we fixed".
 
@@ -300,7 +300,7 @@ On a synthetic run with Urdu hit@5 near 0.6 and Telugu near 0.9, it reports a ga
 
 ## 10. Operations and cost model
 
-**SLOs:** WhatsApp path 99.5% (bounded by Meta); IVR 99.9% with DTMF fallback; answer p95 as in Section 5; rule-change freshness ≤ 4 working hours; human callback on escalations within 1 working day.
+**SLOs.** WhatsApp path 99.5% (bounded by Meta); IVR 99.9% with DTMF fallback; answer p95 as in Section 5; rule-change freshness ≤ 4 working hours; human callback on escalations within 1 working day.
 
 **Observability.** OTel GenAI spans (pin the semantic-convention version; still at Development status) tagged with language, scheme, cited GO IDs and index version; per-language dashboards; a content-ops queue of pending approvals.
 
@@ -337,7 +337,7 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:** discovery memo and data scorecard; SOW; ADR-001 to ADR-006; fertility study; per-language eval report with CIs; threat model and obligations map (with the SGI applicability note); WhatsApp and IVR simulators with the provenance gate; accessibility notes; runbook; change-management plan; a 15-minute Telugu/Urdu demo showing a failure; curveball log.
+**Deliverables:** discovery memo and data scorecard; SOW; ADR-001 to ADR-006; fertility study; per-language eval report with CIs; threat model and obligations map (with the SGI applicability note); WhatsApp and IVR simulators with the provenance gate; accessibility notes; runbook; change-management plan; a 15-minute Telugu/Urdu demo showing a failure; curveball log.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -377,11 +377,11 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 
 ## 15. What reviewers look for / common failure modes
 
-- A pooled accuracy number that hides a weak Urdu slice, or an eval set translated from English.
-- Fertility ignored, so the cost model is wrong by 2–3× for Telugu.
-- An LLM deciding eligibility, or "you are eligible" said without the officer caveat.
-- Ingestion that trusts any uploaded PDF; no effective dating, so superseded GOs are still quoted.
-- Status revealed on application ID alone.
-- Long, jargon-heavy answers read aloud to a feature phone; no fallback when WhatsApp or the LLM is down.
-- SGI rules assumed to bind text answers, or ignored for the voice.
-- Helpline staff treated as the thing being replaced rather than the people who make it work.
+- **A pooled accuracy number** that hides a weak Urdu slice, or an eval set translated from English.
+- **Fertility ignored**, so the cost model is wrong by 2–3× for Telugu.
+- **An LLM deciding eligibility**, or "you are eligible" said without the officer caveat.
+- **Ingestion that trusts any uploaded PDF**; no effective dating, so superseded GOs are still quoted.
+- **Status revealed on application ID alone.**
+- **Long, jargon-heavy answers** read aloud to a feature phone; no fallback when WhatsApp or the LLM is down.
+- **SGI rules assumed to bind text answers**, or ignored for the voice.
+- **Helpline staff treated as the thing being replaced** rather than the people who make it work.

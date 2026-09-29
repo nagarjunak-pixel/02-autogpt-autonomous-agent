@@ -327,9 +327,9 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 
 ## 10. Operations and cost model
 
-**SLOs:** p90 run time ≤ 45 minutes; the verifier runs on 100% of sentences (no verifier, no draft); 99.5% availability across London and Mumbai working hours; deletion within 10 business days of a destroy request.
+**SLOs.** p90 run time ≤ 45 minutes; the verifier runs on 100% of sentences (no verifier, no draft); 99.5% availability across London and Mumbai working hours; deletion within 10 business days of a destroy request.
 
-**Observability:** OTel spans for plan, search, fetch, read, verify and write, with hashed deal ID, tokens and cost (GenAI conventions are at Development status, so pin the version); the fetch log; PDP decisions.
+**Observability.** OTel spans for plan, search, fetch, read, verify and write, with hashed deal ID, tokens and cost (GenAI conventions are at Development status, so pin the version); the fetch log; PDP decisions.
 
 **Cost model.** Prices vary by vendor and change often, so treat these as bands.
 
@@ -370,7 +370,7 @@ Weeks are real-engagement weeks (see §7 for the course schedule).
 
 ## 12. Deliverables and grading rubric
 
-**Deliverables by phase:** questionnaire, claim-accuracy baseline, source register and SOW (discovery); working pipeline, verifier, fetch gateway, ADRs and eval report (POC); analyst UI, wall integration, threat model, compliance map and demo (pilot); runbook, deletion-drill evidence and an owned eval suite (handover).
+**Deliverables:** questionnaire, claim-accuracy baseline, source register and SOW (discovery); working pipeline, verifier, fetch gateway, ADRs and eval report (POC); analyst UI, wall integration, threat model, compliance map and demo (pilot); runbook, deletion-drill evidence and an owned eval suite (handover).
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

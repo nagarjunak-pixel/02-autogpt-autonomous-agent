@@ -94,7 +94,7 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 3. **A workflow.** Adds clarification, a guarded fallback SQL path, result verification and the narrative.
 4. **An agent.** Multi-step "why did Pune drop?" analysis is **deferred** to phase 2 for HQ analysts, with budgets.
 
-Decision: **Go, with conditions:** the CFO and COO name metric owners and sign the 20 core definitions before the pilot, the platform team creates the RLS read-only role, and FinOps agrees a spending cap. Use [template 01](templates/01-discovery-questionnaire.md) and [template 02](templates/02-data-readiness-scorecard.md).
+**Decision: Go, with conditions.** The CFO and COO name metric owners and sign the 20 core definitions before the pilot, the platform team creates the RLS read-only role, and FinOps agrees a spending cap. Use [template 01](templates/01-discovery-questionnaire.md) and [template 02](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
@@ -180,7 +180,7 @@ flowchart LR
 | Production (10–11) | All regions; pre-aggregations; resource monitors; schema-change CI; DPIA ([template 07](templates/07-compliance-obligations-to-controls.md)) | SLOs met for 2 weeks; cost within cap | Runbooks ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (12) | Analysts become metric curators; drills (cost kill, schema change, RLS audit) | Customer team passes the drills unaided | Handover checklist, field-to-product notes |
 
-**Course build (5 weeks):** week 1, discovery role-play, the generator and the semantic layer; week 2, the planner and the guard; week 3, clarification, the fallback path, evals and the effort sweep; week 4, Hindi/Hinglish, cost and curveballs; week 5, hardening and the demo.
+**Course build (5 weeks):** (1) discovery role-play, the generator and the semantic layer; (2) the planner and the guard; (3) clarification, the fallback path, evals and the effort sweep; (4) Hindi/Hinglish, cost and curveballs; (5) hardening and the demo.
 
 **Code sketch: the SQL guard** (tested with `sqlglot` 30.19 against DuckDB; it runs on every statement before execution, on both paths):
 
@@ -309,7 +309,7 @@ An LLM judge is used only for Hindi fluency and clarity. It is calibrated agains
 
 ## 10. Operations and cost model
 
-**SLOs:** availability 99.5% between 07:00 and 23:00 IST; p95 ≤ 8 s on the semantic path; 0 RLS violations; cost per successful answer ≤ ₹4, with a daily anomaly alert.
+**SLOs.** Availability 99.5% between 07:00 and 23:00 IST; p95 ≤ 8 s on the semantic path; 0 RLS violations; cost per successful answer ≤ ₹4, with a daily anomaly alert.
 
 **Observability.** One trace per question: normaliser → planner (`gen_ai.*` token counts) → compile → guard decision → warehouse query ID → verifier. The OTel GenAI conventions are at Development status in a separate [repo](https://github.com/open-telemetry/semantic-conventions-genai), so pin the version you emit. Tag queries for cost attribution (Snowflake `QUERY_TAG`, BigQuery job labels).
 

@@ -159,12 +159,12 @@ The **safety router** is deterministic (rules plus a small classifier tuned for 
 | Telemetry | OTel SDK with disk buffer → HQ collector | Managed APM | SRE |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
-1. **Fine-tune or not** (B0 vs B1 vs B2), with the evidence rule.
-2. **Student per device class.** Gemma 4 E4B/E2B, Qwen3.5-4B, Ministral 3 3B or Phi-4-mini. Check runtime support first, because hybrid architectures may lag in llama.cpp, OpenVINO or ORT.
-3. **Teacher and data provenance.** Self-hosted open-weight or API, recorded in the terms register.
-4. **Safety architecture.** Extractive renderer and lookup, or constrained generation. Generation fails "verbatim" by construction.
-5. **Quantisation per class.** Q4_K_M, Q5_K_M, Q8_0 or QAT q4_0 GGUF on CPU; INT4/INT8 for NPU runtimes; embeddings and output layer at higher precision.
-6. **Versioning.** LoRA adapter on a pinned base, or merged model; A/B slots; recall; pack deltas.
+1. **Fine-tune or not:** B0 vs B1 vs B2, with the evidence rule.
+2. **Student per device class:** Gemma 4 E4B/E2B, Qwen3.5-4B, Ministral 3 3B or Phi-4-mini. Check runtime support first, because hybrid architectures may lag in llama.cpp, OpenVINO or ORT.
+3. **Teacher and data provenance:** self-hosted open-weight or API, recorded in the terms register.
+4. **Safety architecture:** extractive renderer and lookup, or constrained generation. Generation fails "verbatim" by construction.
+5. **Quantisation per class:** Q4_K_M, Q5_K_M, Q8_0 or QAT q4_0 GGUF on CPU; INT4/INT8 for NPU runtimes; embeddings and output layer at higher precision.
+6. **Versioning:** LoRA adapter on a pinned base, or merged model; A/B slots; recall; pack deltas.
 
 **Why fine-tuning can win on-device, honestly:**
 - Build **B0 properly**: two days of prompt work, few-shot exemplars, a JSON schema with citation fields, and the same quantisation. A weak baseline is the classic dishonesty.
@@ -335,7 +335,7 @@ The marginal cost per answer is about zero. People and HSE review dominate, so t
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:** discovery memo; inventory analysis; SOW with gated fine-tune; frozen test set with leakage audit; B0/B1/B2 comparison with CIs; filter code and tests; safety-erosion report per quantised build; router and renderer tests; signed packages and a recall drill; ADRs; threat model; obligations map; runbook; demo showing a refusal and a failure.
+**Deliverables:** discovery memo; inventory analysis; SOW with gated fine-tune; frozen test set with leakage audit; B0/B1/B2 comparison with CIs; filter code and tests; safety-erosion report per quantised build; router and renderer tests; signed packages and a recall drill; ADRs; threat model; obligations map; runbook; demo showing a refusal and a failure.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

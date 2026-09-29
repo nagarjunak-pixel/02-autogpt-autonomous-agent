@@ -119,7 +119,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 - **Workflow:** the model-migration pipeline.
 - **Agents:** none in the request path.
 
-**Decision: go, with conditions.** Security controls are mandatory group policy; chargeback is negotiated per BU.
+**Decision: Go, with conditions.** Security controls are mandatory group policy; chargeback is negotiated per BU.
 
 ## 5. Success criteria and acceptance tests
 
@@ -231,7 +231,7 @@ flowchart LR
 | Production (12–15) | Onboarding waves for the remaining 9 BUs; direct-egress blocks; chargeback live; two-region HA; gateway pen test; runbooks | SLOs met 2 weeks; ≥ 90% of spend through the gateway | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (16) | Platform team runs a failover drill and a model migration alone | Customer-run drill passes | Handover pack |
 
-**Course build (5 weeks):** W1 gateway, virtual keys, mock providers, OTel · W2 budgets, cascade, breaker; curveball 2 · W3 DLP, cache isolation, MCP allow-list; curveball 3 · W4 FOCUS ledger, showback, discovery; curveball 5 · W5 shadow/canary migration, failover drill; curveballs 1 and 4; demo.
+**Course build (5 weeks):** (1) gateway, virtual keys, mock providers and OTel; (2) budgets, cascade and breaker, plus curveball 2; (3) DLP, cache isolation and MCP allow-list, plus curveball 3; (4) FOCUS ledger, showback and discovery, plus curveball 5; (5) shadow/canary migration and failover drill, curveballs 1 and 4, and demo.
 
 **Code sketch: routing cascade with budget guard and circuit breaker** (library-agnostic Python 3.10+; `call_fn` wraps whichever gateway or SDK you use):
 
@@ -305,9 +305,10 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 ## 8. Evaluation plan
 
 **Datasets:**
-- **Golden:** 1,000 frozen items per anchor, labelled by BU experts. **Held-out:** two weeks of pilot traffic, labelled afterwards.
+- **Golden:** 1,000 frozen items per anchor, labelled by BU experts.
 - **Adversarial:** DLP evasions, the poisoned MCP description, cache probes, the loop script, the 40 seeded shadow-AI cases.
 - **Regression:** every escaped PII case, bad cascade acceptance and failed drill.
+- **Held-out:** two weeks of pilot traffic, labelled afterwards.
 
 **Metrics per layer:**
 
@@ -372,7 +373,7 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 
 ## 10. Operations and cost model
 
-**SLOs:** availability 99.95% per month; gateway-attributable errors ≤ 0.05%; overhead p95 ≤ 30 ms; spend data fresh within 5 minutes; chargeback closed by working day 5.
+**SLOs.** Availability 99.95% per month; gateway-attributable errors ≤ 0.05%; overhead p95 ≤ 30 ms; spend data fresh within 5 minutes; chargeback closed by working day 5.
 
 **Observability.** Emit OTel GenAI spans with `gen_ai.request.model`, `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens`, plus `tavrenhill.bu`, `tavrenhill.use_case`, `tavrenhill.tier` and `tavrenhill.outcome`. The GenAI conventions are still at **Development** status in a separate repository ([OTel](https://opentelemetry.io/docs/specs/semconv/gen-ai/)): pin the version.
 
@@ -430,7 +431,7 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 ## 12. Deliverables and grading rubric
 
-**By phase:** discovery census, memo and SOW · POC gateway config, tested router, OTel, ADR-001 to ADR-004, threat model · pilot DLP and isolation reports, showback, registry and calendar, drill report, compliance map, security pack · runbooks, SLO dashboards, chargeback and a customer-run drill.
+**Deliverables:** discovery census, memo and SOW · POC gateway config, tested router, OTel, ADR-001 to ADR-004, threat model · pilot DLP and isolation reports, showback, registry and calendar, drill report, compliance map, security pack · runbooks, SLO dashboards, chargeback and a customer-run drill.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -452,18 +453,18 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 | Turn | Title | How it is exercised |
 |---|---|---|
-| 100, 91 | AI Gateways; LLM FinOps | The core build; ledger, chargeback, cost per outcome |
-| 87, 88 | Model Upgrades and Deprecation; A/B Testing and Canary | Registry, calendar, shadow → canary |
-| 90, 94 | SLOs and Incident Response; Provider Failover and DR | Breakers, `Retry-After` handling, drills, error budgets |
-| 96–98 | Observability; Evaluation; Guardrail Tools | OTel GenAI spans; golden-set harness; DLP tooling |
-| 78 | PII Detection and DLP | Checksum validators; multilingual evaluation |
+| 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity Planning; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
+| 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon Execution | Cascade validators; spend caps; stuck-loop detection |
 | 65, 66, 71 | MCP Specification; MCP Authorization; Agent Identity | Pinned tool descriptions; MCP auth at the gateway; per-agent keys |
 | 68 | The Agentic AI Foundation | agentgateway and Agent Router governance |
 | 73, 74, 77 | OWASP Agentic and LLM Top 10s; Model Supply Chain | Denial of wallet, tool poisoning, pinning and KEV patching |
-| 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity Planning; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
-| 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon Execution | Cascade validators; spend caps; stuck-loop detection |
+| 78 | PII Detection and DLP | Checksum validators; multilingual evaluation |
 | 79–81 | EU AI Act; NIST AI RMF and ISO/IEC 42001; GDPR and DPDP | Inventory screening and risk tiers; logging scope |
+| 87, 88 | Model Upgrades and Deprecation; A/B Testing and Canary | Registry, calendar, shadow → canary |
+| 90, 94 | SLOs and Incident Response; Provider Failover and DR | Breakers, `Retry-After` handling, drills, error budgets |
+| 91, 100 | LLM FinOps; AI Gateways | The core build; ledger, chargeback, cost per outcome |
 | 92, 93 | On-Prem and Sovereign Deployment; IaC | Residency tiers; GitOps policy |
+| 96–98 | Observability; Evaluation; Guardrail Tools | OTel GenAI spans; golden-set harness; DLP tooling |
 | 102 | Model Provider Landscape | Multi-provider fallback pairs |
 | 109–116 | FDE practice | Census, ROI, ADRs, change management, SOW |
 | 128 | Governance-as-Code | Policy repo with tests |

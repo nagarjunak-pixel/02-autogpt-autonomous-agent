@@ -49,8 +49,8 @@ The conversation that decides the project is with the General Counsel. A single 
   - **CERT-In Directions (28 Apr 2022)** for the Indian entity: report incidents within 6 hours; keep logs for 180 days in India ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
   - **Professional duties:**
     - SRA Code 6.3 (confidentiality) and 6.5 (walls).
-    - *Ayinde v Haringey* [2025] EWHC 1383 (Admin) (6 June 2025): lawyers using AI for research have "a professional duty … to check the accuracy of such research by reference to authoritative sources" ([judgment](https://www.judiciary.uk/judgments/ayinde-v-london-borough-of-haringey-and-al-haroun-v-qatar-national-bank/)).
-    - India: professional-communication privilege under s.132 of the Bharatiya Sakshya Adhiniyam 2023 (formerly Evidence Act s.126), in force since 1 July 2024 ([text](https://indiankanoon.org/doc/142112571/)).
+    - *Ayinde v Haringey* [2025] EWHC 1383 (Admin) (6 Jun 2025): lawyers using AI for research have "a professional duty … to check the accuracy of such research by reference to authoritative sources" ([judgment](https://www.judiciary.uk/judgments/ayinde-v-london-borough-of-haringey-and-al-haroun-v-qatar-national-bank/)).
+    - India: professional-communication privilege under s.132 of the Bharatiya Sakshya Adhiniyam 2023 (formerly Evidence Act s.126), in force since 1 Jul 2024 ([text](https://indiankanoon.org/doc/142112571/)).
   - **EU AI Act.** Probably out of scope for a non-EU firm's internal tool (check Art. 2(1)(c) for outputs used in the EU), and not high-risk: Annex III point 8 covers tools for judicial authorities, not law firms ([Regulation 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)). Record the screen anyway.
   - **Contracts.** About 15% of clients' outside-counsel guidelines restrict generative-AI use on their matters.
 - **Infrastructure.** Microsoft 365 with Entra ID; Azure UK South, plus Central India for Indian workloads. The DMS API allows about 20 requests per second.
@@ -118,7 +118,7 @@ The conversation that decides the project is with the General Counsel. A single 
 - **A fixed workflow** (retrieve → trim → rerank → generate → verify) is sufficient and keeps every permission decision in deterministic code.
 - **An agent** is **not** justified for version 1: every extra tool call widens the leakage and injection surface.
 
-Decision: **Go, with conditions.** Written General Counsel approval of the wall design, a CISO-approved provider route, and an AI opt-out flag on matters for restricted clients. Use [template 01](templates/01-discovery-questionnaire.md) and [template 02](templates/02-data-readiness-scorecard.md).
+**Decision: Go, with conditions.** Written General Counsel approval of the wall design, a CISO-approved provider route, and an AI opt-out flag on matters for restricted clients. Use [template 01](templates/01-discovery-questionnaire.md) and [template 02](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
@@ -183,7 +183,7 @@ flowchart LR
 | Entitlement service | Transitive groups, screened matters and version; wall events applied as denies within seconds | Custom service with Redis | Entra ID groups via Microsoft Graph | Firm IAM |
 | Answer workflow | Context budget, pinned system rules, generation with quoted spans | Plain Python or LangGraph | Azure AI Foundry, Bedrock | FDE |
 | Citation verifier | Verbatim span match on the cited document version; entailment check | Custom code plus an NLI model | — | FDE |
-| Gateway and observability | Keys, region routing, budgets, OTel traces carrying IDs only | LiteLLM (pin hashes: 1.82.7/1.82.8 were compromised on PyPI on 24 Mar 2026), Langfuse, Phoenix | Azure API Management, Datadog | Platform team |
+| Gateway and observability | Keys, region routing, budgets, OTel traces carrying IDs only | LiteLLM (pin a verified release; 1.82.7 and 1.82.8 were compromised on PyPI, 24 Mar 2026), Langfuse, Phoenix | Azure API Management, Datadog | Platform team |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 
@@ -301,7 +301,7 @@ Run an ablation: breadcrumbs only vs LLM-written context vs late chunking. Anthr
 
 ## 9. Security, privacy and compliance
 
-**Lethal-trifecta check** ([Willison, 16 June 2025](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/)):
+**Lethal-trifecta check** ([Willison, 16 Jun 2025](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/)):
 
 | Context | Private data | Untrusted content | Exfiltration channel | Design response |
 |---|---|---|---|---|
@@ -309,7 +309,7 @@ Run an ablation: breadcrumbs only vs LLM-written context vs late chunking. Anthr
 | Ingestion contextualiser | Yes (one document) | Yes | None; output stored as index text | Output treated as untrusted |
 | Agent mode (stretch) | Yes | Yes | Possible (email, export) | Quarantined reader, plan-then-execute, approval for sends |
 
-This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copilot" (CVSS 9.3, published 11 June 2025), allowed information disclosure over a network ([CVE record](https://www.cve.org/CVERecord?id=CVE-2025-32711)). A rendered link or image is itself an exfiltration channel.
+This matters in practice: CVE-2025-32711, an "AI command injection in M365 Copilot" (CVSS 9.3, published 11 Jun 2025), allowed information disclosure over a network ([CVE record](https://www.cve.org/CVERecord?id=CVE-2025-32711)). A rendered link or image is itself an exfiltration channel.
 
 Bought tools fail on data governance too. Microsoft advisory CW1226324 (reported 21 Jan 2026, fixed Feb 2026) was a code error that let Copilot Chat process Sent Items and Drafts labelled Confidential despite a DLP policy excluding them: not an ACL bypass (users saw only their own mail), but content barred from AI was processed ([Office 365 for IT Pros](https://office365itpros.com/2026/02/13/dlp-policy-for-copilot-bug/)). The `ai_permitted` flag is the same kind of control, so it gets its own canary tests.
 
@@ -336,7 +336,7 @@ Bought tools fail on data governance too. Microsoft advisory CW1226324 (reported
 
 ## 10. Operations and cost model
 
-**SLOs:** availability 99.5% from 07:00 to 23:00 IST and UK time; p95 ≤ 12 s; wall propagation p99 ≤ 15 min; canary leaks 0 (any leak pages the on-call engineer and the General Counsel); deletion verified within 7 days of approval.
+**SLOs.** Availability 99.5% from 07:00 to 23:00 IST and UK time; p95 ≤ 12 s; wall propagation p99 ≤ 15 min; canary leaks 0 (any leak pages the on-call engineer and the General Counsel); deletion verified within 7 days of approval.
 
 **Observability.** OpenTelemetry GenAI conventions (at *Development* status in their own repository, [OTel](https://github.com/open-telemetry/semantic-conventions-genai)); pin the version you emit. Traces span retrieve → trim → LLM → verify and record `gen_ai.*` token counts, chunk IDs, ACL decisions and the entitlement version, never document text.
 

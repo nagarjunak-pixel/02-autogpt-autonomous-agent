@@ -206,12 +206,12 @@ flowchart LR
 | Observability | Traces, latency, cost, quality | OTel GenAI + Langfuse/Phoenix self-hosted · a vendor under BAA | Almarosa IT |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
-1. **Build vs buy.** Commercial ambient scribes (for example Microsoft Dragon Copilot, [announced 3 Mar 2025](https://news.microsoft.com/2025/03/03/microsoft-dragon-copilot-provides-the-healthcare-industrys-first-unified-voice-ai-assistant-that-enables-clinicians-to-streamline-clinical-documentation-surface-information-and-automate-task/), Abridge, Suki, Nabla, Ambience) vs EHR-native offerings (Epic AI Charting, [released 4 Feb 2026](https://www.epic.com/epic/post/epic-ai-charting-rolls-out-alongside-an-expanding-set-of-built-in-ai-capabilities/); athenahealth's athenaAmbient, [announced 4 Nov 2025](https://www.businesswire.com/news/home/20251104083540/en/athenahealths-AI-native-Clinical-Encounter-Transforms-the-EHR-into-a-Real-Time-Clinical-Intelligence-Partner); check current roadmaps and availability for Almarosa's EHRs) vs custom. Decide by a bake-off on Almarosa's golden set: Spanish and interpreter slices, both EHRs, BAA and data-use terms, exit terms, cost per visit.
-2. **ASR and diarisation.** Managed vs self-hosted; a separate audio channel for video interpreters; voiceprint enrolment or not.
-3. **LLM route.** A BAA-covered API vs self-hosted open weights; the pinning and deprecation policy.
-4. **Audio retention.** Delete at signature vs a 30-day QA window vs consented QI samples only.
-5. **EHR write-back.** FHIR `DocumentReference` vs vendor note APIs vs a copy-paste bridge for the pilot.
-6. **Verification policy.** Which flags block signing and which only highlight; lexical vs NLI vs LLM-judge alignment.
+1. **Build vs buy:** commercial ambient scribes (for example Microsoft Dragon Copilot, [announced 3 Mar 2025](https://news.microsoft.com/2025/03/03/microsoft-dragon-copilot-provides-the-healthcare-industrys-first-unified-voice-ai-assistant-that-enables-clinicians-to-streamline-clinical-documentation-surface-information-and-automate-task/), Abridge, Suki, Nabla, Ambience) vs EHR-native offerings (Epic AI Charting, [released 4 Feb 2026](https://www.epic.com/epic/post/epic-ai-charting-rolls-out-alongside-an-expanding-set-of-built-in-ai-capabilities/); athenahealth's athenaAmbient, [announced 4 Nov 2025](https://www.businesswire.com/news/home/20251104083540/en/athenahealths-AI-native-Clinical-Encounter-Transforms-the-EHR-into-a-Real-Time-Clinical-Intelligence-Partner); check current roadmaps and availability for Almarosa's EHRs) vs custom. Decide by a bake-off on Almarosa's golden set: Spanish and interpreter slices, both EHRs, BAA and data-use terms, exit terms, cost per visit.
+2. **ASR and diarisation:** managed vs self-hosted; a separate audio channel for video interpreters; voiceprint enrolment or not.
+3. **LLM route:** a BAA-covered API vs self-hosted open weights; the pinning and deprecation policy.
+4. **Audio retention:** delete at signature vs a 30-day QA window vs consented QI samples only.
+5. **EHR write-back:** FHIR `DocumentReference` vs vendor note APIs vs a copy-paste bridge for the pilot.
+6. **Verification policy:** which flags block signing and which only highlight; lexical vs NLI vs LLM-judge alignment.
 
 ## 7. Implementation plan — week by week
 
@@ -376,7 +376,7 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:** *Discovery:* process map, baselines, English and Spanish consent scripts, SOW. *POC:* pipeline, verifier, golden set, rater rubric, bake-off report, ADRs. *Pilot:* review UI, FHIR write-back to HAPI, threat model, compliance map, fairness report, demo. *Production (simulated):* SLO dashboard, runbook, DR note. *Handover:* handover pack.
+**Deliverables:** *Discovery:* process map, baselines, English and Spanish consent scripts, SOW. *POC:* pipeline, verifier, golden set, rater rubric, bake-off report, ADRs. *Pilot:* review UI, FHIR write-back to HAPI, threat model, compliance map, fairness report, demo. *Production (simulated):* SLO dashboard, runbook, DR note. *Handover:* handover pack.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

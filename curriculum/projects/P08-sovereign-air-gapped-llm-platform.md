@@ -332,7 +332,7 @@ At about 4M answers a year that is **₹20–47 per answer**, against USD 0.0006
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:** memo, SOW, scorecard, 6 ADRs with capacity maths, frozen eval sets, threat model, obligations map, running enclave, signed-transfer demo, fallback drill log, runbook, AIBOM, weekly status reports, a demo showing one failure.
+**Deliverables:** memo, SOW, scorecard, 6 ADRs with capacity maths, frozen eval sets, threat model, obligations map, running enclave, signed-transfer demo, fallback drill log, runbook, AIBOM, weekly status reports, a demo showing one failure.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

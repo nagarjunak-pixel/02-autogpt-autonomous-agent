@@ -106,7 +106,7 @@ Neyyarasi sells sarees, lehengas, blouses and kurtas: about ₹250 crore of annu
 - *One offline, schema-constrained LLM call:* normalises seller descriptions into attributes.
 - *No agent to build:* the assistants are the agents; Neyyarasi builds tools, data and guardrails.
 
-**Decision: Go, with conditions:** catalogue completeness starts in week 1; checkout phase 1 is a hand-off to the brand's checkout; delegated payment only with written PSP confirmation.
+**Decision: Go, with conditions.** Catalogue completeness starts in week 1; checkout phase 1 is a hand-off to the brand's checkout; delegated payment only with written PSP confirmation.
 
 ## 5. Success criteria and acceptance tests
 
@@ -314,9 +314,9 @@ Follow the [eval plan template](templates/05-eval-plan.md).
 
 ## 10. Operations and cost model
 
-**SLOs:** MCP availability 99.9%; p95 latencies as in §5; cart idempotency correctness 100%; order status freshness ≤ 5 min.
+**SLOs.** MCP availability 99.9%; p95 latencies as in §5; cart idempotency correctness 100%; order status freshness ≤ 5 min.
 
-**Observability:** one OpenTelemetry trace per tool call, with `traceparent` propagated in `_meta` (the 2026-07-28 convention) and spans labelled by bot class, client ID and mandate ID.
+**Observability.** One OpenTelemetry trace per tool call, with `traceparent` propagated in `_meta` (the 2026-07-28 convention) and spans labelled by bot class, client ID and mandate ID.
 
 **Monthly cost at pilot scale** (prices change; bands only):
 
@@ -350,7 +350,7 @@ That is roughly **USD 0.10–0.75 per 1,000 tool calls** before bot management; 
 
 ## 12. Deliverables and grading rubric
 
-**Artefacts by phase:** as in §7, plus a bot-traffic baseline, PSP/protocol matrix, directory submission packs, a WebMCP report, a pen-test report and a 15-minute demo.
+**Deliverables:** as in §7, plus a bot-traffic baseline, PSP/protocol matrix, directory submission packs, a WebMCP report, a pen-test report and a 15-minute demo.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|

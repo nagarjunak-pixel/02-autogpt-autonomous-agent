@@ -106,7 +106,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 
 **Qualification: the lowest rung that works.** *Rules/DTMF* handle known-plan lookups but fail on natural and code-mixed speech. An *intent classifier* routes but cannot explain a bill. A *single grounded LLM call* explains a structured bill well. A **workflow** is the right rung: per-intent state machines, the LLM for understanding, slots and phrasing, and a fixed tool set per state. A free-roaming *agent* is rejected: nothing in scope needs open-ended planning, and autonomy on a phone line breeds fraud and latency failures.
 
-**Decision: Go with conditions.** SIM changes are explained and routed, never executed; payments go out of band; the IVR remains the failover; the BPO contract moves to per-resolution pricing before scale-up.
+**Decision: Go, with conditions.** SIM changes are explained and routed, never executed; payments go out of band; the IVR remains the failover; the BPO contract moves to per-resolution pricing before scale-up.
 
 ## 5. Success criteria and acceptance tests
 
@@ -183,12 +183,12 @@ flowchart LR
 | Gateway + tracing | Routing, budgets, OTel | agentgateway, LiteLLM (pin versions; Turn 77), Langfuse/Phoenix | Cloud AI gateways, APM vendors | Platform |
 
 **ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
-1. **Cascade vs speech-to-speech vs hybrid.** ASR → LLM → TTS; S2S (e.g. OpenAI Realtime, Gemini Live, Amazon Nova Sonic); or a duplex speech front end delegating tools to a text model. Decide on measured Telugu quality, redaction points and cost per minute.
-2. **Platform-native agent (Agentforce/ServiceNow) vs custom vs hybrid.** Native gives CRM data, handoff and governance out of the box, but [Agentforce Voice](https://www.salesforce.com/agentforce/voice/) lists only English (US/UK/AU) as of Sep 2026, other languages "on a phased rollout"; ServiceNow Indic voice: *verify*. Likely answer: a custom Hindi/Telugu voice front end, with the platform as system of record and agent desktop, re-checked quarterly.
-3. **ASR/TTS vendor per language.** Managed Indic vs hyperscaler vs self-hosted, on WER, entity accuracy, latency, residency and price.
-4. **Authentication tiers and step-up.** Options: CLI plus knowledge questions, OTP, app push, or store/e-KYC. Voice biometrics is rejected as a factor (at most a risk signal).
-5. **Payment path.** DTMF-masked payment IVR vs a pay link by SMS/app vs human pause/resume (the weakest).
-6. **Failover.** An SBC health check routes to the IVR, plus multi-provider routing in the gateway.
+1. **Cascade vs speech-to-speech vs hybrid:** ASR → LLM → TTS; S2S (e.g. OpenAI Realtime, Gemini Live, Amazon Nova Sonic); or a duplex speech front end delegating tools to a text model. Decide on measured Telugu quality, redaction points and cost per minute.
+2. **Platform-native agent (Agentforce/ServiceNow) vs custom vs hybrid:** native gives CRM data, handoff and governance out of the box, but [Agentforce Voice](https://www.salesforce.com/agentforce/voice/) lists only English (US/UK/AU) as of Sep 2026, other languages "on a phased rollout"; ServiceNow Indic voice: *verify*. Likely answer: a custom Hindi/Telugu voice front end, with the platform as system of record and agent desktop, re-checked quarterly.
+3. **ASR/TTS vendor per language:** managed Indic vs hyperscaler vs self-hosted, on WER, entity accuracy, latency, residency and price.
+4. **Authentication tiers and step-up:** CLI plus knowledge questions, OTP, app push, or store/e-KYC. Voice biometrics is rejected as a factor (at most a risk signal).
+5. **Payment path:** DTMF-masked payment IVR vs a pay link by SMS/app vs human pause/resume (the weakest).
+6. **Failover:** an SBC health check routes to the IVR, plus multi-provider routing in the gateway.
 
 ## 7. Implementation plan — week by week
 
@@ -200,7 +200,7 @@ flowchart LR
 | Production (13–17) | 25% per circle, canary per model change, failover drills, per-resolution BPO contract | 2 clean drills; SLOs met for 3 weeks | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (18–20) | Train CX engineering; eval-set ownership; on-call shadowing | Kavrona ships a prompt change and a model canary unaided | Handover checklist |
 
-**Course build:** W1 discovery memo · W2 pipeline and latency budget · W3 workflows and read-back · W4 handoff, payments, guard · W5 synthetic-caller evals and red team · W6 curveballs and demo.
+**Course build (6 weeks):** (1) discovery memo; (2) pipeline and latency budget; (3) workflows and read-back; (4) handoff, payments and the guard; (5) synthetic-caller evals and red team; (6) curveballs and demo.
 
 **Latency budget** (p50 targets):
 
@@ -342,7 +342,7 @@ Students extend it with TTS word timestamps (to log partial sentences), a tool-c
 
 ## 10. Operations and cost model
 
-**SLOs:** entry point 99.95%; bot path 99.5%; voice-to-voice p95 ≤ 1.5 s; transfer on request ≥ 99%; PCI leakage = 0 (page on any leak).
+**SLOs.** Entry point 99.95%; bot path 99.5%; voice-to-voice p95 ≤ 1.5 s; transfer on request ≥ 99%; PCI leakage = 0 (page on any leak).
 
 **Observability.** Use the OTel GenAI conventions (at Development status in a [separate repository](https://opentelemetry.io/docs/specs/semconv/gen-ai/); pin the version). Add voice spans `turn.commit`, `asr.final`, `llm.first_token`, `tts.first_audio` and `barge_in`, tagged with circle, language and model version.
 
@@ -392,7 +392,7 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 
 ## 12. Deliverables and grading rubric
 
-**Checklist:** discovery memo and data scorecard; SOW with Section 5 criteria; ADR-001 to ADR-006; threat model and obligations map; working pipeline on the mocks; synthetic-caller harness and eval report (pass^k, latency distributions, CIs); runbook and SLOs; a 15-minute demo with a visible failure; curveball log.
+**Deliverables:** discovery memo and data scorecard; SOW with Section 5 criteria; ADR-001 to ADR-006; threat model and obligations map; working pipeline on the mocks; synthetic-caller harness and eval report (pass^k, latency distributions, CIs); runbook and SLOs; a 15-minute demo with a visible failure; curveball log.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -432,11 +432,11 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 
 ## 15. What reviewers look for / common failure modes
 
-- Latency measured as LLM time in a notebook, not end of speech → first audio at the phone edge; averages without p95 or language slices.
-- Security in the prompt instead of the guard. If the LLM decides the auth level, the design fails.
-- Voice biometrics or "sounds like the customer" used as a factor.
-- Card numbers in transcripts because only the recording was masked.
-- Evals only with clean team voices: no noise, codec or code-mixing.
-- Handoff packets that repeat caller claims as facts.
-- An IVR failover that is assumed, never drilled.
-- A cost model that ignores containment. Every uncontained bot minute is pure extra cost.
+- **Latency measured as LLM time in a notebook**, not end of speech → first audio at the phone edge; averages without p95 or language slices.
+- **Security in the prompt instead of the guard.** If the LLM decides the auth level, the design fails.
+- **Voice biometrics or "sounds like the customer"** used as a factor.
+- **Card numbers in transcripts** because only the recording was masked.
+- **Evals only with clean team voices:** no noise, codec or code-mixing.
+- **Handoff packets that repeat caller claims as facts.**
+- **An IVR failover that is assumed, never drilled.**
+- **A cost model that ignores containment.** Every uncontained bot minute is pure extra cost.
