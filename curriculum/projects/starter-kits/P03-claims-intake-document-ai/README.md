@@ -1,4 +1,4 @@
-# P03 starter kit · Claims intake document AI with human review
+# P03 Starter Kit · Claims Intake Document AI with Human Review
 
 Offline starter kit for the brief [P03 · Claims Intake Document AI with Human Review](../../P03-claims-intake-document-ai.md). Kalsubai General Insurance is fictional, and so is every policyholder, hospital, claim and number in the data.
 
@@ -30,7 +30,7 @@ Options: `python3 eval_harness.py --runs 5` (pass^5 instead of pass^3), `--limit
 | `generate_data.py` | A deterministic generator (seed 3003). Pages are JSON: a PDF text layer (`None` for scans; it includes white-on-white text), OCR lines of the visible render (noisy for scans, photos and handwriting), and metadata (XMP, EXIF, letterhead hash). Default: 115 health and 50 motor claims (about 1,550 pages), 40 adversarial files with clean twins, 15 English/Marathi counterfactual pairs, one policy per claim, 8 hospitals and the curveball 4 case file. |
 | `baseline.py` | `BaselineSystem.predict(packet)`: a keyword page router, English and Marathi regex extractors, and the OCR engine's confidence treated as if it were calibrated. Validation, routing, flags and status come from `review_router`. |
 | `adapter.py` | A stub that replaces `extract_page()` with a call to any OpenAI-compatible `/chat/completions` endpoint (Ollama, vLLM or a hosted API). Pure `urllib`. |
-| `eval_harness.py` | Runs the suites, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs the suites, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the control (including curveballs 1, 2 and 3, and a test that a rubber-stamped seed is never persisted) and for the generator (determinism, tricky cases present). |
 
 ### Tricky cases in the data, and their labels
@@ -90,7 +90,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-15 number its rows in order. Bas
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted, India-region, no-retention endpoint
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted, India-region, no-retention endpoint
 export LLM_MODEL=qwen2.5vl:7b
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 20
@@ -107,7 +107,7 @@ python3 eval_harness.py --system adapter --limit 20
 | 3 (POC) | Extractors through `adapter.py`: Hindi and Marathi labels, Devanagari numerals to ASCII, cross-script names, ISO dates. Constrained JSON output (shape) plus `validate()` (truth). | AC-4, AC-7, AC-12, AC-6 |
 | 4 (Pilot, weeks 7–14) | Calibrate confidence per field type and refit `THRESH`; onboard the curveball 1 layout and add it to the golden and regression sets. Durable workflow with timers, wait-reason codes and a chaos test. | AC-3, AC-5, CB1, AC-8, CB4 |
 | 5 (Pilot) | Reviewer UI with evidence crops, `build_queue()` seeding and active confirmation; agree the vigilance programme with the adjusters' association. | AC-11 (with people), CB3 |
-| 6 (Production, weeks 15–20; Handover, 21–22) | Fairness report with CIs, cost per claim, CI gates (auto-accept error, injections, language gap, cost per page), demo with a caught seed and a delay timeline. | AC-13, AC-15, AC-14 |
+| 6 (Production, weeks 15–20; Handover, weeks 21–22) | Fairness report with CIs, cost per claim, CI gates (auto-accept error, injections, language gap, cost per page), demo with a caught seed and a delay timeline. | AC-13, AC-15, AC-14 |
 
 ## What the kit deliberately does not do
 

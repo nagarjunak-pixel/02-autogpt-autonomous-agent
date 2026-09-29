@@ -37,7 +37,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 | Stakeholder | Cares about | Can block |
 |---|---|---|
 | Group CIO (sponsor) | Visibility, fewer incidents, a platform story | Budget, mandate |
-| Group CFO | Predictable spend; chargeback for FY 2027-28 budgets | Chargeback policy |
+| Group CFO | Predictable spend; chargeback for FY 2027–28 budgets | Chargeback policy |
 | Group CISO | Keys, DLP, logging, supply chain | Go-live; egress blocking |
 | Group DPO/Legal | DPDP, GDPR, cross-border prompts | Logging scope, providers |
 | 12 BU CTOs (esp. the Consumer BU's own AI team) | Autonomy, latency, no "platform tax" | Onboarding waves |
@@ -50,7 +50,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 
 **Data.** Prompts carry loyalty PII (retail), Aadhaar and PAN (NBFC), lab results (diagnostics) and formulations (FMCG, chemicals). Some BUs must keep prompts in-country or on self-hosted models. Sector rules (e.g. RBI for the NBFC) may add conditions: get each BU's regulatory register rather than assuming.
 
-**Legal and regulatory (verified as of Sept 2026):**
+**Legal and regulatory** (verified as of Sep 2026):
 
 | Instrument | Why it applies | What it means for the platform |
 |---|---|---|
@@ -65,7 +65,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 
 **Security.** Provider master keys live only in the vault; the admin plane never faces the internet.
 
-**Budget and timeline.** USD 1.2M in year 1; target a 20–30% saving on addressable spend with no quality loss. The CFO needs showback by January 2027 for FY 2027-28 budgets (the Indian financial year starts 1 April).
+**Budget and timeline.** USD 1.2M in year 1; target a 20–30% saving on addressable spend with no quality loss. The CFO needs showback by January 2027 for FY 2027–28 budgets (the Indian financial year starts 1 April).
 
 **Politics.** The Consumer BU runs its own stack and refuses chargeback. Developers fear latency. Security wants full prompt logs; the works council and DPO do not. Committed-spend minimums mean the cheapest list price is not always the cheapest route.
 
@@ -82,8 +82,8 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 **Mock systems.** Three mock providers (FastAPI) with configurable latency, 429/5xx errors, a "region down" switch, token accounting and a "retired model" switch (404/410); mock MCP servers; a local "self-hosted" tier on Ollama.
 
 **Budget, two paths:**
-- **API ≤ USD 50:** a small and a mid-tier model; use the strong tier only on eval samples.
-- **Local:** two open-weight sizes on Ollama or vLLM (e.g. 3–4B and 8–14B) as cheap and expensive tiers, with mock providers for failover.
+- **API path (≤ USD 50):** a small and a mid-tier model; use the strong tier only on eval samples.
+- **Local path:** two open-weight sizes on Ollama or vLLM (e.g. 3–4B and 8–14B) as cheap and expensive tiers, with mock providers for failover.
 
 **Gateway choice.** Self-host LiteLLM, Agent Router or agentgateway in Docker or kind, or build a thin FastAPI gateway around the §7 sketch.
 
@@ -119,7 +119,7 @@ The gateway holds every provider key and sees every prompt: the crown jewel, and
 - **Workflow:** the model-migration pipeline.
 - **Agents:** none in the request path.
 
-**Decision: go, with conditions.** Security controls are mandatory group policy; chargeback is negotiated per BU.
+**Decision: Go, with conditions.** Security controls are mandatory group policy; chargeback is negotiated per BU.
 
 ## 5. Success criteria and acceptance tests
 
@@ -145,30 +145,30 @@ A cascade that saves 40% but loses 5 accuracy points moves the cost to the BU's 
 
 ```mermaid
 flowchart LR
-  subgraph BU["BU TENANTS - 12 business units"]
+  subgraph BU["BU TENANTS: 12 business units"]
     A1["Apps and agents"]
     A2["Batch jobs"]
   end
-  subgraph GW["AI GATEWAY data plane - secret zone"]
+  subgraph GW["AI GATEWAY data plane: secret zone"]
     AU["AuthN: virtual key or workload identity"]
     PO["Policy: budget guard, quotas, DLP"]
     RT["Router: cascade, fallback, circuit breakers"]
     CA["Per-tenant cache"]
     MG["MCP governance: allow-list, per-tool policy"]
   end
-  subgraph CP["CONTROL plane - admin network only"]
+  subgraph CP["CONTROL plane: admin network only"]
     KV["Vault: provider keys"]
     MR["Model registry + deprecation calendar"]
-    PR["Policy repo - GitOps"]
+    PR["Policy repo (GitOps)"]
     AR["Internal artefact registry: digests, cooldown"]
   end
   subgraph OBS["TELEMETRY and FinOps"]
     OT["OTel collector: GenAI spans"]
-    LED["Cost ledger - FOCUS-shaped"]
+    LED["Cost ledger (FOCUS-shaped)"]
     CB["Showback, chargeback, cost per outcome"]
   end
-  subgraph EXT["EXTERNAL providers - separate trust domain"]
-    P1["Provider A - 2 regions, PTU"]
+  subgraph EXT["EXTERNAL providers: separate trust domain"]
+    P1["Provider A: 2 regions, PTU"]
     P2["Provider B"]
     P3["Provider C"]
   end
@@ -213,7 +213,7 @@ flowchart LR
 | MCP registry | Approved servers, pinned tool descriptions | Private sub-registry following the official MCP Registry API (preview since 8 Sep 2025, [blog](https://blog.modelcontextprotocol.io/posts/2025-09-08-mcp-registry-preview/)) · Azure API Center | Security + Platform |
 | Shadow-AI discovery | Find unsanctioned AI | Zeek/DNS logs + domain list + SSO grants · SSE/CASB AI-app discovery, e.g. Defender for Cloud Apps' Generative AI catalogue category with risk scores and sanction/block ([docs](https://learn.microsoft.com/en-us/security/security-for-ai/discover)) and Entra Global Secure Access shadow-AI discovery, which also flags model-provider APIs and SaaS MCP servers ([docs](https://learn.microsoft.com/en-us/entra/global-secure-access/concept-shadow-ai-discovery)); checked 27 Sep 2026 | Security |
 
-**ADRs to write** ([04-solution-design-and-adr](templates/04-solution-design-and-adr.md)):
+**ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 1. **Gateway product:** OSS (LiteLLM, Agent Router, agentgateway), commercial (Kong, Prisma AIRS), cloud-native (APIM), or two layers (APIM at the edge, OSS for on-prem and MCP).
 2. **Topology:** one central gateway, per-region data planes, or per-BU data planes under a central control plane (this settles the Consumer BU negotiation).
 3. **Routing:** static per use case, a cascade with validators, or a learned router.
@@ -223,15 +223,15 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Tasks | Exit criteria | FDE artefacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| Discovery (1–3) | Spend and key census; inventory v0; anchor success signals; works-council consultation opened; gateway bake-off | Signed memo; baselines; SOW | [01](templates/01-discovery-questionnaire.md), [02](templates/02-data-readiness-scorecard.md), [03](templates/03-sow-and-acceptance-criteria.md) |
-| POC (4–6) | Non-prod gateway for 2 BUs; virtual keys; budgets; OTel; cascade on 1 anchor; DLP monitor mode; mirror + digest pinning; drill #1 in staging | Overhead ≤ 30 ms p95; cascade non-inferior on anchor 1; drill passes | [04](templates/04-solution-design-and-adr.md), [05](templates/05-eval-plan.md), [06](templates/06-threat-model-and-controls.md) |
-| Pilot (7–11) | 3 BUs in production (~60 use cases); showback; DLP enforce for ID classes; MCP allow-list; registry and calendar; shadow-eval harness; game day #2 | §5 met for pilot BUs; showback reconciles ±2% | [07](templates/07-compliance-obligations-to-controls.md), [08](templates/08-security-review-pack.md), weekly [10](templates/10-demo-script-and-status-report.md) |
-| Production (12–15) | Onboarding waves for the remaining 9 BUs; direct-egress blocks; chargeback live; two-region HA; gateway pen test; runbooks | SLOs met 2 weeks; ≥ 90% of spend through the gateway | [09](templates/09-runbook-slos-and-handover.md) |
+| Discovery (1–3) | Spend and key census; inventory v0; anchor success signals; works-council consultation opened; gateway bake-off | Signed memo; baselines; SOW | Discovery memo ([template 01](templates/01-discovery-questionnaire.md)), data readiness ([template 02](templates/02-data-readiness-scorecard.md)), SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)) |
+| POC (4–6) | Non-prod gateway for 2 BUs; virtual keys; budgets; OTel; cascade on 1 anchor; DLP monitor mode; mirror + digest pinning; drill #1 in staging | Overhead ≤ 30 ms p95; cascade non-inferior on anchor 1; drill passes | ADRs ([template 04](templates/04-solution-design-and-adr.md)), eval plan ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (7–11) | 3 BUs in production (~60 use cases); showback; DLP enforce for ID classes; MCP allow-list; registry and calendar; shadow-eval harness; game day #2 | §5 met for pilot BUs; showback reconciles ±2% | Obligations map ([template 07](templates/07-compliance-obligations-to-controls.md)), security pack ([template 08](templates/08-security-review-pack.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (12–15) | Onboarding waves for the remaining 9 BUs; direct-egress blocks; chargeback live; two-region HA; gateway pen test; runbooks | SLOs met 2 weeks; ≥ 90% of spend through the gateway | Runbook and SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
 | Handover (16) | Platform team runs a failover drill and a model migration alone | Customer-run drill passes | Handover pack |
 
-**Course build (5 weeks):** W1 gateway, virtual keys, mock providers, OTel · W2 budgets, cascade, breaker; curveball 2 · W3 DLP, cache isolation, MCP allow-list; curveball 3 · W4 FOCUS ledger, showback, discovery; curveball 5 · W5 shadow/canary migration, failover drill; curveballs 1 and 4; demo.
+**Course build (5 weeks):** (1) gateway, virtual keys, mock providers and OTel; (2) budgets, cascade and breaker, plus curveball 2; (3) DLP, cache isolation and MCP allow-list, plus curveball 3; (4) FOCUS ledger, showback and discovery, plus curveball 5; (5) shadow/canary migration and failover drill, curveballs 1 and 4, and demo.
 
 **Code sketch: routing cascade with budget guard and circuit breaker** (library-agnostic Python 3.10+; `call_fn` wraps whichever gateway or SDK you use):
 
@@ -305,11 +305,12 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 ## 8. Evaluation plan
 
 **Datasets:**
-- **Golden:** 1,000 frozen items per anchor, labelled by BU experts. **Held-out:** two weeks of pilot traffic, labelled afterwards.
+- **Golden:** 1,000 frozen items per anchor, labelled by BU experts.
 - **Adversarial:** DLP evasions, the poisoned MCP description, cache probes, the loop script, the 40 seeded shadow-AI cases.
 - **Regression:** every escaped PII case, bad cascade acceptance and failed drill.
+- **Held-out:** two weeks of pilot traffic, labelled afterwards.
 
-**Metrics by layer:**
+**Metrics per layer:**
 
 | Layer | Metrics |
 |---|---|
@@ -345,6 +346,8 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 | BU agent with RAG + web tool + email tool (via gateway) | Yes | Yes | Yes | **Break a leg:** per-agent tool policy denies "untrusted-read + external-send" without human confirmation |
 | Gateway itself (non-LLM) | All prompts, keys | All prompts | Egress to providers | Egress allow-list; no general internet; admin plane on a separate network |
 
+**Top threats and controls** ([template 06](templates/06-threat-model-and-controls.md)):
+
 | Threat | Control |
 |---|---|
 | Upstream package compromise | Hash-pinned lockfiles, mirror, 3–7 day cooldown, SBOM per image, egress allow-list |
@@ -354,23 +357,23 @@ def route(request, tiers, budget, call_fn, accept, est_in, est_out, clock=time.m
 | Denial of wallet | Hourly caps, per-run step limits, repeated-call detection |
 | DLP evasion | Normalise before detection; checksums; adversarial set in CI |
 | MCP tool poisoning / rug pull | Allow-list; pinned tool-description hashes; re-approval on change |
-| Log store as breach target | Metadata-only default; redaction; retention per ADR-4, then deletion |
+| Log store as breach target | Metadata-only default; redaction; retention per ADR-004, then deletion |
 | Bypass | Direct-provider egress blocked; exceptions logged |
 
-**Obligations → controls** ([07](templates/07-compliance-obligations-to-controls.md)):
+**Obligations → controls** ([template 07](templates/07-compliance-obligations-to-controls.md)):
 
 | Obligation | Control | Evidence |
 |---|---|---|
 | CERT-In 6 h report; 180-day logs in India | Incident runbook with a CERT-In step; log store in an Indian region | Drill record; retention config |
 | DPDP Rules 6–7 (from May 2027): safeguards, one-year logs, breach notice | Encryption, access control, DLP, log retention, breach runbook | Security pack; retention config |
-| GDPR minimisation and transfers | Metadata-only default; residency routing; SCCs with providers | ADR-4; DPA register |
+| GDPR minimisation and transfers | Metadata-only default; residency routing; SCCs with providers | ADR-004; DPA register |
 | BetrVG §87(1) no. 6 | Works-council agreement on logging scope | Signed agreement |
 | EU AI Act Art. 5 and Annex III (from 2 Dec 2027) | Inventory screening questions; high-risk flag triggers review | Inventory records |
 | EU AI Act Art. 4 (as amended) | Literacy module required before a virtual key is issued | Training records |
 
 ## 10. Operations and cost model
 
-**SLOs:** availability 99.95% per month; gateway-attributable errors ≤ 0.05%; overhead p95 ≤ 30 ms; spend data fresh within 5 minutes; chargeback closed by working day 5.
+**SLOs.** Availability 99.95% per month; gateway-attributable errors ≤ 0.05%; overhead p95 ≤ 30 ms; spend data fresh within 5 minutes; chargeback closed by working day 5.
 
 **Observability.** Emit OTel GenAI spans with `gen_ai.request.model`, `gen_ai.usage.input_tokens` and `gen_ai.usage.output_tokens`, plus `tavrenhill.bu`, `tavrenhill.use_case`, `tavrenhill.tier` and `tavrenhill.outcome`. The GenAI conventions are still at **Development** status in a separate repository ([OTel](https://opentelemetry.io/docs/specs/semconv/gen-ai/)): pin the version.
 
@@ -403,6 +406,8 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are real-engagement weeks; see §7 for the course schedule.
+
 1. **Week 10: a provider announces a model retirement with 60 days' notice.**
    - Anthropic and Microsoft Foundry both give at least 60 days' notice for GA models ([Anthropic](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)); Foundry dates are not extendable and provisioned deployments are **not** auto-upgraded.
    - Query the registry for dependent aliases (say 43 use cases).
@@ -412,7 +417,7 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 2. **Week 5: an agent loop burns a month's budget overnight.**
    - Throttle or revoke the key; confirm spend has flattened.
    - Trace the cause (e.g. a failing tool call retried with growing context); add the hourly cap, per-run step limits, repeated-call detection and spend-velocity alerts against a 7-day baseline.
-   - Blameless review. Provider credits are not guaranteed; ADR-5 decides who pays.
+   - Blameless review. Provider credits are not guaranteed; ADR-005 decides who pays.
 3. **Week 8: the gateway package is compromised upstream (a LiteLLM-style event).**
    - Compare deployed digests with the bad versions; check whether the mirror ever served them (the cooldown should have blocked them).
    - Hunt for the `.pth` IoC in dev and CI. If the package ran anywhere with provider keys, **rotate every provider key** and revoke sessions.
@@ -424,11 +429,11 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 5. **Week 13: the Consumer BU refuses chargeback.**
    - Separate **mandatory controls** (vault keys, DLP, logging, inventory; group CISO policy) from **commercial terms**.
    - Offer a federated data plane under the central control plane, starting with showback of the BU's own cost per outcome.
-   - Take a decision memo to the CFO; record the compromise in ADR-2 and ADR-5.
+   - Take a decision memo to the CFO; record the compromise in ADR-002 and ADR-005.
 
 ## 12. Deliverables and grading rubric
 
-**By phase:** discovery census, memo and SOW · POC gateway config, tested router, OTel, ADRs 1–4, threat model · pilot DLP and isolation reports, showback, registry and calendar, drill report, compliance map, security pack · runbooks, SLO dashboards, chargeback and a customer-run drill.
+**Deliverables:** discovery census, memo and SOW · POC gateway config, tested router, OTel, ADR-001 to ADR-004, threat model · pilot DLP and isolation reports, showback, registry and calendar, drill report, compliance map, security pack · runbooks, SLO dashboards, chargeback and a customer-run drill.
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
@@ -450,23 +455,23 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 | Turn | Title | How it is exercised |
 |---|---|---|
-| 100, 91 | AI Gateways; LLM FinOps | The core build; ledger, chargeback, cost per outcome |
-| 87, 88 | Model Upgrades and Deprecation; A/B Testing and Canary | Registry, calendar, shadow → canary |
-| 90, 94 | SLOs and Incident Response; Provider Failover and DR | Breakers, `Retry-After` handling, drills, error budgets |
-| 96, 97, 98 | Observability; Evaluation; Guardrail Tools | OTel GenAI spans; golden-set harness; DLP tooling |
-| 78 | PII Detection and DLP | Checksum validators; multilingual evaluation |
+| 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity Planning; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
+| 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon Execution | Cascade validators; spend caps; stuck-loop detection |
 | 65, 66, 71 | MCP Specification; MCP Authorization; Agent Identity | Pinned tool descriptions; MCP auth at the gateway; per-agent keys |
 | 68 | The Agentic AI Foundation | agentgateway and Agent Router governance |
 | 73, 74, 77 | OWASP Agentic and LLM Top 10s; Model Supply Chain | Denial of wallet, tool poisoning, pinning and KEV patching |
-| 29, 31, 33, 35 | Serving Engines; Prefix Caching; Capacity Planning; Batch | Self-hosted tier; `cache_salt`; PTU sizing; batch savings |
-| 38, 57, 58 | Evaluator Loops; Always-On Agents; Long-Horizon Execution | Cascade validators; spend caps; stuck-loop detection |
-| 79, 80, 81 | EU AI Act; NIST AI RMF and ISO/IEC 42001; GDPR and DPDP | Inventory screening and risk tiers; logging scope |
+| 78 | PII Detection and DLP | Checksum validators; multilingual evaluation |
+| 79–81 | EU AI Act; NIST AI RMF and ISO/IEC 42001; GDPR and DPDP | Inventory screening and risk tiers; logging scope |
+| 87, 88 | Model Upgrades and Deprecation; A/B Testing and Canary | Registry, calendar, shadow → canary |
+| 90, 94 | SLOs and Incident Response; Provider Failover and DR | Breakers, `Retry-After` handling, drills, error budgets |
+| 91, 100 | LLM FinOps; AI Gateways | The core build; ledger, chargeback, cost per outcome |
 | 92, 93 | On-Prem and Sovereign Deployment; IaC | Residency tiers; GitOps policy |
+| 96–98 | Observability; Evaluation; Guardrail Tools | OTel GenAI spans; golden-set harness; DLP tooling |
 | 102 | Model Provider Landscape | Multi-provider fallback pairs |
-| 109–116 | FDE practice turns | Census, ROI, ADRs, change management, SOW |
+| 109–116 | FDE practice | Census, ROI, ADRs, change management, SOW |
 | 128 | Governance-as-Code | Policy repo with tests |
 
-**New/gap topics exercised:** #1 orchestration-layer security (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture; MOD-7 cache isolation; FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; AGT-7 agent sprawl and inventory; AGT-9 low-code builders (exposed n8n); SEC (shadow-AI inventory); SEC (multi-tenant side channels); SEC (incident clocks and record retention).
+**New/gap topics exercised:** #1 orchestration-layer security (LiteLLM supply chain, KEV CVEs); #8 injection-resistant architecture; MOD-7 cache isolation; FDE-4 provider capacity engineering (quotas, PTU, spillover, 429s); FDE-10 multi-tenant isolation; FDE-11 log retention; FDE-1 security review; AGT-7 agent sprawl and inventory; AGT-9 low-code builders (exposed n8n); SEC-10 shadow-AI inventory; SEC-8 multi-tenant side channels; SEC-3 incident clocks and record retention.
 
 ## 15. What reviewers look for / common failure modes
 

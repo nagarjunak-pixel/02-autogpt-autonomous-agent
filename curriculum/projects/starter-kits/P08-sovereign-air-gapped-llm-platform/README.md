@@ -1,4 +1,4 @@
-# P08 starter kit · Sovereign, air-gapped LLM platform
+# P08 Starter Kit · Sovereign, Air-Gapped LLM Platform
 
 Offline starter kit for the brief [P08 · Sovereign, Air-Gapped LLM Platform for a Cooperative Bank](../../P08-sovereign-air-gapped-llm-platform.md). Nallamala Cooperative Bank is fictional, and so is every staff member, borrower, circular and loan file in the data. There is no real personal data anywhere in the kit: Aadhaar-format numbers start with 0 or 1 and PAN-format strings use holder type Z, so neither can be a real ID.
 
@@ -25,9 +25,9 @@ Harness options: `--runs 3` (k in pass^k), `--boot 1000` (bootstrap resamples fo
 The verifier also runs on its own, exactly as the enclave's import quarantine would run it:
 
 ```bash
-python3 bundle_verifier.py data/bundles/good_v8 data/enclave/pubkey.raw 7         # PROMOTE, exit 0
+python3 bundle_verifier.py data/bundles/good_v8 data/enclave/pubkey.raw 7           # PROMOTE, exit 0
 python3 bundle_verifier.py data/bundles/tampered_weights data/enclave/pubkey.raw 7  # hash or size mismatch, exit 1
-python3 kv_capacity.py                                                             # the §6 table and curveball 1
+python3 kv_capacity.py                                                              # the §6 table and curveball 1
 ```
 
 ## What is in the kit
@@ -139,7 +139,7 @@ The course build is 4 weeks; the real engagement is 16 (§7).
 | 2 (POC, weeks 3–6) | Bilingual retrieval with a query-time ACL filter and supersession-aware ranking; OCR for image-only scans; legacy-font repair; a retrieval-only fallback that cites passages. | AC-3, AC-4, AC-7 (ACL) |
 | 3 (POC) | A single-call RAG answer step through `adapter.py` with spotlighting and abstention; a gateway that masks Aadhaar and PAN before logging; a bake-off of two quantisations per language. | AC-3, AC-6, AC-7, CB-3 |
 | 3–4 (Pilot, weeks 7–11) | The loan workflow: deskew and OCR repair, extraction with page evidence, numbers verified against pages, FOIR and red flags computed in code from verified income, text-layer vs rendered-page diff to catch hidden text. | AC-5, AC-7 (loans) |
-| 4 (Production 12–15, Handover 16) | Record the model digest on every trace; decide whether `aibom_gaps()` binds; a signed-transfer demo through a drop directory; a load replay for AC-8; a DR and fallback drill. | CB-4, AC-8, AC-9, AC-10 |
+| 4 (Production, weeks 12–15; Handover, week 16) | Record the model digest on every trace; decide whether `aibom_gaps()` binds; a signed-transfer demo through a drop directory; a load replay for AC-8; a DR and fallback drill. | CB-4, AC-8, AC-9, AC-10 |
 
 ## What the kit deliberately does not do
 

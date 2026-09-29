@@ -1,4 +1,4 @@
-# P06 starter kit · Injection-resistant inbox agent
+# P06 Starter Kit · Injection-Resistant Inbox Agent
 
 Offline starter kit for the brief [P06 · Injection-Resistant Executive Inbox and Calendar Agent](../../P06-injection-resistant-inbox-agent.md). Kerrowan Therapeutics is fictional, and so is every executive, address, trial and number in the data. Kerrowan's mail domain is `helixtx.example`, as in the brief's §7 sketch; `helixtx-secure.example` and `he1ixtx.example` are the lookalikes.
 
@@ -30,7 +30,7 @@ Options: `--runs 5` sets k for scheduling pass^k (5 is the brief's value), `--li
 | `generate_data.py` | Deterministic generator (seed 6062026): a directory, the pinned block, 600 Graph-shaped messages in threads (7 of them 30–60 messages long), 85 calendar events, a 500-item AE set, 409 red-team cases from 90 templates, 100 golden tasks, 50 scheduling scenarios and 200 long sessions. |
 | `baseline.py` | `BaselineSystem`: keyword triage, a regex AE router, a gullible quarantined reader, an extractive summariser, a template planner that reads the mode from its history, a stub compactor, a UI that reports the plan rather than the result, and an organiser-only scheduler. |
 | `adapter.py` | `AdapterSystem`: replaces the reader, summariser and planner with calls to any OpenAI-compatible `/chat/completions` endpoint. Pure `urllib`. Triage and AE routing stay rule-based. |
-| `eval_harness.py` | A mock tenant that logs every tool call and effect, the undefended comparison run, and the metric table. Prints `AC-ID | metric | value | threshold | PASS/FAIL` and writes JSON to `./results/`. |
+| `eval_harness.py` | A mock tenant that logs every tool call and effect, the undefended comparison run, and the metric table. Prints `AC-ID \| metric \| value \| threshold \| PASS/FAIL` and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the control (reviewer fixes and curveballs 1–5) and for the generator (determinism, every tricky case present). |
 
 ### Behaviour kept from the reviewed sketch, and what the kit adds
@@ -98,7 +98,7 @@ Security metrics are programmatic, as §8 requires. The mock tenant logs every c
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted API with zero data retention
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted API with zero data retention
 export LLM_MODEL=qwen3:8b                        # quarantined reader and summariser
 export LLM_PLANNER_MODEL=qwen3:32b               # optional, defaults to LLM_MODEL
 export LLM_API_KEY=...                           # only if your endpoint needs it
@@ -116,7 +116,7 @@ python3 eval_harness.py --system adapter --limit 50
 | 3 (POC) | The Q-LLM through `adapter.py` with constrained decoding; a planner that takes reply recipients from `sender_of`, not from the body; a summariser that states facts only, plus an injection detector that flags (never blocks) suspicious mail. Your MCP server with OAuth and Keycloak token exchange, carrying the same policy. | AC-11, AC-10, AC-9 stays 0 |
 | 4 (POC to Pilot) | The long-session harness: inject the pinned block into every planner call (the `pinned` argument the baseline ignores) and make the UI report outcomes. A scheduler that checks every attendee's hours, holds and the deadline. | CB3, AC-7, AC-8 stays 100% |
 | 5 (Pilot, weeks 6–10) | Red team v2: 20 more curveball-2 variants, held-out attacks written by another team, the calendar-invite path (curveball 4), and a kill-switch drill at L1–L4. | AC-9, AC-12 |
-| 6 (Production and handover, weeks 11–12) | The utility-versus-security report; the ADR-6 autonomy-staging package for curveball 5; cost tracking per executive. | AC-11, AC-14 |
+| 6 (Production and Handover, weeks 11–12) | The utility-versus-security report; the ADR-6 autonomy-staging package for curveball 5; cost tracking per executive. | AC-11, AC-14 |
 
 ## What the kit deliberately does not do
 

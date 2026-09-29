@@ -25,6 +25,7 @@ Applying that rule to Vol 2's 135 turns plus the verified gap topics gives a **c
 | **Model literacy for deployers** (4) | 1 Tokenisation and cost · 29 + 30 Serving engines and quantisation (merged, deployer depth; includes 31 from the serving merge in §2) · 34 Local and on-device inference · 102 Provider landscape (+ 22 "when to fine-tune" decision, with teacher-terms caveat MOD-13) |
 
 **Prerequisite, not a topic:** 103 Python (and TypeScript) engineering for AI apps. Test it on entry.
+
 **Assessed through the projects, not taught as a turn:** 117 Technical interview and system-design readiness. Each project ends with a design defence.
 
 ### Demoted from P1 to P2 (still taught, as electives or on demand)
@@ -178,4 +179,4 @@ Each week has roughly 10–12 hours of study plus project work. The briefs' cour
 | Project 2 (★★★, weeks 8–13) | [P04](projects/P04-contact-centre-voice-agent.md) · [P05](projects/P05-computer-use-agent-replacing-rpa.md) · [P06](projects/P06-injection-resistant-inbox-agent.md) · [P07](projects/P07-ai-vulnerability-triage-and-patch-pipeline.md) · [P08](projects/P08-sovereign-air-gapped-llm-platform.md) · [P10](projects/P10-ambient-clinical-documentation.md) · [P12](projects/P12-enterprise-ai-gateway-finops-platform.md) · [P15](projects/P15-distilled-domain-small-model-offline.md) | Course builds of 4–6 weeks. They add hardening, operations, deployment or real-time constraints |
 | Capstone sprint (weeks 14–16) | (a) Discovery-to-POC on any brief not yet done, chosen for the learner's target industry, or (b) hardening and handover of Project 2 | A portfolio piece that shows the first three weeks of a real engagement, or production readiness; both end with a design defence |
 
-**Coverage.** Across the 16 projects, every core topic above is exercised by at least one project. See the coverage matrix in [projects/README.md](projects/README.md#coverage-matrix).
+**Coverage.** Across the 16 projects, every core topic above is exercised by at least one project. See the coverage matrix in [Real-World FDE Projects](projects/README.md#coverage-matrix).

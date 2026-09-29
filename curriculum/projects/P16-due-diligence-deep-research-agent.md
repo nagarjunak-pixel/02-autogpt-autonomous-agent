@@ -1,7 +1,7 @@
 # P16 · Due-Diligence Deep-Research Agent
 
 > A deep-research agent that drafts first-pass due-diligence memos in which every sentence traces to a passage the system actually retrieved, behind information barriers between deals, with licence-clean sourcing and a hard cost cap per run.
-
+>
 > **Customer:** Corriemuir Capital (fictional) · **Industry:** Private equity (mid-market buyout and growth) · **Geography:** UK (London) and India (Mumbai) · **Real engagement:** 14 weeks. The FDE lead and one FDE work with Corriemuir's data engineer, a part-time compliance officer and 2 analyst champions · **Course build:** 6 weeks, team of 3–4 · **Difficulty:** ★★☆
 
 **Starter kit:** [`starter-kits/P16-due-diligence-deep-research-agent/`](starter-kits/P16-due-diligence-deep-research-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `citation_verifier.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
@@ -31,7 +31,7 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 
 ## 2. Constraints
 
-**Legal and regulatory** (as of Sept 2026). Assume, as fictional facts, that Corriemuir is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
+**Legal and regulatory** (as of Sep 2026). Assume, as fictional facts, that Corriemuir is FCA-authorised in the UK and runs a SEBI-registered fund in India. Verify every item with counsel before teaching.
 - **UK MAR.** Inside information may be disclosed only "in the normal exercise of an employment, a profession or duties" ([Art. 10](https://www.legislation.gov.uk/eur/2014/596/article/10)). This matters when a target or its debt is listed.
 - **FCA SYSC 10.2 (Chinese walls).** 10.2.2R permits withholding information held in one part of the business from another; under 10.2.4R a firm does not "act with knowledge" that a wall keeps out ([FCA Handbook](https://www.handbook.fca.org.uk/handbook/SYSC/10/2.html)). An agent that pools memory across deals breaks the wall.
 - **SEBI (Prohibition of Insider Trading) Regulations, 2015** (last amended 12 Mar 2025, per [SEBI](https://www.sebi.gov.in/legal/regulations/mar-2025/securities-and-exchange-board-of-india-prohibition-of-insider-trading-regulations-2015-last-amended-on-march-12-2025-_92672.html)). These cover unpublished price-sensitive information (UPSI) for listed Indian companies. UPSI may be shared for due diligence only under conditions, and a structured digital database of recipients is required. *Verify clause numbers.*
@@ -42,15 +42,15 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 - **Crawl and licence signals** (not statutes; treat as hard policy): robots.txt; Cloudflare [Content Signals](https://blog.cloudflare.com/content-signals-policy/) (24 Sep 2025: `search`, `ai-input`, `ai-train`); Cloudflare [pay-per-crawl](https://blog.cloudflare.com/introducing-pay-per-crawl/) (1 Jul 2025, private beta; HTTP 402 with `crawler-price`, Web Bot Auth signatures), now being widened into a "pay per use" pilot ([TechCrunch](https://techcrunch.com/2026/07/01/cloudflares-new-policy-pushes-ai-companies-to-pay-for-publishers-content/), 1 Jul 2026); Cloudflare defaults that, from 15 Sep 2026, block training and agent crawlers on pages showing ads ([Cloudflare](https://blog.cloudflare.com/content-independence-day-ai-options/)); [RSL 1.0](https://rslstandard.org/press/rsl-1-specification-2025) (10 Dec 2025); and IETF [aipref](https://datatracker.ietf.org/wg/aipref/about/), still a draft ([vocab-08](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/), 14 Sep 2026; not an RFC; the WG's 31 Aug 2026 milestone for sending it to the IESG is still pending).
 - **Search-API terms.** Bing Search APIs were [retired on 11 Aug 2025](https://learn.microsoft.com/en-us/lifecycle/announcements/bing-search-api-retirement); Google's Custom Search JSON API is [closed to new customers](https://developers.google.com/custom-search/v1/overview) (existing customers until 1 Jan 2027); Brave requires a plan with explicit storage rights to store results ([Brave](https://brave.com/search/api/)).
 
-**Data:** VDR content is under NDAs that differ on sub-processors and "return or destroy". Documents include scans, Excel models and Hindi or Marathi files, with conflicting versions. Licensed market data and expert-call transcripts often restrict AI processing, storage or quotation.
+**Data.** VDR content is under NDAs that differ on sub-processors and "return or destroy". Documents include scans, Excel models and Hindi or Marathi files, with conflicting versions. Licensed market data and expert-call transcripts often restrict AI processing, storage or quotation.
 
-**Infrastructure:** Microsoft 365, a document management system (DMS), a deal CRM, and one cloud tenant in a UK region shared by both offices.
+**Infrastructure.** Microsoft 365, a document management system (DMS), a deal CRM, and one cloud tenant in a UK region shared by both offices.
 
-**Security:** VDR files and web pages are untrusted input, and search queries can leak deal intent.
+**Security.** VDR files and web pages are untrusted input, and search queries can leak deal intent.
 
-**Budget:** run costs capped at USD 4k/month. Per memo, the hard cap is USD 40 and the target median is ≤ USD 15.
+**Budget.** Run costs capped at USD 4k/month. Per memo, the hard cap is USD 40 and the target median is ≤ USD 15.
 
-**Politics:** partners are sceptical, the CCO is sceptical of anything that touches live deals, and the MP wants a demo for LPs in week 10.
+**Politics.** Partners are sceptical, the CCO is sceptical of anything that touches live deals, and the MP wants a demo for LPs in week 10.
 
 ## 3. What students are given (course build)
 
@@ -90,13 +90,13 @@ The memo stays the analyst's work product: the agent delivers a draft plus an ev
 9. Who signs the final memo, and what cost and time per draft are acceptable?
 10. Do LP due-diligence questionnaires ask how AI is used?
 
-**Qualification (lowest rung that works):**
+**Qualification: the lowest rung that works.**
 - **Registry lookups** (Companies House, Indian MCA filings) are plain API calls.
 - **VDR financial tables** need parsing plus single-call schema extraction with reconciliation rules.
 - **Section prose** is written by single-call generation over a verified fact table.
 - **Market and competitor research** is open-ended, so a *bounded* agentic search loop is justified, inside a fixed workflow with budgets and stopping rules. No agent logs in, sends email or acts outside the workflow.
 
-**Decision:** a workflow plus bounded research loop with human sign-off, piloted first on closed deals; record it in the SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), using [template 01](templates/01-discovery-questionnaire.md) and the [scorecard](templates/02-data-readiness-scorecard.md).
+**Decision.** A workflow plus bounded research loop with human sign-off, piloted first on closed deals; record it in the SOW ([template 03](templates/03-sow-and-acceptance-criteria.md)), using [template 01](templates/01-discovery-questionnaire.md) and the [data-readiness scorecard](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
@@ -190,13 +190,13 @@ flowchart LR
 
 ## 7. Implementation plan — week by week
 
-| Phase (weeks) | Key tasks | Exit criteria | FDE artifacts |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
 |---|---|---|---|
-| **Discovery (1–2)** | Interviews; claim-accuracy audit of past memos; NDA and licence review with GC; wall process with CCO | SOW signed; sources classified allowed / conditional / prohibited; gold claims for 3 closed deals | Discovery notes, scorecard, SOW, source register |
-| **POC (3–6)** | Parsing + per-deal index; quarantined readers; fetch gateway; verifier (§7 sketch); writer drafting from a fact table; run on 3 closed deals | Claim precision ≥ 90%; 0 never-accessed citations; injection suite passes | ADRs 1–4, eval report ([05](templates/05-eval-plan.md)), threat model ([06](templates/06-threat-model-and-controls.md)) |
-| **Pilot (7–11)** | 2 deal teams on live deals, *in parallel* with their normal memo; analyst sentence-level accept/reject UI; wall integration; budgets; LP demo (week 10) | §5 thresholds on 12 memos; 0 leakage; CCO sign-off | Security pack ([08](templates/08-security-review-pack.md)), compliance map ([07](templates/07-compliance-obligations-to-controls.md)), demo ([10](templates/10-demo-script-and-status-report.md)) |
-| **Production (12–13)** | Roll out to all teams; deletion workflow; runbooks; cost dashboards | Deletion drill passed; on-call agreed | Runbook + SLOs ([09](templates/09-runbook-slos-and-handover.md)) |
-| **Handover (14)** | Train champions; eval set ownership; quarterly source-register review | Corriemuir reruns the eval suite without the FDE | Handover pack |
+| Discovery (1–2) | Interviews; claim-accuracy audit of past memos; NDA and licence review with GC; wall process with CCO | SOW signed; sources classified allowed / conditional / prohibited; gold claims for 3 closed deals | Discovery notes, scorecard, SOW, source register |
+| POC (3–6) | Parsing + per-deal index; quarantined readers; fetch gateway; verifier (§7 sketch); writer drafting from a fact table; run on 3 closed deals | Claim precision ≥ 90%; 0 never-accessed citations; injection suite passes | ADR-001 to ADR-004, eval report ([template 05](templates/05-eval-plan.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)) |
+| Pilot (7–11) | 2 deal teams on live deals, *in parallel* with their normal memo; analyst sentence-level accept/reject UI; wall integration; budgets; LP demo (week 10) | §5 thresholds on 12 memos; 0 leakage; CCO sign-off | Security pack ([template 08](templates/08-security-review-pack.md)), compliance map ([template 07](templates/07-compliance-obligations-to-controls.md)), demo ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (12–13) | Roll out to all teams; deletion workflow; runbooks; cost dashboards | Deletion drill passed; on-call agreed | Runbook + SLOs ([template 09](templates/09-runbook-slos-and-handover.md)) |
+| Handover (14) | Train champions; eval set ownership; quarterly source-register review | Corriemuir reruns the eval suite without the FDE | Handover pack |
 
 **Course build (6 weeks):** (1) discovery role-play and source register; (2) parsing, per-deal index, quarantined readers; (3) fetch gateway and research loop; (4) verifier and writer; (5) evals, injection and leakage suites, effort sweep; (6) hardening and demo. Inject curveballs 1–2 in week 4, 3–4 in week 5 and 5–6 in week 6.
 
@@ -261,7 +261,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
     return Verdict(sentence, "flag" if reasons else "keep", reasons)
 ```
 
-**What the verifier does:** it **strips** sentences with no citation, *any* citation never accessed or from another deal, or unsupported or contradicted evidence, and logs each one; contradictions go to the analyst as possible counter-evidence. It **flags** supported sentences whose quote or number does not match verbatim (numbers match whole, so "2.5%" does not match "12.5%"), and the analyst decides.
+**What the verifier does.** It **strips** sentences with no citation, *any* citation never accessed or from another deal, or unsupported or contradicted evidence, and logs each one; contradictions go to the analyst as possible counter-evidence. It **flags** supported sentences whose quote or number does not match verbatim (numbers match whole, so "2.5%" does not match "12.5%"), and the analyst decides.
 
 **Student extensions:** split compound sentences into atomic claims; check each cited passage alone as well as combined (to catch citation padding); enforce the quotation limits.
 
@@ -274,7 +274,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 - **Regression:** every analyst-reported bad citation.
 - **Held-out:** one target that is never used in development.
 
-**Metrics by layer:**
+**Metrics per layer:**
 
 | Layer | Metrics |
 |---|---|
@@ -285,7 +285,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 | Process | Analyst hours; partner "usable" score; sentence accept/reject rates |
 | Cost / latency | Cost per memo and per accepted claim; p90 run time |
 
-**Judge calibration:** measure judge–annotator agreement on 500 claim–passage pairs (target κ ≥ 0.7) and publish the confusion matrix; test for leniency on paraphrased numbers and partial support. Pin the judge's model version and effort level, and recalibrate after any change (Turn 87). Do not count on temperature 0 for stability: many reasoning models reject a non-default temperature, and it is not deterministic anyway.
+**Judge calibration.** Measure judge–annotator agreement on 500 claim–passage pairs (target κ ≥ 0.7) and publish the confusion matrix; test for leniency on paraphrased numbers and partial support. Pin the judge's model version and effort level, and recalibrate after any change (Turn 87). Do not count on temperature 0 for stability: many reasoning models reject a non-default temperature, and it is not deterministic anyway.
 
 **CI gates** (every change to prompts, models or retrieval): verifier recall ≥ 95% on the seeded set; 0 MNPI leakage; injection suite passes; cost per run within cap on the 3 fixture deals.
 
@@ -319,7 +319,7 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 | Obligation | Control | Evidence |
 |---|---|---|
 | UK MAR Art. 10; SEBI PIT (UPSI) | Wall register drives deal scope; MNPI-flagged notes never leave their deal namespace | PDP decision logs; probe results |
-| FCA SYSC 10.2 | Physical separation per deal; CCO-owned access policy | ADR 4; access reviews |
+| FCA SYSC 10.2 | Physical separation per deal; CCO-owned access policy | ADR-004; access reviews |
 | UK GDPR / DPDP | LIA for management research; no criminal-offence data via the agent; per-deal deletion | LIA; deletion certificates |
 | CDPA s.30 / licences | Quote limits; source register; attribution in the evidence table | Verifier logs; register |
 | CMA 1990 / site terms | No authenticated scraping; robots and AI-preference enforcement | Fetch-gateway policy log |
@@ -327,9 +327,9 @@ def verify(sentence: str, store: dict[str, Passage], deal_id: str, judge: Judge,
 
 ## 10. Operations and cost model
 
-**SLOs:** p90 run time ≤ 45 minutes; the verifier runs on 100% of sentences (no verifier, no draft); 99.5% availability across London and Mumbai working hours; deletion within 10 business days of a destroy request.
+**SLOs.** p90 run time ≤ 45 minutes; the verifier runs on 100% of sentences (no verifier, no draft); 99.5% availability across London and Mumbai working hours; deletion within 10 business days of a destroy request.
 
-**Observability:** OTel spans for plan, search, fetch, read, verify and write, with hashed deal ID, tokens and cost (GenAI conventions are at Development status, so pin the version); the fetch log; PDP decisions.
+**Observability.** OTel spans for plan, search, fetch, read, verify and write, with hashed deal ID, tokens and cost (GenAI conventions are at Development status, so pin the version); the fetch log; PDP decisions.
 
 **Cost model.** Prices vary by vendor and change often, so treat these as bands.
 
@@ -347,35 +347,42 @@ At 25–40 runs a month that is about USD 25–600 of model and search spend. Li
 
 **Reasoning effort per step.** Set effort explicitly on every call, as defaults change between model versions: high for planning, counter-search and the LLM-judge step on contested or numeric claims; low or none for reading and extraction, where typed schemas do the work. Give each run a reasoning-token budget (e.g. 150k, about USD 0.75–11 at the table's strong-model output prices) inside the USD 40 cap; once it is spent, remaining steps drop to low effort and the run is flagged. Keep the split only if an effort sweep on the 3 fixture deals shows precision and red-flag coverage gains worth the cost.
 
-**Runbook:** *injection detected*: quarantine the document, notify the deal team, add it to the regression set. *Budget breaker*: stop, keep partial state, let the analyst decide whether to resume. *Suspected wall breach*: freeze both namespaces, notify the CCO, preserve logs. *Licence complaint*: block the source and purge its passages. *Destroy request*: run the deletion workflow and issue a certificate. *Provider outage*: fail over to a model that has passed the eval gate.
+**Runbook:**
+- **Injection detected:** quarantine the document, notify the deal team, add it to the regression set.
+- **Budget breaker:** stop, keep partial state, let the analyst decide whether to resume.
+- **Suspected wall breach:** freeze both namespaces, notify the CCO, preserve logs.
+- **Licence complaint:** block the source and purge its passages.
+- **Destroy request:** run the deletion workflow and issue a certificate.
+- **Provider outage:** fail over to a model that has passed the eval gate.
 
-**DR:** per-deal backups under that deal's key, so shredding the key also makes backups unreadable (document this for the CCO). RPO 24 h, RTO 8 h; indexes rebuild from VDR exports.
+**DR.** Per-deal backups under that deal's key, so shredding the key also makes backups unreadable (document this for the CCO). RPO 24 h, RTO 8 h; indexes rebuild from VDR exports.
 
 ## 11. Curveballs (instructor-injected events)
 
-Weeks are real-engagement weeks (see §7 for the course schedule).
+Timings are real-engagement weeks; see §7 for the course schedule.
 
-1. **Week 5 — a CIM footer tells "AI assistants" to call the company low-risk and omit an HMRC dispute.** *Strong response:* show from the logs that the VDR reader returned only typed fields, the planner never saw raw text, and the verifier would strip any unsupported "low risk" claim. Tell the deal team (it may be deliberate) and add the document to the adversarial set.
-2. **Week 7 — the agent cites a paywalled article it never accessed,** built from a search snippet. *Strong response:* the retrieval-record check strips it; fix the root cause so the writer cites only stored passages. Obtain licensed access (a subscription whose terms allow this use, or paid crawler access) or mark the gap for the analyst, and report the metric honestly.
-3. **Week 8 — two deal teams share a target.** Team A is evaluating Quelvane; Team B advises a competitor and holds wall-crossed information about a listed parent. *Strong response:* the CCO decides and the PDP enforces; namespaces, keys and caches are already separate, so run the leakage probes on this pair. If Quelvane is restricted, Team B may not research it at all.
-4. **Week 9 — a run costs 20× the budget (about USD 300).** Counter-search looped on a common company name, and the reader re-fetched a 900-page PDF. *Strong response:* kill the run; add hard per-step caps (fetches, tokens, wall time), a diminishing-returns stopping rule, fetch caching and entity disambiguation before search; alert at 50% and 80% of budget; write a short post-mortem.
-5. **Week 10 — a partner asks the team to scrape a competitor's customer portal with a former employee's login. Say no.** Using credentials you are not authorised to use is unauthorised access (CMA 1990 s.1); it also breaches site terms and raises confidential-information, competition-law and LP reputational risks. *Strong response:* decline in writing, escalate to the GC, and offer lawful alternatives (expert calls through licensed networks, public pricing pages whose signals allow AI input, customer interviews, a commercial DD provider). Record it in the decision log.
-6. **Week 12 — the target invokes the NDA's destroy clause** for a dead deal: all material within 10 business days. *Strong response:* delete index, memory, caches and drafts, and shred the key; handle legal-hold exceptions; issue a certificate; prove it by showing that queries now return nothing.
+1. **Week 5: a CIM footer tells "AI assistants" to call the company low-risk and omit an HMRC dispute.** *Strong response:* show from the logs that the VDR reader returned only typed fields, the planner never saw raw text, and the verifier would strip any unsupported "low risk" claim. Tell the deal team (it may be deliberate) and add the document to the adversarial set.
+2. **Week 7: the agent cites a paywalled article it never accessed,** built from a search snippet. *Strong response:* the retrieval-record check strips it; fix the root cause so the writer cites only stored passages. Obtain licensed access (a subscription whose terms allow this use, or paid crawler access) or mark the gap for the analyst, and report the metric honestly.
+3. **Week 8: two deal teams share a target.** Team A is evaluating Quelvane; Team B advises a competitor and holds wall-crossed information about a listed parent. *Strong response:* the CCO decides and the PDP enforces; namespaces, keys and caches are already separate, so run the leakage probes on this pair. If Quelvane is restricted, Team B may not research it at all.
+4. **Week 9: a run costs 20× the budget (about USD 300).** Counter-search looped on a common company name, and the reader re-fetched a 900-page PDF. *Strong response:* kill the run; add hard per-step caps (fetches, tokens, wall time), a diminishing-returns stopping rule, fetch caching and entity disambiguation before search; alert at 50% and 80% of budget; write a short post-mortem.
+5. **Week 10: a partner asks the team to scrape a competitor's customer portal with a former employee's login. Say no.** Using credentials you are not authorised to use is unauthorised access (CMA 1990 s.1); it also breaches site terms and raises confidential-information, competition-law and LP reputational risks. *Strong response:* decline in writing, escalate to the GC, and offer lawful alternatives (expert calls through licensed networks, public pricing pages whose signals allow AI input, customer interviews, a commercial DD provider). Record it in the decision log.
+6. **Week 12: the target invokes the NDA's destroy clause** for a dead deal: all material within 10 business days. *Strong response:* delete index, memory, caches and drafts, and shred the key; handle legal-hold exceptions; issue a certificate; prove it by showing that queries now return nothing.
 
 ## 12. Deliverables and grading rubric
 
-**Deliverables by phase:** questionnaire, claim-accuracy baseline, source register and SOW (discovery); working pipeline, verifier, fetch gateway, ADRs and eval report (POC); analyst UI, wall integration, threat model, compliance map and demo (pilot); runbook, deletion-drill evidence and an owned eval suite (handover).
+**Deliverables:** questionnaire, claim-accuracy baseline, source register and SOW (discovery); working pipeline, verifier, fetch gateway, ADRs and eval report (POC); analyst UI, wall integration, threat model, compliance map and demo (pilot); runbook, deletion-drill evidence and an owned eval suite (handover).
 
 | Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
 | Working system | 25% | Memos on 3 targets; verifier gates every sentence; per-deal stores | A chat wrapper over a search API |
 | Evaluation rigour | 20% | Calibrated judge; claim-level precision and coverage vs gold; seeded verifier tests | "Looks good" reviews; no gold set |
-| Security / compliance | 15% | Trifecta table; injection and leakage probes pass; fetch-policy log; deletion proven | Shared index with metadata filters; no robots or licence handling |
+| Security and compliance | 15% | Trifecta table; injection and leakage probes pass; fetch-policy log; deletion proven | Shared index with metadata filters; no robots or licence handling |
 | FDE artefacts | 20% | Source register, ADRs with real trade-offs, runbook, LIA | Generic templates |
 | Demo and communication | 10% | Shows a stripped hallucinated citation and a blocked injection | Shows only the happy path |
 | Curveball handling | 10% | Says no to scraping, with alternatives; involves the CCO on the shared target | Complies with the partner; treats walls as a UI filter |
 
 ## 13. Stretch goals
+
 - A Web Bot Auth–signed fetcher tested against a mock HTTP 402 pay-per-crawl server.
 - Hindi and Marathi claim verification with per-language precision.
 - An accept/reject flywheel that tunes source tiering.
@@ -392,16 +399,16 @@ Weeks are real-engagement weeks (see §7 for the course schedule).
 | 50, 52 | Vector Databases; Data Lineage and Deletion in RAG | Per-deal collections; NDA destruction drill |
 | 55, 56, 58 | Subagents and Context Isolation; Deep-Research Agents; Long-Horizon Task Execution | Quarantined readers; the research pipeline with stopping rules; 45-minute resumable runs |
 | 64 | Trust Calibration and Automation Bias | Flags and evidence panel; partner over-trust |
-| 73, 74, 75, 76 | OWASP Agentic / LLM Top 10; Red-Teaming; Data and Memory Poisoning | Injection and leakage suites; poisoned pages |
+| 73–76 | OWASP Agentic / LLM Top 10; Red-Teaming; Data and Memory Poisoning | Injection and leakage suites; poisoned pages |
 | 78, 81, 82 | PII/DLP; GDPR and DPDP; Sector Compliance | Query DLP; LIA; MAR, SYSC 10.2, SEBI PIT |
 | 85 | Copyright and IP for AI | Quotation limits; s.29A not available |
 | 87, 96, 97 | Model Upgrades; Observability; Evaluation Tools | Judge re-pinning and recalibration; OTel spans; calibrated judge |
 | 91, 100 | LLM FinOps; AI Gateways | Per-run caps; the 20× curveball |
-| 95, 99 | Agent Frameworks, Hands-On; Durable Workflow Platforms | LangGraph or a vendor agent SDK for the loop (ADR 1); Temporal-style resumable runs |
-| 109–113 | FDE professional skills | Qualification, ROI, POC → pilot, ADRs, demos |
+| 95, 99 | Agent Frameworks, Hands-On; Durable Workflow Platforms | LangGraph or a vendor agent SDK for the loop (ADR-001); Temporal-style resumable runs |
+| 109–113 | FDE practice | Qualification, ROI, POC → pilot, ADRs, demos |
 | 122 | The Agentic Web | Web Bot Auth, paid crawler access, AI preferences |
 
-**New/gap topics exercised:** #15 crawler control and licensing; #19 web search APIs; #8 injection-resistant architecture (quarantined readers); #12 agent memory (per-deal, deletable); RAG-9 citation checking; RAG-8 agentic retrieval; RAG-1 context engineering for long runs; MOD-1 reasoning controls (per-step effort, run budget); MOD-7 cache isolation (per-deal prompt caches); AGT-1 harness choice and AGT-2 when not to go multi-agent (ADR 1); FDE-8 saying no (the portal scrape); FDE-11 record-keeping vs NDA destruction; plus UK MAR, FCA SYSC 10.2 and SEBI PIT.
+**New/gap topics exercised:** #15 crawler control and licensing; #19 web search APIs; #8 injection-resistant architecture (quarantined readers); #12 agent memory (per-deal, deletable); RAG-9 citation checking; RAG-8 agentic retrieval; RAG-1 context engineering for long runs; MOD-1 reasoning controls (per-step effort, run budget); MOD-7 cache isolation (per-deal prompt caches); AGT-1 harness choice and AGT-2 when not to go multi-agent (ADR-001); FDE-8 saying no (the portal scrape); FDE-11 record-keeping vs NDA destruction; plus UK MAR, FCA SYSC 10.2 and SEBI PIT.
 
 ## 15. What reviewers look for / common failure modes
 

@@ -1,4 +1,4 @@
-# P12 starter kit: enterprise AI gateway, FinOps and model lifecycle for Tavrenhill Holdings
+# P12 Starter Kit · Enterprise AI Gateway, FinOps and Model Lifecycle for Tavrenhill Holdings
 
 Offline starter kit for the brief [P12 · Enterprise AI Gateway, FinOps and Model-Lifecycle Platform](../../P12-enterprise-ai-gateway-finops-platform.md).
 Tavrenhill Holdings, its business units (BUs), people, keys, prompts, bills and providers are all fictional.
@@ -33,7 +33,7 @@ LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:7b python3 eval_harness
 
 ## What is in the kit
 
-| File | What it does |
+| File | What it is |
 |---|---|
 | `generate_data.py` | Seeded generator for the §3 data. Writes everything to `data/`. Also holds the checksum functions (Verhoeff, Luhn, mod-97, GSTIN). |
 | `router.py` | The §7 cascade, budget guard and circuit breaker, kept as the reviewed sketch. Two marked additions: `Deployment.zone` with `filter_residency()` (the §7 production gap "residency filters applied before fallback") and a `ProviderError` that carries `retry_after`. |
@@ -69,25 +69,25 @@ Volumes are cut down from the brief's so everything runs in seconds; `--scale` m
 | 4. Provider regional outage (week 11) | `drill.json`: `india-west` is down during three drills | AC-6 rows, including residency; `test_cb4_*` |
 | 5. Consumer BU refuses chargeback (week 13) | `use_cases.json` `consumer_bu` (retail) | The "Curveball 5" showback line, for the CFO memo |
 
-## Harness metrics and the brief's acceptance criteria
+## Metrics, acceptance criteria and baseline results
 
-Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (spend through the gateway) and AC-13 the last (tool governance). The last column is the baseline's score today.
+Brief §5 has no IDs, so this kit numbers its 13 rows in order: AC-1 is the first row (spend through the gateway) and AC-13 the last (tool governance). Each AC-ID's first row names the brief's area in the Notes column. Baseline figures come from `python3 eval_harness.py` on the default data.
 
-| Harness metric | AC (§5 row) | Threshold (brief §5) | Baseline |
-|---|---|---|---|
-| Share of LLM spend through the gateway (synthetic month) | AC-1 (Business) | ≥ 90% | 0.148 FAIL |
-| Cost per successful outcome, per anchor; quality delta vs strong-only with a one-sided 95% bootstrap lower bound | AC-2 (Business) | ≤ −30%, non-inferior (margin 2 pp) | −87%/−86%/−86% cost but −4.5/−7.0/−4.4 pp quality: FAIL ×3 |
-| Ledger total vs invoiced; unallocated share | AC-3 (Business) | within ±2%; ≤ 3% | +6.00% FAIL; 47.9% FAIL |
-| Seeded shadow-AI recall; findings with owner, data class and risk tier | AC-4 (Inventory) | ≥ 90%; all | 0.500 FAIL; 0.000 FAIL |
-| Gateway availability | AC-5 (Reliability) | 99.95% monthly | not computable offline |
-| Failover drill success (worst of 3); p95 vs normal p95; pass^3; requests served outside their residency zone | AC-6 (Reliability) | ≥ 99%; ≤ 2×; 3/3; 0 | 0.797 FAIL; 1.74× PASS; 0/3 FAIL; 867 FAIL |
-| Gateway overhead p95 of the policy path | AC-7 (Latency) | ≤ 30 ms (rules DLP); ≤ 120 ms (ML DLP) | ≈ 0.01 ms PASS |
-| Time to throttle after the hourly cap; overspend past it | AC-8 (Cost control) | ≤ 60 s; ≤ one request | 3,183 s FAIL; USD 2,979 FAIL |
-| DLP recall on checksum-valid IDs; on names + health; precision; false blocks | AC-9 (Safety/DLP) | ≥ 97%; ≥ 90%; ≥ 90%; ≤ 0.5% | 0.505 FAIL; 0.000 FAIL; 0.520 FAIL; 34.9% FAIL |
-| Cross-BU cache hits in 10,000 probe pairs; cross-BU key use | AC-10 (Isolation) | 0; 0 | 9,000 FAIL; 100 FAIL |
-| Route entries that are registry aliases; deployments with a retirement date | AC-11 (Lifecycle) | all; all | 0.500 FAIL; 0.909 FAIL |
-| Artefacts by digest from the internal registry; hash-pinned lockfiles; KEV CVEs patched ≤ 72 h; known-bad versions the mirror served | AC-12 (Supply chain) | all; all; all; 0 | 0.67 FAIL; 0.50 FAIL; 1/3 FAIL; 2 FAIL |
-| Calls allowed to unapproved MCP servers; poisoned descriptions blocked or flagged | AC-13 (Security) | 0; all | 0 PASS; 0/10 FAIL |
+| AC-ID | Harness metric | Threshold (brief §5) | Baseline | Notes |
+|---|---|---|---|---|
+| AC-1 | Share of LLM spend through the gateway (synthetic month) | ≥ 90% | 0.148: FAIL | Business. |
+| AC-2 | Cost per successful outcome, per anchor; quality delta vs strong-only with a one-sided 95% bootstrap lower bound | ≤ −30%, non-inferior (margin 2 pp) | −87%/−86%/−86% cost but −4.5/−7.0/−4.4 pp quality: FAIL ×3 | Business. |
+| AC-3 | Ledger total vs invoiced; unallocated share | within ±2%; ≤ 3% | +6.00%: FAIL; 47.9%: FAIL | Business. |
+| AC-4 | Seeded shadow-AI recall; findings with owner, data class and risk tier | ≥ 90%; all | 0.500: FAIL; 0.000: FAIL | Inventory. |
+| AC-5 | Gateway availability | 99.95% monthly | not computable offline | Reliability. |
+| AC-6 | Failover drill success (worst of 3); p95 vs normal p95; pass^3; requests served outside their residency zone | ≥ 99%; ≤ 2×; 3/3; 0 | 0.797: FAIL; 1.74×: PASS; 0/3: FAIL; 867: FAIL | Reliability. |
+| AC-7 | Gateway overhead p95 of the policy path | ≤ 30 ms (rules DLP); ≤ 120 ms (ML DLP) | ≈ 0.01 ms: PASS | Latency. |
+| AC-8 | Time to throttle after the hourly cap; overspend past it | ≤ 60 s; ≤ one request | 3,183 s: FAIL; USD 2,979: FAIL | Cost control. |
+| AC-9 | DLP recall on checksum-valid IDs; on names + health; precision; false blocks | ≥ 97%; ≥ 90%; ≥ 90%; ≤ 0.5% | 0.505: FAIL; 0.000: FAIL; 0.520: FAIL; 34.9%: FAIL | Safety/DLP. |
+| AC-10 | Cross-BU cache hits in 10,000 probe pairs; cross-BU key use | 0; 0 | 9,000: FAIL; 100: FAIL | Isolation. |
+| AC-11 | Route entries that are registry aliases; deployments with a retirement date | all; all | 0.500: FAIL; 0.909: FAIL | Lifecycle. |
+| AC-12 | Artefacts by digest from the internal registry; hash-pinned lockfiles; KEV CVEs patched ≤ 72 h; known-bad versions the mirror served | all; all; all; 0 | 0.67: FAIL; 0.50: FAIL; 1/3: FAIL; 2: FAIL | Supply chain. |
+| AC-13 | Calls allowed to unapproved MCP servers; poisoned descriptions blocked or flagged | 0; all | 0: PASS; 0/10: FAIL | Security. |
 
 How the harness scores:
 
@@ -101,15 +101,15 @@ How the harness scores:
 
 ## What you build next
 
-The brief's course plan (§7) runs 5 weeks. The middle column shows the real engagement phase each week rehearses.
+The brief's course plan (§7) runs 5 weeks. The brackets give the real engagement phase each week rehearses.
 
-| Course week | Real phase (weeks) | Build on this kit |
+| Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| 1 | Discovery (1–3) → POC (4–6) | A thin gateway (or LiteLLM, Agent Router or agentgateway) around `router.py`, virtual keys bound to BUs (`authorise`, AC-10), mock providers and OTel spans. Write ADRs 1–3. |
-| 2 | POC (4–6) | Budgets with an hourly burn-rate cap (AC-8), the cascade with real validators on anchor 1 (AC-2), breaker tuning. Inject curveball 2. POC exit: overhead ≤ 30 ms p95; cascade non-inferior on anchor 1; drill passes. |
-| 3 | Pilot (7–11) | DLP with normalisation (Unicode digits, spacing, base64) and checksums, plus a names-and-health detector (AC-9); tenant-scoped cache keys (AC-10); an MCP allow-list with pinned description hashes (AC-13). Inject curveball 3 and fix the manifest and mirror cooldown (AC-12). |
-| 4 | Pilot (7–11) | The FOCUS-shaped ledger with PTU amortisation and credits (AC-3), showback per BU, and shadow-AI discovery that finds owners, data classes and risk tiers (AC-4). Inject curveball 5. |
-| 5 | Production (12–15), Handover (16) | Registry aliases and retirement dates in CI (AC-11), shadow and canary migration, residency-aware fallback chains and three drills (AC-6), and the demo with a live outage and a runaway loop. Inject curveballs 1 and 4. |
+| 1 (Discovery, weeks 1–3 → POC, weeks 4–6) | A thin gateway (or LiteLLM, Agent Router or agentgateway) around `router.py`, virtual keys bound to BUs (`authorise`), mock providers and OTel spans. Write ADRs 1–3. | AC-10 (key use) |
+| 2 (POC) | Budgets with an hourly burn-rate cap, the cascade with real validators on anchor 1, breaker tuning. Inject curveball 2. POC exit: overhead ≤ 30 ms p95; cascade non-inferior on anchor 1; drill passes. | AC-8, AC-2 |
+| 3 (Pilot, weeks 7–11) | DLP with normalisation (Unicode digits, spacing, base64) and checksums, plus a names-and-health detector; tenant-scoped cache keys; an MCP allow-list with pinned description hashes. Inject curveball 3 and fix the manifest and mirror cooldown. | AC-9, AC-10, AC-13, AC-12 |
+| 4 (Pilot) | The FOCUS-shaped ledger with PTU amortisation and credits, showback per BU, and shadow-AI discovery that finds owners, data classes and risk tiers. Inject curveball 5. | AC-3, AC-4 |
+| 5 (Production, weeks 12–15; Handover, week 16) | Registry aliases and retirement dates in CI, shadow and canary migration, residency-aware fallback chains and three drills, and the demo with a live outage and a runaway loop. Inject curveballs 1 and 4. | AC-11, AC-6 |
 
 ## What the kit deliberately does not do
 

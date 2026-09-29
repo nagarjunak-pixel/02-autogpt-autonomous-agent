@@ -1,4 +1,4 @@
-# P01 starter kit · Permission-aware knowledge assistant
+# P01 Starter Kit · Permission-Aware Knowledge Assistant
 
 Offline starter kit for the brief [P01 · Permission-Aware Knowledge Assistant for a Law Firm](../../P01-permission-aware-knowledge-assistant.md) (Carrowby & Varadan LLP, fictional).
 
@@ -30,7 +30,7 @@ Options: `python3 eval_harness.py --runs 5` (pass^5 instead of pass^3), `--limit
 | `generate_data.py` | A deterministic generator (seed 1042). It writes 40 matters, 12 clients, 64 staff, walls, about 540 documents, 200 data subjects, 36 canaries, 15 hostile documents, a 400-item golden set, 10,368 canary probes and 150 injection prompts. |
 | `baseline.py` | `BaselineSystem`: keyword (IDF) retrieval with the permission pre-filter, `authorize()` and the cache, and extractive answers. It also contains `MockDMS`, which applies walls 2–10 minutes late, as the brief's mock DMS does. `predict(item)` wraps `answer()`. |
 | `adapter.py` | A stub that replaces `generate()` with a call to any OpenAI-compatible `/chat/completions` endpoint (Ollama, vLLM or a hosted API). Pure `urllib`. |
-| `eval_harness.py` | Runs the suites, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs the suites, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the control (including curveballs 1, 2 and 5) and for the generator (determinism, tricky cases present). |
 
 ### Tricky cases in the data, and their labels
@@ -81,7 +81,7 @@ The harness also prints the **blocked-answer rate** (curveball 4: the share of d
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted, ZDR, region-pinned endpoint
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted, ZDR, region-pinned endpoint
 export LLM_MODEL=qwen3:14b
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 40
@@ -93,7 +93,7 @@ python3 eval_harness.py --system adapter --limit 40
 
 | Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| 1 (Discovery, weeks 1–2) | Discovery role-play. Read the generator and decide what your frozen golden set v1 must add. Measure the wall lag from `walls.jsonl` (`dms_applied_at − recorded_at`); do not assume it. | none yet |
+| 1 (Discovery, weeks 1–2) | Discovery role-play. Read the generator and decide what your frozen golden set v1 must add. Measure the wall lag from `walls.jsonl` (`dms_applied_at - recorded_at`); do not assume it. | none yet |
 | 2 (POC, weeks 3–6) | Ingestion: breadcrumbs (matter, parties, document type) on every chunk, OCR routing, and a hidden-text detector that compares the text layer with the visible text. Replace keyword search with hybrid search and a reranker; keep `matches_filter()` as a pre-filter. | AC-6, AC-3, AC-8 |
 | 3 (POC) | ACL and wall sync: push wall events through `apply_wall_event()` instead of polling; a reconciler; canary probes on a schedule. | AC-2, CB1, AC-1 stays 0 |
 | 4 (Pilot, weeks 7–11) | Generation through `adapter.py`: quoted spans, a deterministic citation verifier that blocks failing answers, and abstention. Calibrate a judge against lawyer labels (κ ≥ 0.7) to replace the AC-4 and AC-5 proxies. | AC-3, AC-4, AC-5, AC-7, AC-9 |

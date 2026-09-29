@@ -1,4 +1,4 @@
-# P14 starter kit · Multilingual citizen-services assistant
+# P14 Starter Kit · Multilingual Citizen-Services Assistant
 
 Offline starter kit for the brief [P14 · Multilingual Citizen-Services Assistant](../../P14-multilingual-citizen-services-assistant.md) (Anvaya Welfare Directorate, fictional).
 
@@ -31,10 +31,10 @@ Options: `python3 eval_harness.py --runs 6` (pass^6 status flows instead of pass
 | `baseline.py` | `Baseline`: `answer(query)` (alias `predict`), `eligibility(profile)`, `status(app_id, mobile, api)` and `reset()`. BM25 with a naive tokeniser, extractive answers, a one-version age-and-income rule check, and a status tool with a cache bug. |
 | `mock_status_api.py` | The brief's mock status API: needs `app_id` plus the matching mobile, injects 503s, and serves stale records. |
 | `adapter.py` | A stub that replaces the extractive answer with one grounded call to any OpenAI-compatible `/chat/completions` endpoint (Ollama, vLLM or a hosted API). Pure `urllib`. |
-| `eval_harness.py` | Runs every suite, prints the per-slice gate table and then `AC-ID | metric | value | threshold | PASS/FAIL`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Runs every suite, prints the per-slice gate table and then `AC-ID \| metric \| value \| threshold \| PASS/FAIL`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the gate (including curveballs 2 and 3) and for the generator (determinism, tricky cases present). |
 
-## The control: `language_gate.py`
+### The control: `language_gate.py`
 
 It keeps the brief's sketch and its reviewed behaviour, and a test covers each point:
 
@@ -47,7 +47,7 @@ It keeps the brief's sketch and its reviewed behaviour, and a test covers each p
 
 Curveball 3's synthetic case (Urdu near 0.6, Telugu near 0.9) reproduces the brief's gap of about 0.3 [0.2, 0.39], failing on floor and parity.
 
-## Tricky cases in the data, and their labels
+### Tricky cases in the data, and their labels
 
 A system may read `corpus.jsonl`, `registry.json`, `rules.json` and the text of queries and profiles. Ground truth lives in `gold` fields (stripped before a system sees an item), `corpus_labels.jsonl` and `forged_docs.json`. `applications.jsonl` is reachable only through the mock API.
 
@@ -76,7 +76,7 @@ All schemes, names, districts, GO numbers and UPI IDs are fictional. Mobile numb
 
 ## Metrics, acceptance criteria and baseline results
 
-The brief's §5 table has no IDs, so AC-1 to AC-13 number its rows in order. "§8" rows are layer metrics from the evaluation plan, and CB-1 to CB-5 are §11 curveballs. The harness first prints the gate's per-slice table (n, mean, CI, gap to Telugu, and why it fails). The AC rows below summarise it. Baseline figures come from `python3 eval_harness.py` on the default data.
+The brief's §5 table has no IDs, so AC-1 to AC-13 number its rows in order. "§8" rows are layer metrics from the evaluation plan, and CB-1 to CB-5 are §11 curveballs. The harness first prints the gate's per-slice table (n, mean, CI, gap to Telugu, and why it fails). The AC rows below summarise it. Baseline figures come from `python3 eval_harness.py` on the default data, where the totals are 0 PASS, 15 FAIL and 6 not computable offline.
 
 | AC-ID | Harness metric | Threshold (brief §5) | Baseline | Notes |
 |---|---|---|---|---|
@@ -96,19 +96,17 @@ The brief's §5 table has no IDs, so AC-1 to AC-13 number its rows in order. "§
 | AC-11 | Accessibility task success | ≥ 80% / ≥ 70% | not computable offline | 24 moderated sessions. |
 | AC-12 | Approved rule change live | ≤ 4 working hours | not computable offline | Change drill. CB-2 checks the answers. |
 | AC-13 | Cost per resolved query | ≤ ₹3 text; ≤ ₹8 IVR | not computable offline | Metered pilot. |
-| §8 | Fertility proxy: `\w+` tokens on parallel text vs English | reported | te 1.52×, hi 1.57×, ur 1.22× | The baseline's pre-tokeniser splits Telugu and Hindi at every vowel sign. Measure each candidate model's tokenizer the same way. |
+| §8 | Fertility proxy: `\w+` tokens on parallel text vs English | reported | te 1.52×, hi 1.57×, ur 1.22× | The baseline's pre-tokeniser splits Telugu and Hindi at every vowel sign. Measure each candidate model's tokeniser the same way. |
 | CB-1 | Answers citing the forged pension circular, all queries | 0 | 79: FAIL | The brief's bot quoted it 212 times. |
 | CB-2 | Age question two days after the overnight GO answered with 57 | all 20 | 13/20: FAIL | No effective dating. |
 | CB-3 | Urdu hit@5 gap vs Telugu | not credibly > 0.07 | 0.533 [0.433, 0.627]: FAIL | Diagnosis printed: hit@5 is 1.00 for schemes with Urdu documents and 0.00 without, so retrieval is really cross-lingual. Correct answers drop from 0.73 to 0.44 with Arabic code points. |
 | CB-4 | Political questions answered neutrally or escalated | all 100 | 34/100: FAIL | |
 | CB-5 | WhatsApp template paused: SMS or IVR fallback | drill | not computable offline | Needs the WhatsApp simulator. |
 
-Totals on the default data: 0 PASS, 15 FAIL, 6 not computable offline.
-
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM in the SDC; or a hosted API on PII-free paths only
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM in the SDC; or a hosted API on PII-free paths only
 export LLM_MODEL=sarvam-30b                      # or Qwen, Gemma, ...
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 40
@@ -120,12 +118,12 @@ python3 eval_harness.py --system adapter --limit 40
 
 | Course week (real phase) | Build | Harness rows that should move |
 |---|---|---|
-| W1 (Discovery, weeks 1–3) | Discovery memo and data scorecard. Measure the OCR and legacy-font rates in `corpus_labels.jsonl`, and run the fertility study with your candidate tokenizers. | §8 fertility |
-| W2 (POC, weeks 4–8) | Ingestion: legacy-font detection and repair, OCR clean-up, and the provenance gate (verify `registry.json`, drop district uploads and vendor FAQs, two-person approval). Effective dating from `valid_from` and `supersedes`. Curveball 1: freeze, roll back, trace affected answers. | AC-7, CB-1, AC-3, AC-6 wrong answers |
-| W3 (POC) | Retrieval per language: NFC and Urdu code-point normalisation, transliteration for Tenglish and Roman Urdu, hybrid BM25 + dense (bge-m3 or e5) with a reranker, pivot translation for Urdu. Curveball 3: diagnose before tuning. | AC-2, AC-5, CB-3 |
-| W4 (Pilot, weeks 9–16) | Rules engine from `rules.json` (effective dates, exclusions, every criterion) with indicative wording. Status tool: cache keyed by application **and** mobile, one retry, a stale warning, guardian-only delivery for minors. Curveball 2: approve the new GO once and re-run S01's golden set. | AC-4, AC-8, AC-9, CB-2 |
-| W5 (Pilot) | Voice (ASR and TTS with the "automated voice" prefix), accessibility sessions, abstention, a neutral election-period route, and the red team. Curveball 4. | AC-6, AC-7, CB-4 |
-| W6 (Production 17–22, Handover 23–24) | Curveball 5: the SMS/IVR fallback. The eval report with per-language CIs, and a Telugu/Urdu demo that shows the Urdu gap honestly. | AC-10 to AC-13 with pilot data |
+| 1 (Discovery, weeks 1–3) | Discovery memo and data scorecard. Measure the OCR and legacy-font rates in `corpus_labels.jsonl`, and run the fertility study with your candidate tokenisers. | §8 fertility |
+| 2 (POC, weeks 4–8) | Ingestion: legacy-font detection and repair, OCR clean-up, and the provenance gate (verify `registry.json`, drop district uploads and vendor FAQs, two-person approval). Effective dating from `valid_from` and `supersedes`. Curveball 1: freeze, roll back, trace affected answers. | AC-7, CB-1, AC-3, AC-6 wrong answers |
+| 3 (POC) | Retrieval per language: NFC and Urdu code-point normalisation, transliteration for Tenglish and Roman Urdu, hybrid BM25 + dense (bge-m3 or e5) with a reranker, pivot translation for Urdu. Curveball 3: diagnose before tuning. | AC-2, AC-5, CB-3 |
+| 4 (Pilot, weeks 9–16) | Rules engine from `rules.json` (effective dates, exclusions, every criterion) with indicative wording. Status tool: cache keyed by application **and** mobile, one retry, a stale warning, guardian-only delivery for minors. Curveball 2: approve the new GO once and re-run S01's golden set. | AC-4, AC-8, AC-9, CB-2 |
+| 5 (Pilot) | Voice (ASR and TTS with the "automated voice" prefix), accessibility sessions, abstention, a neutral election-period route, and the red team. Curveball 4. | AC-6, AC-7, CB-4 |
+| 6 (Production, weeks 17–22; Handover, weeks 23–24) | Curveball 5: the SMS/IVR fallback. The eval report with per-language CIs, and a Telugu/Urdu demo that shows the Urdu gap honestly. | AC-10 to AC-13 with pilot data |
 
 ## What the kit deliberately does not do
 

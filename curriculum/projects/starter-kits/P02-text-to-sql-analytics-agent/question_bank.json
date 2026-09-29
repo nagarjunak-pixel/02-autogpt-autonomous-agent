@@ -46,7 +46,7 @@
     "{t} सबसे आम रिटर्न कारण क्या था?",
     "{t} sabse common return reason kya tha?"
    ],
-   "gold_sql": "SELECT reason, COUNT(*) AS n FROM fct_returns WHERE return_date BETWEEN DATE '{s}' AND DATE '{e}' GROUP BY reason ORDER BY n DESC, reason LIMIT 1",
+   "gold_sql": "SELECT r.reason, COUNT(*) AS n FROM fct_returns AS r JOIN dim_store AS s ON r.store_sk = s.store_sk WHERE r.return_date BETWEEN DATE '{s}' AND DATE '{e}' AND s.store_id NOT LIKE 'TEST-%' GROUP BY r.reason ORDER BY n DESC, r.reason LIMIT 1",
    "ordered": true
   },
   {
@@ -55,7 +55,7 @@
     "{t} रिटर्न के हिसाब से टॉप 5 SKU कौन से थे?",
     "{t} ke top 5 return wale SKU kaun se the?"
    ],
-   "gold_sql": "SELECT p.sku, COUNT(*) AS n FROM fct_returns AS r JOIN dim_product AS p ON r.product_id = p.product_id WHERE r.return_date BETWEEN DATE '{s}' AND DATE '{e}' GROUP BY p.sku ORDER BY n DESC, p.sku LIMIT 5",
+   "gold_sql": "SELECT p.sku, COUNT(*) AS n FROM fct_returns AS r JOIN dim_product AS p ON r.product_id = p.product_id JOIN dim_store AS s ON r.store_sk = s.store_sk WHERE r.return_date BETWEEN DATE '{s}' AND DATE '{e}' AND s.store_id NOT LIKE 'TEST-%' GROUP BY p.sku ORDER BY n DESC, p.sku LIMIT 5",
    "ordered": true
   },
   {

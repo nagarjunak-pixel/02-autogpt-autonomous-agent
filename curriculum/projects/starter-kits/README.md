@@ -1,4 +1,4 @@
-# Starter kits
+# Starter Kits
 
 One offline kit per project brief. Each kit gives a team a working day-one scaffold, so the course build starts from measured failure instead of a blank repo.
 
@@ -40,22 +40,22 @@ node --experimental-strip-types eval_harness.ts
 
 | Kit | Brief | §7 control | Tests |
 |---|---|---|---|
-| [P01](P01-permission-aware-knowledge-assistant/README.md) | [Permission-aware knowledge assistant](../P01-permission-aware-knowledge-assistant.md) | `permission_trim.py` | 17 |
-| [P02](P02-text-to-sql-analytics-agent/README.md) | [Text-to-SQL analytics agent](../P02-text-to-sql-analytics-agent.md) | `sql_guard.py`, `semantic_layer.py` | 20 |
-| [P03](P03-claims-intake-document-ai/README.md) | [Claims-intake document AI](../P03-claims-intake-document-ai.md) | `review_router.py` | 27 |
-| [P04](P04-contact-centre-voice-agent/README.md) | [Contact-centre voice agent](../P04-contact-centre-voice-agent.md) | `turn_manager.py` | 24 |
-| [P05](P05-computer-use-agent-replacing-rpa/README.md) | [Computer-use agent replacing RPA](../P05-computer-use-agent-replacing-rpa.md) | `action_gate.py`, `mock_portal.py` | 27 |
-| [P06](P06-injection-resistant-inbox-agent/README.md) | [Injection-resistant inbox agent](../P06-injection-resistant-inbox-agent.md) | `dataflow_policy.py` | 25 |
-| [P07](P07-ai-vulnerability-triage-and-patch-pipeline/README.md) | [AI vulnerability triage and patch pipeline](../P07-ai-vulnerability-triage-and-patch-pipeline.md) | `cra_clock.py` | 30 |
-| [P08](P08-sovereign-air-gapped-llm-platform/README.md) | [Sovereign, air-gapped LLM platform](../P08-sovereign-air-gapped-llm-platform.md) | `bundle_verifier.py`, `kv_capacity.py` | 36 |
-| [P09](P09-legacy-modernisation-with-coding-agents/README.md) | [Legacy modernisation with coding agents](../P09-legacy-modernisation-with-coding-agents.md) | `diff_harness.py`, `legacy_prmcalc.py` | 16 |
-| [P10](P10-ambient-clinical-documentation/README.md) | [Ambient clinical documentation](../P10-ambient-clinical-documentation.md) | `note_verifier.py` | 21 |
-| [P11](P11-teen-safe-study-companion-compliance/README.md) | [Teen-safe study companion](../P11-teen-safe-study-companion-compliance.md) | `flip_rate.py` | 24 |
-| [P12](P12-enterprise-ai-gateway-finops-platform/README.md) | [Enterprise AI gateway and FinOps](../P12-enterprise-ai-gateway-finops-platform.md) | `router.py` | 27 |
-| [P13](P13-agent-ready-commerce-mcp/README.md) | [Agent-ready commerce (TypeScript)](../P13-agent-ready-commerce-mcp.md) | `add_to_cart.ts` | 16 |
-| [P14](P14-multilingual-citizen-services-assistant/README.md) | [Multilingual citizen-services assistant](../P14-multilingual-citizen-services-assistant.md) | `language_gate.py`, `mock_status_api.py` | 22 |
-| [P15](P15-distilled-domain-small-model-offline/README.md) | [Distilled domain small model](../P15-distilled-domain-small-model-offline.md) | `synth_filter.py` | 23 |
-| [P16](P16-due-diligence-deep-research-agent/README.md) | [Due-diligence deep-research agent](../P16-due-diligence-deep-research-agent.md) | `citation_verifier.py` | 16 |
+| [P01](P01-permission-aware-knowledge-assistant/README.md) | [Permission-Aware Knowledge Assistant](../P01-permission-aware-knowledge-assistant.md) | `permission_trim.py` | 17 |
+| [P02](P02-text-to-sql-analytics-agent/README.md) | [Text-to-SQL Analytics Assistant](../P02-text-to-sql-analytics-agent.md) | `sql_guard.py`, `semantic_layer.py` | 20 |
+| [P03](P03-claims-intake-document-ai/README.md) | [Claims Intake Document AI](../P03-claims-intake-document-ai.md) | `review_router.py` | 27 |
+| [P04](P04-contact-centre-voice-agent/README.md) | [Contact-Centre Voice Agent](../P04-contact-centre-voice-agent.md) | `turn_manager.py` | 24 |
+| [P05](P05-computer-use-agent-replacing-rpa/README.md) | [Computer-Use Agent Replacing RPA](../P05-computer-use-agent-replacing-rpa.md) | `action_gate.py`, `mock_portal.py` | 27 |
+| [P06](P06-injection-resistant-inbox-agent/README.md) | [Injection-Resistant Inbox Agent](../P06-injection-resistant-inbox-agent.md) | `dataflow_policy.py` | 25 |
+| [P07](P07-ai-vulnerability-triage-and-patch-pipeline/README.md) | [AI Vulnerability Triage and Patch Pipeline](../P07-ai-vulnerability-triage-and-patch-pipeline.md) | `cra_clock.py` | 30 |
+| [P08](P08-sovereign-air-gapped-llm-platform/README.md) | [Sovereign, Air-Gapped LLM Platform](../P08-sovereign-air-gapped-llm-platform.md) | `bundle_verifier.py`, `kv_capacity.py` | 36 |
+| [P09](P09-legacy-modernisation-with-coding-agents/README.md) | [Legacy Modernisation with Coding Agents](../P09-legacy-modernisation-with-coding-agents.md) | `diff_harness.py`, `legacy_prmcalc.py` | 16 |
+| [P10](P10-ambient-clinical-documentation/README.md) | [Ambient Clinical Documentation](../P10-ambient-clinical-documentation.md) | `note_verifier.py` | 21 |
+| [P11](P11-teen-safe-study-companion-compliance/README.md) | [Teen-Safe Study Companion](../P11-teen-safe-study-companion-compliance.md) | `flip_rate.py` | 24 |
+| [P12](P12-enterprise-ai-gateway-finops-platform/README.md) | [Enterprise AI Gateway and FinOps](../P12-enterprise-ai-gateway-finops-platform.md) | `router.py` | 27 |
+| [P13](P13-agent-ready-commerce-mcp/README.md) | [Agent-Ready Commerce (TypeScript)](../P13-agent-ready-commerce-mcp.md) | `add_to_cart.ts` | 16 |
+| [P14](P14-multilingual-citizen-services-assistant/README.md) | [Multilingual Citizen-Services Assistant](../P14-multilingual-citizen-services-assistant.md) | `language_gate.py`, `mock_status_api.py` | 22 |
+| [P15](P15-distilled-domain-small-model-offline/README.md) | [Distilled Domain Small Model](../P15-distilled-domain-small-model-offline.md) | `synth_filter.py` | 23 |
+| [P16](P16-due-diligence-deep-research-agent/README.md) | [Due-Diligence Deep-Research Agent](../P16-due-diligence-deep-research-agent.md) | `citation_verifier.py` | 16 |
 
 That is 371 tests in total. All kits were verified from a fresh clone: data generation, tests and harness pass for each.
 

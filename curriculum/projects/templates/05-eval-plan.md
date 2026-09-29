@@ -1,6 +1,7 @@
 # Template 05 · Evaluation Plan
 
 Evaluation is the spine of every FDE project. A claim you cannot measure cannot go into an SOW, a demo or a go-live decision.
+
 Curriculum links: Turns 13, 49, 63, 97, 104, 132 (evaluation), 88 (A/B and canaries), 89 (flywheel), 64 (trust calibration).
 
 ## 1. What we evaluate, at which layer

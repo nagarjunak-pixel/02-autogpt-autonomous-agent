@@ -3,7 +3,7 @@
 Use this template in the first one or two weeks of every project, before anyone writes a prompt.
 Output: a one- or two-page **Discovery Memo** that ends with a qualification decision: **Go**, **Go with conditions** or **No-go**.
 
-Curriculum links: Turns 109 (discovery), 110 (ROI), 115 (data readiness), 111 (POC→pilot→prod).
+Curriculum links: Turns 109 (discovery), 110 (ROI), 115 (data readiness), 111 (POC → pilot → prod).
 
 ---
 
@@ -66,7 +66,7 @@ Write down which rung you chose and why the lower rungs are not enough.
 1. Problem, in the customer's words and with baseline numbers
 2. Proposed scope and non-goals
 3. Riskiest assumption, and how the POC will test it
-4. Data readiness summary (use Template 02)
+4. Data readiness summary (use template 02)
 5. Success metric, target and guardrail metrics
 6. Known constraints (regulatory, infrastructure, security)
 7. Decision (Go, Go with conditions or No-go) with the conditions spelled out

@@ -1,4 +1,4 @@
-# P13 starter kit · Agent-ready commerce: MCP tools and mandate-bound checkout
+# P13 Starter Kit · Agent-Ready Commerce: MCP Tools and Mandate-Bound Checkout
 
 Offline starter kit for the brief [P13 · Agent-Ready Commerce: MCP Server, Assistant Distribution and Mandate-Bound Checkout](../../P13-agent-ready-commerce-mcp.md). Neyyarasi is fictional, and so is every seller, shopper, order and token in the data.
 
@@ -30,7 +30,7 @@ Options: `eval_harness.ts --runs 5` (pass^5 instead of pass^3), `--data <dir>` a
 | `generate_data.ts` | A deterministic generator (seed 1313). Default: 1,024 SKUs from 12 sellers (the system of record, plus a stale product feed), 40 size charts, 4,000 orders, 300 labelled queries, 200 size cases, 100 shopper tasks (50 held out), 1,000 mandate-abuse attempts, 60 auth cases, 20 legacy calls, 2,000 traffic records, and the curveball fixtures. `sizeRule()` is the rule the size cases come from. |
 | `baseline.ts` | `BaselineServer.call(tool, args, bearer)`: the seven tool handlers (`search_catalog`, `get_product`, `size_guidance`, `create_cart`, `add_to_cart`, `checkout`, `get_order_status`) with `TOOLS` descriptors, `MemoryStore` (the in-memory stand-in for Postgres), `validateToken()`, `classifyRequest()` and `runShopper()`, a rule-based synthetic shopper. No transport: register the handlers with the official MCP TypeScript SDK v2. |
 | `adapter.ts` | `runShopperLLM()`: an LLM-driven shopper (the brief's mock-assistant) through any OpenAI-compatible `/chat/completions` endpoint with tool calling. Built-in `fetch`. |
-| `eval_harness.ts` | Runs the suites, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.ts` | Runs the suites, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `node --test` tests for the control (including curveballs 4 and 5, concurrent retries and the checkout race) and for the generator (determinism, tricky cases present). |
 
 ### Tricky cases in the data, and their labels
@@ -87,7 +87,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-12 number its rows in order. Bas
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted API
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted API
 export LLM_MODEL=qwen3:8b                        # any tool-calling model
 export LLM_API_KEY=...                           # only if your endpoint needs it
 node --experimental-strip-types eval_harness.ts --system adapter
@@ -103,7 +103,7 @@ This swaps only the synthetic shopper (AC-5). The model gets the `TOOLS` descrip
 | 2 (POC, weeks 3–4) | Read-only tools on the system of record; seller-content quarantine (strip hidden text, zero-width characters and links; extract attributes offline with one schema-constrained call; return free text only inside `{untrusted: true}`); hybrid search with transliteration synonyms; deterministic `size_guidance`. | AC-1, AC-2, AC-3, AC-4, AC-9, CB1 |
 | 3 (Freeze, weeks 5–8) | Real authorization: audience and issuer checks, Protected Resource Metadata, PKCE, CIMD. Move `MemoryStore` to Postgres with unique constraints and keep AC-6 and AC-8 at 0. Edge policy by verified identity (Web Bot Auth), not user agent. | AC-7, CB3, AC-6, AC-8 |
 | 4 (Pilot, weeks 9–11) | A stateless MCP 2026-07-28 server with SDK v2 around these handlers; checkout hand-off; minimal disclosure in `get_order_status`; synthetic shoppers on two or three models through `adapter.ts`. | AC-5, §9 |
-| 5 (Production, 12–13; Handover, 14) | Load test, swarm test with k6, cost per 1,000 calls, drills (poisoned listing, spec deprecation, swarm), demo of a refused over-mandate purchase and a blocked injection. | AC-10, AC-11, AC-12 |
+| 5 (Production, weeks 12–13; Handover, week 14) | Load test, swarm test with k6, cost per 1,000 calls, drills (poisoned listing, spec deprecation, swarm), demo of a refused over-mandate purchase and a blocked injection. | AC-10, AC-11, AC-12 |
 
 ## What the kit deliberately does not do
 
@@ -113,4 +113,4 @@ This swaps only the synthetic shopper (AC-5). The model gets the `TOOLS` descrip
 - **No real payments, PSP, ACP, UCP or AP2.** `checkout()` returns a hand-off link to the brand's checkout.
 - **No k6 swarm or edge.** AC-10 is not measured; `traffic.jsonl` only tests classification.
 - **No vector search or embeddings.** The baseline is keyword overlap.
-- **No legal conclusions.** Protocol and policy status is the brief's, as of Sept 2026; verify before teaching.
+- **No legal conclusions.** Protocol and policy status is the brief's, as of 27 Sep 2026; verify before teaching.

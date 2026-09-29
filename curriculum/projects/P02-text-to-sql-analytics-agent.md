@@ -1,6 +1,7 @@
 # P02 · Governed Text-to-SQL Analytics Assistant for a Retail Chain
 
 > Store and regional managers ask questions in English, Hindi or Hinglish and get correct, correctly scoped numbers and charts. Answers come from a governed metrics layer, not from an LLM writing whatever SQL it likes.
+>
 > **Customer:** Annavara Retail (fictional) · **Industry:** Grocery and FMCG retail · **Geography:** India (about 900 stores in 8 regions; HQ in Pune) · **Real engagement:** 12 weeks; an FDE lead and an analytics engineer, plus the customer's data-platform engineer (50%), a FinOps analyst (20%) and 4 pilot regional managers · **Course build:** 5 weeks, team of 2–4 · **Difficulty:** ★★☆
 
 **Starter kit:** [`starter-kits/P02-text-to-sql-analytics-agent/`](starter-kits/P02-text-to-sql-analytics-agent/README.md). It runs offline with no API key: synthetic data with the tricky cases labelled, the §7 control as `sql_guard.py` and `semantic_layer.py` with tests, a deliberately weak baseline, and an eval harness that scores it against §5.
@@ -30,7 +31,7 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 - **Data.** About 180 certified and legacy tables with about 2,400 columns, many cryptic (`TXN_AMT_2`, stored in paise). The store dimension keeps type-2 history; returns post up to 30 days after the sale; some amounts include GST and some exclude it; the fiscal year runs April to March; test stores have a `TEST-` prefix but no flag; and by 09:00 only about 95% of yesterday's data has arrived.
 - **Language.** About 55% of store managers prefer Hindi, typed in Devanagari or as romanised Hinglish. They use lakh/crore and relative dates ("kal", "pichhle hafte").
 - **Platform.** The data team is moving to a cloud warehouse this year; Snowflake, BigQuery or Databricks is still open (ADR-002 informs it), so the assistant must stay portable.
-- **Legal and regulatory** (as of Sept 2026):
+- **Legal and regulatory** (as of Sep 2026):
   - **India's DPDP Act 2023 and DPDP Rules 2025** (notified 13 Nov 2025). The Rules phase in at 12 and 18 months from notification: consent managers from Nov 2026, most obligations from **May 2027**. Until then, IT Act s.43A and the SPDI Rules apply ([DLA Piper summary](https://www.dlapiperdataprotection.com/?t=law&c=IN)).
   - Loyalty-member identifiers, cashier IDs and named managers' question logs are personal data. **Cross-border transfers** are allowed unless the Government restricts a destination by notification under s.16 ([Act text](https://prsindia.org/files/bills_acts/acts_parliament/2023/Digital_Personal_Data_Protection_Act,_2023.pdf)); check before go-live.
   - **CERT-In Directions (28 Apr 2022):** report incidents within 6 hours; keep ICT logs for 180 days within India ([CERT-In](https://www.cert-in.org.in/PDF/CERT-In_Directions_70B_28.04.2022.pdf)).
@@ -62,8 +63,8 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 
 **Budget, two paths:**
 
-- **API path (≤ USD 50).** A small model for planning, clarifying and narrative; a frontier or reasoning model only for fallback-SQL runs and the ADR-006 effort sweep.
-- **Local path.** A 7–14B open-weight instruct or coder model on Ollama or vLLM. Measure its Hindi and Hinglish quality first; small models vary widely.
+- **API path (≤ USD 50):** a small model for planning, clarifying and narrative; a frontier or reasoning model only for fallback-SQL runs and the ADR-006 effort sweep.
+- **Local path:** a 7–14B open-weight instruct or coder model on Ollama or vLLM. Measure its Hindi and Hinglish quality first; small models vary widely.
 
 **Out of scope:** real Snowflake, BigQuery or Databricks accounts (free trials with synthetic data are optional), WhatsApp, voice, other languages and forecasting.
 
@@ -86,21 +87,21 @@ Discovery will show that most requests map onto about 40 metrics × 15 dimension
 9. Which decisions use these numbers (reorders, staffing, promotions)? What does one wrong number cost?
 10. Which models in scope contain personal data, and who signs go-live for finance metrics?
 
-**Qualification and the lowest rung that works.** Of the 300 requests, 55% are about 25 templated questions.
+**Qualification: the lowest rung that works.** Of the 300 requests, 55% are about 25 templated questions.
 
 1. **Rules.** Ship those 25 as parameterised, verified queries; no LLM executes them.
 2. **A single structured-output LLM call.** Maps a question to `{metric, dimensions, filters, time_range, grain}`, validated against the catalogue and compiled deterministically by the semantic layer; about 85% of requests.
 3. **A workflow.** Adds clarification, a guarded fallback SQL path, result verification and the narrative.
 4. **An agent.** Multi-step "why did Pune drop?" analysis is **deferred** to phase 2 for HQ analysts, with budgets.
 
-Decision: **Go, with conditions:** the CFO and COO name metric owners and sign the 20 core definitions before the pilot, the platform team creates the RLS read-only role, and FinOps agrees a spending cap. Use templates [01](templates/01-discovery-questionnaire.md) and [02](templates/02-data-readiness-scorecard.md).
+**Decision: Go, with conditions.** The CFO and COO name metric owners and sign the 20 core definitions before the pilot, the platform team creates the RLS read-only role, and FinOps agrees a spending cap. Use [template 01](templates/01-discovery-questionnaire.md) and [template 02](templates/02-data-readiness-scorecard.md).
 
 ## 5. Success criteria and acceptance tests
 
 | ID | Criterion | Threshold | Test set / method | Why this number |
 |---|---|---|---|---|
 | AC-1 | Execution accuracy, semantic-layer path | ≥ 0.90 overall; each language ≥ 0.85 and within 5 points of English | Frozen golden set v1 (n = 300); result-set equivalence | Slot-filling over ~40 governed metrics is far easier than raw SQL over 2,400 columns |
-| AC-2 | Fallback raw-SQL accuracy | ≥ 0.70; always labelled "unverified definition"; never used for finance metrics | Long-tail subset (n = 60) | Enterprise text-to-SQL is hard: Spider 2.0 reported 21.3% for o1-preview vs. 91.2% on Spider 1.0 ([arXiv](https://arxiv.org/abs/2411.07763)) |
+| AC-2 | Fallback raw-SQL accuracy | ≥ 0.70; always labelled "unverified definition"; never used for finance metrics | Long-tail subset (n = 60) | Enterprise text-to-SQL is hard: Spider 2.0 reported 21.3% for o1-preview vs 91.2% on Spider 1.0 ([arXiv](https://arxiv.org/abs/2411.07763)) |
 | AC-3 | Clarification | Asks on ≥ 85% of ambiguous items; ≤ 10% unnecessary clarifications | Tagged subsets | Too many questions kill adoption |
 | AC-4 | Refusals | ≥ 95% correct on DML and out-of-scope requests | Adversarial subset | — |
 | AC-5 | RLS and read-only | **0** rows outside the user's entitlement in ≥ 1,000 cross-scope attempts; **0** DDL/DML executed | Adversarial suite plus an audit of warehouse query history | Any leak ends the pilot |
@@ -115,10 +116,10 @@ Decision: **Go, with conditions:** the CFO and COO name metric owners and sign t
 
 ```mermaid
 flowchart LR
-  subgraph DEV["Manager devices - untrusted input"]
+  subgraph DEV["Manager devices: untrusted input"]
     U["PWA chat: English, Hindi, Hinglish"]
   end
-  subgraph APP["Annavara Retail app VPC - trust boundary"]
+  subgraph APP["Annavara Retail app VPC: trust boundary"]
     API["API: SSO, role, region and store claims"]
     NORM["Language and date normaliser"]
     PLAN["Metric-query planner: structured output"]
@@ -130,11 +131,11 @@ flowchart LR
     VER["Result verifier: reconcile, freshness, scope"]
     NAR["Chart and narrative: numbers copied from result"]
   end
-  subgraph WH["Cloud warehouse - data platform boundary"]
+  subgraph WH["Cloud warehouse: data platform boundary"]
     RO["Read-only role with row access policies"]
     DATA[("Star schema and pre-aggregates")]
   end
-  subgraph PROV["Model provider or self-hosted model - external boundary"]
+  subgraph PROV["Model provider or self-hosted model: external boundary"]
     LLM["LLM endpoint: schema, definitions, aggregates only"]
   end
   U --> API --> NORM --> PLAN
@@ -160,28 +161,28 @@ flowchart LR
 | Verifier | Row counts; totals reconcile with certified daily aggregates within ±0.5%; nulls; freshness | Python | — | FDE |
 | Gateway and observability | Token and credit budgets, retry caps, query tags, OTel traces | LiteLLM (pin a verified release; 1.82.7 and 1.82.8 were compromised on PyPI, 24 Mar 2026), Langfuse, Phoenix | Cloud API gateway, Datadog | Platform team |
 
-**ADRs to write** (use [template 04](templates/04-solution-design-and-adr.md)):
+**ADRs to write** ([template 04](templates/04-solution-design-and-adr.md)):
 
 - **ADR-001 · Semantic layer.** MetricFlow (simple, ratio, derived, cumulative and conversion metrics; [dbt docs](https://docs.getdbt.com/docs/build/about-metricflow)); Cube, with access policies, a Postgres-compatible SQL API and an MCP server ([Cube docs](https://docs.cube.dev/docs/introduction)); LookML; warehouse-native semantic or metric views; or no layer, just documentation plus verified queries. The Open Semantic Interchange, now **Apache Ossie (incubating)**, aims at portable semantic models ([GitHub](https://github.com/open-semantic-interchange/OSI)). It entered the Apache Incubator on 22 Jun 2026 and had no Apache release as of 27 Sep 2026 ([Incubator status](https://incubator.apache.org/projects/ossie.html)), so treat it as early.
 - **ADR-002 · Warehouse platform.** Compare cost models: Snowflake per-second credits with a 60-second minimum on every resume ([Snowflake](https://docs.snowflake.com/en/user-guide/cost-understanding-compute)); BigQuery per TiB scanned on demand, or slots ([BigQuery](https://docs.cloud.google.com/bigquery/docs/best-practices-costs)); Databricks DBUs. Also compare India-region availability (as of 27 Sep 2026: Snowflake on AWS Mumbai and Azure Central India/Pune ([Snowflake](https://docs.snowflake.com/en/user-guide/intro-regions)); BigQuery in Mumbai and Delhi ([BigQuery](https://docs.cloud.google.com/bigquery/docs/locations)); Databricks on AWS Mumbai ([Databricks](https://docs.databricks.com/aws/en/resources/supported-regions)) and several Azure India regions ([Azure Databricks](https://learn.microsoft.com/en-us/azure/databricks/resources/supported-regions)); check per-feature availability, e.g. serverless), native RLS and team skills.
-- **ADR-003 · Build vs. platform-native.** A custom assistant; Snowflake Cortex Analyst, which uses semantic views, generates SQL that "adhere[s] to all established access controls" and is billed per message plus warehouse time ([Snowflake](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst)); Databricks Genie, now Genie One, Genie Agents and Genie Code ([Databricks](https://docs.databricks.com/aws/en/genie/)), where Genie Agents can query metric views ([docs](https://docs.databricks.com/aws/en/metric-views/)); or BigQuery conversational analytics and data agents (check release stage; [BigQuery](https://docs.cloud.google.com/bigquery/docs/generative-ai-overview)). For in-platform translation, weigh **native AI SQL functions** (Snowflake `AI_TRANSLATE`, [docs](https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql); Databricks `ai_translate`, [docs](https://docs.databricks.com/aws/en/large-language-models/ai-functions); BigQuery `AI.GENERATE`).
-- **ADR-004 · Where RLS lives.** Warehouse row access policies (primary), plus guard injection and semantic-layer policies (defence in depth). Per-user on-behalf-of identity vs. per-region service roles.
-- **ADR-005 · Model and language strategy.** One multilingual model vs. a translate-to-English pivot; small vs. frontier models; self-hosted.
-- **ADR-006 · Generation strategy and retries.** Metric query first with a labelled fallback, vs. raw SQL for everything; the repair budget; and **a reasoning model for hard items only**: the fallback path and planner outputs that fail catalogue validation go to a reasoning model at an explicit, bounded effort (e.g. OpenAI `reasoning.effort`, Anthropic `effort`, Gemini `thinking_level`) with an output-token cap. Ambiguous *definitions* still go to the clarifier; more thinking cannot settle "revenue". Sweep effort on the long-tail subset; keep the lowest level whose AC-2 gain pays for itself within the 15 s fallback p95 (Spider 2.0's 21.3% already came from a reasoning model). Set effort explicitly, as defaults change between versions, and do not use temperature 0 for consistency: many reasoning models reject a non-default temperature, and it is not deterministic anyway; AC-7 rests on the constrained `MetricQuery` and the deterministic compiler.
+- **ADR-003 · Build vs platform-native.** A custom assistant; Snowflake Cortex Analyst, which uses semantic views, generates SQL that "adhere[s] to all established access controls" and is billed per message plus warehouse time ([Snowflake](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst)); Databricks Genie, now Genie One, Genie Agents and Genie Code ([Databricks](https://docs.databricks.com/aws/en/genie/)), where Genie Agents can query metric views ([docs](https://docs.databricks.com/aws/en/metric-views/)); or BigQuery conversational analytics and data agents (check release stage; [BigQuery](https://docs.cloud.google.com/bigquery/docs/generative-ai-overview)). For in-platform translation, weigh **native AI SQL functions** (Snowflake `AI_TRANSLATE`, [docs](https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql); Databricks `ai_translate`, [docs](https://docs.databricks.com/aws/en/large-language-models/ai-functions); BigQuery `AI.GENERATE`).
+- **ADR-004 · Where RLS lives.** Warehouse row access policies (primary), plus guard injection and semantic-layer policies (defence in depth). Per-user on-behalf-of identity vs per-region service roles.
+- **ADR-005 · Model and language strategy.** One multilingual model vs a translate-to-English pivot; small vs frontier models; self-hosted.
+- **ADR-006 · Generation strategy and retries.** Metric query first with a labelled fallback, vs raw SQL for everything; the repair budget; and **a reasoning model for hard items only**: the fallback path and planner outputs that fail catalogue validation go to a reasoning model at an explicit, bounded effort (e.g. OpenAI `reasoning.effort`, Anthropic `effort`, Gemini `thinking_level`) with an output-token cap. Ambiguous *definitions* still go to the clarifier; more thinking cannot settle "revenue". Sweep effort on the long-tail subset; keep the lowest level whose AC-2 gain pays for itself within the 15 s fallback p95 (Spider 2.0's 21.3% already came from a reasoning model). Set effort explicitly, as defaults change between versions, and do not use temperature 0 for consistency: many reasoning models reject a non-default temperature, and it is not deterministic anyway; AC-7 rests on the constrained `MetricQuery` and the deterministic compiler.
 
 ## 7. Implementation plan — week by week
 
-| Phase (real) | Weeks | Tasks | Exit criteria | FDE artefacts |
-|---|---|---|---|---|
-| Discovery | 1–2 | Categorise 300 requests; interview metric owners; profile the schema; cost baseline | Memo signed; 20 core definitions drafted with owners | Discovery memo, scorecard, security review pack ([08](templates/08-security-review-pack.md)) |
-| POC | 3–5 | Semantic layer for 20 metrics; planner; guard; golden set v0 (n = 150) | AC-1 ≥ 0.85 and AC-5 met on the POC set | Eval plan ([05](templates/05-eval-plan.md)), ADR-001, ADR-004, ADR-006 |
-| Pilot | 6–9 | 4 regions, ~150 managers; clarifier; verifier; Hindi and Hinglish tuning; cost dashboards; red team | AC-1 to AC-11 met on frozen v1 (n = 300) | SOW acceptance ([03](templates/03-sow-and-acceptance-criteria.md)), threat model ([06](templates/06-threat-model-and-controls.md)), weekly status ([10](templates/10-demo-script-and-status-report.md)) |
-| Production | 10–11 | All regions; pre-aggregations; resource monitors; schema-change CI; DPIA ([07](templates/07-compliance-obligations-to-controls.md)) | SLOs met for 2 weeks; cost within cap | Runbooks ([09](templates/09-runbook-slos-and-handover.md)) |
-| Handover | 12 | Analysts become metric curators; drills (cost kill, schema change, RLS audit) | Customer team passes the drills unaided | Handover checklist, field-to-product notes |
+| Phase (weeks) | Key tasks | Exit criteria | FDE artefacts |
+|---|---|---|---|
+| Discovery (1–2) | Categorise 300 requests; interview metric owners; profile the schema; cost baseline | Memo signed; 20 core definitions drafted with owners | Discovery memo, scorecard, security review pack ([template 08](templates/08-security-review-pack.md)) |
+| POC (3–5) | Semantic layer for 20 metrics; planner; guard; golden set v0 (n = 150) | AC-1 ≥ 0.85 and AC-5 met on the POC set | Eval plan ([template 05](templates/05-eval-plan.md)), ADR-001, ADR-004, ADR-006 |
+| Pilot (6–9) | 4 regions, ~150 managers; clarifier; verifier; Hindi and Hinglish tuning; cost dashboards; red team | AC-1 to AC-11 met on frozen v1 (n = 300) | SOW acceptance ([template 03](templates/03-sow-and-acceptance-criteria.md)), threat model ([template 06](templates/06-threat-model-and-controls.md)), weekly status ([template 10](templates/10-demo-script-and-status-report.md)) |
+| Production (10–11) | All regions; pre-aggregations; resource monitors; schema-change CI; DPIA ([template 07](templates/07-compliance-obligations-to-controls.md)) | SLOs met for 2 weeks; cost within cap | Runbooks ([template 09](templates/09-runbook-slos-and-handover.md)) |
+| Handover (12) | Analysts become metric curators; drills (cost kill, schema change, RLS audit) | Customer team passes the drills unaided | Handover checklist, field-to-product notes |
 
-**Course build (5 weeks):** week 1, discovery role-play, the generator and the semantic layer; week 2, the planner and the guard; week 3, clarification, the fallback path, evals and the effort sweep; week 4, Hindi/Hinglish, cost and curveballs; week 5, hardening and the demo.
+**Course build (5 weeks):** (1) discovery role-play, the generator and the semantic layer; (2) the planner and the guard; (3) clarification, the fallback path, evals and the effort sweep; (4) Hindi/Hinglish, cost and curveballs; (5) hardening and the demo.
 
-**Code sketch — the SQL guard** (tested with `sqlglot` 30.19 against DuckDB; it runs on every statement before execution, on both paths):
+**Code sketch: the SQL guard** (tested with `sqlglot` 30.19 against DuckDB; it runs on every statement before execution, on both paths):
 
 ```python
 from typing import Callable, Optional
@@ -308,7 +309,7 @@ An LLM judge is used only for Hindi fluency and clarity. It is calibrated agains
 
 ## 10. Operations and cost model
 
-**SLOs:** availability 99.5% between 07:00 and 23:00 IST; p95 ≤ 8 s on the semantic path; 0 RLS violations; cost per successful answer ≤ ₹4, with a daily anomaly alert.
+**SLOs.** Availability 99.5% between 07:00 and 23:00 IST; p95 ≤ 8 s on the semantic path; 0 RLS violations; cost per successful answer ≤ ₹4, with a daily anomaly alert.
 
 **Observability.** One trace per question: normaliser → planner (`gen_ai.*` token counts) → compile → guard decision → warehouse query ID → verifier. The OTel GenAI conventions are at Development status in a separate [repo](https://github.com/open-telemetry/semantic-conventions-genai), so pin the version you emit. Tag queries for cost attribution (Snowflake `QUERY_TAG`, BigQuery job labels).
 
@@ -336,26 +337,26 @@ That gives **≈ USD 0.025–0.055 per successful answer** (at 90% success). The
 
 ## 11. Curveballs (instructor-injected events)
 
-Timings are course weeks, with the real-engagement week in brackets.
+Timings are real-engagement weeks, with the course week in brackets.
 
-1. **Week 2 (real week 3): the CFO and COO disagree on "revenue".** *Strong response:* do not pick a side; run a 30-minute metric-governance session. Define `gross_sales` (owned by the COO) and `net_revenue` (owned by the CFO: net of returns and discounts, excluding GST, provisional for 30 days because of late returns). Until the owners agree a default, "revenue" triggers a clarifying question, and every footer names the definition used.
-2. **Week 3 (real week 5): "test stores ka data delete kar do".** *Strong response:* a polite refusal (the guard would block it anyway) and a data-quality ticket to the data owner. Once an `is_test_store` flag exists, the semantic layer excludes those stores by default; disclose how much they had inflated per-store averages.
-3. **Week 3 (real week 7): the warehouse bill spikes 4×.** *Strong response:* query tags show fallback repair loops (up to 5 attempts, each rescanning) and a resized warehouse. Fix with a repair budget of ≤ 2, a circuit breaker on repeated error classes, dry-run gating, pre-aggregates, the original warehouse size and a resource monitor that suspends at 110% of budget; write a blameless post-mortem on cost per successful answer.
-4. **Week 4 (real week 8): a migration renames `net_amount` → `net_sales_inr` and `store_id` → `site_id`.** *Strong response:* dbt model contracts and a schema-diff CI check catch it before users do. Update the semantic-layer mapping once, add compatibility views for a deprecation window, re-run the golden set, regenerate the fallback few-shot examples, and agree a change-notice process.
-5. **Week 5 (real week 9): a North-2 manager asks "West region ka sales dikhao", then "compare my region with all others".** *Strong response:* an explicit scope refusal, not a silent empty result; an HQ-approved `national_avg_sales_per_store` benchmark instead of other regions' rows; a query-history audit showing zero leakage; and a fix for the latent bug where silent RLS made "national total" equal the user's own region's total.
+1. **Week 3 (course week 2): the CFO and COO disagree on "revenue".** *Strong response:* do not pick a side; run a 30-minute metric-governance session. Define `gross_sales` (owned by the COO) and `net_revenue` (owned by the CFO: net of returns and discounts, excluding GST, provisional for 30 days because of late returns). Until the owners agree a default, "revenue" triggers a clarifying question, and every footer names the definition used.
+2. **Week 5 (course week 3): "test stores ka data delete kar do".** *Strong response:* a polite refusal (the guard would block it anyway) and a data-quality ticket to the data owner. Once an `is_test_store` flag exists, the semantic layer excludes those stores by default; disclose how much they had inflated per-store averages.
+3. **Week 7 (course week 3): the warehouse bill spikes 4×.** *Strong response:* query tags show fallback repair loops (up to 5 attempts, each rescanning) and a resized warehouse. Fix with a repair budget of ≤ 2, a circuit breaker on repeated error classes, dry-run gating, pre-aggregates, the original warehouse size and a resource monitor that suspends at 110% of budget; write a blameless post-mortem on cost per successful answer.
+4. **Week 8 (course week 4): a migration renames `net_amount` → `net_sales_inr` and `store_id` → `site_id`.** *Strong response:* dbt model contracts and a schema-diff CI check catch it before users do. Update the semantic-layer mapping once, add compatibility views for a deprecation window, re-run the golden set, regenerate the fallback few-shot examples, and agree a change-notice process.
+5. **Week 9 (course week 5): a North-2 manager asks "West region ka sales dikhao", then "compare my region with all others".** *Strong response:* an explicit scope refusal, not a silent empty result; an HQ-approved `national_avg_sales_per_store` benchmark instead of other regions' rows; a query-history audit showing zero leakage; and a fix for the latent bug where silent RLS made "national total" equal the user's own region's total.
 
 ## 12. Deliverables and grading rubric
 
 **Deliverables:** discovery memo, request taxonomy, scorecard and SOW; semantic layer, guard, golden set and ADR-001 to ADR-006; eval report, threat model, obligations sheet and FinOps dashboard; runbooks, a 15-minute demo with a visible failure, and the curveball log.
 
-| Weight | Area | Excellent | Weak |
+| Criterion | Weight | Excellent | Weak |
 |---|---|---|---|
-| 25% | Working system | Metric-query first; guard plus native RLS; verifier; scope footer | Raw text-to-SQL over every table |
-| 20% | Evaluation rigour | Execution accuracy with CIs, per language; empty-result traps handled; held-out set | SQL string match; English only |
-| 15% | Security and compliance | Trifecta table, zero-leak audit, DPDP dates right | "The LLM is told not to write DELETE" |
-| 20% | FDE artefacts | Metric glossary with owners; ADRs with cost numbers | Definitions invented by the team |
-| 10% | Demo and communication | Shows a clarification, a refusal and cost per answer | Cherry-picked English queries |
-| 10% | Curveball handling | Governance, not unilateral fixes; post-mortems | Silent patches |
+| Working system | 25% | Metric-query first; guard plus native RLS; verifier; scope footer | Raw text-to-SQL over every table |
+| Evaluation rigour | 20% | Execution accuracy with CIs, per language; empty-result traps handled; held-out set | SQL string match; English only |
+| Security and compliance | 15% | Trifecta table, zero-leak audit, DPDP dates right | "The LLM is told not to write DELETE" |
+| FDE artefacts | 20% | Metric glossary with owners; ADRs with cost numbers | Definitions invented by the team |
+| Demo and communication | 10% | Shows a clarification, a refusal and cost per answer | Cherry-picked English queries |
+| Curveball handling | 10% | Governance, not unilateral fixes; post-mortems | Silent patches |
 
 ## 13. Stretch goals
 
@@ -367,24 +368,24 @@ Timings are course weeks, with the real-engagement week in brackets.
 
 ## 14. Curriculum map
 
-| Turn(s) · title | How it is exercised |
-|---|---|
-| 1 Tokenization Algorithms · 41 Multilingual Prompting | Per-language token cost; Hindi/Hinglish evals |
-| 21 Reasoning Models and Test-Time Compute | Reasoning model at bounded effort on the hard route only; effort sweep (ADR-006) |
-| 36 Constrained Decoding Engines · 61 Agent-Computer Interface (ACI) Design | `MetricQuery` schema as the tool |
-| 37 Self-Consistency and Tree/Graph-of-Thought · 38 Reflection and Evaluator-Optimizer Loops | Capped SQL repair; result voting (stretch) |
-| 40 Meta-Prompting and Agent System-Prompt Design | Planner prompt; data fenced as data |
-| 64 Trust Calibration and Automation Bias | Scope, definition and freshness footer |
-| 71 Agent Identity Platforms | On-behalf-of vs. role identity (ADR-004) |
-| 74 OWASP Top 10 for LLM Applications · 75 Jailbreaks and Red-Teaming Practice · 76 Data and Memory Poisoning | Guard, adversarial set, poisoned values |
-| 78 PII Detection and Data-Loss Prevention · 81 Privacy Law for AI: GDPR and India's DPDP | PII excluded; DPDP phase-in; CERT-In |
-| 87 Model Upgrades and Deprecation Management · 89 Feedback Loops and the Data Flywheel · 90 SLOs, Incident Response and On-Call for AI · 94 Provider Failover and Disaster Recovery | Release gates; "wrong number" loop; runbooks; template fallback |
-| 91 LLM FinOps · 100 AI Gateways · 102 Model Provider Landscape | Warehouse-inclusive cost, budgets, routing |
-| 96 Observability Tools · 97 Evaluation Tools | Traces linked to query IDs; execution-accuracy CI |
-| 103 Python Engineering for AI Apps · 104 Testing AI Code | Pydantic; guard unit tests |
-| 109–116 FDE practice (discovery, ROI, POC → production, ADRs, demos, change management, data readiness, SOWs) | The full engagement arc |
+| Turn | Title | How it is exercised |
+|---|---|---|
+| 1, 41 | Tokenization Algorithms; Multilingual Prompting | Per-language token cost; Hindi/Hinglish evals |
+| 21 | Reasoning Models and Test-Time Compute | Reasoning model at bounded effort on the hard route only; effort sweep (ADR-006) |
+| 36, 61 | Constrained Decoding Engines; Agent-Computer Interface (ACI) Design | `MetricQuery` schema as the tool |
+| 37, 38 | Self-Consistency and Tree/Graph-of-Thought; Reflection and Evaluator-Optimizer Loops | Capped SQL repair; result voting (stretch) |
+| 40 | Meta-Prompting and Agent System-Prompt Design | Planner prompt; data fenced as data |
+| 64 | Trust Calibration and Automation Bias | Scope, definition and freshness footer |
+| 71 | Agent Identity Platforms | On-behalf-of vs role identity (ADR-004) |
+| 74–76 | OWASP Top 10 for LLM Applications; Jailbreaks and Red-Teaming Practice; Data and Memory Poisoning | Guard, adversarial set, poisoned values |
+| 78, 81 | PII Detection and Data-Loss Prevention; Privacy Law for AI: GDPR and India's DPDP | PII excluded; DPDP phase-in; CERT-In |
+| 87, 89, 90, 94 | Model Upgrades and Deprecation Management; Feedback Loops and the Data Flywheel; SLOs, Incident Response and On-Call for AI; Provider Failover and Disaster Recovery | Release gates; "wrong number" loop; runbooks; template fallback |
+| 91, 100, 102 | LLM FinOps; AI Gateways; Model Provider Landscape | Warehouse-inclusive cost, budgets, routing |
+| 96, 97 | Observability Tools; Evaluation Tools | Traces linked to query IDs; execution-accuracy CI |
+| 103, 104 | Python Engineering for AI Apps; Testing AI Code | Pydantic; guard unit tests |
+| 109–116 | FDE practice (discovery, ROI, POC → production, ADRs, demos, change management, data readiness, SOWs) | The full engagement arc |
 
-**New or gap topics exercised:** RAG-5 text-to-SQL and semantic layers (gap #14, the core of the project); RAG-1 context engineering (schema linking over 2,400 columns for the fallback path); #8 injection-resistant architecture (the planner never sees rows; SQL is untrusted output); MOD-1 reasoning controls (explicit, bounded effort on one route); MOD-9 nondeterminism (pass^3 without temperature 0); RAG-6 LLM functions inside the data platform (ADR-003); FDE-1 security review (CISO sign-off, ZDR provider, review pack).
+**New/gap topics exercised:** RAG-5 text-to-SQL and semantic layers (gap #14, the core of the project); RAG-1 context engineering (schema linking over 2,400 columns for the fallback path); #8 injection-resistant architecture (the planner never sees rows; SQL is untrusted output); MOD-1 reasoning controls (explicit, bounded effort on one route); MOD-9 nondeterminism (pass^3 without temperature 0); RAG-6 LLM functions inside the data platform (ADR-003); FDE-1 security review (CISO sign-off, ZDR provider, review pack).
 
 ## 15. What reviewers look for / common failure modes
 

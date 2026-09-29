@@ -1,4 +1,4 @@
-# P10 starter kit · Ambient clinical documentation
+# P10 Starter Kit · Ambient Clinical Documentation
 
 Offline starter kit for the brief [P10 · Ambient Clinical Documentation](../../P10-ambient-clinical-documentation.md). Almarosa Community Health is fictional, and so is every clinician, patient, clinic and visit in the data. There is no real PHI anywhere in the kit.
 
@@ -30,7 +30,7 @@ Options: `--runs 3` (k in pass^k), `--boot 1000` (bootstrap resamples for the co
 | `generate_data.py` | A deterministic generator (seed 1010): 150 golden encounters and 15 adversarial ones, a drug lexicon, a closed vocabulary (symptoms, problems with ICD-10-CM codes, medications, frequencies, routes) and the curveball fixtures. |
 | `baseline.py` | `consent_ok()` and `BaselineSystem.predict(encounter) -> note or None`: keyword rules that draft a SOAP note in the kit's JSON schema. |
 | `adapter.py` | `AdapterSystem`: the same interface backed by any OpenAI-compatible `/chat/completions` endpoint. A tool-less drafter, pure `urllib`. |
-| `eval_harness.py` | Scores drafts against the visit cards, runs the verifier on seeded drafts, simulates two signers, prints `AC-ID | metric | value | threshold | result`, and writes JSON to `./results/`. |
+| `eval_harness.py` | Scores drafts against the visit cards, runs the verifier on seeded drafts, simulates two signers, prints `AC-ID \| metric \| value \| threshold \| result`, and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the verifier (every reviewed behaviour, curveballs 1, 4 and 5, and three known gaps) and for the generator (determinism, tricky cases present, consent labels). |
 
 ### The control: kept from the sketch, and what the kit adds
@@ -117,7 +117,7 @@ The brief's §5 table has no IDs, so AC-1 to AC-16 number its rows in order; CB-
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; a hosted API only under a BAA for real data
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; a hosted API only under a BAA for real data
 export LLM_MODEL=qwen2.5:14b-instruct
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 30
@@ -134,7 +134,7 @@ python3 eval_harness.py --system adapter --limit 30
 | 3 (POC) | A drafter through `adapter.py` with constrained JSON output; interpreter mode (renditions are the patient's), guardian handling, family vs personal history, laterality, dose changes; drop small talk and other patients. | AC-3, AC-5, AC-8, CB-4, AC-13, §8 rows |
 | 4 (POC) | Verifier upgrades: RxNorm-style brand coverage, spoken-number normalisation, multi-word drug names, an NLI or LLM-judge pass for attribution and "the old dose". Keep recall ≥ 95% on the seeded set. | AC-6, AC-4, CB-1 |
 | 5 (Pilot, weeks 9–16) | Review UI with evidence spans and per-flag acknowledgement; a rater rubric with κ; FHIR `DocumentReference` + `Provenance` write-back to HAPI under the clinician's identity; vigilance drills on synthetic notes only. | AC-15, CB-5, AC-9 |
-| 6 (Production 17–22, Handover 23–24) | Real audio (TTS plus role-played) for WER and DER by language; CI gates (critical errors, verifier recall, Spanish WER, p95 latency); a style-regression canary; a cost per signed note. | AC-7, AC-8, AC-14, AC-16, CB-3 |
+| 6 (Production, weeks 17–22; Handover, weeks 23–24) | Real audio (TTS plus role-played) for WER and DER by language; CI gates (critical errors, verifier recall, Spanish WER, p95 latency); a style-regression canary; a cost per signed note. | AC-7, AC-8, AC-14, AC-16, CB-3 |
 
 ## What the kit deliberately does not do
 

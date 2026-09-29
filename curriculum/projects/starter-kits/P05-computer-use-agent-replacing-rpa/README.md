@@ -1,4 +1,4 @@
-# P05 starter kit · Computer-use agent replacing brittle RPA
+# P05 Starter Kit · Computer-Use Agent Replacing Brittle RPA
 
 Offline starter kit for the brief [P05 · Computer-Use Agent Replacing Brittle RPA for Customs Filing](../../P05-computer-use-agent-replacing-rpa.md). Duinhaven Freight Forwarders, the Tollvane portal and every party, vessel, container and identifier in the data are fictional.
 
@@ -31,7 +31,7 @@ Options: `--tasks 60` (golden tasks), `--runs 5` (k in pass^k), `--chaos 2000` (
 | `generate_data.py` | A deterministic generator (seed 5005): 400 shipments by default with ground truth per portal field, 300 adversarial cases, and the curveball fixtures. |
 | `baseline.py` | `build_plan(record)` (copies TMS fields, strips HS-code dots, validates nothing) and `BaselineExecutor.next_action(observation)`: hard-coded v1 labels, a screen-coordinate click when a selector is lost, "resend after timeout", and three legacy habits (applies "consignee changed" ops notes, follows "re-verify your session" links, dismisses pop-ups with their first button). |
 | `adapter.py` | `AdapterExecutor`: the same interface backed by any OpenAI-compatible `/chat/completions` endpoint. Pure `urllib`. |
-| `eval_harness.py` | Runs every suite through the gate, prints `AC-ID | metric | value | threshold | result`, writes JSON to `./results/`. `run_filing()` stands in for your durable workflow. |
+| `eval_harness.py` | Runs every suite through the gate, prints `AC-ID \| metric \| value \| threshold \| result`, writes JSON to `./results/`. `run_filing()` stands in for your durable workflow. |
 | `tests/` | `unittest` tests for the gate (every reviewed behaviour, plus curveballs 1–5) and for the generator (determinism, tricky cases present). |
 
 ### The control: kept from the sketch, and what the kit adds
@@ -48,7 +48,6 @@ Added for the kit:
 - **Confirmation modals** (portal v3). The run holding the claim may move from review to confirm once, under the same approval. A retried confirm click, or a different run, is blocked.
 - **`reconcile(filing, portal_ref)`**. A reference found by a customer-reference search is recorded; "not found" releases the claim, and the next claim needs a fresh approval. A submitted filing is never released.
 - **`presubmit_diff(shown, plan)`**. The harness's simulated approver declines on any mismatch, for example a lazy dropdown that lost its value.
-- The sketch's TMS host `tms.northwind.internal` is renamed `tms.duinhaven.internal` to match the brief's client.
 
 ### Tricky cases in the data, and their labels
 
@@ -106,7 +105,7 @@ The safety rows pass because the gate stops the baseline, not because the baseli
 ## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:11434/v1   # Ollama or vLLM; or a hosted API
+export LLM_BASE_URL=http://localhost:11434/v1    # Ollama or vLLM; or a hosted API
 export LLM_MODEL=qwen2.5:7b-instruct
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --tasks 10 --runs 3 --chaos 40
@@ -123,7 +122,7 @@ python3 eval_harness.py --system adapter --tasks 10 --runs 3 --chaos 40
 | 3 (POC) | A scripted executor that reads the approved screen map and handles the banner, tabs, lazy dropdowns and confirmation modal; drop the three legacy habits. Then Playwright role locators against a FastAPI port of the mock. | AC-4 (v2–v4) |
 | 4 (POC) | A durable workflow (Temporal, DBOS or Restate) in place of `run_filing`: intent record in Postgres, non-retryable submit activity, reconciliation by customer reference; the chaos suite on the real engine. Step-up MFA via a vault TOTP engine or a named operator on a durable timer. | AC-6, CB-5, CB-3 |
 | 5 (Pilot, weeks 6–10) | The computer-use fallback through `adapter.py` on a small subset; human sign-off of VLM locator repairs; screen fingerprints for drift; an approval UI with the pre-submit diff and vigilance probes (works council first). | AC-10, CB-1, AC-9 plumbing |
-| 6 (Production 11–13, Handover 14) | CI gates (pass^5 down more than 2 pp, any safety metric above 0, cost up more than 20%), a cost model that includes approver time, a `lodge_declaration` MCP tool for the vendor API, and the v5 demo. | AC-11, CB-4 |
+| 6 (Production, weeks 11–13; Handover, week 14) | CI gates (pass^5 down more than 2 pp, any safety metric above 0, cost up more than 20%), a cost model that includes approver time, a `lodge_declaration` MCP tool for the vendor API, and the v5 demo. | AC-11, CB-4 |
 
 ## What the kit deliberately does not do
 

@@ -1,4 +1,4 @@
-# PRMCALC premium basis: product-filing summary (fictional, Bhuvika Mutual Life)
+# PRMCALC Premium Basis: Product-Filing Summary (Fictional, Bhuvika Mutual Life)
 
 This is what the filed product documents say. It is **not** a recovered spec. The legacy code differs from it in at least eight places. Recovering those rules and getting the Appointed Actuary to confirm them is the project.
 

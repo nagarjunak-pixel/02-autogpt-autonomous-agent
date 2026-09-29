@@ -1,4 +1,4 @@
-# P15 starter kit · Distilled domain small model, offline
+# P15 Starter Kit · Distilled Domain Small Model, Offline
 
 Offline starter kit for the brief [P15 · Distilled Domain Small Model for Offline Field Technicians](../../P15-distilled-domain-small-model-offline.md). Kilnridge Energy Services is fictional, and so is every equipment model, technician and value in the data. **The torque values are invented for the exercise. They are not engineering data.**
 
@@ -30,7 +30,7 @@ Options: `--runs 5` sets k for pass^k on the safety slice (5 is the brief's valu
 | `generate_data.py` | Deterministic generator (seed 15092026): 256 manual passages in 14 documents (8 equipment models, 3 with a superseded revision, 4 Spanish crew guides, 2 bulletins), a frozen 400-question test set, 40 fault trees, 300 seed dialogues, 50 diagnosis scenarios, 503 rows of simulated teacher output, a terms register, 400 hotline notes and 280 devices of fleet telemetry. |
 | `baseline.py` | `BaselineSystem` (B0): IDF keyword retrieval over passage text, the brief's deterministic safety router and verbatim renderer, the first number in the top passage as the numeric answer, and positional fault-tree walking. |
 | `adapter.py` | `AdapterSystem`: sends the general path and diagnosis turns to any OpenAI-compatible endpoint (llama.cpp server, Ollama, vLLM). The router, the renderer and numeric lookup stay deterministic. Pure `urllib`. |
-| `eval_harness.py` | Scores the test set, the diagnosis scenarios and the fleet snapshot. It also runs the filter over the teacher output and reports its gates. Prints `AC-ID | metric | value | threshold | PASS/FAIL` and writes JSON to `./results/`. |
+| `eval_harness.py` | Scores the test set, the diagnosis scenarios and the fleet snapshot. It also runs the filter over the teacher output and reports its gates. Prints `AC-ID \| metric \| value \| threshold \| PASS/FAIL` and writes JSON to `./results/`. |
 | `tests/` | `unittest` tests for the filter (the sketch's reviewed behaviour, the additions and curveballs 1, 2, 3, 5 and 6) and for the generator (determinism, every trap present). |
 
 ### The filter: reviewed behaviour kept, and five additions
@@ -107,11 +107,11 @@ The brief's §5 table has no IDs, so AC-1 to AC-9 number its rows in order: AC-1
 
 The harness also prints the leak audit (28 of 400 test questions, 7.0%, had a planted leak; 5 survive), clean rows the filter wrongly rejected (0), and the fleet telemetry for curveball 4 (29% with no NPU, although the purchase order claims 100%; 68 devices unsynced for more than 14 days).
 
-## Plugging in a model
+## Plugging in a real model
 
 ```bash
-export LLM_BASE_URL=http://localhost:8080/v1    # llama.cpp server, Ollama or vLLM
-export LLM_MODEL=gemma-4-e4b-q4_0               # your B0 prompt, or your B1/B2 build, quantised as it ships
+export LLM_BASE_URL=http://localhost:8080/v1     # llama.cpp server, Ollama or vLLM
+export LLM_MODEL=gemma-4-e4b-q4_0                # your B0 prompt, or your B1/B2 build, quantised as it ships
 export LLM_API_KEY=...                           # only if your endpoint needs it
 python3 eval_harness.py --system adapter --limit 40
 ```
