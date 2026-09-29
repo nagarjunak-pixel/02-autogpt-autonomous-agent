@@ -327,6 +327,8 @@ The marginal cost per answer is about zero. People and HSE review dominate, so t
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are real-engagement weeks.
+
 1. **Week 3: teacher terms prohibit training a competing model** (the team began with an API teacher). *Strong response:* stop and quarantine the generated data. Do not guess whether the student "competes": that is a contract question, so Legal either obtains the provider's written approval or the team switches to an Apache/MIT open-weight teacher, regenerates, updates the terms register and AI-BOM, and reports the slip.
 2. **Week 6: synthetic data leaked test questions.** An audit finds 7% of test questions with near-duplicates in the SFT data. *Strong response:* invalidate the gains, re-split by held-out sections, regenerate, and retrain **and re-run B0**. Tell the sponsor "+11 points" became "+4", and add the audit to CI.
 3. **Week 8: the 4-bit model fails numeric torque tables.** *Strong response:* numbers come from lookup, never generation, so fix the router. Compare QAT q4_0, Q5_K_M and higher-precision sensitive tensors, and add a numeric slice to the quantisation gate. Weight-only 4-bit formats (GGUF Q4, MXFP4 as shipped with gpt-oss) are dequantised on the fly and run on hardware without native 4-bit support, so treat this as an accuracy problem, not a format problem.

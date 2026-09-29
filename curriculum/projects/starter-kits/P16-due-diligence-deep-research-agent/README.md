@@ -33,7 +33,7 @@ LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:14b python3 eval_harnes
 
 ## What is in the kit
 
-| File | What it does |
+| File | What it is |
 |---|---|
 | `generate_data.py` | Seeded generator for the §3 course materials. Writes everything to `data/`. |
 | `citation_verifier.py` | The §7 verifier, unchanged from the brief. |

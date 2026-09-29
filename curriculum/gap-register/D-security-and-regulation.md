@@ -152,7 +152,7 @@ Status as of 26 Sep 2026. "Gap doc #N" means the instrument is taught in that ga
 **Interview questions.**
 1. Does LoRA fine-tuning of an open-weight model make us a GPAI provider under the EU AI Act? — Normally not. The Commission's indicative criterion, in non-binding guidelines, is whether the modification uses more than one-third of the original model's training compute. Even above that line, only the modification needs documenting. Your AI-system obligations (Art. 50 transparency, high-risk duties) still apply.
 2. What is the GPAI Code of Practice, and why does it matter to a deployer? — A voluntary compliance tool published on 10 Jul 2025, with Transparency, Copyright, and Safety & Security chapters. Whether a vendor has signed it, or can otherwise show compliance, is a practical due-diligence signal and tells you what documentation to ask for.
-3. What changed on 2 August 2026 for GPAI? — Enforcement started: the AI Office and Member State authorities became responsible for enforcing the AI Act, including the Commission's powers over GPAI providers. The obligations themselves had applied since 2 Aug 2025.
+3. What changed on 2 Aug 2026 for GPAI? — Enforcement started: the AI Office and Member State authorities became responsible for enforcing the AI Act, including the Commission's powers over GPAI providers. The obligations themselves had applied since 2 Aug 2025.
 
 ### SEC-5 · Automated-decision and AI-in-hiring rules beyond GDPR Art. 22 (US state and city rules, UK DUAA)  — **P2** · THIN · Section H · new turn after Turn 83 (cross-link Turn 81)
 
@@ -199,7 +199,7 @@ Status as of 26 Sep 2026. "Gap doc #N" means the instrument is taught in that ga
 **Idea to remember.** If your bot feels like a companion or children can reach it, disclosure, crisis routing and age-appropriate controls are legal requirements in several jurisdictions. Use the least intrusive age signal that works, or don't generate the restricted content at all.
 
 **Interview questions.**
-1. What did Australia require of AI companion chatbots from 9 March 2026? — Under the Phase 2 codes, services must protect children from sexually explicit, self-harm and similar material, either by not generating it or by using appropriate age assurance. There is no blanket 18+ rule. The eSafety Commissioner enforces the codes, and AUD 49.5 million is the maximum civil penalty for breaching a direction to comply.
+1. What did Australia require of AI companion chatbots from 9 Mar 2026? — Under the Phase 2 codes, services must protect children from sexually explicit, self-harm and similar material, either by not generating it or by using appropriate age assurance. There is no blanket 18+ rule. The eSafety Commissioner enforces the codes, and AUD 49.5 million is the maximum civil penalty for breaching a direction to comply.
 2. How do California and New York enforce their companion-chatbot laws differently? — California's SB 243 (from 1 Jan 2026) allows private suits for the greater of actual damages or USD 1,000 per violation. New York (from 5 Nov 2025) allows only Attorney General enforcement, at up to USD 15,000 a day.
 3. How would you implement age assurance while protecting privacy? — Prefer signals that reveal only an age bracket (the OS signal under California AB 1043, wallet-style attestations) over storing IDs. Use estimation with a buffer, and escalate to verification only for gated features. Don't keep raw biometrics, and measure error rates across demographic groups, as the EU guidelines' non-discrimination criterion expects.
 
@@ -225,7 +225,7 @@ Status as of 26 Sep 2026. "Gap doc #N" means the instrument is taught in that ga
 **Interview questions.**
 1. Your bank wants its AI voice agent to authenticate callers by voiceprint and then process transfers. What do you push back on? — Voice can be cloned, so a voiceprint should only lower friction. High-risk actions need possession or out-of-band factors (app push or call-back to a registered number), transaction limits and anomaly detection. Log everything for SAR-style investigation.
 2. What is an injection attack in remote identity verification, and why doesn't liveness alone stop it? — The attacker feeds synthetic video straight into the capture pipeline (a virtual camera or emulator) instead of presenting something to a real camera. Presentation-attack detection only examines what the camera sees, so you also need device and camera integrity signals and injection detection.
-3. What did FinCEN's November 2024 alert highlight? — A rise in suspicious-activity reports describing deepfake media, especially fraudulent identity documents used to get past identity verification and authentication.
+3. What did FinCEN's Nov 2024 alert highlight? — A rise in suspicious-activity reports describing deepfake media, especially fraudulent identity documents used to get past identity verification and authentication.
 
 ### SEC-8 · Multi-tenant isolation and LLM side channels (prompt-cache timing, KV-cache sharing, token-length leaks)  — **P2** · THIN · Section H · extend Turn 74 (with a security note in Turn 31)
 

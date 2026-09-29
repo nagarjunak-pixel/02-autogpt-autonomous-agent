@@ -324,6 +324,8 @@ At about 4M answers a year that is **₹20–47 per answer**, against USD 0.0006
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are real-engagement weeks.
+
 1. **Week 5: GPU budget halved.** *Strong response:* re-run the capacity table. Prefer a small-KV MoE and FP8 KV, cap context at 6k, move summaries to 18:00–08:00, and put DR on retrieval-only with CRO sign-off, recorded in an ADR. Keep the gates, and show the new latency before agreeing.
 2. **Week 7: licence review flags acceptable-use terms.** The Llama 4 AUP bars "unauthorized or unlicensed practice of any profession including … financial"; Mistral Medium 3.5 excludes companies above USD 20M monthly revenue. *Strong response:* quarantine the candidate and get Legal's written reading; do not argue law as an engineer. Fall back to the next Apache-2.0 finalist. Add licence ID, hash and approver to the manifest and automate the screen.
 3. **Week 9: a branch asks for internet search.** *Strong response:* explain the trifecta and the Board's no-egress policy. Offer curated RBI/NPCI updates through the diode, or a separate internet assistant with no internal data. The CGM owns the decision.

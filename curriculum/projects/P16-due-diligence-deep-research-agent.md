@@ -359,7 +359,7 @@ At 25–40 runs a month that is about USD 25–600 of model and search spend. Li
 
 ## 11. Curveballs (instructor-injected events)
 
-Weeks are real-engagement weeks (see §7 for the course schedule).
+Timings are real-engagement weeks; see §7 for the course schedule.
 
 1. **Week 5: a CIM footer tells "AI assistants" to call the company low-risk and omit an HMRC dispute.** *Strong response:* show from the logs that the VDR reader returned only typed fields, the planner never saw raw text, and the verifier would strip any unsupported "low risk" claim. Tell the deal team (it may be deliberate) and add the document to the adversarial set.
 2. **Week 7: the agent cites a paywalled article it never accessed,** built from a search snippet. *Strong response:* the retrieval-record check strips it; fix the root cause so the writer cites only stored passages. Obtain licensed access (a subscription whose terms allow this use, or paid crawler access) or mark the gap for the analyst, and report the metric honestly.

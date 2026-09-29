@@ -33,7 +33,7 @@ LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:14b python3 eval_harnes
 
 ## What is in the kit
 
-| File | What it does |
+| File | What it is |
 |---|---|
 | `generate_data.py` | Seeded generator. Writes the star schema (CSV and DuckDB), the eval sets, the mock SSO users and the curveball fixtures to `data/`. |
 | `question_bank.json` | Question wording in English, Hindi (Devanagari) and Hinglish, plus the probe SQL. Analysts and native speakers extend this file, not the Python. |

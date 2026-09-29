@@ -329,6 +329,8 @@ This gives **≈ ₹0.2–3.7 per WhatsApp session** (three answers, 20% of them
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are course weeks; see §7 for the course schedule.
+
 1. **Week 3: a forged scheme circular enters the corpus.** A district clerk uploads a WhatsApp-forwarded "GO" that raises the pension income limit and asks for a ₹500 fee to a UPI ID; the bot quotes it 212 times. Freeze the scheme's answers, roll back the index, trace every affected conversation and send corrected utility templates. Report within the CERT-In window if it qualifies, fix the root cause (registry-only ingestion) and run a blameless post-mortem.
 2. **Week 4: an eligibility rule changes overnight.** A new GO lowers the age limit with immediate effect. Effective-dated rules and index entries (`valid_from`) let the officer approve the change once; clear answer caches, re-run that scheme's golden set, brief agents and publish the freshness SLO result.
 3. **Week 4: Urdu retrieval is far worse than Telugu.** Diagnose before tuning: Arabic vs Urdu code points for *yeh*, *kaf* and *heh* (e.g. U+064A vs U+06CC); Roman-Urdu queries; few Urdu source documents, so retrieval is really cross-lingual; poor Nastaliq OCR. Fix with normalisation, pivot translation for retrieval (answering in Urdu), BM25 hybrid and a curated Urdu FAQ, then embedding fine-tuning on native pairs if needed. Report with CIs and route Urdu to Urdu-speaking agents until the gate passes.

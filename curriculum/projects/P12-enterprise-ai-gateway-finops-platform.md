@@ -406,6 +406,8 @@ At the low end this is a governance programme that pays for itself, not a cost-c
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are real-engagement weeks; see §7 for the course schedule.
+
 1. **Week 10: a provider announces a model retirement with 60 days' notice.**
    - Anthropic and Microsoft Foundry both give at least 60 days' notice for GA models ([Anthropic](https://platform.claude.com/docs/en/about-claude/model-deprecations), [Microsoft](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/model-retirements)); Foundry dates are not extendable and provisioned deployments are **not** auto-upgraded.
    - Query the registry for dependent aliases (say 43 use cases).

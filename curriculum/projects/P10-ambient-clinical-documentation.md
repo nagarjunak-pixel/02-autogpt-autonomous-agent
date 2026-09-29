@@ -368,6 +368,8 @@ It is deliberately lexical, cheap and high-recall. In production, add RxNorm nor
 
 ## 11. Curveballs (instructor-injected events)
 
+Timings are weeks within the real engagement's pilot and production phases (§7).
+
 1. **Pilot week 3: a signed note contains a medication never discussed**; a pharmacist catches it at refill. *Strong response:* file a patient-safety report; amend the note (`docStatus` amended + Provenance). Root-cause it (ASR, drafter, or a verifier miss on a brand name); add it to regression, make new-medication flags blocking, tell pilot clinicians what changed.
 2. **Pilot week 4: a patient withdraws consent mid-visit.** *Strong response:* stop capture; purge partial audio and transcript; set `Consent` inactive with a timestamp, keeping only metadata in the audit log. Prove no copy survives in buffers or at vendors. In California, recording on would be unlawful.
 3. **Pilot week 6: a forced model upgrade changes note style; clinicians revolt.** *Strong response:* roll back to the pinned version while it exists. Add a style-regression eval (section order, length, phrasing) and per-clinician templates; canary with 10 champions and publish before/after metrics. Track deprecation dates.

@@ -3,7 +3,7 @@
 > Part of the [Gap Register](../02-gap-register.md). Verified as of 26 September 2026. Every entry was proposed by a research agent, then adversarially re-checked (coverage in Vol 2, evidence, priority) by a second agent; corrections were applied. Priorities: **P1** = most FDE engagements meet it, or it is legally in force for common deployments · **P2** = frequent but situational · **P3** = niche · **Watch** = future.
 
 
-Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened versions of gap-doc items #7 and #14. RAG-2 is folded into the models lens (MOD-1). RAG-11 was added by the verifier. Abbreviations used throughout: RAG = retrieval-augmented generation; LLM = large language model; API = application programming interface; GA = generally available; FDE = forward deployed engineer; SQL = Structured Query Language.
+*10 entries after adversarial verification: 3 P1, 7 P2. Entries are ordered by priority, P1 first. RAG-1 and RAG-5 are the deepened versions of gap-doc items #7 and #14. RAG-2 is folded into the models lens (MOD-1). RAG-11 was added by the verifier. Abbreviations used throughout: RAG = retrieval-augmented generation; LLM = large language model; API = application programming interface; GA = generally available; FDE = forward deployed engineer; SQL = Structured Query Language.*
 
 ### RAG-1 · Gap doc #7 (deepened): Context engineering  — **P1** · THIN · Section D · new turn after Turn 40 (cross-link Turns 31, 55, 58)
 

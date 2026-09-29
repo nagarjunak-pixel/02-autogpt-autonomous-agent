@@ -33,7 +33,7 @@ LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:7b python3 eval_harness
 
 ## What is in the kit
 
-| File | What it does |
+| File | What it is |
 |---|---|
 | `generate_data.py` | Seeded generator for the §3 data. Writes everything to `data/`. |
 | `turn_manager.py` | The §7 turn manager, kept as the reviewed sketch, plus `latency_gate()`, the §8 CI gate (replay p95 must regress by less than 10%). |

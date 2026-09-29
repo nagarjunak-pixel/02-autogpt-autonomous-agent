@@ -33,7 +33,7 @@ LLM_BASE_URL=http://localhost:11434/v1 LLM_MODEL=qwen2.5:7b python3 eval_harness
 
 ## What is in the kit
 
-| File | What it does |
+| File | What it is |
 |---|---|
 | `generate_data.py` | Seeded generator for the §3 data. Writes everything to `data/`. Also holds the checksum functions (Verhoeff, Luhn, mod-97, GSTIN). |
 | `router.py` | The §7 cascade, budget guard and circuit breaker, kept as the reviewed sketch. Two marked additions: `Deployment.zone` with `filter_residency()` (the §7 production gap "residency filters applied before fallback") and a `ProviderError` that carries `retry_after`. |

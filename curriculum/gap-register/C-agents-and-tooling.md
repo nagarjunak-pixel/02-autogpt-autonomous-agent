@@ -3,7 +3,7 @@
 > Part of the [Gap Register](../02-gap-register.md). Verified as of 26 September 2026. Every entry was proposed by a research agent, then adversarially re-checked (coverage in Vol 2, evidence, priority) by a second agent; corrections were applied. Priorities: **P1** = most FDE engagements meet it, or it is legally in force for common deployments · **P2** = frequent but situational · **P3** = niche · **Watch** = future.
 
 
-Ten entries after verification: 1 P1, 8 P2 and 1 Watch. The verifier merged three items into existing gap-doc items: AGT-4 into #2, AGT-5 into #13 and AGT-9 into #18. Each of these three is written here as a full "deepened" entry that replaces its gap-doc item. The verifier rejected none and added no missed items.
+*10 entries after adversarial verification: 1 P1, 8 P2, 1 Watch. The verifier merged three items into existing gap-doc items: AGT-4 into #2, AGT-5 into #13 and AGT-9 into #18. Each of these three is written here as a full "deepened" entry that replaces its gap-doc item. The verifier rejected none and added no missed items.*
 
 ---
 

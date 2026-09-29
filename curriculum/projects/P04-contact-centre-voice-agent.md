@@ -61,7 +61,7 @@ Callers speak Hindi, Telugu, English and code-mixed speech ("naa recharge fail a
 
 **Synthetic data** (generator scripts plus seeds, all fictional):
 
-| Dataset | Volume | Schema highlights | Tricky cases to include |
+| Dataset | Volume | Schema highlights | Tricky cases |
 |---|---|---|---|
 | Subscribers | 50,000 | msisdn, circle, lang_pref, plan_id, balance, bill_cycle, esim, kyc_status, risk_flags | Name/DOB twins; CRM plan ≠ billing plan |
 | Plan catalogue | 320 | price, validity, data/day, legacy flag | "349 Unlimited" vs "349 Unlimited Plus" |
@@ -373,6 +373,8 @@ At 35% containment (8,400 contained calls a day), cost per contained call = (60,
 **DR.** Active-active across two Indian regions; the IVR is always warm; failover is drilled monthly.
 
 ## 11. Curveballs (instructor-injected events)
+
+Timings are course weeks; see §7 for the course schedule.
 
 1. **Week 3: a model upgrade adds 400 ms.** The pinned model is retired, and its successor pushes p95 to 1.9 s.
    - Catch it in the latency CI gate, not in production; keep the old model until its retirement date.
