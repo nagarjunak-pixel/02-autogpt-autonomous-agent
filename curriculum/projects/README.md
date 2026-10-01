@@ -40,7 +40,7 @@ Every brief has an offline starter kit in [starter-kits/](starter-kits/README.md
 
 Every baseline fails several criteria by design, and metrics that need people or production traffic are marked "not computable offline". Teams start week 1 by running their kit, then replace the baseline and track the numbers. A kit is a scaffold, not a solution: the §8 evaluation plan, the calibrated judges and the engagement artefacts are still the team's work.
 
-**For instructors: what a real attempt scores.** P02 has been built end to end with a small local model and scored with its kit and a paraphrased test set. The [P02 validation report](validation/P02-validation-report.md) gives the results, what failed and why, a bug it found in the kit's answer key (fixed), and grading recommendations.
+**For instructors: what a real attempt scores.** Three projects have been built end to end with a small local model (Qwen2.5-3B on 4 CPU cores) and scored by their kit's own harness on the kit's test set and on a held-out set of new wording: [P01](validation/P01-validation-report.md), [P02](validation/P02-validation-report.md) and [P06](validation/P06-validation-report.md). Each report gives the results, what failed and why, the kit defects it found, and grading recommendations. All three tell the same story: kit-set scores mostly measure fit to the kit's templates, and only new wording shows what a system can do. In all three the hard permission and data-flow controls held (no rows or documents outside the user's entitlement, no unauthorised sends); most losses came from rule vocabularies and gates that did not generalise to new wording.
 
 ## How every project runs
 
