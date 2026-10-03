@@ -38,7 +38,7 @@ const PARTS = [
     files: ['curriculum/projects/README.md', ...ls('curriculum/projects', /^P\d\d-.*\.md$/)] },
   { id: 'part-templates', title: 'Engagement templates', blurb: 'The ten reusable templates every project uses.',
     files: ls('curriculum/projects/templates', /\.md$/) },
-  { id: 'part-kits', title: 'Starter kits', blurb: 'Run commands, metric-to-criterion maps and limits for each offline kit, and the P02 validation report. The kit source code is in the repository, not reproduced here.',
+  { id: 'part-kits', title: 'Starter kits', blurb: 'Run commands, metric-to-criterion maps and limits for each offline kit, and the P01, P02 and P06 validation reports. The kit source code is in the repository, not reproduced here.',
     files: ['curriculum/projects/starter-kits/README.md',
       ...kits.flatMap(k => [`curriculum/projects/starter-kits/${k}/README.md`,
         ...(fs.existsSync(path.join(REPO, `curriculum/projects/starter-kits/${k}/spec_stub.md`)) ? [`curriculum/projects/starter-kits/${k}/spec_stub.md`] : []),
