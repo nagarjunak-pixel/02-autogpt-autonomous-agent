@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Node (tools/pdf-build)
+node_modules/
+npm-debug.log*
+
+# Starter-kit and PDF build outputs (generated locally)
+curriculum/projects/starter-kits/**/data/
+curriculum/projects/starter-kits/**/results/
+tools/pdf-build/out/
+tools/pdf-build/.cache/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
