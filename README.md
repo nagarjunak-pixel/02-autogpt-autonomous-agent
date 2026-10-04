@@ -24,6 +24,7 @@ python3 demo.py
 | [`curriculum/`](curriculum/README.md) | LLM Training Flow Vol. 2 review, gap register, errata, 2026–2028 horizon scan, 16-week FDE syllabus, 16 project briefs |
 | [`curriculum/projects/starter-kits/`](curriculum/projects/starter-kits/README.md) | Offline starter kits (data generators, controls, baselines, eval harnesses) |
 | [`tools/pdf-build/`](tools/pdf-build/README.md) | Optional PDF build pipeline for curriculum exports |
+| [`tools/github-housekeeping/`](tools/github-housekeeping/README.md) | Account-wide repo audit; run `apply-all.sh` with your `gh` login |
 
 ## Curriculum (co-located)
 

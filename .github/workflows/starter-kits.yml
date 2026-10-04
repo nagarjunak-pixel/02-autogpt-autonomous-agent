@@ -1,0 +1,49 @@
+name: Starter kit tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "curriculum/projects/starter-kits/**"
+      - ".github/workflows/starter-kits.yml"
+  pull_request:
+    paths:
+      - "curriculum/projects/starter-kits/**"
+      - ".github/workflows/starter-kits.yml"
+
+jobs:
+  python-kits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install optional kit dependencies
+        run: pip install duckdb sqlglot
+      - name: Unit tests (Python starter kits)
+        run: |
+          set -euo pipefail
+          root=curriculum/projects/starter-kits
+          for kit in "$root"/P*/; do
+            name=$(basename "$kit")
+            if [[ "$name" == P13-* ]]; then
+              continue
+            fi
+            echo "=== $name ==="
+            (cd "$kit" && python3 -m unittest discover -s tests -q)
+          done
+
+  p13-typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: P13 generate data and tests
+        working-directory: curriculum/projects/starter-kits/P13-agent-ready-commerce-mcp
+        run: |
+          set -euo pipefail
+          node --experimental-strip-types generate_data.ts
+          node --experimental-strip-types --test tests/*.test.ts
