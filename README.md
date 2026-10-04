@@ -1,29 +1,38 @@
-# #02 · autogpt autonomous agent
-⭐ ~185k GitHub Stars
+# 02 · AutoGPT — Autonomous Agent
 
-## What Is This?
-• How autonomous agents make decisions without human input
-• Self-correction and retry mechanisms
-• Why AutoGPT started the entire AI agent revolution
+Educational demo for the [Top 50 Agentic AI](https://github.com/nagarjunak-pixel/nagarjunak-pixel) series (~185k stars on the upstream AutoGPT project). No API keys or cloud setup required.
 
-## Quick Start
+## What you learn
+
+- How autonomous agents decide without constant human input
+- Self-correction and retry loops
+- Why AutoGPT kicked off the agent wave
+
+## Quick start
+
 ```bash
 python3 demo.py
 ```
 
-## How It Works
-This demo simulates the core architecture of the autogpt autonomous agent project,
-showing students how the key concepts work without requiring API keys or cloud setup.
+`demo.py` simulates the goal → think → act → observe loop so students can see the architecture without calling a live model.
 
-## Part of Top 50 Agentic AI Projects
-This project is #02 in the [Top 50 Agentic AI GitHub Projects](https://github.com/nagarjunak-pixel) collection.
+## Repository layout
 
-## Curriculum materials: LLM Training Flow Vol. 2 review and FDE projects
+| Path | Contents |
+| --- | --- |
+| [`demo.py`](demo.py) | Runnable AutoGPT-style autonomous-agent simulation |
+| [`curriculum/`](curriculum/README.md) | LLM Training Flow Vol. 2 review, gap register, errata, 2026–2028 horizon scan, 16-week FDE syllabus, 16 project briefs |
+| [`curriculum/projects/starter-kits/`](curriculum/projects/starter-kits/README.md) | Offline starter kits (data generators, controls, baselines, eval harnesses) |
+| [`tools/pdf-build/`](tools/pdf-build/README.md) | Optional PDF build pipeline for curriculum exports |
 
-The [`curriculum/`](curriculum/README.md) folder contains:
-- a verified review of the *LLM Training Flow Vol. 2* curriculum;
-- a gap register of missing topics;
-- errata;
-- a 2026–2028 horizon scan;
-- a revised 16-week Forward Deployed Engineer track;
-- 16 real-world FDE project briefs with reusable engagement templates.
+## Curriculum (co-located)
+
+The [`curriculum/`](curriculum/README.md) folder holds:
+
+- A verified review of *LLM Training Flow Vol. 2*
+- A gap register and errata
+- A 2026–2028 horizon scan
+- A revised 16-week Forward Deployed Engineer track
+- Sixteen real-world FDE project briefs with engagement templates
+
+Index of all public repos: [nagarjunak-pixel/nagarjunak-pixel](https://github.com/nagarjunak-pixel/nagarjunak-pixel).
